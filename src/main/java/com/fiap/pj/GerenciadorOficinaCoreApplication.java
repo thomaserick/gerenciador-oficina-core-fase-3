@@ -1,4 +1,4 @@
-package com.fiap.pj.gerenciador_oficina_core;
+package com.fiap.pj;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

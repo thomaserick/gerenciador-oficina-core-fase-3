@@ -1,10 +1,10 @@
-package com.fiap.pj.gerenciador_oficina_core;
+package com.fiap.pj;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class GerenciadorOficinaCoreApplicationTests {
+class GerenciadorOficinaCoreApplicationTest {
 
 	@Test
 	void contextLoads() {

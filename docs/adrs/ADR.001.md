@@ -1,61 +1,39 @@
-# Estruturação de pacotes
- 
-**Data:** 22/07/2025
-**Situação:** Aceita
- 
-## Contexto
- 
-Estruturar os pacotes como base a segregação de responsabilidades, separando também a gestão de configuração e do produto em si.
- 
-## Decisão
- 
-Sendo assim a estrutura básica ficou estabelecida da seguinte forma:
- 
-```java
-. giq
-  . plano            // domínio.
-  . amostragem       // domínio.
-  . fornecedor       // domínio.
-  . ...              // outros domínios.
-  . sk               // código compartilhado entre os demais pacotes; deve conter, preferencialmente, identificadores e valores de objetos.
-. infra              // código de configuração de recursos técnicos que não fazem parte da implementação de negócio em si, como por exemplo configuração de bibliotecas parceiras.
-```
- 
-Desconsiderando o pacote de `infraestrutura` (`infra`) e `shared kernel` (`sk`), a estruturação do pacote, para o **domínio**, deve seguir o seguinte modelo:
- 
-```java
-. domain: plano | amostragem | fornecedor | demais - domínios
-  . adapter          // conforme definido na arquitetura hexagonal devemos mapear os adaptadores de entrada e saídas.
-    . in             // adaptadores de entrada.
-      . api          // definição dos adaptadores Restful para fornecimento das APIs (_controllers_).
-      . stream       // definição dos adaptadores de entrada para a mensageria (_subscribers_).
-    . out            // adaptadores de saída.
-      . stream       // definição dos adaptadores de saída para a mensageria (_publishers_).
-      . db           // implementação dos contratos de acesso ao banco de dados.
-  . app              // definição dos serviços de aplicação; cada caso de uso deve possuir o seu. 
-  . domain            // implementação do código de domínio.
-    . ...            // pode conter sub-divisões caso necessários; não pode conter código de infraestrutura.
-  . repository       // definição do contrato de repositório para o domínio.
-  . .                // definição dos casos de usos a serem implementados.
-```
+# ADR: Estruturação de Pacotes
 
-Desconsiderando o pacote de `infraestrutura` (`infra`) e `shared kernel` (`sk`), a estruturação do pacote, para as **consultas**, deve seguir o seguinte modelo:
- 
-```java
-. domain: plano | amostragem | fornecedor | demais
-  . adapter          // conforme definido na arquitetura hexagonal devemos mapear os adaptadores de entrada e saídas.
-    . in             // adaptadores de entrada.
-      . api          // definição dos adaptadores Restful para fornecimento das APIs (_controllers_).
-        . criteria   // definição dos critérios de consulta, ordenação e paginação por exemplo.
-        . projection // definição das interfaces de representação das projeções para as consultas.
-      . stream       // definição dos adaptadores de entrada para a mensageria (_subscribers_).
-    . out            // adaptadores de saída.
-      . stream       // definição dos adaptadores de saída para a mensageria (_publishers_).
-      . db           // implementação dos contratos de acesso ao banco de dados.
-  . app              // definição dos serviços de aplicação.
-  . domain           // implementação do código com a representação das tabelas.
+**Data:** 17/07/2025
+
+## Contexto
+
+A estrutura de pastas do projeto segue uma organização modularizada e com foco no domínio para proporcionar uma
+separação clara das responsabilidades, fácil navegação e entendimento rápido do projeto sob uma perspectiva
+de negócio.
+
+## Decisão
+
+A estrutura básica foi estabelecida da seguinte forma:
+
+```plaintext
+📁core
+├── 📁feature-name
+│   ├── 📁adapter           
+│   │   ├── 📁in                 
+│   │   │   ├── 📁api           // Controllers da feature.
+│   │   │   │   └── 📁openapi   // Classes com anotações de documentação relacionadas ao swagger das nossas controllers.
+│   │   └── 📁out   
+│   │       └── 📁db            // Repositórios da feature.
+│   ├── 📁app                   // Services responsáveis pela lógica e regra de negócio.
+│   ├── 📁domain                // Classes de domínio.
+│   │   ├── 📁enums
+│   │   └── 📁vo                // Objetos de transferência de informações, normalmente customizadas para casos específicos.
+│   ├── 📁usecase               // Interfaces de casos de uso, onde temos as assinaturas dos métodos que serão utilizados nas services.
+│   │   └── 📁command           // Objetos com dados necessários para realizar alguma ação. Utilizado para tranferir dados entre controllers, useCases, services, events.
+│   ├── 📁exception             // Implementação de exceptions customizadas
+│   └──📁sk                     // código compartilhado entre os demais pacotes; deve conter, preferencialmente, identificadores e valores de objetos. 
+└── 📁infra                     // código de configuração de recursos técnicos que não fazem parte da implementação de negócio em si, como por exemplo configuração de bibliotecas parceiras.
+
 ```
 
 ## Consequências
- 
-Em determinado casos pode ser que alguns pacotes fiquem com um número grande de classes; caso isso venha a acontecer é prudente agrupar por contexto/domínio para facilitar o entendimento.
+
+Em determinados casos pode ser que alguns pacotes fiquem com um número grande de classes. Caso isso venha a acontecer é
+prudente agrupar por contexto/domínio para facilitar o entendimento.

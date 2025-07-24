@@ -20,7 +20,9 @@ public class UsuarioService implements CriarUsuarioUseCase {
 
     @Override
     public Usuario handle(UsuarioCommand cmd) {
-        var usuario = new Usuario(UUID.randomUUID(), cmd.nome(), cmd.email(), cmd.senha());
+        var usuario = new Usuario(UUID.randomUUID(), cmd.nome(), cmd.sobreNome(), cmd.email(), cmd.senha(), cmd.ativo());
+        usuario.addPerfil(cmd.perfis());
         return repository.save(usuario);
+
     }
 }

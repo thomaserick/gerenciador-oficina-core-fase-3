@@ -7,5 +7,6 @@ import org.springframework.data.repository.Repository;
 
 import java.util.UUID;
 
+
 public interface UsuarioRepositoryJpa extends UsuarioDomainRepository, Repository<Usuario, UUID> {
 }

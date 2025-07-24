@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 public interface UsuarioControllerOpenApi {
 
-
     @Operation(description = "Cria um novo usuário", method = "POST")
     @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "Usuario criado."),
             @ApiResponse(responseCode = "400", description = "O  Usuário não pode ser criado.")})

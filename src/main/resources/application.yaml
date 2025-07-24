@@ -1,0 +1,73 @@
+spring:
+
+  application:
+    name: gerenciador-oficina-core
+
+  jackson:
+    time-zone: UTC
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/gerenciador-oficina
+    username: postgres
+    password: totvs@123
+    #    username: postgres
+    #    password: oficina@123
+    hikari:
+      minimum-idle: 0
+      maximum-pool-size: 20
+      max-lifetime: 300000
+      transaction-isolation: TRANSACTION_READ_COMMITTED
+      auto-commit: false
+      validation-timeout: 3000
+      leak-detection-threshold: 0  # 1min - log message indicating a possible connection leak
+      data-source-properties:
+        useServerPrepStmts: false
+        cachePrepStmts: true
+        prepStmtCacheSize: 500
+        prepStmtCacheSqlLimit: 1024
+
+  flyway:
+    enabled: true
+    baselineOnMigrate: true
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  data:
+    web:
+      sort:
+        sort-parameter: order
+      pageable:
+        page-parameter: page
+        one-indexed-parameters: true
+        size-parameter: pageSize
+        max-page-size: 50
+        default-page-size: 10
+
+
+  springdoc:
+    default-produces-media-type: application/json
+    api-docs:
+      path: /swagger-ui/v3/api-docs
+    swagger-ui:
+      title: Gerenciador de Oficina
+      doc-expansion: none
+      display-request-duration: true
+      groups-order: DESC
+      operationsSorter: alpha
+      tagsSorter: alpha
+      disable-swagger-default-url: true
+      path: /swagger-ui
+    group-configs:
+      - group: v1 - api
+        paths-to-match: /api/**
+
+server:
+  port: 8081

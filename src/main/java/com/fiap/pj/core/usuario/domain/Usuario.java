@@ -46,4 +46,7 @@ public class Usuario {
         this.perfis.addAll(perfis);
     }
 
+    public void desativar() {
+        this.ativo = false;
+    }
 }

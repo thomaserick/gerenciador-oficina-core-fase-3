@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class UsuarioController implements UsuarioControllerOpenApi {
 
-    public static final String PATH = "/usuarios";
+    public static final String PATH = "usuarios";
 
     private CriarUsuarioUseCase criarUsuarioUseCase;
 

@@ -29,13 +29,13 @@ class UsuarioServiceTest {
     private UsuarioRepositoryJpa usuarioRepositoryJpa;
 
     @InjectMocks
-    private UsuarioService usuarioService;
+    private CriarUsuarioService criarUsuarioService;
 
     @Test
     void deveCriarUsuario() {
         when(usuarioRepositoryJpa.save(any(Usuario.class))).thenReturn(UsuarioTestFactory.umUsuario());
 
-        var usuario = usuarioService.handle(UsuarioTestFactory.umUsuarioCommand());
+        var usuario = criarUsuarioService.handle(UsuarioTestFactory.umCriarUsuarioCommand());
 
         assertNotNull(usuario);
         assertEquals(ID, usuario.getId());

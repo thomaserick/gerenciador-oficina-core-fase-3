@@ -3,7 +3,7 @@ package com.fiap.pj.core.usuario.util.factrory;
 
 import com.fiap.pj.core.usuario.domain.Usuario;
 import com.fiap.pj.core.usuario.domain.enums.PerfilUsuario;
-import com.fiap.pj.core.usuario.usecase.command.UsuarioCommand;
+import com.fiap.pj.core.usuario.usecase.command.CriarUsuarioCommand;
 
 import java.util.List;
 import java.util.Set;
@@ -24,7 +24,7 @@ public class UsuarioTestFactory {
         return usuario;
     }
 
-    public static UsuarioCommand umUsuarioCommand() {
-        return new UsuarioCommand(null, NOME, SOBRE_NOME, E_MAIL, SENHA, true, Set.of(PERFIL_USUARIO));
+    public static CriarUsuarioCommand umCriarUsuarioCommand() {
+        return new CriarUsuarioCommand(NOME, SOBRE_NOME, E_MAIL, SENHA, true, Set.of(PERFIL_USUARIO));
     }
 }

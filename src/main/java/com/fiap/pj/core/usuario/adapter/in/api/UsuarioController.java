@@ -3,7 +3,7 @@ package com.fiap.pj.core.usuario.adapter.in.api;
 import com.fiap.pj.core.sk.web.ResponseEntityUtils;
 import com.fiap.pj.core.usuario.adapter.in.api.openapi.UsuarioControllerOpenApi;
 import com.fiap.pj.core.usuario.usecase.CriarUsuarioUseCase;
-import com.fiap.pj.core.usuario.usecase.command.UsuarioCommand;
+import com.fiap.pj.core.usuario.usecase.command.CriarUsuarioCommand;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +22,7 @@ public class UsuarioController implements UsuarioControllerOpenApi {
     private CriarUsuarioUseCase criarUsuarioUseCase;
 
     @PostMapping
-    public ResponseEntity<Void> criarUsuario(@Valid @RequestBody UsuarioCommand cmd) {
+    public ResponseEntity<Void> criarUsuario(@Valid @RequestBody CriarUsuarioCommand cmd) {
         var usuario = criarUsuarioUseCase.handle(cmd);
         return ResponseEntityUtils.create(getClass(), usuario.getId());
     }

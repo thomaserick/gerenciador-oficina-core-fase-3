@@ -14,7 +14,7 @@ import java.util.UUID;
 @Service
 @Transactional
 @AllArgsConstructor
-public class UsuarioService implements CriarUsuarioUseCase {
+public class CriarUsuarioService implements CriarUsuarioUseCase {
 
     private final UsuarioDomainRepository repository;
 
@@ -23,6 +23,5 @@ public class UsuarioService implements CriarUsuarioUseCase {
         var usuario = new Usuario(UUID.randomUUID(), cmd.nome(), cmd.sobreNome(), cmd.email(), cmd.senha(), cmd.ativo());
         usuario.addPerfil(cmd.perfis());
         return repository.save(usuario);
-
     }
 }

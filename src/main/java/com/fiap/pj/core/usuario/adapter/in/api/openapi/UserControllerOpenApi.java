@@ -18,8 +18,13 @@ public interface UserControllerOpenApi {
             @ApiResponse(responseCode = "400", description = "O  Usuário não pode ser criado.")})
     ResponseEntity<Void> createUser(@Valid @RequestBody CreateUserCommand cmd);
 
-    @Operation(description = "Desativar um novo usuário", method = "POST")
+    @Operation(description = "Desativar um usuário", method = "POST")
     @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "Usuario desativado."),
             @ApiResponse(responseCode = "400", description = "O  Usuário não pode ser desativado.")})
-    public ResponseEntity<Void> disableUser(@PathVariable UUID id);
+    ResponseEntity<Void> disableUser(@PathVariable UUID id);
+
+    @Operation(description = "Ativar um usuário", method = "POST")
+    @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "Usuario Ativado."),
+            @ApiResponse(responseCode = "400", description = "O  Usuário não pode ser ativado.")})
+    ResponseEntity<Void> activateUser(@PathVariable UUID id);
 }

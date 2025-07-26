@@ -49,4 +49,9 @@ public class User {
     public void disable() {
         this.active = false;
     }
+
+    public void activate() {
+        this.active = true;
+    }
+
 }

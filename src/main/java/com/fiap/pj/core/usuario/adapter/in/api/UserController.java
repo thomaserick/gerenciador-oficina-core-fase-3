@@ -2,8 +2,10 @@ package com.fiap.pj.core.usuario.adapter.in.api;
 
 import com.fiap.pj.core.sk.web.ResponseEntityUtils;
 import com.fiap.pj.core.usuario.adapter.in.api.openapi.UserControllerOpenApi;
+import com.fiap.pj.core.usuario.usecase.ActivateUserUseCase;
 import com.fiap.pj.core.usuario.usecase.CreateUserUseCase;
 import com.fiap.pj.core.usuario.usecase.DisableUserUseCase;
+import com.fiap.pj.core.usuario.usecase.command.ActivateUserCommand;
 import com.fiap.pj.core.usuario.usecase.command.CreateUserCommand;
 import com.fiap.pj.core.usuario.usecase.command.DisableUserCommand;
 import jakarta.validation.Valid;
@@ -26,6 +28,7 @@ public class UserController implements UserControllerOpenApi {
 
     private CreateUserUseCase createUserUseCase;
     private DisableUserUseCase disableUserUseCase;
+    private ActivateUserUseCase activateUserUseCase;
 
     @PostMapping
     public ResponseEntity<Void> createUser(@Valid @RequestBody CreateUserCommand cmd) {
@@ -36,6 +39,13 @@ public class UserController implements UserControllerOpenApi {
     @PostMapping("{id}/disable")
     public ResponseEntity<Void> disableUser(@PathVariable UUID id) {
         disableUserUseCase.handle(new DisableUserCommand(id));
+        return ResponseEntity.ok().build();
+    }
+
+
+    @PostMapping("{id}/activate")
+    public ResponseEntity<Void> activateUser(@PathVariable UUID id) {
+        activateUserUseCase.handle(new ActivateUserCommand(id));
         return ResponseEntity.ok().build();
     }
 

@@ -1,6 +1,6 @@
 package com.fiap.pj.core.usuario.domain;
 
-import com.fiap.pj.core.usuario.domain.enums.PerfilUsuario;
+import com.fiap.pj.core.usuario.domain.enums.Roles;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -18,35 +18,35 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Table(name = "usuario")
+@Table(name = "users")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class Usuario {
+public class User {
 
     @ElementCollection
-    @CollectionTable(name = "usuario_perfil", joinColumns = @JoinColumn(name = "usuario_id"))
-    @Column(name = "perfil")
-    private final Set<PerfilUsuario> perfis = new HashSet<>();
+    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "role")
+    private final Set<Roles> roles = new HashSet<>();
 
     @Id
     private UUID id;
     @Column(nullable = false)
-    private String nome;
+    private String name;
     @Column(nullable = false)
-    private String sobreNome;
+    private String lastName;
     @Column(nullable = false, unique = true)
     private String email;
     @Column(nullable = false)
-    private String senha;
+    private String password;
     @Column(nullable = false)
-    private boolean ativo;
+    private boolean active;
 
-    public void addPerfil(Collection<PerfilUsuario> perfis) {
-        this.perfis.addAll(perfis);
+    public void addRoles(Collection<Roles> roles) {
+        this.roles.addAll(roles);
     }
 
-    public void desativar() {
-        this.ativo = false;
+    public void disable() {
+        this.active = false;
     }
 }

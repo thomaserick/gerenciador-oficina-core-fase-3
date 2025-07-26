@@ -1,8 +1,8 @@
 package com.fiap.pj.core.usuario.controller;
 
 
-import com.fiap.pj.core.usuario.adapter.in.api.UsuarioController;
-import com.fiap.pj.core.usuario.usecase.DesativarUsuarioUseCase;
+import com.fiap.pj.core.usuario.adapter.in.api.UserController;
+import com.fiap.pj.core.usuario.usecase.DisableUserUseCase;
 import com.fiap.pj.core.util.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,25 +20,25 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
-class DesativarUsuarioControllerTest {
+class DisableUserControllerTest {
 
     @Mock
-    private DesativarUsuarioUseCase desativarUsuarioUseCase;
+    private DisableUserUseCase disableUserUseCase;
 
     @InjectMocks
-    private UsuarioController usuarioController;
+    private UserController userController;
 
     private MockMvc mock;
 
     @BeforeEach
     void setup() {
-        mock = MockMvcBuilders.standaloneSetup(usuarioController).build();
+        mock = MockMvcBuilders.standaloneSetup(userController).build();
     }
 
     @Test
-    void deveDesativarUsuario() throws Exception {
+    void deveDisableUsuario() throws Exception {
         mock.perform(post(
-                TestUtils.buildURL(UsuarioController.PATH, UUID.randomUUID().toString(), "desativar"))
+                TestUtils.buildURL(UserController.PATH, UUID.randomUUID().toString(), "disable"))
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
         ).andExpect(status().is2xxSuccessful());
 

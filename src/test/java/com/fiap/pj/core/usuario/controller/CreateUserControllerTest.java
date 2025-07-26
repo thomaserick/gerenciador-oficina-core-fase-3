@@ -1,10 +1,10 @@
 package com.fiap.pj.core.usuario.controller;
 
 
-import com.fiap.pj.core.usuario.adapter.in.api.UsuarioController;
-import com.fiap.pj.core.usuario.usecase.CriarUsuarioUseCase;
-import com.fiap.pj.core.usuario.usecase.command.CriarUsuarioCommand;
-import com.fiap.pj.core.usuario.util.factrory.UsuarioTestFactory;
+import com.fiap.pj.core.usuario.adapter.in.api.UserController;
+import com.fiap.pj.core.usuario.usecase.CreateUserUseCase;
+import com.fiap.pj.core.usuario.usecase.command.CreateUserCommand;
+import com.fiap.pj.core.usuario.util.factrory.UserTestFactory;
 import com.fiap.pj.core.util.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,33 +17,33 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static com.fiap.pj.core.usuario.util.factrory.UsuarioTestFactory.umCriarUsuarioCommand;
+import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.umCriarUsuarioCommand;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
-class CriarUsuarioControllerTest {
+class CreateUserControllerTest {
 
     @Mock
-    private CriarUsuarioUseCase criarUsuarioUseCase;
+    private CreateUserUseCase createUserUseCase;
 
     @InjectMocks
-    private UsuarioController usuarioController;
+    private UserController userController;
 
     private MockMvc mock;
 
     @BeforeEach
     void setup() {
-        mock = MockMvcBuilders.standaloneSetup(usuarioController).build();
+        mock = MockMvcBuilders.standaloneSetup(userController).build();
     }
 
     @Test
-    void deveCriarUsuario() throws Exception {
+    void deveCreateUser() throws Exception {
 
-        Mockito.when(criarUsuarioUseCase.handle(Mockito.any(CriarUsuarioCommand.class))).thenReturn(UsuarioTestFactory.umUsuario());
+        Mockito.when(createUserUseCase.handle(Mockito.any(CreateUserCommand.class))).thenReturn(UserTestFactory.umUsuario());
 
         mock.perform(post(
-                TestUtils.buildURL(UsuarioController.PATH))
+                TestUtils.buildURL(UserController.PATH))
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(TestUtils.objectToJson(umCriarUsuarioCommand()))).andExpect(status().is2xxSuccessful());
 

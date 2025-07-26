@@ -1,7 +1,7 @@
 package com.fiap.pj.core.usuario.usecase.command;
 
 
-import com.fiap.pj.core.usuario.domain.enums.PerfilUsuario;
+import com.fiap.pj.core.usuario.domain.enums.Roles;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 
@@ -10,7 +10,7 @@ import java.util.Set;
 import static java.util.Objects.requireNonNull;
 
 @Getter
-public abstract class UsuarioCommand {
+public abstract class UserCommand {
 
     @NotBlank(message = "Nome do usuário não pode estar vazio")
     protected String nome;
@@ -25,9 +25,9 @@ public abstract class UsuarioCommand {
 
     protected boolean ativo;
 
-    protected Set<PerfilUsuario> perfis;
+    protected Set<Roles> perfis;
 
-    protected UsuarioCommand(String nome, String sobreNome, String email, String senha, boolean ativo, Set<PerfilUsuario> perfis) {
+    protected UserCommand(String nome, String sobreNome, String email, String senha, boolean ativo, Set<Roles> perfis) {
         this.nome = requireNonNull(nome);
         this.sobreNome = sobreNome;
         this.email = requireNonNull(email);

@@ -1,7 +1,7 @@
 package com.fiap.pj.core.usuario.exception;
 
-public class UsuarioExceptions {
-    private UsuarioExceptions() {
+public class UserExceptions {
+    private UserExceptions() {
     }
 
     public static class UsuarioNotFoundException extends RuntimeException {

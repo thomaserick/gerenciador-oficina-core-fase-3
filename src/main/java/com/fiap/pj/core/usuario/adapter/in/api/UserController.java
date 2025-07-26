@@ -5,7 +5,7 @@ import com.fiap.pj.core.usuario.adapter.in.api.openapi.UserControllerOpenApi;
 import com.fiap.pj.core.usuario.usecase.CreateUserUseCase;
 import com.fiap.pj.core.usuario.usecase.DisableUserUseCase;
 import com.fiap.pj.core.usuario.usecase.command.CreateUserCommand;
-import com.fiap.pj.core.usuario.usecase.command.DisablesUserCommand;
+import com.fiap.pj.core.usuario.usecase.command.DisableUserCommand;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +35,7 @@ public class UserController implements UserControllerOpenApi {
 
     @PostMapping("{id}/disable")
     public ResponseEntity<Void> disableUser(@PathVariable UUID id) {
-        disableUserUseCase.handle(new DisablesUserCommand(id));
+        disableUserUseCase.handle(new DisableUserCommand(id));
         return ResponseEntity.ok().build();
     }
 

@@ -1,8 +1,8 @@
 package com.fiap.pj.core.usuario.usecase;
 
-import com.fiap.pj.core.usuario.usecase.command.DisablesUserCommand;
+import com.fiap.pj.core.usuario.usecase.command.DisableUserCommand;
 
 public interface DisableUserUseCase {
 
-    void handle(DisablesUserCommand cmd);
+    void handle(DisableUserCommand cmd);
 }

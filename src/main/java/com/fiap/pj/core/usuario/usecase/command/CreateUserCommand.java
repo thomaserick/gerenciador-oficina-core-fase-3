@@ -10,8 +10,8 @@ import java.util.Set;
 @Getter
 public class CreateUserCommand extends UserCommand {
 
-    public CreateUserCommand(String nome, String sobreNome, String email, String senha, boolean ativo, Set<Roles> perfis) {
-        super(nome, sobreNome, email, senha, ativo, perfis);
+    public CreateUserCommand(String name, String lastName, String email, String password, boolean active, Set<Roles> roles) {
+        super(name, lastName, email, password, active, roles);
     }
 }
 

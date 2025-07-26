@@ -1,4 +1,4 @@
-package com.fiap.pj.core.sk.jpa;
+package com.fiap.pj.infra.jpa;
 
 import java.util.Optional;
 

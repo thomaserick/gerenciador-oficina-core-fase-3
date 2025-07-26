@@ -5,10 +5,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.E_MAIL;
-import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.NOME;
-import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.PERFIL_USUARIO;
-import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.SENHA;
-import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.SOBRE_NOME;
+import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.LAST_NAME;
+import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.NAME;
+import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.PASSWORD;
+import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.USER_ROLE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -17,15 +17,15 @@ class UserTest {
 
     @Test
     @DisplayName("Deve criar com sucesso uma instância de usuario.")
-    void deveCriarUsuario() {
+    void shouldCrateUser() {
 
-        var usuario = UserTestFactory.umUsuario();
+        var usuario = UserTestFactory.oneUser();
 
-        assertEquals(NOME, usuario.getName());
-        assertEquals(SOBRE_NOME, usuario.getLastName());
+        assertEquals(NAME, usuario.getName());
+        assertEquals(LAST_NAME, usuario.getLastName());
         assertEquals(E_MAIL, usuario.getEmail());
-        assertEquals(SENHA, usuario.getPassword());
-        assertTrue(usuario.getRoles().contains(PERFIL_USUARIO));
+        assertEquals(PASSWORD, usuario.getPassword());
+        assertTrue(usuario.getRoles().contains(USER_ROLE));
         assertTrue(usuario.isActive());
     }
 }

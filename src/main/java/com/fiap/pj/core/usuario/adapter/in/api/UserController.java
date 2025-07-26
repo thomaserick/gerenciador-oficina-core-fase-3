@@ -5,14 +5,17 @@ import com.fiap.pj.core.usuario.adapter.in.api.openapi.UserControllerOpenApi;
 import com.fiap.pj.core.usuario.usecase.ActivateUserUseCase;
 import com.fiap.pj.core.usuario.usecase.CreateUserUseCase;
 import com.fiap.pj.core.usuario.usecase.DisableUserUseCase;
+import com.fiap.pj.core.usuario.usecase.UpdateUserUseCase;
 import com.fiap.pj.core.usuario.usecase.command.ActivateUserCommand;
 import com.fiap.pj.core.usuario.usecase.command.CreateUserCommand;
 import com.fiap.pj.core.usuario.usecase.command.DisableUserCommand;
+import com.fiap.pj.core.usuario.usecase.command.UpdateUserCommand;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,11 +32,19 @@ public class UserController implements UserControllerOpenApi {
     private CreateUserUseCase createUserUseCase;
     private DisableUserUseCase disableUserUseCase;
     private ActivateUserUseCase activateUserUseCase;
+    private UpdateUserUseCase updateUserUseCase;
 
     @PostMapping
     public ResponseEntity<Void> createUser(@Valid @RequestBody CreateUserCommand cmd) {
         var usuario = createUserUseCase.handle(cmd);
         return ResponseEntityUtils.create(getClass(), usuario.getId());
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> updateUser(@Valid @PathVariable UUID id, @RequestBody UpdateUserCommand cmd) {
+        cmd.setId(id);
+        updateUserUseCase.handle(cmd);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("{id}/disable")

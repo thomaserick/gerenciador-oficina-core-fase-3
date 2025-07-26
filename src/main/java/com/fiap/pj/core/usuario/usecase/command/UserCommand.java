@@ -12,28 +12,28 @@ import static java.util.Objects.requireNonNull;
 @Getter
 public abstract class UserCommand {
 
-    @NotBlank(message = "Nome do usuário não pode estar vazio")
-    protected String nome;
+    @NotBlank(message = "Nome do usuário não pode estar vazio.")
+    protected String name;
 
-    protected String sobreNome;
+    protected String lastName;
 
-    @NotBlank(message = "E-mail do usuário não pode estar vazio")
+    @NotBlank(message = "E-mail do usuário não pode estar vazio.")
     protected String email;
 
-    @NotBlank(message = "Senha do usuário não pode estar vazio")
-    protected String senha;
+    @NotBlank(message = "Senha do usuário não pode estar vazio.")
+    protected String password;
 
-    protected boolean ativo;
+    protected boolean active;
 
-    protected Set<Roles> perfis;
+    protected Set<Roles> roles;
 
-    protected UserCommand(String nome, String sobreNome, String email, String senha, boolean ativo, Set<Roles> perfis) {
-        this.nome = requireNonNull(nome);
-        this.sobreNome = sobreNome;
+    protected UserCommand(String name, String lastName, String email, String password, boolean active, Set<Roles> roles) {
+        this.name = requireNonNull(name);
+        this.lastName = lastName;
         this.email = requireNonNull(email);
-        this.senha = requireNonNull(senha);
-        this.ativo = ativo;
-        this.perfis = requireNonNull(perfis);
+        this.password = requireNonNull(password);
+        this.active = active;
+        this.roles = requireNonNull(roles);
     }
 }
 

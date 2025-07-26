@@ -27,9 +27,9 @@ class DisableUservarServiceTest {
     private DisableUserService desativarUsuarioService;
 
     @Test
-    void deveCriarUsuario() {
+    void shouldDisableUser() {
         var id = UUID.randomUUID();
-        when(userRepositoryJpa.findByIdOrThrowNotFound(id)).thenReturn(UserTestFactory.umUsuario());
+        when(userRepositoryJpa.findByIdOrThrowNotFound(id)).thenReturn(UserTestFactory.oneUser());
         desativarUsuarioService.handle(new DisableUserCommand(id));
         verify(userRepositoryJpa).save(Mockito.any(User.class));
 

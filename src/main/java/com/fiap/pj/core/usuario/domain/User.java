@@ -1,6 +1,7 @@
 package com.fiap.pj.core.usuario.domain;
 
 import com.fiap.pj.core.usuario.domain.enums.Roles;
+import com.fiap.pj.core.util.CollectionUtils;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -54,4 +55,16 @@ public class User {
         this.active = true;
     }
 
+    public void update(String name, String lastName, boolean active, String password, Set<Roles> roles) {
+
+        this.name = name;
+        this.lastName = lastName;
+        this.active = active;
+        this.password = password;
+        updateRoles(roles);
+    }
+
+    public void updateRoles(Set<Roles> roles) {
+        CollectionUtils.instanceNonNullCollection(this.roles, roles);
+    }
 }

@@ -27,9 +27,9 @@ class ActivateUserServiceTest {
     private ActivateUserService activateUserService;
 
     @Test
-    void deveCriarUsuario() {
+    void shouldActivateUSer() {
         var id = UUID.randomUUID();
-        when(userRepositoryJpa.findByIdOrThrowNotFound(id)).thenReturn(UserTestFactory.umUsuario());
+        when(userRepositoryJpa.findByIdOrThrowNotFound(id)).thenReturn(UserTestFactory.oneUser());
         activateUserService.handle(new ActivateUserCommand(id));
         verify(userRepositoryJpa).save(Mockito.any(User.class));
     }

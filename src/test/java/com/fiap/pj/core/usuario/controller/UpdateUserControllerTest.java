@@ -2,7 +2,7 @@ package com.fiap.pj.core.usuario.controller;
 
 
 import com.fiap.pj.core.usuario.adapter.in.api.UserController;
-import com.fiap.pj.core.usuario.usecase.ActivateUserUseCase;
+import com.fiap.pj.core.usuario.usecase.UpdateUserUseCase;
 import com.fiap.pj.core.util.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,14 +16,15 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.UUID;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.oneCreateUserCommand;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
-class ActivateUserControllerTest {
+class UpdateUserControllerTest {
 
     @Mock
-    private ActivateUserUseCase activateUserUseCase;
+    private UpdateUserUseCase updateUserUseCase;
 
     @InjectMocks
     private UserController userController;
@@ -36,12 +37,12 @@ class ActivateUserControllerTest {
     }
 
     @Test
-    void shouldActivateUser() throws Exception {
-        mock.perform(post(
-                TestUtils.buildURL(UserController.PATH, UUID.randomUUID().toString(), "activate"))
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-        ).andExpect(status().is2xxSuccessful());
+    void shouldUpdateUser() throws Exception {
 
+        mock.perform(put(
+                TestUtils.buildURL(UserController.PATH, UUID.randomUUID().toString()))
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(TestUtils.objectToJson(oneCreateUserCommand()))).andExpect(status().is2xxSuccessful());
 
     }
 

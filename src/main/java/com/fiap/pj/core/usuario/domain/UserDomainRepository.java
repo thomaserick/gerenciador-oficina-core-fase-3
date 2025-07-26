@@ -1,8 +1,8 @@
 package com.fiap.pj.core.usuario.domain;
 
 
-import com.fiap.pj.core.sk.jpa.BaseCrudRepository;
 import com.fiap.pj.core.usuario.exception.UserExceptions.UsuarioNotFoundException;
+import com.fiap.pj.infra.jpa.BaseCrudRepository;
 
 import java.util.UUID;
 

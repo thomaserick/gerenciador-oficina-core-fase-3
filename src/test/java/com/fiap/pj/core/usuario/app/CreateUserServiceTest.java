@@ -12,10 +12,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.E_MAIL;
 import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.ID;
-import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.NOME;
-import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.PERFIL_USUARIO;
-import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.SENHA;
-import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.SOBRE_NOME;
+import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.LAST_NAME;
+import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.NAME;
+import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.PASSWORD;
+import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.USER_ROLE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -32,17 +32,17 @@ class CreateUserServiceTest {
     private CreateUserService createUserService;
 
     @Test
-    void deveCriarUsuario() {
-        when(userRepositoryJpa.save(any(User.class))).thenReturn(UserTestFactory.umUsuario());
+    void shouldCreateUser() {
+        when(userRepositoryJpa.save(any(User.class))).thenReturn(UserTestFactory.oneUser());
 
-        var usuario = createUserService.handle(UserTestFactory.umCriarUsuarioCommand());
+        var usuario = createUserService.handle(UserTestFactory.oneCreateUserCommand());
 
         assertNotNull(usuario);
         assertEquals(ID, usuario.getId());
-        assertEquals(NOME, usuario.getName());
-        assertEquals(SOBRE_NOME, usuario.getLastName());
+        assertEquals(NAME, usuario.getName());
+        assertEquals(LAST_NAME, usuario.getLastName());
         assertEquals(E_MAIL, usuario.getEmail());
-        assertEquals(SENHA, usuario.getPassword());
-        assertTrue(usuario.getRoles().contains(PERFIL_USUARIO));
+        assertEquals(PASSWORD, usuario.getPassword());
+        assertTrue(usuario.getRoles().contains(USER_ROLE));
     }
 }

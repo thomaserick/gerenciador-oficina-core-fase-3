@@ -5,7 +5,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
 
@@ -27,10 +26,7 @@ public class IdentificationDocument implements Serializable {
         this.number = number;
     }
 
-    public static IdentificationDocument build(DocumentOrigin origemDocumento, String numero) {
-        if (DocumentOrigin.ESTRANGEIRO.equals(origemDocumento)) {
-            return new IdentificationDocument(DocumentOrigin.ESTRANGEIRO, StringUtils.upperCase(numero));
-        }
-        return BrazilianDocument.build(numero);
+    public static IdentificationDocument build(String number) {
+        return new BrazilianDocument(number);
     }
 }

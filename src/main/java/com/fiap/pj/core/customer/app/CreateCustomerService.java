@@ -18,10 +18,11 @@ public class CreateCustomerService implements CreateCustomerUserCase {
 
     private final CustomerDomainRepository repository;
 
+
     @Override
     public Customer handle(CreateCustomerCommand cmd) {
 
-        var identificationDocument = IdentificationDocument.build(cmd.getOriginDocument(),
+        var identificationDocument = IdentificationDocument.build(
                 cmd.getIdentificationDocument());
 
         var customer = Customer.builder()

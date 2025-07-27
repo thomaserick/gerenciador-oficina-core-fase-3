@@ -12,16 +12,15 @@ public abstract class CustomerCommand {
     protected String name;
     protected String email;
     protected String phone;
-    protected boolean active;
 
     @NotBlank(message = "Endereco do cliente não pode estar vazio.")
     protected String address;
 
-    protected CustomerCommand(String name, String email, String phone, boolean active, String address) {
+    protected CustomerCommand(String name, String email, String phone, String address) {
         this.name = requireNonNull(name);
         this.email = email;
         this.phone = phone;
-        this.active = active;
+
         this.address = requireNonNull(address);
     }
 }

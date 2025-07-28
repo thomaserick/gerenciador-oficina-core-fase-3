@@ -20,7 +20,6 @@ public abstract class CustomerCommand {
         this.name = requireNonNull(name);
         this.email = email;
         this.phone = phone;
-
         this.address = requireNonNull(address);
     }
 }

@@ -49,4 +49,11 @@ public class Customer {
     public void disable() {
         this.active = false;
     }
+
+    public void update(String name, String email, String address, String phone) {
+        this.name = name;
+        this.email = email;
+        this.address = address;
+        this.phone = phone;
+    }
 }

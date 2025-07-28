@@ -3,6 +3,7 @@ package com.fiap.pj.core.usuario.app;
 
 import com.fiap.pj.core.usuario.adapter.out.UserRepositoryJpa;
 import com.fiap.pj.core.usuario.domain.User;
+import com.fiap.pj.core.usuario.exception.UserExceptions.UserNotFoundException;
 import com.fiap.pj.core.usuario.util.factrory.UserTestFactory;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,6 +11,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.ALTER_LAST_NAME;
@@ -17,6 +19,8 @@ import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.ALTER_NAME;
 import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.ALTER_PASSWORD;
 import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.ALTER_USER_ROLE;
 import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.ID;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -34,7 +38,7 @@ class UpdateUserServiceTest {
     private UpdateUserService updateUserService;
 
     @Test
-    void shouldCreateUser() {
+    void shouldUpdateUser() {
         var user = UserTestFactory.oneUser();
         when(userRepositoryJpa.findByIdOrThrowNotFound(user.getId())).thenReturn(user);
 
@@ -51,5 +55,18 @@ class UpdateUserServiceTest {
         assertTrue(usuario.getRoles().contains(ALTER_USER_ROLE));
 
         verify(userRepositoryJpa).save(user);
+    }
+
+    @Test
+    void shouldReturnUserNotFoundException() {
+        var user = UserTestFactory.oneUser();
+
+        Mockito.doThrow(new UserNotFoundException())
+                .when(userRepositoryJpa)
+                .findByIdOrThrowNotFound(user.getId());
+
+        var thrown = catchThrowable(() -> updateUserService.handle(UserTestFactory.umUpdateUserCommand(user.getId())));
+        assertThat(thrown).isInstanceOf(UserNotFoundException.class);
+
     }
 }

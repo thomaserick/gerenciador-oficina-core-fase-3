@@ -41,4 +41,12 @@ public class Customer {
         this.address = requireNonNull(address);
         this.identificationDocument = requireNonNull(identificationDocument);
     }
+
+    public void activate() {
+        this.active = true;
+    }
+
+    public void disable() {
+        this.active = false;
+    }
 }

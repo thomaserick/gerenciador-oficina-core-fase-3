@@ -6,7 +6,7 @@ CREATE TABLE customer
     email      VARCHAR(255),
     phone      VARCHAR(32),
     identification_document_origin SMALLINT NOT NULL,
-    identification_document_number VARCHAR(64) NOT NULL,
+    identification_document_number VARCHAR(64) NOT NULL UNIQUE,
     CONSTRAINT customer_pkey  PRIMARY KEY (id)
 );
 CREATE INDEX IF NOT EXISTS idx_customer_name ON customer(name);

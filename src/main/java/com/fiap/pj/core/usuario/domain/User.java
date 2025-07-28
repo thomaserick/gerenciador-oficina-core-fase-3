@@ -9,7 +9,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -18,9 +17,10 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+import static java.util.Objects.requireNonNull;
+
 @Entity
 @Table(name = "users")
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 public class User {
@@ -42,6 +42,15 @@ public class User {
     private String password;
     @Column(nullable = false)
     private boolean active;
+
+    public User(UUID id, String name, String lastName, String email, String password, boolean active) {
+        this.id = requireNonNull(id);
+        this.name = requireNonNull(name);
+        this.lastName = lastName;
+        this.email = requireNonNull(email);
+        this.password = requireNonNull(password);
+        this.active = active;
+    }
 
     public void addRoles(Collection<Roles> roles) {
         this.roles.addAll(roles);

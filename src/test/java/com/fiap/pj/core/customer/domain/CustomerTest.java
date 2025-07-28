@@ -2,6 +2,7 @@ package com.fiap.pj.core.customer.domain;
 
 import com.fiap.pj.core.customer.util.factory.CustomerTestFactory;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static com.fiap.pj.core.customer.util.factory.CustomerTestFactory.ADDRESS;
@@ -10,6 +11,7 @@ import static com.fiap.pj.core.customer.util.factory.CustomerTestFactory.PHONE;
 import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.E_MAIL;
 import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.NAME;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class CustomerTest {
@@ -27,5 +29,27 @@ class CustomerTest {
         assertEquals(ADDRESS, customer.getAddress());
         assertEquals(IDENTIFICATION_DOCUMENT_NUMBER, customer.getIdentificationDocument().getNumber());
         assertTrue(customer.isActive());
+    }
+
+    @Nested
+    class CreationFailure {
+
+        @Test
+        void ShouldNotCreateCustomerWithoutName() {
+            assertThrows(NullPointerException.class,
+                    () -> new Customer(CustomerTestFactory.ID,
+                            null,
+                            null,
+                            null, true, null, null));
+        }
+
+        @Test
+        void ShouldNotCreateCustomerWithoutIdentificationDocument() {
+            assertThrows(NullPointerException.class,
+                    () -> new Customer(CustomerTestFactory.ID,
+                            CustomerTestFactory.NAME,
+                            null,
+                            null, true, ADDRESS, null));
+        }
     }
 }

@@ -2,6 +2,7 @@ package com.fiap.pj.core.customer.app;
 
 import com.fiap.pj.core.customer.domain.Customer;
 import com.fiap.pj.core.customer.domain.CustomerDomainRepository;
+import com.fiap.pj.core.customer.exception.CustomerExceptions.DocumentIdentificationDuplicateException;
 import com.fiap.pj.core.customer.usecase.CreateCustomerUserCase;
 import com.fiap.pj.core.customer.usecase.command.CreateCustomerCommand;
 import com.fiap.pj.core.sk.documentoidentificacao.domain.IdentificationDocument;
@@ -21,6 +22,10 @@ public class CreateCustomerService implements CreateCustomerUserCase {
 
     @Override
     public Customer handle(CreateCustomerCommand cmd) {
+
+        if (repository.existsByIdentificationDocumentNumber(cmd.getIdentificationDocument())) {
+            throw new DocumentIdentificationDuplicateException();
+        }
 
         var identificationDocument = IdentificationDocument.build(
                 cmd.getIdentificationDocument());

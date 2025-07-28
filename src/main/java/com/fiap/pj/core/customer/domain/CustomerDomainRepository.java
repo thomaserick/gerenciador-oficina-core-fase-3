@@ -8,6 +8,7 @@ import java.util.UUID;
 
 public interface CustomerDomainRepository extends BaseCrudRepository<Customer, UUID> {
 
+    boolean existsByIdentificationDocumentNumber(String number);
 
     @Override
     default Customer findByIdOrThrowNotFound(UUID id) {

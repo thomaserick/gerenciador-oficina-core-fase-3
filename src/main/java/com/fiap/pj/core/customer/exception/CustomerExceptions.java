@@ -9,4 +9,10 @@ public class CustomerExceptions {
             super("Cliente não encontrado.");
         }
     }
+
+    public static class DocumentIdentificationDuplicateException extends RuntimeException {
+        public DocumentIdentificationDuplicateException() {
+            super("Documento de Identificacão Duplicado.");
+        }
+    }
 }

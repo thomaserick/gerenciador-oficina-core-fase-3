@@ -18,7 +18,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class CustomerVehicleController implements CustomerVehicleControllerOpenApi {
 
-    public static final String PATH = "customer/{id}/vechicles";
+    public static final String PATH = "v1/customer/{id}/vechicles";
 
     private final AddVehicleToCustomerUseCase addVehicleToCustomerUseCase;
 

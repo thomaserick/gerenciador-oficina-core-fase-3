@@ -66,4 +66,8 @@ public class Customer {
         this.address = address;
         this.phone = phone;
     }
+
+    public void addVehicle(Vehicle vehicle) {
+        this.vehicles.add(vehicle);
+    }
 }

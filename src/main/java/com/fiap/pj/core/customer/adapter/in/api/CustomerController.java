@@ -34,6 +34,7 @@ public class CustomerController implements CustomerControllerOpenApi {
     private final DeactivateCustomerUserCase deactivateCustomerUserCase;
     private final UpdateCustomerUserCase updateCustomerUserCase;
 
+
     @Override
     @PostMapping
     public ResponseEntity<Void> createCustomer(@Valid @RequestBody CreateCustomerCommand cmd) {

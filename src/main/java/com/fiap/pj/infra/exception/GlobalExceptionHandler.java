@@ -1,7 +1,6 @@
 package com.fiap.pj.infra.exception;
 
 import com.fiap.pj.core.customer.exception.CustomerExceptions.CustomerNotFoundException;
-import com.fiap.pj.core.customer.exception.CustomerExceptions.DocumentIdentificationDuplicateException;
 import com.fiap.pj.core.usuario.exception.UserExceptions.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,9 +28,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({
             UserNotFoundException.class,
-            CustomerNotFoundException.class,
-            DocumentIdentificationDuplicateException.class
-    })
+            CustomerNotFoundException.class})
     public ResponseEntity<ApiError> notFoundException(RuntimeException ex) {
         ApiError apiError = ApiError
                 .builder()

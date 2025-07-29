@@ -1,7 +1,6 @@
-package com.fiap.pj.core.customer.controller;
+package com.fiap.pj.core.customer.adapter.in.api;
 
 
-import com.fiap.pj.core.customer.adapter.in.api.CustomerController;
 import com.fiap.pj.core.customer.usecase.DeactivateCustomerUserCase;
 import com.fiap.pj.core.util.TestUtils;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,8 +1,7 @@
-package com.fiap.pj.core.usuario.controller;
+package com.fiap.pj.core.usuario.adapter.in.api;
 
 
-import com.fiap.pj.core.usuario.adapter.in.api.UserController;
-import com.fiap.pj.core.usuario.usecase.DeactivateUserUseCase;
+import com.fiap.pj.core.usuario.usecase.ActivateUserUseCase;
 import com.fiap.pj.core.util.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,10 +19,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
-class DeactivateUserControllerTest {
+class ActivateUserControllerTest {
 
     @Mock
-    private DeactivateUserUseCase deactivateUserUseCase;
+    private ActivateUserUseCase activateUserUseCase;
 
     @InjectMocks
     private UserController userController;
@@ -36,9 +35,9 @@ class DeactivateUserControllerTest {
     }
 
     @Test
-    void ShouldDeactivateUser() throws Exception {
+    void shouldActivateUser() throws Exception {
         mock.perform(post(
-                TestUtils.buildURL(UserController.PATH, UUID.randomUUID().toString(), "deactivate"))
+                TestUtils.buildURL(UserController.PATH, UUID.randomUUID().toString(), "activate"))
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
         ).andExpect(status().is2xxSuccessful());
 

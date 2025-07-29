@@ -35,5 +35,4 @@ public interface CustomerControllerOpenApi {
             @ApiResponse(responseCode = "400", description = "O  Cliente não pode ser ativado.")})
     ResponseEntity<Void> activateCustomer(@PathVariable UUID id);
 
-
 }

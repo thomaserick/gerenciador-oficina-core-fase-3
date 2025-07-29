@@ -1,7 +1,6 @@
-package com.fiap.pj.core.customer.controller;
+package com.fiap.pj.core.customer.adapter.in.api;
 
 
-import com.fiap.pj.core.customer.adapter.in.api.CustomerController;
 import com.fiap.pj.core.customer.usecase.CreateCustomerUserCase;
 import com.fiap.pj.core.customer.usecase.command.CreateCustomerCommand;
 import com.fiap.pj.core.customer.util.factory.CustomerTestFactory;

@@ -1,4 +1,4 @@
-package com.fiap.pj.core.vehicle.adapter.out;
+package com.fiap.pj.core.vehicle.adapter.out.db;
 
 
 import com.fiap.pj.core.vehicle.domain.Vehicle;

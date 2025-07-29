@@ -27,7 +27,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class UserController implements UserControllerOpenApi {
 
-    public static final String PATH = "users";
+    public static final String PATH = "v1/users";
 
     private CreateUserUseCase createUserUseCase;
     private DeactivateUserUseCase deactivateUserUseCase;

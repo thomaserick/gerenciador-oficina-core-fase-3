@@ -27,7 +27,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class CustomerController implements CustomerControllerOpenApi {
 
-    public static final String PATH = "customer";
+    public static final String PATH = "v1/customer";
 
     private final CreateCustomerUserCase createCustomerUserCase;
     private final ActivateCustomerUserCase activateCustomerUserCase;

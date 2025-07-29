@@ -4,7 +4,7 @@ package com.fiap.pj.core.vehicle.app;
 import com.fiap.pj.core.customer.adapter.out.CustomerRepositoryJpa;
 import com.fiap.pj.core.customer.domain.Customer;
 import com.fiap.pj.core.customer.util.factory.CustomerTestFactory;
-import com.fiap.pj.core.vehicle.adapter.out.VehicleRepositoryJpa;
+import com.fiap.pj.core.vehicle.adapter.out.db.VehicleRepositoryJpa;
 import com.fiap.pj.core.vehicle.exception.VehicleExceptions.VehiclePlateDuplicateException;
 import com.fiap.pj.core.vehicle.util.factory.VehicleTestFactory;
 import org.junit.jupiter.api.Test;

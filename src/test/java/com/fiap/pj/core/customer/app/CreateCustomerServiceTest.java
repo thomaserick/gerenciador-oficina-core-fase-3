@@ -48,11 +48,9 @@ class CreateCustomerServiceTest {
     }
 
     @Test
-    void shouldReturnUserNotFoundException() {
-        var customer = CustomerTestFactory.oneCustomer();
-
-        Mockito.doThrow(new DocumentIdentificationDuplicateException())
-                .when(customerRepositoryJpa).existsByIdentificationDocumentNumber(customer.getIdentificationDocument().getNumber());
+    void shouldReturnConsumerDocumentIdentificationDuplicateException() {
+        
+        Mockito.when(customerRepositoryJpa.existsByIdentificationDocumentNumber(Mockito.anyString())).thenReturn(true);
 
         var thrown = catchThrowable(() -> createCustomerService.handle(CustomerTestFactory.onCrateCustomerCommand()));
         assertThat(thrown).isInstanceOf(DocumentIdentificationDuplicateException.class);

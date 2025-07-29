@@ -2,14 +2,20 @@ package com.fiap.pj.core.customer.domain;
 
 
 import com.fiap.pj.core.sk.documentoidentificacao.domain.IdentificationDocument;
+import com.fiap.pj.core.vehicle.domain.Vehicle;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 import static java.util.Objects.requireNonNull;
@@ -31,6 +37,10 @@ public class Customer {
     @Embedded
     private IdentificationDocument identificationDocument;
 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "customer_vehicle_id")
+    private Set<Vehicle> vehicles = new HashSet<>();
+
     @Builder
     public Customer(UUID id, String name, String email, String phone, boolean active, String address, IdentificationDocument identificationDocument) {
         this.id = requireNonNull(id);
@@ -46,7 +56,7 @@ public class Customer {
         this.active = true;
     }
 
-    public void disable() {
+    public void deactivate() {
         this.active = false;
     }
 

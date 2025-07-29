@@ -28,7 +28,7 @@ public interface CustomerControllerOpenApi {
     @Operation(description = "Desativar um Cliente", method = "POST")
     @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "Cliente desativado com sucesso."),
             @ApiResponse(responseCode = "400", description = "O  Cliente não pode ser desativado.")})
-    ResponseEntity<Void> disableCustomer(@PathVariable UUID id);
+    ResponseEntity<Void> deactivateCustomer(@PathVariable UUID id);
 
     @Operation(description = "Ativar um Cliente", method = "POST")
     @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "Cliente Ativado com sucesso."),

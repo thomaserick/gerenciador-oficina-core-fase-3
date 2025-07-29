@@ -3,11 +3,11 @@ package com.fiap.pj.core.customer.adapter.in.api;
 import com.fiap.pj.core.customer.adapter.in.api.openapi.CustomerControllerOpenApi;
 import com.fiap.pj.core.customer.usecase.ActivateCustomerUserCase;
 import com.fiap.pj.core.customer.usecase.CreateCustomerUserCase;
-import com.fiap.pj.core.customer.usecase.DisableCustomerUserCase;
+import com.fiap.pj.core.customer.usecase.DeactivateCustomerUserCase;
 import com.fiap.pj.core.customer.usecase.UpdateCustomerUserCase;
 import com.fiap.pj.core.customer.usecase.command.ActivateCustomerCommand;
 import com.fiap.pj.core.customer.usecase.command.CreateCustomerCommand;
-import com.fiap.pj.core.customer.usecase.command.DisableCustomerCommand;
+import com.fiap.pj.core.customer.usecase.command.DeactivateCustomerCommand;
 import com.fiap.pj.core.customer.usecase.command.UpdateCustomerCommand;
 import com.fiap.pj.core.sk.web.ResponseEntityUtils;
 import jakarta.validation.Valid;
@@ -31,7 +31,7 @@ public class CustomerController implements CustomerControllerOpenApi {
 
     private final CreateCustomerUserCase createCustomerUserCase;
     private final ActivateCustomerUserCase activateCustomerUserCase;
-    private final DisableCustomerUserCase disableCustomerUserCase;
+    private final DeactivateCustomerUserCase deactivateCustomerUserCase;
     private final UpdateCustomerUserCase updateCustomerUserCase;
 
     @Override
@@ -57,9 +57,9 @@ public class CustomerController implements CustomerControllerOpenApi {
     }
 
     @Override
-    @PostMapping("/{id}/disable")
-    public ResponseEntity<Void> disableCustomer(@Valid @PathVariable UUID id) {
-        disableCustomerUserCase.handle(new DisableCustomerCommand(id));
+    @PostMapping("/{id}/deactivate")
+    public ResponseEntity<Void> deactivateCustomer(@Valid @PathVariable UUID id) {
+        deactivateCustomerUserCase.handle(new DeactivateCustomerCommand(id));
         return ResponseEntity.ok().build();
     }
 

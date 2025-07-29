@@ -3,7 +3,7 @@ package com.fiap.pj.core.usuario.app;
 
 import com.fiap.pj.core.usuario.adapter.out.UserRepositoryJpa;
 import com.fiap.pj.core.usuario.domain.User;
-import com.fiap.pj.core.usuario.usecase.command.DisableUserCommand;
+import com.fiap.pj.core.usuario.usecase.command.DeactivateUserCommand;
 import com.fiap.pj.core.usuario.util.factrory.UserTestFactory;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,19 +18,19 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class DisableUservarServiceTest {
+class DeactivateUservarServiceTest {
 
     @Mock
     private UserRepositoryJpa userRepositoryJpa;
 
     @InjectMocks
-    private DisableUserService desativarUsuarioService;
+    private DeactivateUserService desativarUsuarioService;
 
     @Test
-    void shouldDisableUser() {
+    void shouldDeactivateUser() {
         var id = UUID.randomUUID();
         when(userRepositoryJpa.findByIdOrThrowNotFound(id)).thenReturn(UserTestFactory.oneUser());
-        desativarUsuarioService.handle(new DisableUserCommand(id));
+        desativarUsuarioService.handle(new DeactivateUserCommand(id));
         verify(userRepositoryJpa).save(Mockito.any(User.class));
 
     }

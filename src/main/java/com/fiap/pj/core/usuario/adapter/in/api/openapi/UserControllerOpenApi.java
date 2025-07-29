@@ -28,7 +28,7 @@ public interface UserControllerOpenApi {
     @Operation(description = "Desativar um usuário", method = "POST")
     @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "Usuario desativado com sucesso."),
             @ApiResponse(responseCode = "400", description = "O  Usuário não pode ser desativado.")})
-    ResponseEntity<Void> disableUser(@PathVariable UUID id);
+    ResponseEntity<Void> deactivateUser(@PathVariable UUID id);
 
     @Operation(description = "Ativar um usuário", method = "POST")
     @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "Usuario Ativado com sucesso."),

@@ -1,8 +1,8 @@
-package com.fiap.pj.core.customer.controller;
+package com.fiap.pj.core.usuario.controller;
 
 
-import com.fiap.pj.core.customer.adapter.in.api.CustomerController;
-import com.fiap.pj.core.customer.usecase.DisableCustomerUserCase;
+import com.fiap.pj.core.usuario.adapter.in.api.UserController;
+import com.fiap.pj.core.usuario.usecase.DeactivateUserUseCase;
 import com.fiap.pj.core.util.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,32 +16,33 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.UUID;
 
-import static com.fiap.pj.core.customer.util.factory.CustomerTestFactory.onCrateCustomerCommand;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
-class DisableCustomerControllerTest {
+class DeactivateUserControllerTest {
 
     @Mock
-    private DisableCustomerUserCase disableCustomerUserCase;
+    private DeactivateUserUseCase deactivateUserUseCase;
+
     @InjectMocks
-    private CustomerController customerController;
+    private UserController userController;
 
     private MockMvc mock;
 
     @BeforeEach
     void setup() {
-        mock = MockMvcBuilders.standaloneSetup(customerController).build();
+        mock = MockMvcBuilders.standaloneSetup(userController).build();
     }
 
     @Test
-    void shouldActivateCustomer() throws Exception {
-
+    void ShouldDeactivateUser() throws Exception {
         mock.perform(post(
-                TestUtils.buildURL(CustomerController.PATH, UUID.randomUUID().toString(), "disable"))
+                TestUtils.buildURL(UserController.PATH, UUID.randomUUID().toString(), "deactivate"))
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(TestUtils.objectToJson(onCrateCustomerCommand()))).andExpect(status().is2xxSuccessful());
+        ).andExpect(status().is2xxSuccessful());
+
+
     }
 
 }

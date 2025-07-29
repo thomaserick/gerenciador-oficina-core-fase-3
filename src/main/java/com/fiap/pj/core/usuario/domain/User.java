@@ -56,7 +56,7 @@ public class User {
         this.roles.addAll(roles);
     }
 
-    public void disable() {
+    public void deactivate() {
         this.active = false;
     }
 

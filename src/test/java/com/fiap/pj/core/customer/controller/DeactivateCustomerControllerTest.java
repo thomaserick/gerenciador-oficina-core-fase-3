@@ -1,8 +1,8 @@
-package com.fiap.pj.core.usuario.controller;
+package com.fiap.pj.core.customer.controller;
 
 
-import com.fiap.pj.core.usuario.adapter.in.api.UserController;
-import com.fiap.pj.core.usuario.usecase.DisableUserUseCase;
+import com.fiap.pj.core.customer.adapter.in.api.CustomerController;
+import com.fiap.pj.core.customer.usecase.DeactivateCustomerUserCase;
 import com.fiap.pj.core.util.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,33 +16,32 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.UUID;
 
+import static com.fiap.pj.core.customer.util.factory.CustomerTestFactory.onCrateCustomerCommand;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
-class DisableUserControllerTest {
+class DeactivateCustomerControllerTest {
 
     @Mock
-    private DisableUserUseCase disableUserUseCase;
-
+    private DeactivateCustomerUserCase deactivateCustomerUserCase;
     @InjectMocks
-    private UserController userController;
+    private CustomerController customerController;
 
     private MockMvc mock;
 
     @BeforeEach
     void setup() {
-        mock = MockMvcBuilders.standaloneSetup(userController).build();
+        mock = MockMvcBuilders.standaloneSetup(customerController).build();
     }
 
     @Test
-    void deveDisableUsuario() throws Exception {
+    void shouldActivateCustomer() throws Exception {
+
         mock.perform(post(
-                TestUtils.buildURL(UserController.PATH, UUID.randomUUID().toString(), "disable"))
+                TestUtils.buildURL(CustomerController.PATH, UUID.randomUUID().toString(), "deactivate"))
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-        ).andExpect(status().is2xxSuccessful());
-
-
+                .content(TestUtils.objectToJson(onCrateCustomerCommand()))).andExpect(status().is2xxSuccessful());
     }
 
 }

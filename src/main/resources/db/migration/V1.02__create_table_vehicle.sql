@@ -5,7 +5,7 @@ CREATE TABLE vehicle
     plate        VARCHAR(12)     NOT NULL,
     model        VARCHAR(64),
     make         VARCHAR(64),
-    model_year   VARCHAR(4),
+    model_year   SMALLINT DEFAULT 0,
     CONSTRAINT vehicle_pkey  PRIMARY KEY (id),
     CONSTRAINT fk_customer   FOREIGN KEY (customer_id)  REFERENCES customer(id)
 );

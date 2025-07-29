@@ -24,11 +24,11 @@ public class Vehicle {
     private String model;
     private String make;
     @Column(name = "model_year")
-    private String year;
+    private int year;
     private UUID customerId;
 
     @Builder
-    public Vehicle(UUID id, String plate, String model, String make, String year, UUID customerId) {
+    public Vehicle(UUID id, String plate, String model, String make, int year, UUID customerId) {
         this.id = requireNonNull(id);
         this.plate = requireNonNull(plate);
         this.model = model;

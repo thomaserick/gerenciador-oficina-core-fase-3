@@ -11,7 +11,7 @@ public class VehicleTestFactory {
     public static final String PLATE = "MOI-0037";
     public static final String MAKE = "FIAT";
     public static final String MODEL = "FIAT 147";
-    public static final String YEAR = "2025";
+    public static final int YEAR = 2025;
 
     public static Vehicle oneVehicle(UUID customerId) {
         return new Vehicle(ID, PLATE, MODEL, MAKE, YEAR, customerId);

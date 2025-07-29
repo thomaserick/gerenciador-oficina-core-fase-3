@@ -37,7 +37,7 @@ class VehicleTest {
         @Test
         void ShouldNotCreateVehicleWithoutPlate() {
             assertThrows(NullPointerException.class,
-                    () -> new Vehicle(ID, null, null, null, null, CustomerTestFactory.ID));
+                    () -> new Vehicle(ID, null, null, null, 0, CustomerTestFactory.ID));
         }
 
         @Test

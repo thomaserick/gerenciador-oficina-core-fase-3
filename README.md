@@ -16,7 +16,7 @@ API para gerenciamento de uma oficina com autenticação e controle de estoque.
 
 - **Java 17+** - Linguagem principal
 - **Spring Boot 3.3** - Framework backend
-- **PostgreSQL 15** - Banco de dados
+- **PostgreSQL ** - Banco de dados
 - **Docker** - Containerização
 - **Flyway** - Migrações de banco
 
@@ -29,6 +29,6 @@ API para gerenciamento de uma oficina com autenticação e controle de estoque.
 
 ## 📚 Documentação da API
 
-[Swagger](http://localhost:8081/swagger-ui/index.html) 
+### [Swagger](http://localhost:8081/swagger-ui/index.html) 
 
 

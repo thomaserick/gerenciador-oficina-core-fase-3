@@ -26,6 +26,7 @@ services:
     depends_on:
       - postgres
     environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/gerenciador-oficina
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: oficina@123
 

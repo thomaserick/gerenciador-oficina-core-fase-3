@@ -9,10 +9,9 @@ spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/gerenciador-oficina
-    username: postgres
-    password: totvs@123
-    #    username: postgres
-    #    password: oficina@123
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+
     hikari:
       minimum-idle: 0
       maximum-pool-size: 20

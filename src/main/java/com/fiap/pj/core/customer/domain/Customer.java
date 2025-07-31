@@ -21,7 +21,7 @@ import java.util.UUID;
 import static java.util.Objects.requireNonNull;
 
 @Entity
-@Table(name = "customer")
+@Table(name = "customers")
 @NoArgsConstructor
 @Getter
 public class Customer {

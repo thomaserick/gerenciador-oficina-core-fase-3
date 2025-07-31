@@ -1,7 +1,7 @@
 package com.fiap.pj.core.usuario.app;
 
 
-import com.fiap.pj.core.usuario.adapter.out.UserRepositoryJpa;
+import com.fiap.pj.core.usuario.adapter.out.db.UserRepositoryJpa;
 import com.fiap.pj.core.usuario.domain.User;
 import com.fiap.pj.core.usuario.util.factrory.UserTestFactory;
 import org.junit.jupiter.api.Test;

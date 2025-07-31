@@ -13,7 +13,7 @@ import java.util.UUID;
 import static java.util.Objects.requireNonNull;
 
 @Entity
-@Table(name = "service")
+@Table(name = "services")
 @NoArgsConstructor
 @Getter
 public class ServiceEntity {

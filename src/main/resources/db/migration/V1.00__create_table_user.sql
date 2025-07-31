@@ -10,12 +10,12 @@ CREATE TABLE users
 );
 
 
-CREATE TABLE user_role
+CREATE TABLE users_role
 (
    user_id                UUID		NOT NULL,
    role                   SMALLINT 	NOT NULL,
 
-   CONSTRAINT user_role_pkey		PRIMARY KEY (user_id, role),
-   CONSTRAINT fk_user 			    FOREIGN KEY (user_id) REFERENCES users (id)
+   CONSTRAINT users_role_pkey		PRIMARY KEY (user_id, role),
+   CONSTRAINT fk_users 			    FOREIGN KEY (user_id) REFERENCES users (id)
 );
 

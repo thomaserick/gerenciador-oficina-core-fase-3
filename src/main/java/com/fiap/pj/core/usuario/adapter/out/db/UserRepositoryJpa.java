@@ -1,4 +1,4 @@
-package com.fiap.pj.core.usuario.adapter.out;
+package com.fiap.pj.core.usuario.adapter.out.db;
 
 
 import com.fiap.pj.core.usuario.domain.User;

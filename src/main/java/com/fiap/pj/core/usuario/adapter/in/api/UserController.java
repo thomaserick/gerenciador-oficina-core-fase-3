@@ -1,10 +1,13 @@
 package com.fiap.pj.core.usuario.adapter.in.api;
 
 import com.fiap.pj.core.sk.web.ResponseEntityUtils;
+import com.fiap.pj.core.usuario.adapter.in.api.dto.UserDto;
 import com.fiap.pj.core.usuario.adapter.in.api.openapi.UserControllerOpenApi;
+import com.fiap.pj.core.usuario.adapter.in.api.request.GetAlUserRequest;
 import com.fiap.pj.core.usuario.usecase.ActivateUserUseCase;
 import com.fiap.pj.core.usuario.usecase.CreateUserUseCase;
 import com.fiap.pj.core.usuario.usecase.DeactivateUserUseCase;
+import com.fiap.pj.core.usuario.usecase.GetAllUserUseCase;
 import com.fiap.pj.core.usuario.usecase.UpdateUserUseCase;
 import com.fiap.pj.core.usuario.usecase.command.ActivateUserCommand;
 import com.fiap.pj.core.usuario.usecase.command.CreateUserCommand;
@@ -12,7 +15,11 @@ import com.fiap.pj.core.usuario.usecase.command.DeactivateUserCommand;
 import com.fiap.pj.core.usuario.usecase.command.UpdateUserCommand;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -33,6 +40,7 @@ public class UserController implements UserControllerOpenApi {
     private DeactivateUserUseCase deactivateUserUseCase;
     private ActivateUserUseCase activateUserUseCase;
     private UpdateUserUseCase updateUserUseCase;
+    private GetAllUserUseCase getAllUserUseCase;
 
     @PostMapping
     public ResponseEntity<Void> createUser(@Valid @RequestBody CreateUserCommand cmd) {
@@ -58,6 +66,13 @@ public class UserController implements UserControllerOpenApi {
     public ResponseEntity<Void> activateUser(@PathVariable UUID id) {
         activateUserUseCase.handle(new ActivateUserCommand(id));
         return ResponseEntity.ok().build();
+    }
+
+    @Override
+    @GetMapping
+    public Slice<UserDto> getAll(@ParameterObject GetAlUserRequest filterRequest, Pageable pageable) {
+        filterRequest.setPageable(pageable);
+        return getAllUserUseCase.handle(filterRequest);
     }
 
 

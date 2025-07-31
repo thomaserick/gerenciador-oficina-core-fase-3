@@ -3,6 +3,7 @@ package com.fiap.pj.core.customer.domain;
 
 import com.fiap.pj.core.sk.documentoidentificacao.domain.IdentificationDocument;
 import com.fiap.pj.core.vehicle.domain.Vehicle;
+import com.fiap.pj.core.vehicle.exception.VehicleExceptions.VehicleNotBelongToCustomerException;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -38,7 +39,7 @@ public class Customer {
     private IdentificationDocument identificationDocument;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "customer_vehicle_id")
+    @JoinColumn(name = "customerId")
     private Set<Vehicle> vehicles = new HashSet<>();
 
     @Builder
@@ -69,5 +70,11 @@ public class Customer {
 
     public void addVehicle(Vehicle vehicle) {
         this.vehicles.add(vehicle);
+    }
+
+    public void validVehicle(UUID vehicleId) {
+        if (this.getVehicles().stream().noneMatch(vehicle -> vehicle.getId().equals(vehicleId))) {
+            throw new VehicleNotBelongToCustomerException();
+        }
     }
 }

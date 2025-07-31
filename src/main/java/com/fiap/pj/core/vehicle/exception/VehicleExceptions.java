@@ -10,6 +10,12 @@ public class VehicleExceptions {
         }
     }
 
+    public static class VehicleNotBelongToCustomerException extends RuntimeException {
+        public VehicleNotBelongToCustomerException() {
+            super("Veículo não pertence ao Cliente informado.");
+        }
+    }
+
     public static class VehiclePlateDuplicateException extends RuntimeException {
         public VehiclePlateDuplicateException() {
             super("Placa do veículo já cadastrada.");

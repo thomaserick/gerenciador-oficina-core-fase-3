@@ -1,7 +1,7 @@
 package com.fiap.pj.core.customer.app;
 
 
-import com.fiap.pj.core.customer.adapter.out.CustomerRepositoryJpa;
+import com.fiap.pj.core.customer.adapter.out.db.CustomerRepositoryJpa;
 import com.fiap.pj.core.customer.domain.Customer;
 import com.fiap.pj.core.customer.exception.CustomerExceptions.CustomerNotFoundException;
 import com.fiap.pj.core.customer.util.factory.CustomerTestFactory;

@@ -7,5 +7,4 @@ import java.util.UUID;
 
 public interface ServiceDomainRepository extends BaseCrudRepository<ServiceEntity, UUID> {
 
-
 }

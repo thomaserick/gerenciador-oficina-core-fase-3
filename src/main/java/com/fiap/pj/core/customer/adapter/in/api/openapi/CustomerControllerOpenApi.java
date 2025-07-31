@@ -20,18 +20,18 @@ public interface CustomerControllerOpenApi {
     ResponseEntity<Void> createCustomer(@Valid @RequestBody CreateCustomerCommand cmd);
 
     @Operation(description = "Alterar um  Cliente", method = "PUT")
-    @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "Cliente alterado com sucesso."),
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Cliente alterado com sucesso."),
             @ApiResponse(responseCode = "400", description = "O  Cliente não pode ser alterado.")})
     ResponseEntity<Void> updateCustomer(@Valid @PathVariable UUID id, @RequestBody UpdateCustomerCommand cmd);
 
 
     @Operation(description = "Desativar um Cliente", method = "POST")
-    @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "Cliente desativado com sucesso."),
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Cliente desativado com sucesso."),
             @ApiResponse(responseCode = "400", description = "O  Cliente não pode ser desativado.")})
     ResponseEntity<Void> deactivateCustomer(@PathVariable UUID id);
 
     @Operation(description = "Ativar um Cliente", method = "POST")
-    @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "Cliente Ativado com sucesso."),
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Cliente Ativado com sucesso."),
             @ApiResponse(responseCode = "400", description = "O  Cliente não pode ser ativado.")})
     ResponseEntity<Void> activateCustomer(@PathVariable UUID id);
 

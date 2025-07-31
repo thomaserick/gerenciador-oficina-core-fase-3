@@ -21,17 +21,17 @@ public interface UserControllerOpenApi {
 
 
     @Operation(description = "Alterar um  usuário", method = "PUT")
-    @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "Usuario alterado com sucesso."),
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Usuario alterado com sucesso."),
             @ApiResponse(responseCode = "400", description = "O  Usuário não pode ser alterado.")})
     ResponseEntity<Void> updateUser(@Valid @PathVariable UUID id, @RequestBody UpdateUserCommand cmd);
 
     @Operation(description = "Desativar um usuário", method = "POST")
-    @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "Usuario desativado com sucesso."),
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Usuario desativado com sucesso."),
             @ApiResponse(responseCode = "400", description = "O  Usuário não pode ser desativado.")})
     ResponseEntity<Void> deactivateUser(@PathVariable UUID id);
 
     @Operation(description = "Ativar um usuário", method = "POST")
-    @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "Usuario Ativado com sucesso."),
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Usuario Ativado com sucesso."),
             @ApiResponse(responseCode = "400", description = "O  Usuário não pode ser ativado.")})
     ResponseEntity<Void> activateUser(@PathVariable UUID id);
 }

@@ -1,7 +1,7 @@
 package com.fiap.pj.core.customer.app;
 
 
-import com.fiap.pj.core.customer.adapter.out.CustomerRepositoryJpa;
+import com.fiap.pj.core.customer.adapter.out.db.CustomerRepositoryJpa;
 import com.fiap.pj.core.customer.domain.Customer;
 import com.fiap.pj.core.customer.exception.CustomerExceptions.DocumentIdentificationDuplicateException;
 import com.fiap.pj.core.customer.util.factory.CustomerTestFactory;
@@ -49,7 +49,7 @@ class CreateCustomerServiceTest {
 
     @Test
     void shouldReturnConsumerDocumentIdentificationDuplicateException() {
-        
+
         Mockito.when(customerRepositoryJpa.existsByIdentificationDocumentNumber(Mockito.anyString())).thenReturn(true);
 
         var thrown = catchThrowable(() -> createCustomerService.handle(CustomerTestFactory.onCrateCustomerCommand()));

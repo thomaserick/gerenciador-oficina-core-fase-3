@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb # Specifies an in-memory database named 'testdb'
+    driver-class-name: org.h2.Driver
+    username: sa # Default username for H2
+    password: # You can leave this blank or set a password
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect # Hibernate dialect for H2
+    hibernate:
+      ddl-auto: update # Automatically update schema based on entities
+    show-sql: true # Log SQL statements executed by Hibernate
+  h2:
+    console:
+      enabled: true # Enable the H2 console for management
+      path: /h2-console # Path to access the H2 console in the browser

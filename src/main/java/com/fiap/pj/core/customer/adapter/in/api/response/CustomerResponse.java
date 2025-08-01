@@ -9,7 +9,7 @@ import com.fiap.pj.core.vehicle.domain.Vehicle;
 import java.util.List;
 
 @JsonPropertyOrder({"id", "name", "email", "phone", "address", "active"})
-public interface CustomerReponse {
+public interface CustomerResponse {
 
     String getId();
 

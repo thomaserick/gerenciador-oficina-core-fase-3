@@ -1,7 +1,7 @@
 package com.fiap.pj.core.customer.adapter.in.api.openapi;
 
 import com.fiap.pj.core.customer.adapter.in.api.request.GetAlCustomerRequest;
-import com.fiap.pj.core.customer.adapter.in.api.response.CustomerReponse;
+import com.fiap.pj.core.customer.adapter.in.api.response.CustomerResponse;
 import com.fiap.pj.core.customer.usecase.command.CreateCustomerCommand;
 import com.fiap.pj.core.customer.usecase.command.UpdateCustomerCommand;
 import com.fiap.pj.infra.api.Slice;
@@ -41,7 +41,7 @@ public interface CustomerControllerOpenApi {
     ResponseEntity<Void> activateCustomer(@PathVariable UUID id);
 
     @Operation(description = "Retorna uma lista de Clientes.", method = "GET")
-    Slice<CustomerReponse> getAll(@ParameterObject GetAlCustomerRequest filterRequest, Pageable pageable);
+    Slice<CustomerResponse> getAll(@ParameterObject GetAlCustomerRequest filterRequest, @ParameterObject Pageable pageable);
 
 
 }

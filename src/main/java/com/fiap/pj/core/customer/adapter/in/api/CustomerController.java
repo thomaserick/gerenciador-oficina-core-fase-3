@@ -2,7 +2,7 @@ package com.fiap.pj.core.customer.adapter.in.api;
 
 import com.fiap.pj.core.customer.adapter.in.api.openapi.CustomerControllerOpenApi;
 import com.fiap.pj.core.customer.adapter.in.api.request.GetAlCustomerRequest;
-import com.fiap.pj.core.customer.adapter.in.api.response.CustomerReponse;
+import com.fiap.pj.core.customer.adapter.in.api.response.CustomerResponse;
 import com.fiap.pj.core.customer.usecase.ActivateCustomerUserCase;
 import com.fiap.pj.core.customer.usecase.CreateCustomerUserCase;
 import com.fiap.pj.core.customer.usecase.DeactivateCustomerUserCase;
@@ -74,7 +74,7 @@ public class CustomerController implements CustomerControllerOpenApi {
 
     @Override
     @GetMapping
-    public Slice<CustomerReponse> getAll(@ParameterObject GetAlCustomerRequest filterRequest, @ParameterObject Pageable pageable) {
+    public Slice<CustomerResponse> getAll(@ParameterObject GetAlCustomerRequest filterRequest, @ParameterObject Pageable pageable) {
         filterRequest.setPageable(pageable);
         return getAllCustomerUseCase.handle(filterRequest);
     }

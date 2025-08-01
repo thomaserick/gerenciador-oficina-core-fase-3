@@ -29,5 +29,4 @@ public class CustomerVehicleController implements CustomerVehicleControllerOpenA
         return ResponseEntity.ok().build();
     }
 
-
 }

@@ -18,5 +18,4 @@ public interface CustomerVehicleControllerOpenApi {
             @ApiResponse(responseCode = "400", description = "O  Veículo não pode ser adicionado ao cliente.")})
     ResponseEntity<Void> addVehicle(@PathVariable UUID id, @RequestBody AddVehicleToCustomerCommand cmd);
 
-
 }

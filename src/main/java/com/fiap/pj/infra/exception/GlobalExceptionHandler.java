@@ -1,7 +1,7 @@
 package com.fiap.pj.infra.exception;
 
 import com.fiap.pj.core.customer.exception.CustomerExceptions.CustomerNotFoundException;
-import com.fiap.pj.core.usuario.exception.UserExceptions.UserNotFoundException;
+import com.fiap.pj.core.user.exception.UserExceptions.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;

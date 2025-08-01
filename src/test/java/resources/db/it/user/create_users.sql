@@ -1,1 +1,1 @@
-INSERT INTO users (id, name, last_name, active, email, password) VALUES('ace50297-1785-4a7d-ae6d-8ec2dc450af6', 'Urso', 'Teddy',true,'urso.teddy@gmail.com','1234')
+INSERT INTO "_IT".users (id, name, last_name, active, email, password) VALUES('ace50297-1785-4a7d-ae6d-8ec2dc450af6', 'Urso', 'Teddy',true,'urso.teddy@gmail.com','1234')

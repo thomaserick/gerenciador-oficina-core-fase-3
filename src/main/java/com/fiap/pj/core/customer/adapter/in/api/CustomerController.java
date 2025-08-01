@@ -1,18 +1,25 @@
 package com.fiap.pj.core.customer.adapter.in.api;
 
 import com.fiap.pj.core.customer.adapter.in.api.openapi.CustomerControllerOpenApi;
+import com.fiap.pj.core.customer.adapter.in.api.request.GetAlCustomerRequest;
+import com.fiap.pj.core.customer.adapter.in.api.response.CustomerReponse;
 import com.fiap.pj.core.customer.usecase.ActivateCustomerUserCase;
 import com.fiap.pj.core.customer.usecase.CreateCustomerUserCase;
 import com.fiap.pj.core.customer.usecase.DeactivateCustomerUserCase;
+import com.fiap.pj.core.customer.usecase.GetAllCustomerUseCase;
 import com.fiap.pj.core.customer.usecase.UpdateCustomerUserCase;
 import com.fiap.pj.core.customer.usecase.command.ActivateCustomerCommand;
 import com.fiap.pj.core.customer.usecase.command.CreateCustomerCommand;
 import com.fiap.pj.core.customer.usecase.command.DeactivateCustomerCommand;
 import com.fiap.pj.core.customer.usecase.command.UpdateCustomerCommand;
 import com.fiap.pj.core.sk.web.ResponseEntityUtils;
+import com.fiap.pj.infra.api.Slice;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -33,6 +40,7 @@ public class CustomerController implements CustomerControllerOpenApi {
     private final ActivateCustomerUserCase activateCustomerUserCase;
     private final DeactivateCustomerUserCase deactivateCustomerUserCase;
     private final UpdateCustomerUserCase updateCustomerUserCase;
+    private final GetAllCustomerUseCase getAllCustomerUseCase;
 
 
     @Override
@@ -62,6 +70,13 @@ public class CustomerController implements CustomerControllerOpenApi {
     public ResponseEntity<Void> deactivateCustomer(@Valid @PathVariable UUID id) {
         deactivateCustomerUserCase.handle(new DeactivateCustomerCommand(id));
         return ResponseEntity.ok().build();
+    }
+
+    @Override
+    @GetMapping
+    public Slice<CustomerReponse> getAll(@ParameterObject GetAlCustomerRequest filterRequest, @ParameterObject Pageable pageable) {
+        filterRequest.setPageable(pageable);
+        return getAllCustomerUseCase.handle(filterRequest);
     }
 
 

@@ -8,7 +8,7 @@ CREATE TABLE estimates
     work_order_id UUID,
     observation   VARCHAR(255),
     odometer     BIGINT        NOT NULL DEFAULT 0,
-    created_at  DATE    NOT NULL,
+    created_at  TIMESTAMPTZ    NOT NULL,
     CONSTRAINT estimate_pkey   PRIMARY KEY (id),
     CONSTRAINT fk_estimates_customers FOREIGN KEY (customer_id) REFERENCES customers(id),
     CONSTRAINT fk_vehicles  FOREIGN KEY (vehicle_id)  REFERENCES vehicles(id)

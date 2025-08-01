@@ -1,9 +1,9 @@
 package com.fiap.pj.core.usuario.adapter.in.api;
 
 import com.fiap.pj.core.sk.web.ResponseEntityUtils;
-import com.fiap.pj.core.usuario.adapter.in.api.dto.UserDto;
 import com.fiap.pj.core.usuario.adapter.in.api.openapi.UserControllerOpenApi;
 import com.fiap.pj.core.usuario.adapter.in.api.request.GetAlUserRequest;
+import com.fiap.pj.core.usuario.adapter.in.api.response.UserReponse;
 import com.fiap.pj.core.usuario.usecase.ActivateUserUseCase;
 import com.fiap.pj.core.usuario.usecase.CreateUserUseCase;
 import com.fiap.pj.core.usuario.usecase.DeactivateUserUseCase;
@@ -13,11 +13,11 @@ import com.fiap.pj.core.usuario.usecase.command.ActivateUserCommand;
 import com.fiap.pj.core.usuario.usecase.command.CreateUserCommand;
 import com.fiap.pj.core.usuario.usecase.command.DeactivateUserCommand;
 import com.fiap.pj.core.usuario.usecase.command.UpdateUserCommand;
+import com.fiap.pj.infra.api.Slice;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -70,7 +70,7 @@ public class UserController implements UserControllerOpenApi {
 
     @Override
     @GetMapping
-    public Slice<UserDto> getAll(@ParameterObject GetAlUserRequest filterRequest, Pageable pageable) {
+    public Slice<UserReponse> getAll(@ParameterObject GetAlUserRequest filterRequest, @ParameterObject Pageable pageable) {
         filterRequest.setPageable(pageable);
         return getAllUserUseCase.handle(filterRequest);
     }

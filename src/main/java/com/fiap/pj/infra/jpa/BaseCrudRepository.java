@@ -1,6 +1,6 @@
 package com.fiap.pj.infra.jpa;
 
-import org.springframework.data.domain.Page;
+import com.fiap.pj.infra.api.Slice;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -15,8 +15,7 @@ public interface BaseCrudRepository<D, K> {
 
     void deleteAll(Iterable<? extends D> entities);
 
-    <S> Page<S> findProjectedBy(Specification<D> specs, Pageable pageable, Class<S> type);
-
+    <S> Slice<S> findProjectedBy(Specification<D> specs, Pageable pageable, Class<S> type);
 
     default D findByIdOrThrowNotFound(K id) {
         return findById(id).orElseThrow(RuntimeException::new);

@@ -1,6 +1,6 @@
 package com.fiap.pj.infra.jpa;
 
-import org.springframework.data.domain.Page;
+import com.fiap.pj.infra.api.Slice;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,5 +14,5 @@ public interface ExtendedRepository<T, I extends Serializable> extends JpaReposi
 
     List<T> findBy(Specification<T> spec, Pageable pageable);
 
-    <S> Page<S> findProjectedBy(Specification<T> specs, Pageable pageable, Class<S> type);
+    <S> Slice<S> findProjectedBy(Specification<T> specs, Pageable pageable, Class<S> type);
 }

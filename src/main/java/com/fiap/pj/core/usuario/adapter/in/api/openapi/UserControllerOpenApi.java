@@ -1,16 +1,16 @@
 package com.fiap.pj.core.usuario.adapter.in.api.openapi;
 
-import com.fiap.pj.core.usuario.adapter.in.api.dto.UserDto;
 import com.fiap.pj.core.usuario.adapter.in.api.request.GetAlUserRequest;
+import com.fiap.pj.core.usuario.adapter.in.api.response.UserReponse;
 import com.fiap.pj.core.usuario.usecase.command.CreateUserCommand;
 import com.fiap.pj.core.usuario.usecase.command.UpdateUserCommand;
+import com.fiap.pj.infra.api.Slice;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,5 +41,5 @@ public interface UserControllerOpenApi {
     ResponseEntity<Void> activateUser(@PathVariable UUID id);
 
     @Operation(description = "Retorna uma lista de usuarios.", method = "GET")
-    Slice<UserDto> getAll(@ParameterObject GetAlUserRequest filterRequest, Pageable pageable);
+    Slice<UserReponse> getAll(@ParameterObject GetAlUserRequest filterRequest, Pageable pageable);
 }

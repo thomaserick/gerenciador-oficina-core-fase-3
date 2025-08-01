@@ -10,15 +10,13 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.util.Objects;
 
-import static com.fiap.pj.core.util.SpecificationUtils.likeTerm;
+import static com.fiap.pj.core.user.domain.specification.UserSpecification.isActive;
+import static com.fiap.pj.core.user.domain.specification.UserSpecification.thatContainsNameWith;
 import static org.springframework.util.StringUtils.hasText;
 
 @Getter
 @AllArgsConstructor
 public class GetAlUserRequest {
-
-    private static final String FIELD_NAME = "name";
-    private static final String FIELD_ACTIVE = "active";
 
     private String name;
     @Setter
@@ -31,22 +29,13 @@ public class GetAlUserRequest {
         Specification<User> specs = Specification.allOf();
 
         if (hasText(this.name)) {
-            specs = specs.and(thatContainsNameWith());
+            specs = specs.and(thatContainsNameWith(this.name));
         }
 
         if (Objects.nonNull(active)) {
-            specs = specs.and(isActive());
+            specs = specs.and(isActive(this.active));
         }
         return specs;
     }
 
-    private Specification<User> thatContainsNameWith() {
-        return (root, criteriaQuery, builder) ->
-                builder.like(builder.upper(root.get(FIELD_NAME)), likeTerm(this.getName().trim().toUpperCase()));
-    }
-
-    private Specification<User> isActive() {
-        return (root, criteriaQuery, builder) ->
-                builder.equal(root.get(FIELD_ACTIVE), this.getActive());
-    }
 }

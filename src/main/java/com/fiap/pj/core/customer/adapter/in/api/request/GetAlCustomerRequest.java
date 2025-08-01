@@ -11,7 +11,9 @@ import org.springframework.data.jpa.domain.Specification;
 import java.util.Objects;
 
 import static com.fiap.pj.core.customer.domain.specification.CustomerSpecification.isActive;
+import static com.fiap.pj.core.customer.domain.specification.CustomerSpecification.thatContainsIdentificationDocumentWith;
 import static com.fiap.pj.core.customer.domain.specification.CustomerSpecification.thatContainsNameWith;
+import static com.fiap.pj.core.customer.domain.specification.CustomerSpecification.thatContainsPlateWith;
 import static org.springframework.util.StringUtils.hasText;
 
 @Getter
@@ -19,6 +21,8 @@ import static org.springframework.util.StringUtils.hasText;
 public class GetAlCustomerRequest {
 
     private String name;
+    private String identificationDocument;
+    private String plate;
     @Setter
     @JsonIgnore
     private Pageable pageable;
@@ -30,6 +34,14 @@ public class GetAlCustomerRequest {
 
         if (hasText(this.name)) {
             specs = specs.and(thatContainsNameWith(this.name));
+        }
+
+        if (hasText(this.identificationDocument)) {
+            specs = specs.and(thatContainsIdentificationDocumentWith(this.identificationDocument));
+        }
+
+        if (hasText(this.plate)) {
+            specs = specs.and(thatContainsPlateWith(this.plate));
         }
 
         if (Objects.nonNull(active)) {

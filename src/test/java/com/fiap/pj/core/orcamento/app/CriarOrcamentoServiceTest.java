@@ -41,7 +41,7 @@ class CriarOrcamentoServiceTest {
     @Test
     void deveCriarOrcamento() {
         var orcamento = OrcamentoTestFactory.umOrcamento();
-        orcamento.adicionarServicos(OrcamentoTestFactory.umOrcamentoItemServico(orcamento.getId()));
+        orcamento.adicionarServico(OrcamentoTestFactory.umOrcamentoItemServico(orcamento.getId()));
 
         when(orcamentoRepositoryJpa.save(any(Orcamento.class))).thenReturn(orcamento);
 

@@ -1,6 +1,7 @@
 package com.fiap.pj.core.orcamento.domain;
 
 import com.fiap.pj.core.orcamento.domain.enums.OrcamentoStatus;
+import com.fiap.pj.core.orcamento.exception.OrcamentoExceptions.ReprovarOrcamentoStatusInvalidoException;
 import com.fiap.pj.core.util.DateTimeUtils;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -55,7 +56,7 @@ public class Orcamento {
         this.dataCriacao = DateTimeUtils.getNow();
     }
 
-    public void adicionarServicos(OrcamentoItemServico servico) {
+    public void adicionarServico(OrcamentoItemServico servico) {
         this.servicos.add(servico);
     }
 
@@ -63,5 +64,10 @@ public class Orcamento {
         return this.getServicos().stream().map(OrcamentoItemServico::valorTotal).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-
+    public void reprovar() {
+        if (!this.status.isAguardandoAprovacao()) {
+            throw new ReprovarOrcamentoStatusInvalidoException();
+        }
+        this.status = OrcamentoStatus.REPROVADO;
+    }
 }

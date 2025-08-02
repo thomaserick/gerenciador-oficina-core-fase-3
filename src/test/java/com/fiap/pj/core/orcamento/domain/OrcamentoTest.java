@@ -17,7 +17,7 @@ class OrcamentoTest {
     @DisplayName("Deve criar com sucesso uma instância de orcamento.")
     void deveCriarServico() {
         var orcamento = OrcamentoTestFactory.umOrcamento();
-        orcamento.adicionarServicos(OrcamentoTestFactory.umOrcamentoItemServico(orcamento.getId()));
+        orcamento.adicionarServico(OrcamentoTestFactory.umOrcamentoItemServico(orcamento.getId()));
 
         assertEquals(OrcamentoTestFactory.ID, orcamento.getId());
         assertEquals(OrcamentoTestFactory.DESCRICAO, orcamento.getDescricao());

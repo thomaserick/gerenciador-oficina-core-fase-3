@@ -4,4 +4,12 @@ public enum OrcamentoStatus {
 
     AGUARDANDO_APROVACAO, APROVADO, REPROVADO;
 
+
+    public boolean isAguardandoAprovacao() {
+        return this.equals(AGUARDANDO_APROVACAO);
+    }
+
+    public boolean isReprovado() {
+        return this.equals(REPROVADO);
+    }
 }

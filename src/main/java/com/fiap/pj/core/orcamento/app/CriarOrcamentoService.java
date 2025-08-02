@@ -59,7 +59,7 @@ public class CriarOrcamentoService implements CriarOrcamentoUseCase {
                     .descricao(service.getDescricao())
                     .servicoId(service.getId())
                     .build();
-            orcamento.adicionarServicos(servicoOrcamento);
+            orcamento.adicionarServico(servicoOrcamento);
         });
 
     }

@@ -6,7 +6,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.UUID;
 
 public interface OrcamentoControllerOpenApi {
 
@@ -14,6 +17,11 @@ public interface OrcamentoControllerOpenApi {
     @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "Orcamento criado com sucesso."),
             @ApiResponse(responseCode = "400", description = "O  Orcamento não pode ser criado.")})
     ResponseEntity<Void> criarOrcamento(@Valid @RequestBody CriarOrcamentoCommand cmd);
+
+    @Operation(description = "Reprovar Orcamento", method = "POST")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Orcamento criado com sucesso."),
+            @ApiResponse(responseCode = "400", description = "O  Orcamento não pode ser criado.")})
+    ResponseEntity<Void> reprovarOrcamento(@Valid @PathVariable UUID id);
 
 
 }

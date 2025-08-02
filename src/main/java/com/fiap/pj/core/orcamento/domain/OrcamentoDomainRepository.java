@@ -7,4 +7,8 @@ import java.util.UUID;
 
 public interface OrcamentoDomainRepository extends BaseCrudRepository<Orcamento, UUID> {
 
+
+    @Override
+    Orcamento findByIdOrThrowNotFound(UUID id);
+
 }

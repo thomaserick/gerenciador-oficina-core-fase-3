@@ -3,7 +3,7 @@ package com.fiap.pj.core.servico.app;
 
 import com.fiap.pj.core.servico.adapter.out.db.ServicoRepositoryJpa;
 import com.fiap.pj.core.servico.domain.Servico;
-import com.fiap.pj.core.servico.util.factory.ServiceTestFactory;
+import com.fiap.pj.core.servico.util.factory.ServicoTestFactory;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -26,15 +26,15 @@ class CriarServicoServiceTest {
 
     @Test
     void deveCriarServico() {
-        when(servicoRepositoryJpa.save(any(Servico.class))).thenReturn(ServiceTestFactory.umServico());
+        when(servicoRepositoryJpa.save(any(Servico.class))).thenReturn(ServicoTestFactory.umServico());
 
-        var service = criarServicoService.handle(ServiceTestFactory.umCriarServicoCommand());
+        var service = criarServicoService.handle(ServicoTestFactory.umCriarServicoCommand());
 
         assertNotNull(service);
-        assertEquals(ServiceTestFactory.ID, service.getId());
-        assertEquals(ServiceTestFactory.DESCRICAO, service.getDescricao());
-        assertEquals(ServiceTestFactory.PRECO, service.getPreco());
-        assertEquals(ServiceTestFactory.OBSERVACAO, service.getObservacao());
+        assertEquals(ServicoTestFactory.ID, service.getId());
+        assertEquals(ServicoTestFactory.DESCRICAO, service.getDescricao());
+        assertEquals(ServicoTestFactory.PRECO, service.getPreco());
+        assertEquals(ServicoTestFactory.OBSERVACAO, service.getObservacao());
 
     }
 }

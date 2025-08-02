@@ -3,12 +3,14 @@ package com.fiap.pj.core.orcamento.usecase.command;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.Set;
 import java.util.UUID;
 
 @Getter
+@AllArgsConstructor
 public class CriarOrcamentoCommand {
 
     private String descricao;
@@ -21,4 +23,6 @@ public class CriarOrcamentoCommand {
 
     @Valid
     private Set<OrcamentoItemServicoCommand> servicos;
+
+
 }

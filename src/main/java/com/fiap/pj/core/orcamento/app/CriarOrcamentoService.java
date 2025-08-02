@@ -38,7 +38,7 @@ public class CriarOrcamentoService implements CriarOrcamentoUseCase {
                 .descricao(cmd.getDescricao())
                 .clienteId(cmd.getClienteId())
                 .veiculoId(cmd.getVeiculoId())
-                .status(OrcamentoStatus.PENDING_APPROVE)
+                .status(OrcamentoStatus.AGUARDANDO_APROVACAO)
                 .hodometer(cmd.getHodometer())
                 .build();
 

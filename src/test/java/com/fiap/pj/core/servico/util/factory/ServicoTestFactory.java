@@ -6,7 +6,7 @@ import com.fiap.pj.core.servico.usecase.command.CriarServicoCommand;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-public class ServiceTestFactory {
+public class ServicoTestFactory {
 
     public static final UUID ID = UUID.randomUUID();
     public static final String DESCRICAO = "Troca de Óleo";

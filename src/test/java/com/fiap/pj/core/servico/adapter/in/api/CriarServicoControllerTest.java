@@ -3,7 +3,7 @@ package com.fiap.pj.core.servico.adapter.in.api;
 
 import com.fiap.pj.core.servico.usecase.CriarServicoUseCase;
 import com.fiap.pj.core.servico.usecase.command.CriarServicoCommand;
-import com.fiap.pj.core.servico.util.factory.ServiceTestFactory;
+import com.fiap.pj.core.servico.util.factory.ServicoTestFactory;
 import com.fiap.pj.core.util.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,12 +16,12 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static com.fiap.pj.core.servico.util.factory.ServiceTestFactory.umCriarServicoCommand;
+import static com.fiap.pj.core.servico.util.factory.ServicoTestFactory.umCriarServicoCommand;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
-class CreateServiceControllerTest {
+class CriarServicoControllerTest {
 
     @Mock
     private CriarServicoUseCase criarServicoUseCase;
@@ -39,7 +39,7 @@ class CreateServiceControllerTest {
     @Test
     void deveCriarServico() throws Exception {
 
-        Mockito.when(criarServicoUseCase.handle(Mockito.any(CriarServicoCommand.class))).thenReturn(ServiceTestFactory.umServico());
+        Mockito.when(criarServicoUseCase.handle(Mockito.any(CriarServicoCommand.class))).thenReturn(ServicoTestFactory.umServico());
 
         mock.perform(post(
                 TestUtils.buildURL(ServicoController.PATH))

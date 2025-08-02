@@ -1,7 +1,7 @@
-package com.fiap.pj.core.customer.adapter.in.api;
+package com.fiap.pj.core.service.adapter.in.api;
 
 
-import com.fiap.pj.core.customer.util.factory.CustomerTestFactory;
+import com.fiap.pj.core.service.util.factory.ServiceTestFactory;
 import com.fiap.pj.core.util.TestUtils;
 import com.fiap.pj.util.IntegrationTest;
 import org.junit.jupiter.api.Test;
@@ -16,27 +16,24 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
-@Sql(scripts = {"classpath:db/it/customers/create_customers.sql"
+@Sql(scripts = {"classpath:db/it/services/create_services.sql"
 }, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @IntegrationTest
-class GetAllCustomerControllerIT {
+class GetAllServiceControllerIT {
 
     @Autowired
     private MockMvc mock;
 
     @Test
-    void shouldGetAllCustomers() throws Exception {
+    void shouldGetAllServices() throws Exception {
         mock.perform(get(
-                        TestUtils.buildURL(CustomerController.PATH)).param("name", "haku").param("active", "true")
+                        TestUtils.buildURL(ServiceController.PATH)).param("name", "troca").param("active", "true")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                 ).andExpect(status().isOk())
                 .andExpect(jsonPath("$.hasNext", is(false)))
-                .andExpect(jsonPath("$.items[0].id", is("113e83b4-02e3-4059-8498-f4beafbb5ed9")))
-                .andExpect(jsonPath("$.items[0].name", is(CustomerTestFactory.NAME)))
-                .andExpect(jsonPath("$.items[0].email", is(CustomerTestFactory.E_MAIL)))
-                .andExpect(jsonPath("$.items[0].phone", is(CustomerTestFactory.PHONE)))
-                .andExpect(jsonPath("$.items[0].address", is(CustomerTestFactory.ADDRESS)))
-                .andExpect(jsonPath("$.items[0].identificationDocument.number", is(CustomerTestFactory.IDENTIFICATION_DOCUMENT_NUMBER)))
+                .andExpect(jsonPath("$.items[0].id", is("84c052e5-3aa5-465b-9e14-6551e4ba1a65")))
+                .andExpect(jsonPath("$.items[0].description", is(ServiceTestFactory.DESCRIPTION)))
+                .andExpect(jsonPath("$.items[0].observation", is(ServiceTestFactory.OBSERVATION)))
                 .andExpect(jsonPath("$.items[0].active", is(true)));
     }
 

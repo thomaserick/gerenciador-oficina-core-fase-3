@@ -3,6 +3,8 @@ package com.fiap.pj.core.service.adapter.in.api.response;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import java.math.BigDecimal;
+
 @JsonPropertyOrder({"id", "description", "price", "observation", "active"})
 public interface ServiceResponse {
 
@@ -10,7 +12,7 @@ public interface ServiceResponse {
 
     String getDescription();
 
-    String getPrice();
+    BigDecimal getPrice();
 
     String getObservation();
 

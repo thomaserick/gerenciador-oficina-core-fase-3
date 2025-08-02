@@ -7,4 +7,6 @@ import java.util.UUID;
 
 public interface ServicoDomainRepository extends BaseCrudRepository<Servico, UUID> {
 
+    @Override
+    Servico findByIdOrThrowNotFound(UUID id);
 }

@@ -32,4 +32,12 @@ public class Servico {
         this.observacao = observacao;
         this.ativo = ativo;
     }
+
+    public void ativar() {
+        this.ativo = true;
+    }
+
+    public void inativar() {
+        this.ativo = false;
+    }
 }

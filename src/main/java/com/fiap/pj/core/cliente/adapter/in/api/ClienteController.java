@@ -55,7 +55,7 @@ public class ClienteController implements ClienteControllerOpenApi {
     public ResponseEntity<Void> alterarCliente(@Valid @PathVariable UUID id, @RequestBody AlterarClienteCommand cmd) {
         cmd.setId(id);
         alterarClienteUserCase.handle(cmd);
-        return null;
+        return ResponseEntity.ok().build();
     }
 
     @Override

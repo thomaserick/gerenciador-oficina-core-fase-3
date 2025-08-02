@@ -62,7 +62,7 @@ public class UsuarioController implements UsuarioControllerOpenApi {
     }
 
 
-    @PostMapping("{id}/ativo")
+    @PostMapping("{id}/ativar")
     public ResponseEntity<Void> ativarUsuario(@PathVariable UUID id) {
         ativarUsuarioUseCase.handle(new AtivarUsuarioCommand(id));
         return ResponseEntity.ok().build();

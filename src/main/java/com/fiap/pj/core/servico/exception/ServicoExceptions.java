@@ -4,8 +4,8 @@ public class ServicoExceptions {
     private ServicoExceptions() {
     }
 
-    public static class ServiceNotFoundException extends RuntimeException {
-        public ServiceNotFoundException() {
+    public static class ServicoNaoEncontradoException extends RuntimeException {
+        public ServicoNaoEncontradoException() {
             super("Servico não encontrado.");
         }
     }

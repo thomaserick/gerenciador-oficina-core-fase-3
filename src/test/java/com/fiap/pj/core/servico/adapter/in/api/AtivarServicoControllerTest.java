@@ -1,7 +1,7 @@
-package com.fiap.pj.core.usuario.adapter.in.api;
+package com.fiap.pj.core.servico.adapter.in.api;
 
 
-import com.fiap.pj.core.usuario.usecase.AtivarUsuarioUseCase;
+import com.fiap.pj.core.servico.usecase.AtivarServicoUserCase;
 import com.fiap.pj.core.util.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,33 +15,33 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.UUID;
 
+import static com.fiap.pj.core.cliente.util.factory.ClienteTestFactory.umCriarClienteCommand;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
-class AtivarUsuarioControllerTest {
+class AtivarServicoControllerTest {
 
     @Mock
-    private AtivarUsuarioUseCase ativarUsuarioUseCase;
+    private AtivarServicoUserCase ativarServicoUserCase;
 
     @InjectMocks
-    private UsuarioController userController;
+    private ServicoController servicoController;
 
     private MockMvc mock;
 
     @BeforeEach
     void setup() {
-        mock = MockMvcBuilders.standaloneSetup(userController).build();
+        mock = MockMvcBuilders.standaloneSetup(servicoController).build();
     }
 
     @Test
-    void deveAtivarUsuario() throws Exception {
+    void deveAtivarServico() throws Exception {
+
         mock.perform(post(
-                TestUtils.buildURL(UsuarioController.PATH, UUID.randomUUID().toString(), "ativar"))
+                TestUtils.buildURL(ServicoController.PATH, UUID.randomUUID().toString(), "ativar"))
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-        ).andExpect(status().is2xxSuccessful());
-
-
+                .content(TestUtils.objectToJson(umCriarClienteCommand()))).andExpect(status().is2xxSuccessful());
     }
 
 }

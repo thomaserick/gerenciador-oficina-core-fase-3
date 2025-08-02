@@ -19,7 +19,7 @@ public class CriarOrcamentoCommand {
     @NotNull(message = "Identificador do veiculo não pode ser nulo")
     private UUID veiculoId;
     @PositiveOrZero(message = "Hodômetro do veiculo não pode ser negativa.")
-    private int hodometer;
+    private int hodometro;
 
     @Valid
     private Set<OrcamentoItemServicoCommand> servicos;

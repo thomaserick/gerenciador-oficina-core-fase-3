@@ -7,7 +7,7 @@ CREATE TABLE orcamentos
     status           VARCHAR(32)  NOT NULL,
     ordem_servico_id UUID,
     observacao       VARCHAR(255),
-    hodometer        BIGINT        NOT NULL DEFAULT 0,
+    hodometro        BIGINT        NOT NULL DEFAULT 0,
     data_criacao     TIMESTAMPTZ   NOT NULL,
     CONSTRAINT orcamentos_pkey   PRIMARY KEY (id),
     CONSTRAINT fk_orcamentos_clientes FOREIGN KEY (cliente_id) REFERENCES clientes(id),

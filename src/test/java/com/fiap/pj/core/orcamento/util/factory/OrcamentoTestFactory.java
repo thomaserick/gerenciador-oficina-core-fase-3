@@ -29,7 +29,7 @@ public class OrcamentoTestFactory {
         return Orcamento.builder().id(ID)
                 .status(ORCAMENTO_STATUS)
                 .descricao(DESCRICAO)
-                .hodometer(HODOMENTO)
+                .hodometro(HODOMENTO)
                 .veiculoId(VEICULO_ID)
                 .clienteId(CLIENTE_ID).build();
     }

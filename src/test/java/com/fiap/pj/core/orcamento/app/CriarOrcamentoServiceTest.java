@@ -58,7 +58,7 @@ class CriarOrcamentoServiceTest {
         assertEquals(OrcamentoTestFactory.DESCRICAO, orcamentoCriado.getDescricao());
         assertEquals(OrcamentoTestFactory.CLIENTE_ID, orcamentoCriado.getClienteId());
         assertEquals(OrcamentoTestFactory.VEICULO_ID, orcamentoCriado.getVeiculoId());
-        assertEquals(OrcamentoTestFactory.HODOMENTO, orcamentoCriado.getHodometer());
+        assertEquals(OrcamentoTestFactory.HODOMENTO, orcamentoCriado.getHodometro());
         assertEquals(OrcamentoTestFactory.ORCAMENTO_STATUS, orcamentoCriado.getStatus());
         assertFalse(orcamento.getServicos().isEmpty());
 

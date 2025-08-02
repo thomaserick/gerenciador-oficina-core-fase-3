@@ -39,7 +39,7 @@ public class CriarOrcamentoService implements CriarOrcamentoUseCase {
                 .clienteId(cmd.getClienteId())
                 .veiculoId(cmd.getVeiculoId())
                 .status(OrcamentoStatus.AGUARDANDO_APROVACAO)
-                .hodometer(cmd.getHodometer())
+                .hodometro(cmd.getHodometro())
                 .build();
 
         buildItemServico(orcamento, cmd.getServicos());

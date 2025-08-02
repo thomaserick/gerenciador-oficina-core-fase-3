@@ -33,7 +33,7 @@ public class Orcamento {
     private String descricao;
     private UUID clienteId;
     private UUID veiculoId;
-    private int hodometer;
+    private int hodometro;
     @Enumerated(EnumType.STRING)
     private OrcamentoStatus status;
     private UUID ordemServicoId;
@@ -44,12 +44,12 @@ public class Orcamento {
     private Set<OrcamentoItemServico> servicos = new HashSet<>();
 
     @Builder
-    public Orcamento(UUID id, String descricao, UUID clienteId, UUID veiculoId, int hodometer, OrcamentoStatus status, UUID ordemServicoId) {
+    public Orcamento(UUID id, String descricao, UUID clienteId, UUID veiculoId, int hodometro, OrcamentoStatus status, UUID ordemServicoId) {
         this.id = requireNonNull(id);
         this.descricao = descricao;
         this.clienteId = requireNonNull(clienteId);
         this.veiculoId = requireNonNull(veiculoId);
-        this.hodometer = hodometer;
+        this.hodometro = hodometro;
         this.status = requireNonNull(status);
         this.ordemServicoId = ordemServicoId;
         this.dataCriacao = DateTimeUtils.getNow();

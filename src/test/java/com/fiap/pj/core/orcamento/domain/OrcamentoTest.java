@@ -22,7 +22,7 @@ class OrcamentoTest {
         assertEquals(OrcamentoTestFactory.DESCRICAO, orcamento.getDescricao());
         assertEquals(OrcamentoTestFactory.CLIENTE_ID, orcamento.getClienteId());
         assertEquals(OrcamentoTestFactory.VEICULO_ID, orcamento.getVeiculoId());
-        assertEquals(OrcamentoTestFactory.HODOMENTO, orcamento.getHodometer());
+        assertEquals(OrcamentoTestFactory.HODOMENTO, orcamento.getHodometro());
         assertEquals(OrcamentoTestFactory.ORCAMENTO_STATUS, orcamento.getStatus());
         assertFalse(orcamento.getServicos().isEmpty());
     }

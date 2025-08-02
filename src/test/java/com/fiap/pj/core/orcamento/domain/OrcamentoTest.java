@@ -1,6 +1,7 @@
 package com.fiap.pj.core.orcamento.domain;
 
 import com.fiap.pj.core.orcamento.util.factory.OrcamentoTestFactory;
+import com.fiap.pj.core.servico.util.factory.ServicoTestFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -24,6 +25,7 @@ class OrcamentoTest {
         assertEquals(OrcamentoTestFactory.VEICULO_ID, orcamento.getVeiculoId());
         assertEquals(OrcamentoTestFactory.HODOMENTO, orcamento.getHodometro());
         assertEquals(OrcamentoTestFactory.ORCAMENTO_STATUS, orcamento.getStatus());
+        assertEquals(ServicoTestFactory.PRECO, orcamento.getValorTotal());
         assertFalse(orcamento.getServicos().isEmpty());
     }
 

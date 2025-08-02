@@ -32,7 +32,7 @@ class CriarUsuarioServiceTest {
     private CriarUsuarioService criarUsuarioService;
 
     @Test
-    void shouldCreateUser() {
+    void deveCriarUsuarior() {
         when(usuarioRepositoryJpa.save(any(Usuario.class))).thenReturn(UserTestFactory.oneUser());
 
         var usuario = criarUsuarioService.handle(UserTestFactory.oneCreateUserCommand());

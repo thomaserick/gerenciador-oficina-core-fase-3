@@ -43,34 +43,34 @@ public class UsuarioController implements UsuarioControllerOpenApi {
     private ListarUsuarioUseCase listarUsuarioUseCase;
 
     @PostMapping
-    public ResponseEntity<Void> createUser(@Valid @RequestBody CriarUsuarioCommand cmd) {
+    public ResponseEntity<Void> criarUsuario(@Valid @RequestBody CriarUsuarioCommand cmd) {
         var usuario = criarUsuarioUseCase.handle(cmd);
         return ResponseEntityUtils.create(getClass(), usuario.getId());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateUser(@Valid @PathVariable UUID id, @RequestBody AlterarUsuarioCommand cmd) {
+    public ResponseEntity<Void> alteraUsuario(@Valid @PathVariable UUID id, @RequestBody AlterarUsuarioCommand cmd) {
         cmd.setId(id);
         alterarUsuarioUseCase.handle(cmd);
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("{id}/deactivate")
-    public ResponseEntity<Void> deactivateUser(@PathVariable UUID id) {
+    @PostMapping("{id}/inativar")
+    public ResponseEntity<Void> inativarUsuario(@PathVariable UUID id) {
         inativarUsuarioUseCase.handle(new InativarUsuarioCommand(id));
         return ResponseEntity.ok().build();
     }
 
 
-    @PostMapping("{id}/activate")
-    public ResponseEntity<Void> activateUser(@PathVariable UUID id) {
+    @PostMapping("{id}/ativo")
+    public ResponseEntity<Void> ativarUsuario(@PathVariable UUID id) {
         ativarUsuarioUseCase.handle(new AtivarUsuarioCommand(id));
         return ResponseEntity.ok().build();
     }
 
     @Override
     @GetMapping
-    public Slice<UsuarioReponse> getAll(@ParameterObject ListarUsuarioRequest filterRequest, @ParameterObject Pageable pageable) {
+    public Slice<UsuarioReponse> listarUsuario(@ParameterObject ListarUsuarioRequest filterRequest, @ParameterObject Pageable pageable) {
         filterRequest.setPageable(pageable);
         return listarUsuarioUseCase.handle(filterRequest);
     }

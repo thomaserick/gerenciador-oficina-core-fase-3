@@ -25,7 +25,7 @@ class ListarClienteControllerIT {
     private MockMvc mock;
 
     @Test
-    void shouldGetAllCustomers() throws Exception {
+    void deveListarClientesAtivo() throws Exception {
         mock.perform(get(
                         TestUtils.buildURL(ClienteController.PATH)).param("nome", "haku").param("ativo", "true")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)

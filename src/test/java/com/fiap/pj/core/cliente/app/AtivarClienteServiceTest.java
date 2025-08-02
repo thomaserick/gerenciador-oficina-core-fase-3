@@ -30,15 +30,15 @@ class AtivarClienteServiceTest {
     private AtivarClienteService ativarClienteService;
 
     @Test
-    void shouldAtivarUCustomer() {
+    void deveAtivarCliente() {
         var id = UUID.randomUUID();
-        when(clienteRepositoryJpa.findByIdOrThrowNotFound(id)).thenReturn(ClienteTestFactory.oneCustomer());
+        when(clienteRepositoryJpa.findByIdOrThrowNotFound(id)).thenReturn(ClienteTestFactory.umCliente());
         ativarClienteService.handle(new AtivarClienteCommand(id));
         verify(clienteRepositoryJpa).save(Mockito.any(Cliente.class));
     }
 
     @Test
-    void shouldReturnCustomerNotFoundException() {
+    void deveRetonarClienteNaoEncontradoException() {
         var id = UUID.randomUUID();
 
         Mockito.doThrow(new ClienteNaoEncontradoException())

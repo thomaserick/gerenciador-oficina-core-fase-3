@@ -5,7 +5,7 @@ import com.fiap.pj.core.cliente.adapter.in.api.ClienteVeiculoController;
 import com.fiap.pj.core.cliente.util.factory.ClienteTestFactory;
 import com.fiap.pj.core.util.TestUtils;
 import com.fiap.pj.core.veiculo.usecase.AdicionarVeiculoClienteUseCase;
-import com.fiap.pj.core.veiculo.util.factory.VehicleTestFactory;
+import com.fiap.pj.core.veiculo.util.factory.VeiculoTestFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,7 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static com.fiap.pj.core.veiculo.util.factory.VehicleTestFactory.oneAddVehicleToCustomerCommand;
+import static com.fiap.pj.core.veiculo.util.factory.VeiculoTestFactory.umAdicionarVeiculoClienteCommand;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -37,11 +37,11 @@ class VeiculoControllerTest {
     }
 
     @Test
-    void shouldCreateCustomer() throws Exception {
+    void deveAdicionarVeiculoAoCliente() throws Exception {
         mock.perform(post(
-                TestUtils.buildURL(ClienteVeiculoController.PATH.replace("{id}", VehicleTestFactory.ID.toString())))
+                TestUtils.buildURL(ClienteVeiculoController.PATH.replace("{id}", VeiculoTestFactory.ID.toString())))
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(TestUtils.objectToJson(oneAddVehicleToCustomerCommand(ClienteTestFactory.ID)))).andExpect(status().is2xxSuccessful());
+                .content(TestUtils.objectToJson(umAdicionarVeiculoClienteCommand(ClienteTestFactory.ID)))).andExpect(status().is2xxSuccessful());
     }
 
 }

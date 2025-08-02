@@ -13,11 +13,11 @@ public class ServiceTestFactory {
     public static final BigDecimal PRECO = BigDecimal.valueOf(69.00);
     public static final String OBSERVACAO = "xpto";
 
-    public static Servico oneService() {
+    public static Servico umServico() {
         return new Servico(ID, DESCRICAO, PRECO, OBSERVACAO, true);
     }
 
-    public static CriarServicoCommand oneCreateServiceCommand() {
+    public static CriarServicoCommand umCriarServicoCommand() {
         return new CriarServicoCommand(DESCRICAO, PRECO, OBSERVACAO);
     }
 

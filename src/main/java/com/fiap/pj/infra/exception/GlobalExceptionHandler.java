@@ -1,7 +1,7 @@
 package com.fiap.pj.infra.exception;
 
 import com.fiap.pj.core.cliente.exception.ClienteExceptions.ClienteNaoEncontradoException;
-import com.fiap.pj.core.usuario.exception.UsuarioExceptions.UserNaoEncontradoException;
+import com.fiap.pj.core.usuario.exception.UsuarioExceptions.UsuarioNaoEncontradoException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -27,7 +27,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler({
-            UserNaoEncontradoException.class,
+            UsuarioNaoEncontradoException.class,
             ClienteNaoEncontradoException.class})
     public ResponseEntity<ApiError> notFoundException(RuntimeException ex) {
         ApiError apiError = ApiError

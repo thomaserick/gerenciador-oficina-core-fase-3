@@ -1,8 +1,8 @@
 package com.fiap.pj.core.usuario.app;
 
 
-import com.fiap.pj.core.usuario.domain.UserDomainRepository;
 import com.fiap.pj.core.usuario.domain.Usuario;
+import com.fiap.pj.core.usuario.domain.UsuarioDomainRepository;
 import com.fiap.pj.core.usuario.usecase.CriarUsuarioUseCase;
 import com.fiap.pj.core.usuario.usecase.command.CriarUsuarioCommand;
 import jakarta.transaction.Transactional;
@@ -16,7 +16,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class CriarUsuarioService implements CriarUsuarioUseCase {
 
-    private final UserDomainRepository repository;
+    private final UsuarioDomainRepository repository;
 
     @Override
     public Usuario handle(CriarUsuarioCommand cmd) {

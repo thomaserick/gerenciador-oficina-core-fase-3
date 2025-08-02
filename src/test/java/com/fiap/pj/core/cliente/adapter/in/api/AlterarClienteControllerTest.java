@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.UUID;
 
-import static com.fiap.pj.core.cliente.util.factory.ClienteTestFactory.onUpdateCustomerCommand;
+import static com.fiap.pj.core.cliente.util.factory.ClienteTestFactory.umAlterarClienteCommand;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -37,12 +37,12 @@ class AlterarClienteControllerTest {
     }
 
     @Test
-    void shouldAlterarCustomer() throws Exception {
+    void deveAlterarCliente() throws Exception {
 
         mock.perform(put(
                 TestUtils.buildURL(ClienteController.PATH, UUID.randomUUID().toString()))
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(TestUtils.objectToJson(onUpdateCustomerCommand(ClienteTestFactory.ID)))).andExpect(status().is2xxSuccessful());
+                .content(TestUtils.objectToJson(umAlterarClienteCommand(ClienteTestFactory.ID)))).andExpect(status().is2xxSuccessful());
     }
 
 

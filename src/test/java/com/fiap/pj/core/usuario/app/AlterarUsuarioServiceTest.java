@@ -3,7 +3,7 @@ package com.fiap.pj.core.usuario.app;
 
 import com.fiap.pj.core.usuario.adapter.out.db.UsuarioRepositoryJpa;
 import com.fiap.pj.core.usuario.domain.Usuario;
-import com.fiap.pj.core.usuario.exception.UsuarioExceptions.UserNaoEncontradoException;
+import com.fiap.pj.core.usuario.exception.UsuarioExceptions.UsuarioNaoEncontradoException;
 import com.fiap.pj.core.usuario.util.factrory.UserTestFactory;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -38,7 +38,7 @@ class AlterarUsuarioServiceTest {
     private AlterarUsuarioService alterarUsuarioService;
 
     @Test
-    void shouldAlterarUser() {
+    void deveAlterarUsuario() {
         var user = UserTestFactory.oneUser();
         when(usuarioRepositoryJpa.findByIdOrThrowNotFound(user.getId())).thenReturn(user);
 
@@ -61,12 +61,12 @@ class AlterarUsuarioServiceTest {
     void shouldReturnUserNotFoundException() {
         var user = UserTestFactory.oneUser();
 
-        Mockito.doThrow(new UserNaoEncontradoException())
+        Mockito.doThrow(new UsuarioNaoEncontradoException())
                 .when(usuarioRepositoryJpa)
                 .findByIdOrThrowNotFound(user.getId());
 
         var thrown = catchThrowable(() -> alterarUsuarioService.handle(UserTestFactory.umUpdateUserCommand(user.getId())));
-        assertThat(thrown).isInstanceOf(UserNaoEncontradoException.class);
+        assertThat(thrown).isInstanceOf(UsuarioNaoEncontradoException.class);
 
     }
 }

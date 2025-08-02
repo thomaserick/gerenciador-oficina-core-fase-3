@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.UUID;
 
-import static com.fiap.pj.core.cliente.util.factory.ClienteTestFactory.onCrateCustomerCommand;
+import static com.fiap.pj.core.cliente.util.factory.ClienteTestFactory.umCriarClienteCommand;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -36,12 +36,12 @@ class AtivarClienteControllerTest {
     }
 
     @Test
-    void shouldAtivarCustomer() throws Exception {
+    void deveAtivarCliente() throws Exception {
 
         mock.perform(post(
                 TestUtils.buildURL(ClienteController.PATH, UUID.randomUUID().toString(), "ativar"))
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(TestUtils.objectToJson(onCrateCustomerCommand()))).andExpect(status().is2xxSuccessful());
+                .content(TestUtils.objectToJson(umCriarClienteCommand()))).andExpect(status().is2xxSuccessful());
     }
 
 }

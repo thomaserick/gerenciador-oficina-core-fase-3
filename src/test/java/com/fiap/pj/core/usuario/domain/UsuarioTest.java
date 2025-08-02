@@ -19,7 +19,7 @@ class UsuarioTest {
 
     @Test
     @DisplayName("Deve criar com sucesso uma instância de usuario.")
-    void shouldCrateUser() {
+    void deveCriarUsuario() {
 
         var usuario = UserTestFactory.oneUser();
 
@@ -32,10 +32,10 @@ class UsuarioTest {
     }
 
     @Nested
-    class CreationFailure {
+    class FalhaNaCriacao {
 
         @Test
-        void ShouldNotCreateUserWithoutName() {
+        void deveFalharComNomeInvalido() {
             assertThrows(NullPointerException.class,
                     () -> new Usuario(UserTestFactory.ID,
                             null,
@@ -44,7 +44,7 @@ class UsuarioTest {
         }
 
         @Test
-        void ShouldNotCreateUserWithoutEmail() {
+        void deveFalharComEmailInvalido() {
             assertThrows(NullPointerException.class,
                     () -> new Usuario(UserTestFactory.ID,
                             NAME,
@@ -53,7 +53,7 @@ class UsuarioTest {
         }
 
         @Test
-        void ShouldNotCreateUserWithoutPassword() {
+        void deveFalharComSenhaInvalida() {
             assertThrows(NullPointerException.class,
                     () -> new Usuario(UserTestFactory.ID,
                             NAME,

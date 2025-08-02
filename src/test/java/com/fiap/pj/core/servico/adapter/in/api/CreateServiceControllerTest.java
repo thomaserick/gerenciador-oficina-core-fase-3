@@ -16,7 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static com.fiap.pj.core.servico.util.factory.ServiceTestFactory.oneCreateServiceCommand;
+import static com.fiap.pj.core.servico.util.factory.ServiceTestFactory.umCriarServicoCommand;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -39,12 +39,12 @@ class CreateServiceControllerTest {
     @Test
     void deveCriarServico() throws Exception {
 
-        Mockito.when(criarServicoUseCase.handle(Mockito.any(CriarServicoCommand.class))).thenReturn(ServiceTestFactory.oneService());
+        Mockito.when(criarServicoUseCase.handle(Mockito.any(CriarServicoCommand.class))).thenReturn(ServiceTestFactory.umServico());
 
         mock.perform(post(
                 TestUtils.buildURL(ServicoController.PATH))
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(TestUtils.objectToJson(oneCreateServiceCommand()))).andExpect(status().is2xxSuccessful());
+                .content(TestUtils.objectToJson(umCriarServicoCommand()))).andExpect(status().is2xxSuccessful());
 
     }
 

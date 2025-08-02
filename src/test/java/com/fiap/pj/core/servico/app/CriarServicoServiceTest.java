@@ -26,9 +26,9 @@ class CriarServicoServiceTest {
 
     @Test
     void deveCriarServico() {
-        when(servicoRepositoryJpa.save(any(Servico.class))).thenReturn(ServiceTestFactory.oneService());
+        when(servicoRepositoryJpa.save(any(Servico.class))).thenReturn(ServiceTestFactory.umServico());
 
-        var service = criarServicoService.handle(ServiceTestFactory.oneCreateServiceCommand());
+        var service = criarServicoService.handle(ServiceTestFactory.umCriarServicoCommand());
 
         assertNotNull(service);
         assertEquals(ServiceTestFactory.ID, service.getId());

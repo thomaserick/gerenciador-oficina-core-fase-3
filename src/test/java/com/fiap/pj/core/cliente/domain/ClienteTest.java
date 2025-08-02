@@ -19,9 +19,9 @@ class ClienteTest {
 
     @Test
     @DisplayName("Deve criar com sucesso uma instância de Cliente.")
-    void shouldCrateCustomer() {
+    void deveCriarCliente() {
 
-        var cliente = ClienteTestFactory.oneCustomer();
+        var cliente = ClienteTestFactory.umCliente();
 
         assertEquals(NAME, cliente.getNome());
         assertEquals(E_MAIL, cliente.getEmail());
@@ -32,10 +32,10 @@ class ClienteTest {
     }
 
     @Nested
-    class CreationFailure {
+    class FalhaNaCriacao {
 
         @Test
-        void ShouldNotCreateCustomerWithoutName() {
+        void deveFalharComNomeInvalido() {
             assertThrows(NullPointerException.class,
                     () -> new Cliente(ClienteTestFactory.ID,
                             null,
@@ -44,7 +44,7 @@ class ClienteTest {
         }
 
         @Test
-        void ShouldNotCreateCustomerWithoutIdentificationDocument() {
+        void deveFalharComDocumentoIdentifiacaoInvalido() {
             assertThrows(NullPointerException.class,
                     () -> new Cliente(ClienteTestFactory.ID,
                             ClienteTestFactory.NOME,

@@ -34,10 +34,10 @@ class CriarClienteServiceTest {
     private CriarClienteService criarClienteService;
 
     @Test
-    void shouldCreateUser() {
-        when(clienteRepositoryJpa.save(any(Cliente.class))).thenReturn(ClienteTestFactory.oneCustomer());
+    void deveCriarCliente() {
+        when(clienteRepositoryJpa.save(any(Cliente.class))).thenReturn(ClienteTestFactory.umCliente());
 
-        var cliente = criarClienteService.handle(ClienteTestFactory.onCrateCustomerCommand());
+        var cliente = criarClienteService.handle(ClienteTestFactory.umCriarClienteCommand());
 
         assertEquals(NAME, cliente.getNome());
         assertEquals(E_MAIL, cliente.getEmail());
@@ -48,11 +48,11 @@ class CriarClienteServiceTest {
     }
 
     @Test
-    void shouldReturnConsumerDocumentIdentificationDuplicateException() {
+    void deveRetornarDocumentoIdentificacaoDuplicadoException() {
 
         Mockito.when(clienteRepositoryJpa.existsByIDocumentoIdentificacaoNumero(Mockito.anyString())).thenReturn(true);
 
-        var thrown = catchThrowable(() -> criarClienteService.handle(ClienteTestFactory.onCrateCustomerCommand()));
+        var thrown = catchThrowable(() -> criarClienteService.handle(ClienteTestFactory.umCriarClienteCommand()));
         assertThat(thrown).isInstanceOf(DocumentoIdentificacaoDuplicadoException.class);
 
     }

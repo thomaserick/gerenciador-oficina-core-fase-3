@@ -4,8 +4,8 @@ public class UsuarioExceptions {
     private UsuarioExceptions() {
     }
 
-    public static class UserNaoEncontradoException extends RuntimeException {
-        public UserNaoEncontradoException() {
+    public static class UsuarioNaoEncontradoException extends RuntimeException {
+        public UsuarioNaoEncontradoException() {
             super("Usuário não encontrado.");
         }
     }

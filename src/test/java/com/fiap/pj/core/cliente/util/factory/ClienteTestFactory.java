@@ -20,30 +20,30 @@ public class ClienteTestFactory {
     public static final String NUMERO_DOCUMENTO = "82711650030";
     public static final String NUMERO_DOCUMENTO_CNPJ = "09670003000107";
 
-    public static final String ALTER_NAME = "Jack";
-    public static final String ALTER_E_MAIL = "jack.daniels@gmail.com";
-    public static final String ALTER_PHONE = "11-981020304";
-    public static final String ALTER_ADDRESS = "Av. Braz Leme, 1000 - Santana, São Paulo - SP, 02511-000";
+    public static final String NOME_ALTERADO = "Jack";
+    public static final String E_MAIL_ALTERADO = "jack.daniels@gmail.com";
+    public static final String TELEFONE_ALTERADO = "11-981020304";
+    public static final String ENDERECO_ALTERADO = "Av. Braz Leme, 1000 - Santana, São Paulo - SP, 02511-000";
 
 
-    public static Cliente oneCustomer() {
+    public static Cliente umCliente() {
         return new Cliente(ID, NOME, E_MAIL, TELEFONE, ATIVO, ENDERECO, new DocumentoIdentificacao(OrigemDocumento.BRASIL, NUMERO_DOCUMENTO));
     }
 
-    public static Cliente oneCustomerCNPJ() {
+    public static Cliente umClienteCNPJ() {
         return new Cliente(ID, NOME, E_MAIL, TELEFONE, ATIVO, ENDERECO, new DocumentoIdentificacao(OrigemDocumento.BRASIL, NUMERO_DOCUMENTO_CNPJ));
     }
 
 
-    public static CriarClienteCommand onCrateCustomerCommand() {
+    public static CriarClienteCommand umCriarClienteCommand() {
         return new CriarClienteCommand(NOME, E_MAIL, TELEFONE, ENDERECO, NUMERO_DOCUMENTO);
     }
 
-    public static CriarClienteCommand onCrateCustomerCNPJCommand() {
+    public static CriarClienteCommand umCriarClienteCNPJCommand() {
         return new CriarClienteCommand(NOME, E_MAIL, TELEFONE, ENDERECO, NUMERO_DOCUMENTO_CNPJ);
     }
 
-    public static AlterarClienteCommand onUpdateCustomerCommand(UUID id) {
-        return new AlterarClienteCommand(id, ALTER_NAME, ALTER_E_MAIL, ALTER_PHONE, ALTER_ADDRESS);
+    public static AlterarClienteCommand umAlterarClienteCommand(UUID id) {
+        return new AlterarClienteCommand(id, NOME_ALTERADO, E_MAIL_ALTERADO, TELEFONE_ALTERADO, ENDERECO_ALTERADO);
     }
 }

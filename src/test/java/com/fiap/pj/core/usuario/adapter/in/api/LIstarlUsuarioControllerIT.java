@@ -24,7 +24,7 @@ class LIstarlUsuarioControllerIT {
     private MockMvc mock;
 
     @Test
-    void shouldGetAllUser() throws Exception {
+    void deveListarUsuarios() throws Exception {
         mock.perform(get(
                         TestUtils.buildURL(UsuarioController.PATH)).param("nome", "urso").param("ativo", "true")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)

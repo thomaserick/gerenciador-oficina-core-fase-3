@@ -18,7 +18,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class DeactivateUservarServiceTest {
+class InativarUsuarioServiceTest {
 
     @Mock
     private UsuarioRepositoryJpa usuarioRepositoryJpa;
@@ -27,7 +27,7 @@ class DeactivateUservarServiceTest {
     private InativarUsuarioService desativarUsuarioService;
 
     @Test
-    void shouldDeactivateUser() {
+    void deveInativarUsuario() {
         var id = UUID.randomUUID();
         when(usuarioRepositoryJpa.findByIdOrThrowNotFound(id)).thenReturn(UserTestFactory.oneUser());
         desativarUsuarioService.handle(new InativarUsuarioCommand(id));

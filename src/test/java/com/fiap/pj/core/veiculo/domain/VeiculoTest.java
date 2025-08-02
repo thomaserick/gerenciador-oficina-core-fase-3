@@ -1,32 +1,32 @@
 package com.fiap.pj.core.veiculo.domain;
 
 import com.fiap.pj.core.cliente.util.factory.ClienteTestFactory;
-import com.fiap.pj.core.veiculo.util.factory.VehicleTestFactory;
+import com.fiap.pj.core.veiculo.util.factory.VeiculoTestFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import static com.fiap.pj.core.veiculo.util.factory.VehicleTestFactory.ID;
-import static com.fiap.pj.core.veiculo.util.factory.VehicleTestFactory.MAKE;
-import static com.fiap.pj.core.veiculo.util.factory.VehicleTestFactory.MODEL;
-import static com.fiap.pj.core.veiculo.util.factory.VehicleTestFactory.PLATE;
-import static com.fiap.pj.core.veiculo.util.factory.VehicleTestFactory.YEAR;
+import static com.fiap.pj.core.veiculo.util.factory.VeiculoTestFactory.ANO;
+import static com.fiap.pj.core.veiculo.util.factory.VeiculoTestFactory.ID;
+import static com.fiap.pj.core.veiculo.util.factory.VeiculoTestFactory.MARCA;
+import static com.fiap.pj.core.veiculo.util.factory.VeiculoTestFactory.MODELO;
+import static com.fiap.pj.core.veiculo.util.factory.VeiculoTestFactory.PLACA;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class VeiculoTest {
 
     @Test
-    @DisplayName("Deve criar com sucesso uma instância de Cliente.")
-    void shouldCrateCustomer() {
+    @DisplayName("Deve criar com sucesso uma instância de veiculo.")
+    void deveCriarVeiculo() {
 
-        var veiculo = VehicleTestFactory.oneVehicle(ClienteTestFactory.ID);
+        var veiculo = VeiculoTestFactory.umVeiculo(ClienteTestFactory.ID);
 
         assertEquals(ID, veiculo.getId());
-        assertEquals(PLATE, veiculo.getPlaca());
-        assertEquals(MODEL, veiculo.getModelo());
-        assertEquals(MAKE, veiculo.getMarca());
-        assertEquals(YEAR, veiculo.getAno());
+        assertEquals(PLACA, veiculo.getPlaca());
+        assertEquals(MODELO, veiculo.getModelo());
+        assertEquals(MARCA, veiculo.getMarca());
+        assertEquals(ANO, veiculo.getAno());
         assertEquals(ClienteTestFactory.ID, veiculo.getClienteId());
 
     }
@@ -35,15 +35,15 @@ class VeiculoTest {
     class CreationFailure {
 
         @Test
-        void ShouldNotCreateVehicleWithoutPlate() {
+        void deveFalharComPlacaInvalido() {
             assertThrows(NullPointerException.class,
                     () -> new Veiculo(ID, null, null, null, 0, ClienteTestFactory.ID));
         }
 
         @Test
-        void ShouldNotCreateVehicleWithoutCustomerId() {
+        void deveFalharComClienteIdInvalido() {
             assertThrows(NullPointerException.class,
-                    () -> new Veiculo(ID, PLATE, MODEL, MAKE, YEAR, null));
+                    () -> new Veiculo(ID, PLACA, MODELO, MARCA, ANO, null));
         }
     }
 }

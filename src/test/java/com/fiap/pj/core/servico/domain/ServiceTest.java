@@ -15,7 +15,7 @@ class ServiceTest {
     @Test
     @DisplayName("Deve criar com sucesso uma instância de servico.")
     void deveCriarServico() {
-        var service = ServiceTestFactory.oneService();
+        var service = ServiceTestFactory.umServico();
 
 
         assertEquals(ServiceTestFactory.ID, service.getId());

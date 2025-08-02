@@ -22,24 +22,24 @@ public interface UsuarioControllerOpenApi {
     @Operation(description = "Cria um novo usuário", method = "POST")
     @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "Usuario criado com sucesso."),
             @ApiResponse(responseCode = "400", description = "O  Usuário não pode ser criado.")})
-    ResponseEntity<Void> createUser(@Valid @RequestBody CriarUsuarioCommand cmd);
+    ResponseEntity<Void> criarUsuario(@Valid @RequestBody CriarUsuarioCommand cmd);
 
 
     @Operation(description = "Alterar um  usuário", method = "PUT")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Usuario alterado com sucesso."),
             @ApiResponse(responseCode = "400", description = "O  Usuário não pode ser alterado.")})
-    ResponseEntity<Void> updateUser(@Valid @PathVariable UUID id, @RequestBody AlterarUsuarioCommand cmd);
+    ResponseEntity<Void> alteraUsuario(@Valid @PathVariable UUID id, @RequestBody AlterarUsuarioCommand cmd);
 
     @Operation(description = "Desativar um usuário", method = "POST")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Usuario desativado com sucesso."),
             @ApiResponse(responseCode = "400", description = "O  Usuário não pode ser desativado.")})
-    ResponseEntity<Void> deactivateUser(@PathVariable UUID id);
+    ResponseEntity<Void> inativarUsuario(@PathVariable UUID id);
 
     @Operation(description = "Ativar um usuário", method = "POST")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Usuario Ativado com sucesso."),
             @ApiResponse(responseCode = "400", description = "O  Usuário não pode ser ativado.")})
-    ResponseEntity<Void> activateUser(@PathVariable UUID id);
+    ResponseEntity<Void> ativarUsuario(@PathVariable UUID id);
 
     @Operation(description = "Retorna uma lista de usuarios.", method = "GET")
-    Slice<UsuarioReponse> getAll(@ParameterObject ListarUsuarioRequest filterRequest, Pageable pageable);
+    Slice<UsuarioReponse> listarUsuario(@ParameterObject ListarUsuarioRequest filterRequest, Pageable pageable);
 }

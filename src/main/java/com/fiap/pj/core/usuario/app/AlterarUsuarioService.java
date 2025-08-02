@@ -1,7 +1,7 @@
 package com.fiap.pj.core.usuario.app;
 
 
-import com.fiap.pj.core.usuario.domain.UserDomainRepository;
+import com.fiap.pj.core.usuario.domain.UsuarioDomainRepository;
 import com.fiap.pj.core.usuario.usecase.AlterarUsuarioUseCase;
 import com.fiap.pj.core.usuario.usecase.command.AlterarUsuarioCommand;
 import jakarta.transaction.Transactional;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class AlterarUsuarioService implements AlterarUsuarioUseCase {
 
-    private final UserDomainRepository repository;
+    private final UsuarioDomainRepository repository;
 
     @Override
     public void handle(AlterarUsuarioCommand cmd) {

@@ -27,7 +27,7 @@ class AtivarUsuarioServiceTest {
     private AtivarUsuarioService ativarUsuarioService;
 
     @Test
-    void shouldAtivarUSer() {
+    void deveAtivarUsuario() {
         var id = UUID.randomUUID();
         when(usuarioRepositoryJpa.findByIdOrThrowNotFound(id)).thenReturn(UserTestFactory.oneUser());
         ativarUsuarioService.handle(new AtivarUsuarioCommand(id));

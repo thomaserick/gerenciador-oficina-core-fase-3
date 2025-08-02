@@ -33,21 +33,21 @@ class AlterarClienteServiceTest {
     private AlterarClienteService alterarClienteService;
 
     @Test
-    void shouldAlterarCustomer() {
-        var cliente = ClienteTestFactory.oneCustomer();
+    void deveAlteraCliente() {
+        var cliente = ClienteTestFactory.umCliente();
         when(clienteRepositoryJpa.findByIdOrThrowNotFound(cliente.getId())).thenReturn(cliente);
 
-        alterarClienteService.handle(ClienteTestFactory.onUpdateCustomerCommand(cliente.getId()));
+        alterarClienteService.handle(ClienteTestFactory.umAlterarClienteCommand(cliente.getId()));
 
         verify(clienteRepositoryJpa).save(clienteCaptor.capture());
         Cliente clienteUpdated = clienteCaptor.getValue();
 
         assertNotNull(clienteUpdated);
         assertEquals(ClienteTestFactory.ID, clienteUpdated.getId());
-        assertEquals(ClienteTestFactory.ALTER_NAME, clienteUpdated.getNome());
-        assertEquals(ClienteTestFactory.ALTER_PHONE, clienteUpdated.getTelefone());
-        assertEquals(ClienteTestFactory.ALTER_E_MAIL, clienteUpdated.getEmail());
-        assertEquals(ClienteTestFactory.ALTER_ADDRESS, clienteUpdated.getEndereco());
+        assertEquals(ClienteTestFactory.NOME_ALTERADO, clienteUpdated.getNome());
+        assertEquals(ClienteTestFactory.TELEFONE_ALTERADO, clienteUpdated.getTelefone());
+        assertEquals(ClienteTestFactory.E_MAIL_ALTERADO, clienteUpdated.getEmail());
+        assertEquals(ClienteTestFactory.ENDERECO_ALTERADO, clienteUpdated.getEndereco());
 
 
         verify(clienteRepositoryJpa).save(cliente);
@@ -55,14 +55,14 @@ class AlterarClienteServiceTest {
     }
 
     @Test
-    void shouldReturnCustomerNotFoundException() {
-        var cliente = ClienteTestFactory.oneCustomer();
+    void deveRetornarClienteNaoEncontratoException() {
+        var cliente = ClienteTestFactory.umCliente();
 
         Mockito.doThrow(new ClienteNaoEncontradoException())
                 .when(clienteRepositoryJpa)
                 .findByIdOrThrowNotFound(cliente.getId());
 
-        var thrown = catchThrowable(() -> alterarClienteService.handle(ClienteTestFactory.onUpdateCustomerCommand(cliente.getId())));
+        var thrown = catchThrowable(() -> alterarClienteService.handle(ClienteTestFactory.umAlterarClienteCommand(cliente.getId())));
         assertThat(thrown).isInstanceOf(ClienteNaoEncontradoException.class);
     }
 }

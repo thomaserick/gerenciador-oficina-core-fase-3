@@ -6,7 +6,7 @@ import com.fiap.pj.core.cliente.domain.Cliente;
 import com.fiap.pj.core.cliente.util.factory.ClienteTestFactory;
 import com.fiap.pj.core.veiculo.adapter.out.db.VeiculoRepositoryJpa;
 import com.fiap.pj.core.veiculo.exception.VeiculoExceptions.VeiucloPlacaDuplicadaException;
-import com.fiap.pj.core.veiculo.util.factory.VehicleTestFactory;
+import com.fiap.pj.core.veiculo.util.factory.VeiculoTestFactory;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -34,13 +34,13 @@ class AdicionarVeiculoClienteServiceTest {
     private VeiculoRepositoryJpa veiculoRepositoryJpa;
 
     @InjectMocks
-    private AdicionarVeiculoClienteService addVehicleToCustomerService;
+    private AdicionarVeiculoClienteService adicionarVeiculoClienteService;
 
     @Test
-    void shouldAdicionarVeiculoToCustomer() {
-        var cliente = ClienteTestFactory.oneCustomer();
+    void deveAdicionarVeiculoAoCliente() {
+        var cliente = ClienteTestFactory.umCliente();
         when(clienteRepositoryJpa.findByIdOrThrowNotFound(cliente.getId())).thenReturn(cliente);
-        addVehicleToCustomerService.handle(VehicleTestFactory.oneAddVehicleToCustomerCommand(cliente.getId()));
+        adicionarVeiculoClienteService.handle(VeiculoTestFactory.umAdicionarVeiculoClienteCommand(cliente.getId()));
 
         verify(clienteRepositoryJpa).save(clienteArgumentCaptor.capture());
         Cliente clienteUpdated = clienteArgumentCaptor.getValue();
@@ -48,17 +48,17 @@ class AdicionarVeiculoClienteServiceTest {
         assertNotNull(clienteUpdated);
         var veiculo = clienteUpdated.getVeiculos().stream().findFirst().orElse(null);
         assertNotNull(veiculo);
-        assertEquals(VehicleTestFactory.PLATE, veiculo.getPlaca());
-        assertEquals(VehicleTestFactory.MAKE, veiculo.getMarca());
-        assertEquals(VehicleTestFactory.MODEL, veiculo.getModelo());
-        assertEquals(VehicleTestFactory.YEAR, veiculo.getAno());
+        assertEquals(VeiculoTestFactory.PLACA, veiculo.getPlaca());
+        assertEquals(VeiculoTestFactory.MARCA, veiculo.getMarca());
+        assertEquals(VeiculoTestFactory.MODELO, veiculo.getModelo());
+        assertEquals(VeiculoTestFactory.ANO, veiculo.getAno());
     }
 
     @Test
-    void shouldReturnVehiclePlateDuplicateException() {
-        var veiculo = VehicleTestFactory.oneVehicle(ClienteTestFactory.ID);
+    void deveRetonarVeiucloPlacaDuplicadaException() {
+        var veiculo = VeiculoTestFactory.umVeiculo(ClienteTestFactory.ID);
         Mockito.when(veiculoRepositoryJpa.existsByPlaca(veiculo.getPlaca())).thenReturn(true);
-        var thrown = catchThrowable(() -> addVehicleToCustomerService.handle(VehicleTestFactory.oneAddVehicleToCustomerCommand(ClienteTestFactory.ID)));
+        var thrown = catchThrowable(() -> adicionarVeiculoClienteService.handle(VeiculoTestFactory.umAdicionarVeiculoClienteCommand(ClienteTestFactory.ID)));
         assertThat(thrown).isInstanceOf(VeiucloPlacaDuplicadaException.class);
     }
 

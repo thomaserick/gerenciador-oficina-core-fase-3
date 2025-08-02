@@ -3,7 +3,7 @@ package com.fiap.pj.core.usuario.app;
 
 import com.fiap.pj.core.usuario.adapter.in.api.request.ListarUsuarioRequest;
 import com.fiap.pj.core.usuario.adapter.in.api.response.UsuarioReponse;
-import com.fiap.pj.core.usuario.domain.UserDomainRepository;
+import com.fiap.pj.core.usuario.domain.UsuarioDomainRepository;
 import com.fiap.pj.core.usuario.usecase.ListarUsuarioUseCase;
 import com.fiap.pj.infra.api.Slice;
 import jakarta.transaction.Transactional;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class ListarUsuariorService implements ListarUsuarioUseCase {
 
-    private final UserDomainRepository repository;
+    private final UsuarioDomainRepository repository;
 
     @Override
     public Slice<UsuarioReponse> handle(ListarUsuarioRequest request) {

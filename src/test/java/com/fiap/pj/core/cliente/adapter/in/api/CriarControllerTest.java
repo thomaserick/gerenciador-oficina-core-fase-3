@@ -16,8 +16,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static com.fiap.pj.core.cliente.util.factory.ClienteTestFactory.onCrateCustomerCNPJCommand;
-import static com.fiap.pj.core.cliente.util.factory.ClienteTestFactory.onCrateCustomerCommand;
+import static com.fiap.pj.core.cliente.util.factory.ClienteTestFactory.umCriarClienteCNPJCommand;
+import static com.fiap.pj.core.cliente.util.factory.ClienteTestFactory.umCriarClienteCommand;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -38,23 +38,23 @@ class CriarControllerTest {
     }
 
     @Test
-    void shouldCreateCustomer() throws Exception {
+    void deveCriarCliente() throws Exception {
 
-        Mockito.when(criarClienteUserCase.handle(Mockito.any(CriarClienteCommand.class))).thenReturn(ClienteTestFactory.oneCustomer());
+        Mockito.when(criarClienteUserCase.handle(Mockito.any(CriarClienteCommand.class))).thenReturn(ClienteTestFactory.umCliente());
 
         mock.perform(post(
                 TestUtils.buildURL(ClienteController.PATH))
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(TestUtils.objectToJson(onCrateCustomerCommand()))).andExpect(status().is2xxSuccessful());
+                .content(TestUtils.objectToJson(umCriarClienteCommand()))).andExpect(status().is2xxSuccessful());
     }
 
     @Test
-    void shouldCreateCustomerWithCNPJ() throws Exception {
-        Mockito.when(criarClienteUserCase.handle(Mockito.any(CriarClienteCommand.class))).thenReturn(ClienteTestFactory.oneCustomerCNPJ());
+    void deveCriarClienteComCnpj() throws Exception {
+        Mockito.when(criarClienteUserCase.handle(Mockito.any(CriarClienteCommand.class))).thenReturn(ClienteTestFactory.umClienteCNPJ());
         mock.perform(post(
                 TestUtils.buildURL(ClienteController.PATH))
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(TestUtils.objectToJson(onCrateCustomerCNPJCommand()))).andExpect(status().is2xxSuccessful());
+                .content(TestUtils.objectToJson(umCriarClienteCNPJCommand()))).andExpect(status().is2xxSuccessful());
 
     }
 

@@ -44,4 +44,10 @@ public interface ClienteControllerOpenApi {
     Slice<ClienteResponse> listarCliente(@ParameterObject ListarClienteRequest filterRequest, @ParameterObject Pageable pageable);
 
 
+    @Operation(description = "Excluir um Cliente", method = "POST")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Cliente excluido com sucesso."),
+            @ApiResponse(responseCode = "400", description = "O  Cliente não pode ser excluido.")})
+    ResponseEntity<Void> excluirCliente(@PathVariable UUID id);
+
+
 }

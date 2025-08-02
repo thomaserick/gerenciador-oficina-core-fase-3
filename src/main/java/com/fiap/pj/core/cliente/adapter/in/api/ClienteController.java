@@ -6,11 +6,13 @@ import com.fiap.pj.core.cliente.adapter.in.api.response.ClienteResponse;
 import com.fiap.pj.core.cliente.usecase.AlterarClienteUserCase;
 import com.fiap.pj.core.cliente.usecase.AtivarClienteUserCase;
 import com.fiap.pj.core.cliente.usecase.CriarClienteUserCase;
+import com.fiap.pj.core.cliente.usecase.ExcluirClienteUserCase;
 import com.fiap.pj.core.cliente.usecase.InativarClienteUserCase;
 import com.fiap.pj.core.cliente.usecase.ListarClienteUseCase;
 import com.fiap.pj.core.cliente.usecase.command.AlterarClienteCommand;
 import com.fiap.pj.core.cliente.usecase.command.AtivarClienteCommand;
 import com.fiap.pj.core.cliente.usecase.command.CriarClienteCommand;
+import com.fiap.pj.core.cliente.usecase.command.ExcluirClienteCommand;
 import com.fiap.pj.core.cliente.usecase.command.InativarClienteCommand;
 import com.fiap.pj.core.sk.web.ResponseEntityUtils;
 import com.fiap.pj.infra.api.Slice;
@@ -19,6 +21,7 @@ import lombok.AllArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,6 +44,7 @@ public class ClienteController implements ClienteControllerOpenApi {
     private final InativarClienteUserCase inativarClienteUserCase;
     private final AlterarClienteUserCase alterarClienteUserCase;
     private final ListarClienteUseCase listarClienteUseCase;
+    private final ExcluirClienteUserCase excluirClienteUserCase;
 
 
     @Override
@@ -77,6 +81,13 @@ public class ClienteController implements ClienteControllerOpenApi {
     public Slice<ClienteResponse> listarCliente(@ParameterObject ListarClienteRequest filterRequest, @ParameterObject Pageable pageable) {
         filterRequest.setPageable(pageable);
         return listarClienteUseCase.handle(filterRequest);
+    }
+
+    @Override
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> excluirCliente(@PathVariable UUID id) {
+        excluirClienteUserCase.handle(new ExcluirClienteCommand(id));
+        return ResponseEntity.ok().build();
     }
 
 

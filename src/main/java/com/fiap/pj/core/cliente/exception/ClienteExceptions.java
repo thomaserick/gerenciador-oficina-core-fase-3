@@ -15,4 +15,10 @@ public class ClienteExceptions {
             super("Documento de Identificacão Duplicado.");
         }
     }
+
+    public static class ClienteComRelacionamentoException extends RuntimeException {
+        public ClienteComRelacionamentoException() {
+            super("Cliente com relacionamento, não permite excluir.");
+        }
+    }
 }

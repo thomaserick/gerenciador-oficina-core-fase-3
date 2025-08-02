@@ -1,7 +1,7 @@
 CREATE TABLE veiculos
 (
     id           UUID            NOT NULL,
-    cliente_id   UUID            NOT NULL,
+    cliente_id   UUID,
     placa        VARCHAR(12)     NOT NULL,
     modelo       VARCHAR(64),
     marca        VARCHAR(64),

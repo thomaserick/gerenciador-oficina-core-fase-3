@@ -4,11 +4,6 @@ public class VeiculoExceptions {
     private VeiculoExceptions() {
     }
 
-    public static class VeiculoNaoEntradoException extends RuntimeException {
-        public VeiculoNaoEntradoException() {
-            super("Veículo não encontrado.");
-        }
-    }
 
     public static class VeiculoNaoPertenceAoClienteException extends RuntimeException {
         public VeiculoNaoPertenceAoClienteException() {

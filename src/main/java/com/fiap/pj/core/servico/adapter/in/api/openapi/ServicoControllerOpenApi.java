@@ -44,4 +44,10 @@ public interface ServicoControllerOpenApi {
     @Operation(description = "Retorna uma lista de servico.", method = "GET")
     Slice<ServicoResponse> listarServico(@ParameterObject ListarServicoRequest filterRequest, @ParameterObject Pageable pageable);
 
+
+    @Operation(description = "Excluir um servico", method = "POST")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Servico excluido com sucesso."),
+            @ApiResponse(responseCode = "400", description = "O  Servico não pode ser excluido.")})
+    ResponseEntity<Void> excluirServico(@PathVariable UUID id);
+
 }

@@ -6,11 +6,13 @@ import com.fiap.pj.core.servico.adapter.in.api.response.ServicoResponse;
 import com.fiap.pj.core.servico.usecase.AlterarServicoUseCase;
 import com.fiap.pj.core.servico.usecase.AtivarServicoUserCase;
 import com.fiap.pj.core.servico.usecase.CriarServicoUseCase;
+import com.fiap.pj.core.servico.usecase.ExcluirServicoUserCase;
 import com.fiap.pj.core.servico.usecase.InativarServicoUserCase;
 import com.fiap.pj.core.servico.usecase.ListarServicoUseCase;
 import com.fiap.pj.core.servico.usecase.command.AlterarServicoCommand;
 import com.fiap.pj.core.servico.usecase.command.AtivarServicoCommand;
 import com.fiap.pj.core.servico.usecase.command.CriarServicoCommand;
+import com.fiap.pj.core.servico.usecase.command.ExcluirServicoCommand;
 import com.fiap.pj.core.servico.usecase.command.InativarServicoCommand;
 import com.fiap.pj.core.sk.web.ResponseEntityUtils;
 import com.fiap.pj.infra.api.Slice;
@@ -19,6 +21,7 @@ import lombok.AllArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,6 +44,7 @@ public class ServicoController implements ServicoControllerOpenApi {
     private final AtivarServicoUserCase ativarServicoUserCase;
     private final InativarServicoUserCase inativarServicoUserCase;
     private final AlterarServicoUseCase alterarServicoUseCase;
+    private final ExcluirServicoUserCase excluirServicoUserCase;
 
     @Override
     @PostMapping
@@ -77,6 +81,13 @@ public class ServicoController implements ServicoControllerOpenApi {
     public Slice<ServicoResponse> listarServico(@ParameterObject ListarServicoRequest filterRequest, @ParameterObject Pageable pageable) {
         filterRequest.setPageable(pageable);
         return listarServicoUseCase.handle(filterRequest);
+    }
+
+    @Override
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> excluirServico(@PathVariable UUID id) {
+        excluirServicoUserCase.handle(new ExcluirServicoCommand(id));
+        return ResponseEntity.ok().build();
     }
 
 }

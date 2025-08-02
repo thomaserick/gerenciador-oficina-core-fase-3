@@ -15,5 +15,12 @@ public class ServicoExceptions {
             super("Servico inativo, não permite alterar.");
         }
     }
+
+    public static class ServicoComRelacionamentoException extends RuntimeException {
+        public ServicoComRelacionamentoException() {
+            super("Servico com relacionamento, não permite excluir.");
+        }
+    }
+
 }
 

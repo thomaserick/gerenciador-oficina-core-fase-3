@@ -1,0 +1,10 @@
+package com.fiap.pj.core.servico.domain;
+
+
+import com.fiap.pj.infra.jpa.BaseCrudRepository;
+
+import java.util.UUID;
+
+public interface ServicoDomainRepository extends BaseCrudRepository<Servico, UUID> {
+
+}

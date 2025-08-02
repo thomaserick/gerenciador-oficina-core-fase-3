@@ -9,4 +9,11 @@ public class UsuarioExceptions {
             super("Usuário não encontrado.");
         }
     }
+
+
+    public static class UsuarioComRelacionamentoException extends RuntimeException {
+        public UsuarioComRelacionamentoException() {
+            super("Usuário com relacionamento, não permite excluir.");
+        }
+    }
 }

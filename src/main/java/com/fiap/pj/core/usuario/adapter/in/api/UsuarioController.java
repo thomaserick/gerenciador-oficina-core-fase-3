@@ -7,11 +7,13 @@ import com.fiap.pj.core.usuario.adapter.in.api.response.UsuarioReponse;
 import com.fiap.pj.core.usuario.usecase.AlterarUsuarioUseCase;
 import com.fiap.pj.core.usuario.usecase.AtivarUsuarioUseCase;
 import com.fiap.pj.core.usuario.usecase.CriarUsuarioUseCase;
+import com.fiap.pj.core.usuario.usecase.ExcluirUsuarioUseCase;
 import com.fiap.pj.core.usuario.usecase.InativarUsuarioUseCase;
 import com.fiap.pj.core.usuario.usecase.ListarUsuarioUseCase;
 import com.fiap.pj.core.usuario.usecase.command.AlterarUsuarioCommand;
 import com.fiap.pj.core.usuario.usecase.command.AtivarUsuarioCommand;
 import com.fiap.pj.core.usuario.usecase.command.CriarUsuarioCommand;
+import com.fiap.pj.core.usuario.usecase.command.ExcluirUsuarioCommand;
 import com.fiap.pj.core.usuario.usecase.command.InativarUsuarioCommand;
 import com.fiap.pj.infra.api.Slice;
 import jakarta.validation.Valid;
@@ -19,6 +21,7 @@ import lombok.AllArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,11 +39,12 @@ public class UsuarioController implements UsuarioControllerOpenApi {
 
     public static final String PATH = "v1/usuarios";
 
-    private CriarUsuarioUseCase criarUsuarioUseCase;
-    private InativarUsuarioUseCase inativarUsuarioUseCase;
-    private AtivarUsuarioUseCase ativarUsuarioUseCase;
-    private AlterarUsuarioUseCase alterarUsuarioUseCase;
-    private ListarUsuarioUseCase listarUsuarioUseCase;
+    private final CriarUsuarioUseCase criarUsuarioUseCase;
+    private final InativarUsuarioUseCase inativarUsuarioUseCase;
+    private final AtivarUsuarioUseCase ativarUsuarioUseCase;
+    private final AlterarUsuarioUseCase alterarUsuarioUseCase;
+    private final ListarUsuarioUseCase listarUsuarioUseCase;
+    private final ExcluirUsuarioUseCase excluirUsuarioUseCase;
 
     @PostMapping
     public ResponseEntity<Void> criarUsuario(@Valid @RequestBody CriarUsuarioCommand cmd) {
@@ -73,6 +77,13 @@ public class UsuarioController implements UsuarioControllerOpenApi {
     public Slice<UsuarioReponse> listarUsuario(@ParameterObject ListarUsuarioRequest filterRequest, @ParameterObject Pageable pageable) {
         filterRequest.setPageable(pageable);
         return listarUsuarioUseCase.handle(filterRequest);
+    }
+
+    @Override
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> excluirUsuario(@PathVariable UUID id) {
+        excluirUsuarioUseCase.handle(new ExcluirUsuarioCommand(id));
+        return ResponseEntity.ok().build();
     }
 
 

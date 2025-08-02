@@ -1,6 +1,7 @@
 package com.fiap.pj.core.servico.domain;
 
 
+import com.fiap.pj.core.servico.exception.ServicoExceptions.StatusServicoNaoPermiteAlterarException;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -39,5 +40,14 @@ public class Servico {
 
     public void inativar() {
         this.ativo = false;
+    }
+
+    public void alterar(String descricao, BigDecimal preco, String observacao) {
+        if (!this.ativo) {
+            throw new StatusServicoNaoPermiteAlterarException();
+        }
+        this.descricao = descricao;
+        this.preco = preco;
+        this.observacao = observacao;
     }
 }

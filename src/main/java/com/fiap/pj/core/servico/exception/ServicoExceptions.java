@@ -9,4 +9,11 @@ public class ServicoExceptions {
             super("Servico não encontrado.");
         }
     }
+
+    public static class StatusServicoNaoPermiteAlterarException extends RuntimeException {
+        public StatusServicoNaoPermiteAlterarException() {
+            super("Servico inativo, não permite alterar.");
+        }
+    }
 }
+

@@ -58,7 +58,7 @@ class AlterarUsuarioServiceTest {
     }
 
     @Test
-    void shouldReturnUserNotFoundException() {
+    void deveRetornarUsuarioNaoEncontratoException() {
         var user = UserTestFactory.oneUser();
 
         Mockito.doThrow(new UsuarioNaoEncontradoException())

@@ -2,6 +2,7 @@ package com.fiap.pj.core.servico.adapter.in.api.openapi;
 
 import com.fiap.pj.core.servico.adapter.in.api.request.ListarServicoRequest;
 import com.fiap.pj.core.servico.adapter.in.api.response.ServicoResponse;
+import com.fiap.pj.core.servico.usecase.command.AlterarServicoCommand;
 import com.fiap.pj.core.servico.usecase.command.CriarServicoCommand;
 import com.fiap.pj.infra.api.Slice;
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,6 +33,12 @@ public interface ServicoControllerOpenApi {
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Servico Ativado com sucesso."),
             @ApiResponse(responseCode = "400", description = "O  Servico não pode ser ativado.")})
     ResponseEntity<Void> ativarServico(@PathVariable UUID id);
+
+
+    @Operation(description = "Alterar um  Servico", method = "PUT")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Servico alterado com sucesso."),
+            @ApiResponse(responseCode = "400", description = "O  Servico não pode ser alterado.")})
+    ResponseEntity<Void> alterarServico(@Valid @PathVariable UUID id, @RequestBody AlterarServicoCommand cmd);
 
 
     @Operation(description = "Retorna uma lista de servico.", method = "GET")

@@ -4,6 +4,7 @@ import com.fiap.pj.core.cliente.adapter.in.api.request.ListarClienteRequest;
 import com.fiap.pj.core.cliente.adapter.in.api.response.ClienteResponse;
 import com.fiap.pj.core.cliente.usecase.command.AlterarClienteCommand;
 import com.fiap.pj.core.cliente.usecase.command.CriarClienteCommand;
+import com.fiap.pj.core.sk.web.ResponseEntityUtils.ResponseId;
 import com.fiap.pj.infra.api.Slice;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -22,7 +23,7 @@ public interface ClienteControllerOpenApi {
     @Operation(description = "Cria um novo Cliente", method = "POST")
     @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "Cliente criado com sucesso."),
             @ApiResponse(responseCode = "400", description = "O  Cliente não pode ser criado.")})
-    ResponseEntity<Void> criarCliente(@Valid @RequestBody CriarClienteCommand cmd);
+    ResponseEntity<ResponseId> criarCliente(@Valid @RequestBody CriarClienteCommand cmd);
 
     @Operation(description = "Alterar um  Cliente", method = "PUT")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Cliente alterado com sucesso."),

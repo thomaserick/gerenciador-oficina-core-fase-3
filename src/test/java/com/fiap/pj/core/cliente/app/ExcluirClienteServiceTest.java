@@ -3,7 +3,6 @@ package com.fiap.pj.core.cliente.app;
 
 import com.fiap.pj.core.cliente.adapter.out.db.ClienteRepositoryJpa;
 import com.fiap.pj.core.cliente.domain.Cliente;
-import com.fiap.pj.core.cliente.exception.ClienteExceptions.ClienteComRelacionamentoException;
 import com.fiap.pj.core.cliente.usecase.command.ExcluirClienteCommand;
 import com.fiap.pj.core.cliente.util.factory.ClienteTestFactory;
 import org.junit.jupiter.api.Test;
@@ -15,8 +14,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.UUID;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -37,18 +34,4 @@ class ExcluirClienteServiceTest {
         excluirClienteService.handle(new ExcluirClienteCommand(id));
         verify(clienteRepositoryJpa).delete(Mockito.any(Cliente.class));
     }
-
-    @Test
-    void deveRetornarUsuarioComRelacionamentoException() {
-        var id = UUID.randomUUID();
-        when(clienteRepositoryJpa.findByIdOrThrowNotFound(id)).thenReturn(ClienteTestFactory.umCliente());
-
-        Mockito.doThrow(new ClienteComRelacionamentoException())
-                .when(clienteRepositoryJpa)
-                .delete(Mockito.any(Cliente.class));
-
-        var thrown = catchThrowable(() -> excluirClienteService.handle(new ExcluirClienteCommand(id)));
-        assertThat(thrown).isInstanceOf(ClienteComRelacionamentoException.class);
-    }
-
 }

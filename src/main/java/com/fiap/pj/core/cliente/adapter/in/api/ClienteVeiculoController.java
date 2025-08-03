@@ -2,6 +2,7 @@ package com.fiap.pj.core.cliente.adapter.in.api;
 
 import com.fiap.pj.core.cliente.adapter.in.api.openapi.ClienteVeiculoControllerOpenApi;
 import com.fiap.pj.core.sk.web.ResponseEntityUtils;
+import com.fiap.pj.core.sk.web.ResponseEntityUtils.ResponseId;
 import com.fiap.pj.core.veiculo.usecase.AdicionarVeiculoClienteUseCase;
 import com.fiap.pj.core.veiculo.usecase.command.AdicionarVeiculoClienteCommand;
 import lombok.AllArgsConstructor;
@@ -25,9 +26,9 @@ public class ClienteVeiculoController implements ClienteVeiculoControllerOpenApi
 
     @Override
     @PostMapping
-    public ResponseEntity<Void> adicionarVeiculo(@PathVariable UUID id, @RequestBody AdicionarVeiculoClienteCommand cmd) {
+    public ResponseEntity<ResponseId> adicionarVeiculo(@PathVariable UUID id, @RequestBody AdicionarVeiculoClienteCommand cmd) {
         var veiculo = adicionarVeiculoClienteUseCase.handle(cmd.comClienteId(id));
-        return ResponseEntityUtils.create(getClass(), veiculo.getId());
+        return ResponseEntityUtils.ok(veiculo.getId());
     }
 
 }

@@ -5,12 +5,14 @@ import com.fiap.pj.core.cliente.adapter.in.api.ClienteVeiculoController;
 import com.fiap.pj.core.cliente.util.factory.ClienteTestFactory;
 import com.fiap.pj.core.util.TestUtils;
 import com.fiap.pj.core.veiculo.usecase.AdicionarVeiculoClienteUseCase;
+import com.fiap.pj.core.veiculo.usecase.command.AdicionarVeiculoClienteCommand;
 import com.fiap.pj.core.veiculo.util.factory.VeiculoTestFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -38,8 +40,9 @@ class VeiculoControllerTest {
 
     @Test
     void deveAdicionarVeiculoAoCliente() throws Exception {
+        Mockito.when(adicionarVeiculoClienteUseCase.handle(Mockito.any(AdicionarVeiculoClienteCommand.class))).thenReturn(VeiculoTestFactory.umVeiculo(ClienteTestFactory.ID));
         mock.perform(post(
-                TestUtils.buildURL(ClienteVeiculoController.PATH.replace("{id}", VeiculoTestFactory.ID.toString())))
+                TestUtils.buildURL(ClienteVeiculoController.PATH.replace("{id}", ClienteTestFactory.ID.toString())))
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(TestUtils.objectToJson(umAdicionarVeiculoClienteCommand(ClienteTestFactory.ID)))).andExpect(status().is2xxSuccessful());
     }

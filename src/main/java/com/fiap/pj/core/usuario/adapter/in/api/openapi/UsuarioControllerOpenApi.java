@@ -1,5 +1,6 @@
 package com.fiap.pj.core.usuario.adapter.in.api.openapi;
 
+import com.fiap.pj.core.sk.web.ResponseEntityUtils.ResponseId;
 import com.fiap.pj.core.usuario.adapter.in.api.request.ListarUsuarioRequest;
 import com.fiap.pj.core.usuario.adapter.in.api.response.UsuarioReponse;
 import com.fiap.pj.core.usuario.usecase.command.AlterarUsuarioCommand;
@@ -22,7 +23,7 @@ public interface UsuarioControllerOpenApi {
     @Operation(description = "Cria um novo usuário", method = "POST")
     @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "Usuario criado com sucesso."),
             @ApiResponse(responseCode = "400", description = "O  Usuário não pode ser criado.")})
-    ResponseEntity<Void> criarUsuario(@Valid @RequestBody CriarUsuarioCommand cmd);
+    ResponseEntity<ResponseId> criarUsuario(@Valid @RequestBody CriarUsuarioCommand cmd);
 
 
     @Operation(description = "Alterar um  usuário", method = "PUT")

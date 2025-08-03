@@ -8,6 +8,7 @@ import com.fiap.pj.core.orcamento.usecase.command.AlterarOrcamentoCommand;
 import com.fiap.pj.core.orcamento.usecase.command.CriarOrcamentoCommand;
 import com.fiap.pj.core.orcamento.usecase.command.ReprovarOrcamentoCommand;
 import com.fiap.pj.core.sk.web.ResponseEntityUtils;
+import com.fiap.pj.core.sk.web.ResponseEntityUtils.ResponseId;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +35,7 @@ public class OrcamentoController implements OrcamentoControllerOpenApi {
 
     @Override
     @PostMapping
-    public ResponseEntity<Void> criarOrcamento(@Valid @RequestBody CriarOrcamentoCommand cmd) {
+    public ResponseEntity<ResponseId> criarOrcamento(@Valid @RequestBody CriarOrcamentoCommand cmd) {
         var orcamento = criarOrcamentoUseCase.handle(cmd);
         return ResponseEntityUtils.create(getClass(), orcamento.getId());
     }

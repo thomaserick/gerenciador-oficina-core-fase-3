@@ -1,9 +1,11 @@
 package com.fiap.pj.core.usuario.adapter.in.api;
 
 import com.fiap.pj.core.sk.web.ResponseEntityUtils;
+import com.fiap.pj.core.sk.web.ResponseEntityUtils.ResponseId;
 import com.fiap.pj.core.usuario.adapter.in.api.openapi.UsuarioControllerOpenApi;
 import com.fiap.pj.core.usuario.adapter.in.api.request.ListarUsuarioRequest;
 import com.fiap.pj.core.usuario.adapter.in.api.response.UsuarioReponse;
+import com.fiap.pj.core.usuario.exception.UsuarioExceptions.UsuarioComRelacionamentoException;
 import com.fiap.pj.core.usuario.usecase.AlterarUsuarioUseCase;
 import com.fiap.pj.core.usuario.usecase.AtivarUsuarioUseCase;
 import com.fiap.pj.core.usuario.usecase.CriarUsuarioUseCase;
@@ -19,6 +21,7 @@ import com.fiap.pj.infra.api.Slice;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -47,7 +50,7 @@ public class UsuarioController implements UsuarioControllerOpenApi {
     private final ExcluirUsuarioUseCase excluirUsuarioUseCase;
 
     @PostMapping
-    public ResponseEntity<Void> criarUsuario(@Valid @RequestBody CriarUsuarioCommand cmd) {
+    public ResponseEntity<ResponseId> criarUsuario(@Valid @RequestBody CriarUsuarioCommand cmd) {
         var usuario = criarUsuarioUseCase.handle(cmd);
         return ResponseEntityUtils.create(getClass(), usuario.getId());
     }
@@ -82,7 +85,11 @@ public class UsuarioController implements UsuarioControllerOpenApi {
     @Override
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> excluirUsuario(@PathVariable UUID id) {
-        excluirUsuarioUseCase.handle(new ExcluirUsuarioCommand(id));
+        try {
+            excluirUsuarioUseCase.handle(new ExcluirUsuarioCommand(id));
+        } catch (DataIntegrityViolationException e) {
+            throw new UsuarioComRelacionamentoException();
+        }
         return ResponseEntity.ok().build();
     }
 

@@ -3,6 +3,7 @@ package com.fiap.pj.core.cliente.adapter.in.api;
 import com.fiap.pj.core.cliente.adapter.in.api.openapi.ClienteControllerOpenApi;
 import com.fiap.pj.core.cliente.adapter.in.api.request.ListarClienteRequest;
 import com.fiap.pj.core.cliente.adapter.in.api.response.ClienteResponse;
+import com.fiap.pj.core.cliente.exception.ClienteExceptions.ClienteComRelacionamentoException;
 import com.fiap.pj.core.cliente.usecase.AlterarClienteUserCase;
 import com.fiap.pj.core.cliente.usecase.AtivarClienteUserCase;
 import com.fiap.pj.core.cliente.usecase.CriarClienteUserCase;
@@ -15,10 +16,12 @@ import com.fiap.pj.core.cliente.usecase.command.CriarClienteCommand;
 import com.fiap.pj.core.cliente.usecase.command.ExcluirClienteCommand;
 import com.fiap.pj.core.cliente.usecase.command.InativarClienteCommand;
 import com.fiap.pj.core.sk.web.ResponseEntityUtils;
+import com.fiap.pj.core.sk.web.ResponseEntityUtils.ResponseId;
 import com.fiap.pj.infra.api.Slice;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -49,7 +52,7 @@ public class ClienteController implements ClienteControllerOpenApi {
 
     @Override
     @PostMapping
-    public ResponseEntity<Void> criarCliente(@Valid @RequestBody CriarClienteCommand cmd) {
+    public ResponseEntity<ResponseId> criarCliente(@Valid @RequestBody CriarClienteCommand cmd) {
         var cliente = criarClienteUserCase.handle(cmd);
         return ResponseEntityUtils.create(getClass(), cliente.getId());
     }
@@ -86,7 +89,11 @@ public class ClienteController implements ClienteControllerOpenApi {
     @Override
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> excluirCliente(@PathVariable UUID id) {
-        excluirClienteUserCase.handle(new ExcluirClienteCommand(id));
+        try {
+            excluirClienteUserCase.handle(new ExcluirClienteCommand(id));
+        } catch (DataIntegrityViolationException e) {
+            throw new ClienteComRelacionamentoException();
+        }
         return ResponseEntity.ok().build();
     }
 

@@ -4,6 +4,7 @@ import com.fiap.pj.core.servico.adapter.in.api.request.ListarServicoRequest;
 import com.fiap.pj.core.servico.adapter.in.api.response.ServicoResponse;
 import com.fiap.pj.core.servico.usecase.command.AlterarServicoCommand;
 import com.fiap.pj.core.servico.usecase.command.CriarServicoCommand;
+import com.fiap.pj.core.sk.web.ResponseEntityUtils.ResponseId;
 import com.fiap.pj.infra.api.Slice;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -22,7 +23,7 @@ public interface ServicoControllerOpenApi {
     @Operation(description = "Cria um novo servico", method = "POST")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Servico criado com sucesso."),
             @ApiResponse(responseCode = "400", description = "O  Servico não pode ser criado.")})
-    ResponseEntity<Void> criarServico(@Valid @RequestBody CriarServicoCommand cmd);
+    ResponseEntity<ResponseId> criarServico(@Valid @RequestBody CriarServicoCommand cmd);
 
     @Operation(description = "Desativar um Servico", method = "POST")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Servico desativado com sucesso."),

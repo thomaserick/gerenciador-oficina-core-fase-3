@@ -16,6 +16,7 @@ import com.fiap.pj.core.servico.usecase.command.CriarServicoCommand;
 import com.fiap.pj.core.servico.usecase.command.ExcluirServicoCommand;
 import com.fiap.pj.core.servico.usecase.command.InativarServicoCommand;
 import com.fiap.pj.core.sk.web.ResponseEntityUtils;
+import com.fiap.pj.core.sk.web.ResponseEntityUtils.ResponseId;
 import com.fiap.pj.infra.api.Slice;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -50,7 +51,7 @@ public class ServicoController implements ServicoControllerOpenApi {
 
     @Override
     @PostMapping
-    public ResponseEntity<Void> criarServico(@Valid @RequestBody CriarServicoCommand cmd) {
+    public ResponseEntity<ResponseId> criarServico(@Valid @RequestBody CriarServicoCommand cmd) {
         var service = criarServicoUseCase.handle(cmd);
         return ResponseEntityUtils.create(getClass(), service.getId());
     }

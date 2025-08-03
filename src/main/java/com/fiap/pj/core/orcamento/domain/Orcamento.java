@@ -1,6 +1,7 @@
 package com.fiap.pj.core.orcamento.domain;
 
 import com.fiap.pj.core.orcamento.domain.enums.OrcamentoStatus;
+import com.fiap.pj.core.orcamento.exception.OrcamentoExceptions.AlterarOrcamentoStatusInvalidoException;
 import com.fiap.pj.core.orcamento.exception.OrcamentoExceptions.ReprovarOrcamentoStatusInvalidoException;
 import com.fiap.pj.core.util.DateTimeUtils;
 import jakarta.persistence.CascadeType;
@@ -69,5 +70,15 @@ public class Orcamento {
             throw new ReprovarOrcamentoStatusInvalidoException();
         }
         this.status = OrcamentoStatus.REPROVADO;
+    }
+
+    public void alterar(String descricao, UUID clienteId, UUID veiculoId, int hodometro) {
+        if (!this.status.isAguardandoAprovacao()) {
+            throw new AlterarOrcamentoStatusInvalidoException();
+        }
+        this.descricao = descricao;
+        this.clienteId = requireNonNull(clienteId);
+        this.veiculoId = requireNonNull(veiculoId);
+        this.hodometro = hodometro;
     }
 }

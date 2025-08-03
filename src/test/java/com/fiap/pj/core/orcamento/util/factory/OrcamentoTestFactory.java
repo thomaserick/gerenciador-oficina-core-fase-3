@@ -4,6 +4,7 @@ import com.fiap.pj.core.cliente.util.factory.ClienteTestFactory;
 import com.fiap.pj.core.orcamento.domain.Orcamento;
 import com.fiap.pj.core.orcamento.domain.OrcamentoItemServico;
 import com.fiap.pj.core.orcamento.domain.enums.OrcamentoStatus;
+import com.fiap.pj.core.orcamento.usecase.command.AlterarOrcamentoCommand;
 import com.fiap.pj.core.orcamento.usecase.command.CriarOrcamentoCommand;
 import com.fiap.pj.core.orcamento.usecase.command.OrcamentoItemServicoCommand;
 import com.fiap.pj.core.orcamento.usecase.command.ReprovarOrcamentoCommand;
@@ -25,6 +26,11 @@ public class OrcamentoTestFactory {
     public static final String DESCRICAO = "Verificar Freios";
     public static final int HODOMENTO = 21052024;
     public static final OrcamentoStatus ORCAMENTO_STATUS = OrcamentoStatus.AGUARDANDO_APROVACAO;
+
+    public static final UUID CLIENTE_ID_ALTERADO = ClienteTestFactory.ID_ALTERADO;
+    public static final UUID VEICULO_ID_ALTERADO = VeiculoTestFactory.ID_ALTERADO;
+    public static final String DESCRICAO_ALTERADO = "Verificar amortecedor";
+    public static final int HODOMENTO_ALTERADO = 9111989;
 
     public static Orcamento umOrcamento() {
         return umOrcamento(ORCAMENTO_STATUS);
@@ -50,6 +56,11 @@ public class OrcamentoTestFactory {
 
     public static CriarOrcamentoCommand umCriarOrcamentoCommand() {
         return new CriarOrcamentoCommand(DESCRICAO, CLIENTE_ID, VEICULO_ID, HODOMENTO, Set.of(umOrcamentoItemServicoCommand()));
+
+    }
+
+    public static AlterarOrcamentoCommand umAlterarOrcamentoCommand(UUID id) {
+        return new AlterarOrcamentoCommand(id, DESCRICAO_ALTERADO, CLIENTE_ID_ALTERADO, VEICULO_ID_ALTERADO, HODOMENTO_ALTERADO, Set.of(umOrcamentoItemServicoCommand()));
     }
 
     public static OrcamentoItemServicoCommand umOrcamentoItemServicoCommand() {

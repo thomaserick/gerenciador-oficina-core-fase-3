@@ -22,7 +22,7 @@ public class AdicionarVeiculoClienteService implements AdicionarVeiculoClienteUs
     private final VeiculoDomainRepository repository;
 
     @Override
-    public void handle(AdicionarVeiculoClienteCommand cmd) {
+    public Veiculo handle(AdicionarVeiculoClienteCommand cmd) {
 
         if (repository.existsByPlaca(cmd.placa())) {
             throw new VeiucloPlacaDuplicadaException();
@@ -41,6 +41,8 @@ public class AdicionarVeiculoClienteService implements AdicionarVeiculoClienteUs
         cliente.adicionarVeiculo(veiculo);
 
         clienteDomainRepository.save(cliente);
+
+        return veiculo;
 
     }
 }

@@ -3,6 +3,7 @@ package com.fiap.pj.core.servico.adapter.in.api;
 import com.fiap.pj.core.servico.adapter.in.api.openapi.ServicoControllerOpenApi;
 import com.fiap.pj.core.servico.adapter.in.api.request.ListarServicoRequest;
 import com.fiap.pj.core.servico.adapter.in.api.response.ServicoResponse;
+import com.fiap.pj.core.servico.exception.ServicoExceptions.ServicoComRelacionamentoException;
 import com.fiap.pj.core.servico.usecase.AlterarServicoUseCase;
 import com.fiap.pj.core.servico.usecase.AtivarServicoUserCase;
 import com.fiap.pj.core.servico.usecase.CriarServicoUseCase;
@@ -19,6 +20,7 @@ import com.fiap.pj.infra.api.Slice;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -86,7 +88,11 @@ public class ServicoController implements ServicoControllerOpenApi {
     @Override
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> excluirServico(@PathVariable UUID id) {
-        excluirServicoUserCase.handle(new ExcluirServicoCommand(id));
+        try {
+            excluirServicoUserCase.handle(new ExcluirServicoCommand(id));
+        } catch (DataIntegrityViolationException e) {
+            throw new ServicoComRelacionamentoException();
+        }
         return ResponseEntity.ok().build();
     }
 

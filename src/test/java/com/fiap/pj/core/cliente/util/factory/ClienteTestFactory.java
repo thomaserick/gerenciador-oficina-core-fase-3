@@ -20,6 +20,7 @@ public class ClienteTestFactory {
     public static final String NUMERO_DOCUMENTO = "82711650030";
     public static final String NUMERO_DOCUMENTO_CNPJ = "09670003000107";
 
+    public static final UUID ID_ALTERADO = UUID.randomUUID();
     public static final String NOME_ALTERADO = "Jack";
     public static final String E_MAIL_ALTERADO = "jack.daniels@gmail.com";
     public static final String TELEFONE_ALTERADO = "11-981020304";
@@ -28,6 +29,10 @@ public class ClienteTestFactory {
 
     public static Cliente umCliente() {
         return new Cliente(ID, NOME, E_MAIL, TELEFONE, ATIVO, ENDERECO, new DocumentoIdentificacao(OrigemDocumento.BRASIL, NUMERO_DOCUMENTO));
+    }
+
+    public static Cliente umClienteAlterado() {
+        return new Cliente(ID_ALTERADO, NOME_ALTERADO, E_MAIL_ALTERADO, TELEFONE_ALTERADO, ATIVO, ENDERECO_ALTERADO, new DocumentoIdentificacao(OrigemDocumento.BRASIL, NUMERO_DOCUMENTO));
     }
 
     public static Cliente umClienteCNPJ() {

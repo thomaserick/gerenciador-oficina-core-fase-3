@@ -1,6 +1,8 @@
 package com.fiap.pj.infra.exception;
 
 import com.fiap.pj.core.cliente.exception.ClienteExceptions.ClienteNaoEncontradoException;
+import com.fiap.pj.core.orcamento.exception.OrcamentoExceptions.OrcamentoNaoEncontradoException;
+import com.fiap.pj.core.servico.exception.ServicoExceptions.ServicoNaoEncontradoException;
 import com.fiap.pj.core.usuario.exception.UsuarioExceptions.UsuarioNaoEncontradoException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +30,9 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({
             UsuarioNaoEncontradoException.class,
-            ClienteNaoEncontradoException.class})
+            ClienteNaoEncontradoException.class,
+            ServicoNaoEncontradoException.class,
+            OrcamentoNaoEncontradoException.class})
     public ResponseEntity<ApiError> notFoundException(RuntimeException ex) {
         ApiError apiError = ApiError
                 .builder()

@@ -16,5 +16,11 @@ public class OrcamentoExceptions {
         }
     }
 
+    public static class AlterarOrcamentoStatusInvalidoException extends RuntimeException {
+        public AlterarOrcamentoStatusInvalidoException() {
+            super("Status do orcamento não permite alterar.");
+        }
+    }
+
 
 }

@@ -1,5 +1,6 @@
 package com.fiap.pj.core.orcamento.adapter.in.api.openapi;
 
+import com.fiap.pj.core.orcamento.usecase.command.AlterarOrcamentoCommand;
 import com.fiap.pj.core.orcamento.usecase.command.CriarOrcamentoCommand;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -21,7 +22,12 @@ public interface OrcamentoControllerOpenApi {
     @Operation(description = "Reprovar Orcamento", method = "POST")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Orcamento criado com sucesso."),
             @ApiResponse(responseCode = "400", description = "O  Orcamento não pode ser criado.")})
-    ResponseEntity<Void> reprovarOrcamento(@Valid @PathVariable UUID id);
+    ResponseEntity<Void> reprovarOrcamento(@PathVariable UUID id);
+
+    @Operation(description = "Alterar Orcamento", method = "PUT")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Orcamento alterado com sucesso."),
+            @ApiResponse(responseCode = "400", description = "O  Orcamento não pode ser alterado.")})
+    ResponseEntity<Void> alterarOrcamento(@PathVariable UUID id, @Valid @RequestBody AlterarOrcamentoCommand cmd);
 
 
 }

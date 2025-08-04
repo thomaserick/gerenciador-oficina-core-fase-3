@@ -1,0 +1,37 @@
+package com.fiap.pj.core.pecaInsumo.adapter.in.api;
+
+import com.fiap.pj.core.util.TestUtils;
+import com.fiap.pj.util.IntegrationTest;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.web.servlet.MockMvc;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@Sql(scripts = {"classpath:db/it/pecas_insumos/create_pecas_insumos.sql"
+}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@IntegrationTest
+class ListarPecaInsumoControllerIT {
+
+    @Autowired
+    private MockMvc mock;
+
+    @Test
+    void deveListarPecasInsumos() throws Exception {
+        mock.perform(get(
+                        TestUtils.buildURL(PecaInsumoController.PATH)).param("nome", "óleo").param("descricao", "motor")
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                ).andExpect(status().isOk())
+                .andExpect(jsonPath("$.hasNext", is(false)))
+                .andExpect(jsonPath("$.items[0].id", is("ace50297-1785-4a7d-ae6d-8ec2dc450af6")))
+                .andExpect(jsonPath("$.items[0].nome", is("Óleo do Motor")))
+                .andExpect(jsonPath("$.items[0].descricao", is("Óleo sintético 5W-30 para motor")))
+                .andExpect(jsonPath("$.items[0].valorUnitario", is(45.50)))
+                .andExpect(jsonPath("$.items[0].quantidadeEstoque", is(10)));
+    }
+} 

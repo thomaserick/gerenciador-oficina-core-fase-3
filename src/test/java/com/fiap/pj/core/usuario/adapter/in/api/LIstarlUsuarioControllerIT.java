@@ -2,10 +2,12 @@ package com.fiap.pj.core.usuario.adapter.in.api;
 
 
 import com.fiap.pj.core.util.TestUtils;
+import com.fiap.pj.infra.helpers.JwtUtil;
 import com.fiap.pj.util.IntegrationTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -23,7 +25,11 @@ class LIstarlUsuarioControllerIT {
     @Autowired
     private MockMvc mock;
 
+    @Autowired
+    private JwtUtil jwtUtil;
+
     @Test
+    @WithMockUser(username = "testuser", roles = {"ADMIN"})
     void deveListarUsuarios() throws Exception {
         mock.perform(get(
                         TestUtils.buildURL(UsuarioController.PATH)).param("nome", "urso").param("ativo", "true")

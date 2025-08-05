@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.ALTER_LAST_NAME;
 import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.ALTER_NAME;
@@ -43,8 +44,9 @@ class AlterarUsuarioServiceTest {
     private AlterarUsuarioService alterarUsuarioService;
 
     @Test
+    @WithMockUser(username = "testuser", roles = {"ADMIN"})
     void deveAlterarUsuario() {
-        when(passwordEncoder.encode(anyString())).thenReturn("1234");
+        when(passwordEncoder.encode(anyString())).thenReturn("4321");
         var user = UserTestFactory.oneUser();
         when(usuarioRepositoryJpa.findByIdOrThrowNotFound(user.getId())).thenReturn(user);
 

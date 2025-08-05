@@ -4,7 +4,6 @@ import com.fiap.pj.core.sk.web.ResponseEntityUtils;
 import com.fiap.pj.core.sk.web.ResponseEntityUtils.ResponseId;
 import com.fiap.pj.core.usuario.adapter.in.api.openapi.UsuarioControllerOpenApi;
 import com.fiap.pj.core.usuario.adapter.in.api.request.ListarUsuarioRequest;
-import com.fiap.pj.core.usuario.adapter.in.api.response.LoginUsuarioResponse;
 import com.fiap.pj.core.usuario.adapter.in.api.response.UsuarioReponse;
 import com.fiap.pj.core.usuario.exception.UsuarioExceptions.UsuarioComRelacionamentoException;
 import com.fiap.pj.core.usuario.usecase.AlterarUsuarioUseCase;
@@ -19,7 +18,6 @@ import com.fiap.pj.core.usuario.usecase.command.AtivarUsuarioCommand;
 import com.fiap.pj.core.usuario.usecase.command.CriarUsuarioCommand;
 import com.fiap.pj.core.usuario.usecase.command.ExcluirUsuarioCommand;
 import com.fiap.pj.core.usuario.usecase.command.InativarUsuarioCommand;
-import com.fiap.pj.core.usuario.usecase.command.LoginUsuarioCommand;
 import com.fiap.pj.infra.api.Slice;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -96,13 +94,4 @@ public class UsuarioController implements UsuarioControllerOpenApi {
         }
         return ResponseEntity.ok().build();
     }
-
-    @Override
-    @PostMapping("/login")
-    public ResponseEntity<LoginUsuarioResponse> loginUsuario(LoginUsuarioCommand cmd) {
-        var login = loginUsuarioUseCase.handle(cmd);
-        return ResponseEntity.ok(login);
-    }
-
-
 }

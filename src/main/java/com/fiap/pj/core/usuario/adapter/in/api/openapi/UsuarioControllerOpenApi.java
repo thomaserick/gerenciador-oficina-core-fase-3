@@ -2,11 +2,9 @@ package com.fiap.pj.core.usuario.adapter.in.api.openapi;
 
 import com.fiap.pj.core.sk.web.ResponseEntityUtils.ResponseId;
 import com.fiap.pj.core.usuario.adapter.in.api.request.ListarUsuarioRequest;
-import com.fiap.pj.core.usuario.adapter.in.api.response.LoginUsuarioResponse;
 import com.fiap.pj.core.usuario.adapter.in.api.response.UsuarioReponse;
 import com.fiap.pj.core.usuario.usecase.command.AlterarUsuarioCommand;
 import com.fiap.pj.core.usuario.usecase.command.CriarUsuarioCommand;
-import com.fiap.pj.core.usuario.usecase.command.LoginUsuarioCommand;
 import com.fiap.pj.infra.api.Slice;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -50,10 +48,5 @@ public interface UsuarioControllerOpenApi {
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Usuario excluido com sucesso."),
             @ApiResponse(responseCode = "400", description = "O  Usuário não pode ser excluido.")})
     ResponseEntity<Void> excluirUsuario(@PathVariable UUID id);
-
-    @Operation(description = "Realiza o login do usuário", method = "POST")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Login realizado com sucesso."),
-            @ApiResponse(responseCode = "401", description = "Credenciais inválidas.")})
-    ResponseEntity<LoginUsuarioResponse> loginUsuario(@RequestBody LoginUsuarioCommand cmd);
 
 }

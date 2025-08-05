@@ -21,7 +21,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @AllArgsConstructor
 public class SecurityConfig {
 
-    public static final String[] ENDPOINT_SWAGGER = {
+    private static final String[] ENDPOINT_SWAGGER = {
             "/swagger-ui/**",
             "/v3/api-docs",
             "/v3/api-docs/**",

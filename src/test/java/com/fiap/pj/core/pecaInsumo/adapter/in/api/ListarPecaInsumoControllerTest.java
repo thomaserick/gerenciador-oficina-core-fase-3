@@ -1,6 +1,7 @@
 package com.fiap.pj.core.pecaInsumo.adapter.in.api;
 
 import com.fiap.pj.core.pecaInsumo.adapter.in.api.request.ListarPecaInsumoRequest;
+import com.fiap.pj.core.pecaInsumo.adapter.in.api.response.PecaInsumoResponse;
 import com.fiap.pj.core.pecaInsumo.usecase.ListarPecaInsumoUseCase;
 import com.fiap.pj.core.util.TestUtils;
 import com.fiap.pj.infra.api.Slice;
@@ -42,10 +43,10 @@ class ListarPecaInsumoControllerTest {
 
     @Test
     void deveListarPecasInsumos() throws Exception {
-        var request = new ListarPecaInsumoRequest("óleo", "motor", PageRequest.of(0, 10));
+        var request = new ListarPecaInsumoRequest("óleo", "motor", null, PageRequest.of(0, 10));
 
         Mockito.when(listarPecaInsumoUseCase.handle(Mockito.any(ListarPecaInsumoRequest.class)))
-                .thenReturn(new Slice<com.fiap.pj.core.pecaInsumo.adapter.in.api.response.PecaInsumoResponse>(false, List.of()));
+                .thenReturn(new Slice<PecaInsumoResponse>(false, List.of()));
 
         mock.perform(get(TestUtils.buildURL(PecaInsumoController.PATH))
                 .param("nome", "óleo")

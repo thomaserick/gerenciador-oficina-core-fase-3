@@ -43,5 +43,6 @@ class AlterarPecaInsumoServiceTest {
         assertEquals(ALTER_NOME, pecaInsumo.getNome());
         assertEquals(ALTER_DESCRICAO, pecaInsumo.getDescricao());
         assertEquals(ALTER_VALOR_UNITARIO, pecaInsumo.getValorUnitario());
+        assertEquals(ALTER_QUANTIDADE_MINIMO_ESTOQUE, pecaInsumo.getQuantidadeMinimoEstoque());
     }
 } 

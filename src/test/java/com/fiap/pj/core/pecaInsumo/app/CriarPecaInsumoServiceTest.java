@@ -37,5 +37,6 @@ class CriarPecaInsumoServiceTest {
         assertEquals(DESCRICAO, pecaInsumo.getDescricao());
         assertEquals(VALOR_UNITARIO, pecaInsumo.getValorUnitario());
         assertEquals(QUANTIDADE_ESTOQUE, pecaInsumo.getQuantidadeEstoque());
+        assertEquals(QUANTIDADE_MINIMO_ESTOQUE, pecaInsumo.getQuantidadeMinimoEstoque());
     }
 } 

@@ -32,7 +32,24 @@ class ListarPecaInsumoServiceTest {
 
     @Test
     void deveListarPecasInsumos() {
-        var request = new ListarPecaInsumoRequest("óleo", "motor", PageRequest.of(0, 10));
+        var request = new ListarPecaInsumoRequest("óleo", "motor", null, PageRequest.of(0, 10));
+
+        var pecaInsumo = PecaInsumoTestFactory.onePecaInsumo();
+        var page = new PageImpl<>(List.of(pecaInsumo));
+        var slice = new Slice<PecaInsumoResponse>(false, List.of());
+
+        when(pecaInsumoRepositoryJpa.findProjectedBy(any(Specification.class), any(PageRequest.class), any(Class.class)))
+                .thenReturn(slice);
+
+        var result = listarPecaInsumoService.handle(request);
+
+        assertNotNull(result);
+        assertEquals(0, result.getItems().size());
+    }
+
+    @Test
+    void deveListarPecasInsumosComEstoqueBaixo() {
+        var request = new ListarPecaInsumoRequest("óleo", "motor", true, PageRequest.of(0, 10));
 
         var pecaInsumo = PecaInsumoTestFactory.onePecaInsumo();
         var page = new PageImpl<>(List.of(pecaInsumo));

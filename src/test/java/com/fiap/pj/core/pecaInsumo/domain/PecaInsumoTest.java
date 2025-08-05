@@ -21,6 +21,7 @@ class PecaInsumoTest {
         assertEquals(DESCRICAO, pecaInsumo.getDescricao());
         assertEquals(VALOR_UNITARIO, pecaInsumo.getValorUnitario());
         assertEquals(QUANTIDADE_ESTOQUE, pecaInsumo.getQuantidadeEstoque());
+        assertEquals(QUANTIDADE_MINIMO_ESTOQUE, pecaInsumo.getQuantidadeMinimoEstoque());
     }
 
     @Test
@@ -52,12 +53,35 @@ class PecaInsumoTest {
         var novoNome = "Óleo Sintético";
         var novaDescricao = "Óleo sintético de alta performance";
         var novoValor = new BigDecimal("55.00");
+        var novoMinimoEstoque = 8;
 
-        pecaInsumo.atualizarDados(novoNome, novaDescricao, novoValor);
+        pecaInsumo.atualizarDados(novoNome, novaDescricao, novoValor, novoMinimoEstoque);
 
         assertEquals(novoNome, pecaInsumo.getNome());
         assertEquals(novaDescricao, pecaInsumo.getDescricao());
         assertEquals(novoValor, pecaInsumo.getValorUnitario());
+        assertEquals(novoMinimoEstoque, pecaInsumo.getQuantidadeMinimoEstoque());
+    }
+
+    @Test
+    @DisplayName("Deve identificar estoque baixo quando quantidade é menor ou igual ao mínimo.")
+    void deveIdentificarEstoqueBaixo() {
+        var pecaInsumo = PecaInsumoTestFactory.onePecaInsumo();
+        
+        // Estoque inicial (10) é maior que o mínimo (5), então não está baixo
+        assertFalse(pecaInsumo.estoqueBaixo());
+        
+        // Estoque igual ao mínimo (5)
+        pecaInsumo.removerEstoque(5);
+        assertTrue(pecaInsumo.estoqueBaixo());
+        
+        // Estoque abaixo do mínimo (4)
+        pecaInsumo.removerEstoque(1);
+        assertTrue(pecaInsumo.estoqueBaixo());
+        
+        // Estoque acima do mínimo (9)
+        pecaInsumo.adicionarEstoque(5);
+        assertFalse(pecaInsumo.estoqueBaixo());
     }
 
     @Nested
@@ -69,7 +93,7 @@ class PecaInsumoTest {
                     () -> new PecaInsumo(PecaInsumoTestFactory.ID,
                             null,
                             DESCRICAO,
-                            VALOR_UNITARIO, QUANTIDADE_ESTOQUE));
+                            VALOR_UNITARIO, QUANTIDADE_ESTOQUE, QUANTIDADE_MINIMO_ESTOQUE));
         }
 
         @Test
@@ -78,7 +102,7 @@ class PecaInsumoTest {
                     () -> new PecaInsumo(PecaInsumoTestFactory.ID,
                             NOME,
                             null,
-                            VALOR_UNITARIO, QUANTIDADE_ESTOQUE));
+                            VALOR_UNITARIO, QUANTIDADE_ESTOQUE, QUANTIDADE_MINIMO_ESTOQUE));
         }
 
         @Test
@@ -87,7 +111,7 @@ class PecaInsumoTest {
                     () -> new PecaInsumo(PecaInsumoTestFactory.ID,
                             NOME,
                             DESCRICAO,
-                            null, QUANTIDADE_ESTOQUE));
+                            null, QUANTIDADE_ESTOQUE, QUANTIDADE_MINIMO_ESTOQUE));
         }
 
         @Test
@@ -96,7 +120,16 @@ class PecaInsumoTest {
                     () -> new PecaInsumo(PecaInsumoTestFactory.ID,
                             NOME,
                             DESCRICAO,
-                            VALOR_UNITARIO, null));
+                            VALOR_UNITARIO, null, QUANTIDADE_MINIMO_ESTOQUE));
+        }
+
+        @Test
+        void deveFalharComQuantidadeMinimoEstoqueInvalida() {
+            assertThrows(NullPointerException.class,
+                    () -> new PecaInsumo(PecaInsumoTestFactory.ID,
+                            NOME,
+                            DESCRICAO,
+                            VALOR_UNITARIO, QUANTIDADE_ESTOQUE, null));
         }
     }
 

@@ -32,13 +32,17 @@ public class PecaInsumo {
     
     @Column(nullable = false)
     private Integer quantidadeEstoque;
+    
+    @Column(nullable = false)
+    private Integer quantidadeMinimoEstoque;
 
-    public PecaInsumo(UUID id, String nome, String descricao, BigDecimal valorUnitario, Integer quantidadeEstoque) {
+    public PecaInsumo(UUID id, String nome, String descricao, BigDecimal valorUnitario, Integer quantidadeEstoque, Integer quantidadeMinimoEstoque) {
         this.id = requireNonNull(id);
         this.nome = requireNonNull(nome);
         this.descricao = requireNonNull(descricao);
         this.valorUnitario = requireNonNull(valorUnitario);
         this.quantidadeEstoque = requireNonNull(quantidadeEstoque);
+        this.quantidadeMinimoEstoque = requireNonNull(quantidadeMinimoEstoque);
     }
 
     public void adicionarEstoque(Integer quantidade) {
@@ -58,9 +62,14 @@ public class PecaInsumo {
         this.quantidadeEstoque -= quantidade;
     }
 
-    public void atualizarDados(String nome, String descricao, BigDecimal valorUnitario) {
+    public void atualizarDados(String nome, String descricao, BigDecimal valorUnitario, Integer quantidadeMinimoEstoque) {
         this.nome = requireNonNull(nome);
         this.descricao = requireNonNull(descricao);
         this.valorUnitario = requireNonNull(valorUnitario);
+        this.quantidadeMinimoEstoque = requireNonNull(quantidadeMinimoEstoque);
+    }
+    
+    public boolean estoqueBaixo() {
+        return this.quantidadeEstoque <= this.quantidadeMinimoEstoque;
     }
 } 

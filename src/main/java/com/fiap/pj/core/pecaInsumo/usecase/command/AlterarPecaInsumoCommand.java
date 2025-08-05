@@ -12,7 +12,7 @@ public class AlterarPecaInsumoCommand extends PecaInsumoCommand {
 
     private UUID id;
 
-    public AlterarPecaInsumoCommand(String nome, String descricao, BigDecimal valorUnitario, Integer quantidadeEstoque) {
-        super(nome, descricao, valorUnitario, quantidadeEstoque);
+    public AlterarPecaInsumoCommand(String nome, String descricao, BigDecimal valorUnitario, Integer quantidadeEstoque, Integer quantidadeMinimoEstoque) {
+        super(nome, descricao, valorUnitario, quantidadeEstoque, quantidadeMinimoEstoque);
     }
 } 

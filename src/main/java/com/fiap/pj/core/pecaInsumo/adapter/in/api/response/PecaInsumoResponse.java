@@ -2,7 +2,7 @@ package com.fiap.pj.core.pecaInsumo.adapter.in.api.response;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonPropertyOrder({"id", "nome", "descricao", "valorUnitario", "quantidadeEstoque"})
+@JsonPropertyOrder({"id", "nome", "descricao", "valorUnitario", "quantidadeEstoque", "quantidadeMinimoEstoque"})
 public interface PecaInsumoResponse {
 
     String getId();
@@ -14,4 +14,6 @@ public interface PecaInsumoResponse {
     String getValorUnitario();
 
     String getQuantidadeEstoque();
+    
+    String getQuantidadeMinimoEstoque();
 } 

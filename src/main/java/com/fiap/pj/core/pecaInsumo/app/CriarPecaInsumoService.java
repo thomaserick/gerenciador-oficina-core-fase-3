@@ -24,7 +24,8 @@ public class CriarPecaInsumoService implements CriarPecaInsumoUseCase {
             cmd.getNome(), 
             cmd.getDescricao(), 
             cmd.getValorUnitario(), 
-            cmd.getQuantidadeEstoque()
+            cmd.getQuantidadeEstoque(),
+            cmd.getQuantidadeMinimoEstoque()
         );
         return repository.save(pecaInsumo);
     }

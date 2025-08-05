@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.UUID;
 
-@Tag(name = "Peças/Insumos", description = "API para gerenciamento de peças e insumos")
+@Tag(name = "pecas-insumos-controller")
 public interface PecaInsumoControllerOpenApi {
 
     @Operation(summary = "Criar peça/insumo", description = "Cria uma nova peça ou insumo")
@@ -24,9 +24,9 @@ public interface PecaInsumoControllerOpenApi {
     @Operation(summary = "Alterar peça/insumo", description = "Altera uma peça ou insumo existente")
     ResponseEntity<Void> alterarPecaInsumo(@PathVariable UUID id, @RequestBody AlterarPecaInsumoCommand cmd);
 
-    @Operation(summary = "Listar peças/insumos", description = "Lista todas as peças e insumos com paginação e filtros")
+    @Operation(summary = "Listar peças/insumos", description = "Lista todas as peças e insumos com paginação e filtros. Use 'estoqueBaixo=true' para filtrar apenas itens com estoque baixo.")
     Slice<PecaInsumoResponse> listarPecaInsumo(
-        @Parameter(description = "Filtros para busca") ListarPecaInsumoRequest filterRequest,
+        @Parameter(description = "Filtros para busca (nome, descricao, estoqueBaixo)") ListarPecaInsumoRequest filterRequest,
         @Parameter(description = "Configurações de paginação") Pageable pageable
     );
 

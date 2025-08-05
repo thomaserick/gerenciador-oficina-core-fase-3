@@ -18,6 +18,7 @@ public class ListarPecaInsumoRequest {
 
     private String nome;
     private String descricao;
+    private Boolean estoqueBaixo;
     @Setter
     @JsonIgnore
     private Pageable pageable;
@@ -33,6 +34,11 @@ public class ListarPecaInsumoRequest {
         if (hasText(this.descricao)) {
             specs = specs.and((root, query, criteriaBuilder) ->
                 criteriaBuilder.like(criteriaBuilder.lower(root.get("descricao")), "%" + this.descricao.toLowerCase() + "%"));
+        }
+
+        if (this.estoqueBaixo != null && this.estoqueBaixo) {
+            specs = specs.and((root, query, criteriaBuilder) ->
+                criteriaBuilder.lessThanOrEqualTo(root.get("quantidadeEstoque"), root.get("quantidadeMinimoEstoque")));
         }
 
         return specs;

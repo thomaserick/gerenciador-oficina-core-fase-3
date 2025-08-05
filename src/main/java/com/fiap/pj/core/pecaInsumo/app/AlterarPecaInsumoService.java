@@ -17,7 +17,7 @@ public class AlterarPecaInsumoService implements AlterarPecaInsumoUseCase {
     @Override
     public void handle(AlterarPecaInsumoCommand cmd) {
         var pecaInsumo = repository.findByIdOrThrowNotFound(cmd.getId());
-        pecaInsumo.atualizarDados(cmd.getNome(), cmd.getDescricao(), cmd.getValorUnitario());
+        pecaInsumo.atualizarDados(cmd.getNome(), cmd.getDescricao(), cmd.getValorUnitario(), cmd.getQuantidadeMinimoEstoque());
         repository.save(pecaInsumo);
     }
 } 

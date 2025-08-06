@@ -52,8 +52,8 @@ public class Usuario {
         this.ativo = ativo;
     }
 
-    public void adicionarPerfils(Collection<Perfil> roles) {
-        this.perfis.addAll(roles);
+    public void adicionarPerfils(Collection<Perfil> perfis) {
+        this.perfis.addAll(perfis);
     }
 
     public void inativar() {
@@ -64,13 +64,13 @@ public class Usuario {
         this.ativo = true;
     }
 
-    public void alterar(String name, String lastName, boolean active, String password, Set<Perfil> roles) {
+    public void alterar(String nome, String sobreNome, boolean ativo, String senha, Set<Perfil> perfis) {
 
-        this.nome = name;
-        this.sobreNome = lastName;
-        this.ativo = active;
-        this.senha = password;
-        alterarPerfis(roles);
+        this.nome = nome;
+        this.sobreNome = sobreNome;
+        this.ativo = ativo;
+        this.senha = senha;
+        alterarPerfis(perfis);
     }
 
     public void alterarPerfis(Set<Perfil> perfis) {

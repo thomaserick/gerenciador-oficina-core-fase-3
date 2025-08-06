@@ -6,6 +6,7 @@ import com.fiap.pj.core.usuario.usecase.AlterarUsuarioUseCase;
 import com.fiap.pj.core.usuario.usecase.command.AlterarUsuarioCommand;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,11 +15,13 @@ import org.springframework.stereotype.Service;
 public class AlterarUsuarioService implements AlterarUsuarioUseCase {
 
     private final UsuarioDomainRepository repository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public void handle(AlterarUsuarioCommand cmd) {
         var usuario = repository.findByIdOrThrowNotFound(cmd.getId());
-        usuario.alterar(cmd.getName(), cmd.getLastName(), cmd.isActive(), cmd.getPassword(), cmd.getRoles());
+        var senha = passwordEncoder.encode(cmd.getSenha());
+        usuario.alterar(cmd.getNome(), cmd.getSobreNome(), cmd.isAtivo(), senha, cmd.getPerfis());
         repository.save(usuario);
     }
 }

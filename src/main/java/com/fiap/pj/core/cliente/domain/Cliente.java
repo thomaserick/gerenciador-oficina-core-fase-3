@@ -61,11 +61,11 @@ public class Cliente {
         this.ativo = false;
     }
 
-    public void alterar(String name, String email, String address, String phone) {
+    public void alterar(String name, String email, String endereco, String telefone) {
         this.nome = name;
         this.email = email;
-        this.endereco = address;
-        this.telefone = phone;
+        this.endereco = endereco;
+        this.telefone = telefone;
     }
 
     public void adicionarVeiculo(Veiculo veiculo) {

@@ -20,7 +20,7 @@ CREATE TABLE orcamentos_servicos
 (
     id            UUID         NOT NULL,
     servico_id    UUID         NOT NULL,
-    orcamento_id  UUID         NOT NULL,
+    orcamento_id  UUID ,
     descricao     VARCHAR(255) NOT NULL,
     preco         NUMERIC      NOT NULL,
     quantidade    NUMERIC      NOT NULL,

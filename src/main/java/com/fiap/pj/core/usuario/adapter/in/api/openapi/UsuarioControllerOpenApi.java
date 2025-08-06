@@ -48,4 +48,5 @@ public interface UsuarioControllerOpenApi {
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Usuario excluido com sucesso."),
             @ApiResponse(responseCode = "400", description = "O  Usuário não pode ser excluido.")})
     ResponseEntity<Void> excluirUsuario(@PathVariable UUID id);
+
 }

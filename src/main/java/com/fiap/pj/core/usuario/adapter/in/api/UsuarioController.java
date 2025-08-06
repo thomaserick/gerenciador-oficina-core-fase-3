@@ -12,6 +12,7 @@ import com.fiap.pj.core.usuario.usecase.CriarUsuarioUseCase;
 import com.fiap.pj.core.usuario.usecase.ExcluirUsuarioUseCase;
 import com.fiap.pj.core.usuario.usecase.InativarUsuarioUseCase;
 import com.fiap.pj.core.usuario.usecase.ListarUsuarioUseCase;
+import com.fiap.pj.core.usuario.usecase.LoginUsuarioUseCase;
 import com.fiap.pj.core.usuario.usecase.command.AlterarUsuarioCommand;
 import com.fiap.pj.core.usuario.usecase.command.AtivarUsuarioCommand;
 import com.fiap.pj.core.usuario.usecase.command.CriarUsuarioCommand;
@@ -48,6 +49,7 @@ public class UsuarioController implements UsuarioControllerOpenApi {
     private final AlterarUsuarioUseCase alterarUsuarioUseCase;
     private final ListarUsuarioUseCase listarUsuarioUseCase;
     private final ExcluirUsuarioUseCase excluirUsuarioUseCase;
+    private final LoginUsuarioUseCase loginUsuarioUseCase;
 
     @PostMapping
     public ResponseEntity<ResponseId> criarUsuario(@Valid @RequestBody CriarUsuarioCommand cmd) {
@@ -92,6 +94,4 @@ public class UsuarioController implements UsuarioControllerOpenApi {
         }
         return ResponseEntity.ok().build();
     }
-
-
 }

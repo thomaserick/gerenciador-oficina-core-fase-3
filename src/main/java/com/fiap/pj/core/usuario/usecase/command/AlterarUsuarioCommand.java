@@ -17,8 +17,8 @@ public class AlterarUsuarioCommand extends UserCommand {
     @JsonIgnore
     private UUID id;
 
-    public AlterarUsuarioCommand(UUID id, String name, String lastName, String email, String password, boolean active, Set<Perfil> roles) {
-        super(name, lastName, email, password, active, roles);
+    public AlterarUsuarioCommand(UUID id, String nome, String sobreNome, String email, String senha, boolean ativo, Set<Perfil> perfis) {
+        super(nome, sobreNome, email, senha, ativo, perfis);
         this.id = id;
     }
 }

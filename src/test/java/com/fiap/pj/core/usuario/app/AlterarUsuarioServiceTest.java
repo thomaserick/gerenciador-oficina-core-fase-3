@@ -13,6 +13,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.ALTER_LAST_NAME;
 import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.ALTER_NAME;
@@ -24,6 +26,7 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -34,11 +37,16 @@ class AlterarUsuarioServiceTest {
     ArgumentCaptor<Usuario> userCaptor;
     @Mock
     private UsuarioRepositoryJpa usuarioRepositoryJpa;
+
+    @Mock
+    private PasswordEncoder passwordEncoder;
     @InjectMocks
     private AlterarUsuarioService alterarUsuarioService;
 
     @Test
+    @WithMockUser(username = "testuser", roles = {"ADMIN"})
     void deveAlterarUsuario() {
+        when(passwordEncoder.encode(anyString())).thenReturn("4321");
         var user = UserTestFactory.oneUser();
         when(usuarioRepositoryJpa.findByIdOrThrowNotFound(user.getId())).thenReturn(user);
 

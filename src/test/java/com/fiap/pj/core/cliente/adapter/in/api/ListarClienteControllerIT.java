@@ -7,6 +7,7 @@ import com.fiap.pj.util.IntegrationTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -25,6 +26,7 @@ class ListarClienteControllerIT {
     private MockMvc mock;
 
     @Test
+    @WithMockUser(username = "testuser", roles = {"ADMIN"})
     void deveListarClientesAtivo() throws Exception {
         mock.perform(get(
                         TestUtils.buildURL(ClienteController.PATH)).param("nome", "haku").param("ativo", "true")

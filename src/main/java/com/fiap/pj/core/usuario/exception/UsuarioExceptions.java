@@ -8,6 +8,10 @@ public class UsuarioExceptions {
         public UsuarioNaoEncontradoException() {
             super("Usuário não encontrado.");
         }
+
+        public UsuarioNaoEncontradoException(String message) {
+            super(message);
+        }
     }
 
 

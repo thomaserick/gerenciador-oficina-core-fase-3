@@ -89,7 +89,7 @@ class CriarOrcamentoServiceTest {
 
         when(clienteRepositoryJpa.findByIdOrThrowNotFound(any(UUID.class))).thenReturn(cliente);
 
-        var cmd = new CriarOrcamentoCommand(DESCRICAO, CLIENTE_ID, UUID.randomUUID(), HODOMENTO, Set.of(umOrcamentoItemServicoCommand()), Set.of(umOrcamentoItemPecaInsumoCommand()));
+        var cmd = new CriarOrcamentoCommand(DESCRICAO, CLIENTE_ID, UUID.randomUUID(), null, HODOMENTO, Set.of(umOrcamentoItemServicoCommand()), Set.of(umOrcamentoItemPecaInsumoCommand()));
 
         var thrown = catchThrowable(() -> criarOrcamentoService.handle(cmd));
         assertThat(thrown).isInstanceOf(VeiculoNaoPertenceAoClienteException.class);

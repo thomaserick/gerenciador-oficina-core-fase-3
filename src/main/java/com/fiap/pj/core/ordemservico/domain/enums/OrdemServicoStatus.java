@@ -1,4 +1,4 @@
-package com.fiap.pj.ordemservico.domain.enums;
+package com.fiap.pj.core.ordemservico.domain.enums;
 
 public enum OrdemServicoStatus {
 

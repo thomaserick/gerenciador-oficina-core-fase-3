@@ -1,4 +1,4 @@
-package com.fiap.pj.ordemservico.domain;
+package com.fiap.pj.core.ordemservico.domain;
 
 import com.fiap.pj.infra.jpa.BaseCrudRepository;
 

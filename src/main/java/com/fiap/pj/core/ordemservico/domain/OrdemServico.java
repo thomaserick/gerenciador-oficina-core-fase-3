@@ -1,7 +1,7 @@
-package com.fiap.pj.ordemservico.domain;
+package com.fiap.pj.core.ordemservico.domain;
 
+import com.fiap.pj.core.ordemservico.domain.enums.OrdemServicoStatus;
 import com.fiap.pj.core.util.DateTimeUtils;
-import com.fiap.pj.ordemservico.domain.enums.OrdemServicoStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

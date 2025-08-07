@@ -1,4 +1,4 @@
-package com.fiap.pj.ordemservico.exception;
+package com.fiap.pj.core.ordemservico.exception;
 
 public class OrdemServicoExceptions {
     private OrdemServicoExceptions() {

@@ -1,9 +1,9 @@
-package com.fiap.pj.ordemservico.adapter.out.db;
+package com.fiap.pj.core.ordemservico.adapter.out.db;
 
 
-import com.fiap.pj.ordemservico.domain.OrdemServico;
-import com.fiap.pj.ordemservico.domain.OrdemServicoDomainRepository;
-import com.fiap.pj.ordemservico.exception.OrdemServicoExceptions.OrdemServicoEncontradoException;
+import com.fiap.pj.core.ordemservico.domain.OrdemServico;
+import com.fiap.pj.core.ordemservico.domain.OrdemServicoDomainRepository;
+import com.fiap.pj.core.ordemservico.exception.OrdemServicoExceptions.OrdemServicoEncontradoException;
 import org.springframework.data.repository.Repository;
 
 import java.util.UUID;

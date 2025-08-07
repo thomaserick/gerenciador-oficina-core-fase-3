@@ -6,6 +6,7 @@ import com.fiap.pj.core.usuario.usecase.LoginUsuarioUseCase;
 import com.fiap.pj.core.usuario.usecase.command.LoginUsuarioCommand;
 import com.fiap.pj.infra.exception.CredenciaisInvalidasException;
 import com.fiap.pj.infra.helpers.JwtUtil;
+import com.fiap.pj.infra.security.UserDetailsImpl;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -30,7 +31,8 @@ public class LoginUsuarioService implements LoginUsuarioUseCase {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(cmd.email(), cmd.senha()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            final String jwt = jwtUtil.generateToken(cmd.email());
+            UserDetailsImpl userDetailsImpl = (UserDetailsImpl) authentication.getPrincipal();
+            final String jwt = jwtUtil.generateToken(userDetailsImpl);
             return new LoginUsuarioResponse(jwt);
         } catch (AuthenticationException e) {
             throw new CredenciaisInvalidasException("Credenciais inválidas");

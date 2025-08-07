@@ -12,6 +12,7 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -23,7 +24,9 @@ import static java.util.Objects.requireNonNull;
 @Table(name = "usuarios")
 @NoArgsConstructor
 @Getter
-public class Usuario {
+public class Usuario implements Serializable {
+
+    private static final long serialVersionUID = -2059235872181567136L;
 
     @ElementCollection
     @CollectionTable(name = "usuarios_perfil", joinColumns = @JoinColumn(name = "usuario_id"))
@@ -75,5 +78,9 @@ public class Usuario {
 
     public void alterarPerfis(Set<Perfil> perfis) {
         CollectionUtils.instanceNonNullCollection(this.perfis, perfis);
+    }
+
+    public String getNomeCompleto() {
+        return this.nome + " " + this.sobreNome;
     }
 }

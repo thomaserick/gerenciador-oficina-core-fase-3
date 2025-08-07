@@ -2,7 +2,7 @@ package com.fiap.pj.core.orcamento.domain;
 
 import com.fiap.pj.core.orcamento.domain.enums.OrcamentoStatus;
 import com.fiap.pj.core.orcamento.exception.OrcamentoExceptions.AlterarOrcamentoStatusInvalidoException;
-import com.fiap.pj.core.orcamento.exception.OrcamentoExceptions.AprovarOrcamentoStatusInvalidoException;
+import com.fiap.pj.core.orcamento.exception.OrcamentoExceptions.ReprovarOrcamentoStatusInvalidoException;
 import com.fiap.pj.core.util.DateTimeUtils;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -88,9 +88,9 @@ public class Orcamento {
 
     public void reprovar() {
         if (!this.status.isAguardandoAprovacao()) {
-            throw new AprovarOrcamentoStatusInvalidoException();
+            throw new ReprovarOrcamentoStatusInvalidoException();
         }
-        this.status = OrcamentoStatus.APROVADO;
+        this.status = OrcamentoStatus.REPROVADO;
     }
 
     public BigDecimal getValorTotal() {

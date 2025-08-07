@@ -9,6 +9,8 @@ import com.fiap.pj.core.orcamento.domain.enums.OrcamentoStatus;
 import com.fiap.pj.core.orcamento.exception.OrcamentoExceptions.AlterarOrcamentoStatusInvalidoException;
 import com.fiap.pj.core.orcamento.usecase.command.AlterarOrcamentoCommand;
 import com.fiap.pj.core.orcamento.util.factory.OrcamentoTestFactory;
+import com.fiap.pj.core.pecainsumo.adapter.out.db.PecaInsumoRepositoryJpa;
+import com.fiap.pj.core.pecainsumo.util.factory.PecaInsumoTestFactory;
 import com.fiap.pj.core.servico.adapter.out.db.ServicoRepositoryJpa;
 import com.fiap.pj.core.servico.util.factory.ServicoTestFactory;
 import com.fiap.pj.core.veiculo.exception.VeiculoExceptions.VeiculoNaoPertenceAoClienteException;
@@ -51,6 +53,9 @@ class AlterarOrcamentoServiceTest {
     @Mock
     private ServicoRepositoryJpa servicoRepositoryJpa;
 
+    @Mock
+    private PecaInsumoRepositoryJpa pecaInsumoRepositoryJpa;
+
     @InjectMocks
     private AlterarOrcamentoService alterarOrcamentoService;
 
@@ -65,6 +70,7 @@ class AlterarOrcamentoServiceTest {
         when(orcamentoRepositoryJpa.findByIdOrThrowNotFound(any(UUID.class))).thenReturn(orcamento);
         when(clienteRepositoryJpa.findByIdOrThrowNotFound(any(UUID.class))).thenReturn(cliente);
         when(servicoRepositoryJpa.findByIdOrThrowNotFound(any(UUID.class))).thenReturn(ServicoTestFactory.umServico());
+        when(pecaInsumoRepositoryJpa.findByIdOrThrowNotFound(any(UUID.class))).thenReturn(PecaInsumoTestFactory.umPecaInsumo());
 
         alterarOrcamentoService.handle(OrcamentoTestFactory.umAlterarOrcamentoCommand(orcamento.getId()));
 
@@ -107,7 +113,7 @@ class AlterarOrcamentoServiceTest {
         var cliente = ClienteTestFactory.umCliente();
         cliente.adicionarVeiculo(VeiculoTestFactory.umVeiculo(cliente.getId()));
         when(clienteRepositoryJpa.findByIdOrThrowNotFound(any(UUID.class))).thenReturn(cliente);
-        var cmd = new AlterarOrcamentoCommand(orcamento.getId(), DESCRICAO_ALTERADO, CLIENTE_ID_ALTERADO, UUID.randomUUID(), HODOMENTO_ALTERADO, Set.of());
+        var cmd = new AlterarOrcamentoCommand(orcamento.getId(), DESCRICAO_ALTERADO, CLIENTE_ID_ALTERADO, UUID.randomUUID(), HODOMENTO_ALTERADO, Set.of(), Set.of());
 
         var thrown = catchThrowable(() -> alterarOrcamentoService.handle(cmd));
         assertThat(thrown).isInstanceOf(VeiculoNaoPertenceAoClienteException.class);

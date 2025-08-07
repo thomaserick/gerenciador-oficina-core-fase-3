@@ -14,8 +14,8 @@ public class AlterarOrcamentoCommand extends OrcamentoCommand {
     @JsonIgnore
     private UUID id;
 
-    public AlterarOrcamentoCommand(UUID id, String descricao, UUID clienteId, UUID veiculoId, int hodometro, Set<OrcamentoItemServicoCommand> servicos) {
-        super(descricao, clienteId, veiculoId, hodometro, servicos);
+    public AlterarOrcamentoCommand(UUID id, String descricao, UUID clienteId, UUID veiculoId, int hodometro, Set<OrcamentoItemServicoCommand> servicos, Set<OrcamentoItemPecaInsumoCommand> pecasInsumos) {
+        super(descricao, clienteId, veiculoId, hodometro, servicos, pecasInsumos);
         this.id = id;
     }
 }

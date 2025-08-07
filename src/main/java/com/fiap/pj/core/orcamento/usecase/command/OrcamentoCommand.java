@@ -24,5 +24,8 @@ public abstract class OrcamentoCommand {
     @Valid
     protected Set<OrcamentoItemServicoCommand> servicos;
 
+    @Valid
+    protected Set<OrcamentoItemPecaInsumoCommand> pecasInsumos;
+
 
 }

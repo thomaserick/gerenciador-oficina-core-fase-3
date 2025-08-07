@@ -45,6 +45,10 @@ public class Orcamento {
     @JoinColumn(name = "orcamentoId")
     private Set<OrcamentoItemServico> servicos = new HashSet<>();
 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "orcamentoId")
+    private Set<OrcamentoItemPecaInsumo> pecasInsumos = new HashSet<>();
+
     @Builder
     public Orcamento(UUID id, String descricao, UUID clienteId, UUID veiculoId, int hodometro, OrcamentoStatus status, UUID ordemServicoId) {
         this.id = requireNonNull(id);
@@ -61,8 +65,13 @@ public class Orcamento {
         this.servicos.add(servico);
     }
 
+    public void adicionaPecaInsumo(OrcamentoItemPecaInsumo pecaInsumo) {
+        this.pecasInsumos.add(pecaInsumo);
+    }
+
     public BigDecimal getValorTotal() {
-        return this.getServicos().stream().map(OrcamentoItemServico::valorTotal).reduce(BigDecimal.ZERO, BigDecimal::add);
+        var totalPecasInsumo = this.getPecasInsumos().stream().map(OrcamentoItemPecaInsumo::valorTotal).reduce(BigDecimal.ZERO, BigDecimal::add);
+        return this.getServicos().stream().map(OrcamentoItemServico::valorTotal).reduce(BigDecimal.ZERO, BigDecimal::add).add(totalPecasInsumo);
     }
 
     public void reprovar() {

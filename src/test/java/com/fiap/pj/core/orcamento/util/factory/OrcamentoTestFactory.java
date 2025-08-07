@@ -2,12 +2,15 @@ package com.fiap.pj.core.orcamento.util.factory;
 
 import com.fiap.pj.core.cliente.util.factory.ClienteTestFactory;
 import com.fiap.pj.core.orcamento.domain.Orcamento;
+import com.fiap.pj.core.orcamento.domain.OrcamentoItemPecaInsumo;
 import com.fiap.pj.core.orcamento.domain.OrcamentoItemServico;
 import com.fiap.pj.core.orcamento.domain.enums.OrcamentoStatus;
 import com.fiap.pj.core.orcamento.usecase.command.AlterarOrcamentoCommand;
 import com.fiap.pj.core.orcamento.usecase.command.CriarOrcamentoCommand;
+import com.fiap.pj.core.orcamento.usecase.command.OrcamentoItemPecaInsumoCommand;
 import com.fiap.pj.core.orcamento.usecase.command.OrcamentoItemServicoCommand;
 import com.fiap.pj.core.orcamento.usecase.command.ReprovarOrcamentoCommand;
+import com.fiap.pj.core.pecainsumo.util.factory.PecaInsumoTestFactory;
 import com.fiap.pj.core.servico.util.factory.ServicoTestFactory;
 import com.fiap.pj.core.veiculo.util.factory.VeiculoTestFactory;
 
@@ -21,6 +24,8 @@ public class OrcamentoTestFactory {
     public static final UUID ID = UUID.randomUUID();
     public static final UUID ITEM_SERVICO_ID = UUID.randomUUID();
     public static final BigDecimal ITEM_SERVICO_QUANTIDADE = BigDecimal.ONE;
+    public static final UUID ITEM_PECA_INSUMO_ID = UUID.randomUUID();
+    public static final BigDecimal ITEM_PECA_INSUMO_QUANTIDADE = BigDecimal.TEN;
     public static final UUID CLIENTE_ID = ClienteTestFactory.ID;
     public static final UUID VEICULO_ID = VeiculoTestFactory.ID;
     public static final String DESCRICAO = "Verificar Freios";
@@ -54,17 +59,25 @@ public class OrcamentoTestFactory {
         return new OrcamentoItemServico(ITEM_SERVICO_ID, ServicoTestFactory.ID, orcamentoId, ServicoTestFactory.DESCRICAO, ServicoTestFactory.PRECO, ITEM_SERVICO_QUANTIDADE);
     }
 
+    public static OrcamentoItemPecaInsumo umOrcamentoItemPecaInsumo(UUID orcamentoId) {
+        return new OrcamentoItemPecaInsumo(ITEM_PECA_INSUMO_ID, PecaInsumoTestFactory.ID, orcamentoId, PecaInsumoTestFactory.DESCRICAO, PecaInsumoTestFactory.VALOR_UNITARIO, ITEM_PECA_INSUMO_QUANTIDADE);
+    }
+
     public static CriarOrcamentoCommand umCriarOrcamentoCommand() {
-        return new CriarOrcamentoCommand(DESCRICAO, CLIENTE_ID, VEICULO_ID, HODOMENTO, Set.of(umOrcamentoItemServicoCommand()));
+        return new CriarOrcamentoCommand(DESCRICAO, CLIENTE_ID, VEICULO_ID, HODOMENTO, Set.of(umOrcamentoItemServicoCommand()), Set.of(umOrcamentoItemPecaInsumoCommand()));
 
     }
 
     public static AlterarOrcamentoCommand umAlterarOrcamentoCommand(UUID id) {
-        return new AlterarOrcamentoCommand(id, DESCRICAO_ALTERADO, CLIENTE_ID_ALTERADO, VEICULO_ID_ALTERADO, HODOMENTO_ALTERADO, Set.of(umOrcamentoItemServicoCommand()));
+        return new AlterarOrcamentoCommand(id, DESCRICAO_ALTERADO, CLIENTE_ID_ALTERADO, VEICULO_ID_ALTERADO, HODOMENTO_ALTERADO, Set.of(umOrcamentoItemServicoCommand()), Set.of(umOrcamentoItemPecaInsumoCommand()));
     }
 
     public static OrcamentoItemServicoCommand umOrcamentoItemServicoCommand() {
         return new OrcamentoItemServicoCommand(ITEM_SERVICO_ID, ITEM_SERVICO_QUANTIDADE);
+    }
+
+    public static OrcamentoItemPecaInsumoCommand umOrcamentoItemPecaInsumoCommand() {
+        return new OrcamentoItemPecaInsumoCommand(ITEM_PECA_INSUMO_ID, ITEM_PECA_INSUMO_QUANTIDADE);
     }
 
     public static ReprovarOrcamentoCommand umReprovarOrcamentoCommand() {

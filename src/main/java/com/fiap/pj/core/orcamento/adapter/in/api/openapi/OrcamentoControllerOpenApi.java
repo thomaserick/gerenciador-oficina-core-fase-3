@@ -1,12 +1,17 @@
 package com.fiap.pj.core.orcamento.adapter.in.api.openapi;
 
+import com.fiap.pj.core.orcamento.adapter.in.api.request.ListarOrcamentoRequest;
+import com.fiap.pj.core.orcamento.adapter.in.api.response.OrcamentoResponse;
 import com.fiap.pj.core.orcamento.usecase.command.AlterarOrcamentoCommand;
 import com.fiap.pj.core.orcamento.usecase.command.CriarOrcamentoCommand;
 import com.fiap.pj.core.sk.web.ResponseEntityUtils.ResponseId;
+import com.fiap.pj.infra.api.Slice;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
+import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,6 +39,9 @@ public interface OrcamentoControllerOpenApi {
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Orcamento alterado com sucesso."),
             @ApiResponse(responseCode = "400", description = "O Orcamento não pode ser alterado.")})
     ResponseEntity<Void> alterarOrcamento(@PathVariable UUID id, @Valid @RequestBody AlterarOrcamentoCommand cmd);
+
+    @Operation(description = "Retorna uma lista de orçamento.", method = "GET")
+    Slice<OrcamentoResponse> listarOrcamento(@ParameterObject ListarOrcamentoRequest filterRequest, @ParameterObject Pageable pageable);
 
 
 }

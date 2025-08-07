@@ -36,7 +36,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class CriarOrcamentoServiceTest {
+class CriarOrcamentoServicoTest {
 
     @Mock
     private OrcamentoRepositoryJpa orcamentoRepositoryJpa;
@@ -51,7 +51,7 @@ class CriarOrcamentoServiceTest {
     private PecaInsumoRepositoryJpa pecaInsumoRepositoryJpa;
 
     @InjectMocks
-    private CriarOrcamentoService criarOrcamentoService;
+    private CriarOrcamentoServico criarOrcamentoService;
 
     @Test
     void deveCriarOrcamento() {

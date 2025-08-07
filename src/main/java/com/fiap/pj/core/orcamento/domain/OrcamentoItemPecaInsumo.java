@@ -21,16 +21,16 @@ public class OrcamentoItemPecaInsumo {
 
     @Id
     private UUID id;
-    private UUID pecaInsumoId;
+    private UUID pecasInsumosId;
     private UUID orcamentoId;
     private String descricao;
     private BigDecimal preco;
     private BigDecimal quantidade;
 
     @Builder
-    public OrcamentoItemPecaInsumo(UUID id, UUID pecaInsumoId, UUID orcamentoId, String descricao, BigDecimal preco, BigDecimal quantidade) {
+    public OrcamentoItemPecaInsumo(UUID id, UUID pecasInsumosId, UUID orcamentoId, String descricao, BigDecimal preco, BigDecimal quantidade) {
         this.id = requireNonNull(id);
-        this.pecaInsumoId = requireNonNull(pecaInsumoId);
+        this.pecasInsumosId = requireNonNull(pecasInsumosId);
         this.orcamentoId = requireNonNull(orcamentoId);
         this.descricao = requireNonNull(descricao);
         this.preco = requireNonNull(preco);

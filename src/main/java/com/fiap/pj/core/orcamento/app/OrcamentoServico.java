@@ -14,7 +14,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @AllArgsConstructor
-public abstract class OrcamentoService {
+public abstract class OrcamentoServico {
 
     private final ServicoDomainRepository servicoDomainRepository;
     private final PecaInsumoDomainRepository pecaInsumoDomainRepository;
@@ -25,7 +25,7 @@ public abstract class OrcamentoService {
         pecasInsumos.forEach(cmd -> {
             var pecaInsumo = pecaInsumoDomainRepository.findByIdOrThrowNotFound(cmd.pecaInsumoId());
             var pecaInsumoOrcamento = OrcamentoItemPecaInsumo.builder().id(UUID.randomUUID())
-                    .pecaInsumoId(cmd.pecaInsumoId())
+                    .pecasInsumosId(pecaInsumo.getId())
                     .orcamentoId(orcamento.getId())
                     .quantidade(cmd.quantidade())
                     .descricao(pecaInsumo.getDescricao())

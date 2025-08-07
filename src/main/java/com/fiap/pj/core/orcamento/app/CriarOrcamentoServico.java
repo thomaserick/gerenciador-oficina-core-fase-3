@@ -7,7 +7,6 @@ import com.fiap.pj.core.orcamento.domain.OrcamentoDomainRepository;
 import com.fiap.pj.core.orcamento.domain.enums.OrcamentoStatus;
 import com.fiap.pj.core.orcamento.usecase.CriarOrcamentoUseCase;
 import com.fiap.pj.core.orcamento.usecase.command.CriarOrcamentoCommand;
-import com.fiap.pj.core.orcamento.usecase.command.OrcamentoCommand;
 import com.fiap.pj.core.pecainsumo.domain.PecaInsumoDomainRepository;
 import com.fiap.pj.core.servico.domain.ServicoDomainRepository;
 import jakarta.transaction.Transactional;
@@ -18,12 +17,12 @@ import java.util.UUID;
 
 @Service
 @Transactional
-public class CriarOrcamentoService extends OrcamentoService implements CriarOrcamentoUseCase {
+public class CriarOrcamentoServico extends OrcamentoServico implements CriarOrcamentoUseCase {
 
     private final OrcamentoDomainRepository repository;
     private final ClienteDomainRepository clienteDomainRepository;
 
-    public CriarOrcamentoService(ServicoDomainRepository servicoDomainRepository, PecaInsumoDomainRepository pecaInsumoDomainRepository,
+    public CriarOrcamentoServico(ServicoDomainRepository servicoDomainRepository, PecaInsumoDomainRepository pecaInsumoDomainRepository,
                                  OrcamentoDomainRepository repository, ClienteDomainRepository clienteDomainRepository) {
         super(servicoDomainRepository, pecaInsumoDomainRepository);
         this.repository = repository;

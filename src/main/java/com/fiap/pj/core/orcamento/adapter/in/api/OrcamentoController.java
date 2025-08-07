@@ -1,9 +1,12 @@
 package com.fiap.pj.core.orcamento.adapter.in.api;
 
 import com.fiap.pj.core.orcamento.adapter.in.api.openapi.OrcamentoControllerOpenApi;
+import com.fiap.pj.core.orcamento.adapter.in.api.request.ListarOrcamentoRequest;
+import com.fiap.pj.core.orcamento.adapter.in.api.response.OrcamentoResponse;
 import com.fiap.pj.core.orcamento.usecase.AlterarOrcamentoUseCase;
 import com.fiap.pj.core.orcamento.usecase.AprovarOrcamentoUseCase;
 import com.fiap.pj.core.orcamento.usecase.CriarOrcamentoUseCase;
+import com.fiap.pj.core.orcamento.usecase.ListarOrcamentoUseCase;
 import com.fiap.pj.core.orcamento.usecase.ReprovarOrcamentoUseCase;
 import com.fiap.pj.core.orcamento.usecase.command.AlterarOrcamentoCommand;
 import com.fiap.pj.core.orcamento.usecase.command.AprovarOrcamentoCommand;
@@ -11,9 +14,12 @@ import com.fiap.pj.core.orcamento.usecase.command.CriarOrcamentoCommand;
 import com.fiap.pj.core.orcamento.usecase.command.ReprovarOrcamentoCommand;
 import com.fiap.pj.core.sk.web.ResponseEntityUtils;
 import com.fiap.pj.core.sk.web.ResponseEntityUtils.ResponseId;
+import com.fiap.pj.infra.api.Slice;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -34,6 +40,7 @@ public class OrcamentoController implements OrcamentoControllerOpenApi {
     private final AprovarOrcamentoUseCase aprovarOrcamentoUseCase;
     private final ReprovarOrcamentoUseCase reprovarOrcamentoUseCase;
     private final AlterarOrcamentoUseCase alterarOrcamentoUseCase;
+    private final ListarOrcamentoUseCase listarOrcamentoUseCase;
 
     @Override
     @PostMapping
@@ -62,5 +69,12 @@ public class OrcamentoController implements OrcamentoControllerOpenApi {
         cmd.setId(id);
         this.alterarOrcamentoUseCase.handle(cmd);
         return ResponseEntity.ok().build();
+    }
+
+    @Override
+    @GetMapping
+    public Slice<OrcamentoResponse> listarOrcamento(ListarOrcamentoRequest filterRequest, Pageable pageable) {
+        filterRequest.setPageable(pageable);
+        return listarOrcamentoUseCase.handle(filterRequest);
     }
 }

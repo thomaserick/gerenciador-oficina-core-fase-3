@@ -14,12 +14,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Transactional
-public class AlterarOrcamentoService extends OrcamentoService implements AlterarOrcamentoUseCase {
+public class AlterarOrcamentoServico extends OrcamentoServico implements AlterarOrcamentoUseCase {
 
     private final OrcamentoDomainRepository repository;
     private final ClienteDomainRepository clienteDomainRepository;
 
-    public AlterarOrcamentoService(ServicoDomainRepository servicoDomainRepository, PecaInsumoDomainRepository pecaInsumoDomainRepository,
+    public AlterarOrcamentoServico(ServicoDomainRepository servicoDomainRepository, PecaInsumoDomainRepository pecaInsumoDomainRepository,
                                    OrcamentoDomainRepository repository, ClienteDomainRepository clienteDomainRepository) {
         super(servicoDomainRepository, pecaInsumoDomainRepository);
         this.repository = repository;

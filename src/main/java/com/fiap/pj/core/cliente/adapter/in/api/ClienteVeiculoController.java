@@ -4,9 +4,12 @@ import com.fiap.pj.core.cliente.adapter.in.api.openapi.ClienteVeiculoControllerO
 import com.fiap.pj.core.sk.web.ResponseEntityUtils;
 import com.fiap.pj.core.sk.web.ResponseEntityUtils.ResponseId;
 import com.fiap.pj.core.veiculo.usecase.AdicionarVeiculoClienteUseCase;
+import com.fiap.pj.core.veiculo.usecase.RemoverVeiculoClienteUseCase;
 import com.fiap.pj.core.veiculo.usecase.command.AdicionarVeiculoClienteCommand;
+import com.fiap.pj.core.veiculo.usecase.command.RemoverVeiculoClienteCommand;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,12 +26,20 @@ public class ClienteVeiculoController implements ClienteVeiculoControllerOpenApi
     public static final String PATH = "v1/clientes/{id}/veiculos";
 
     private final AdicionarVeiculoClienteUseCase adicionarVeiculoClienteUseCase;
+    private final RemoverVeiculoClienteUseCase removerVeiculoClienteUseCase;
 
     @Override
     @PostMapping
     public ResponseEntity<ResponseId> adicionarVeiculo(@PathVariable UUID id, @RequestBody AdicionarVeiculoClienteCommand cmd) {
         var veiculo = adicionarVeiculoClienteUseCase.handle(cmd.comClienteId(id));
         return ResponseEntityUtils.ok(veiculo.getId());
+    }
+
+    @Override
+    @DeleteMapping
+    public ResponseEntity<Void> removerVeiculo(@PathVariable UUID id, @RequestBody RemoverVeiculoClienteCommand cmd) {
+        removerVeiculoClienteUseCase.handle(cmd.comClienteId(id));
+        return ResponseEntity.noContent().build();
     }
 
 }

@@ -7,6 +7,8 @@ import com.fiap.pj.core.orcamento.adapter.out.db.OrcamentoRepositoryJpa;
 import com.fiap.pj.core.orcamento.domain.Orcamento;
 import com.fiap.pj.core.orcamento.usecase.command.CriarOrcamentoCommand;
 import com.fiap.pj.core.orcamento.util.factory.OrcamentoTestFactory;
+import com.fiap.pj.core.pecainsumo.adapter.out.db.PecaInsumoRepositoryJpa;
+import com.fiap.pj.core.pecainsumo.util.factory.PecaInsumoTestFactory;
 import com.fiap.pj.core.servico.adapter.out.db.ServicoRepositoryJpa;
 import com.fiap.pj.core.servico.util.factory.ServicoTestFactory;
 import com.fiap.pj.core.veiculo.exception.VeiculoExceptions.VeiculoNaoPertenceAoClienteException;
@@ -23,6 +25,7 @@ import java.util.UUID;
 import static com.fiap.pj.core.orcamento.util.factory.OrcamentoTestFactory.CLIENTE_ID;
 import static com.fiap.pj.core.orcamento.util.factory.OrcamentoTestFactory.DESCRICAO;
 import static com.fiap.pj.core.orcamento.util.factory.OrcamentoTestFactory.HODOMENTO;
+import static com.fiap.pj.core.orcamento.util.factory.OrcamentoTestFactory.umOrcamentoItemPecaInsumoCommand;
 import static com.fiap.pj.core.orcamento.util.factory.OrcamentoTestFactory.umOrcamentoItemServicoCommand;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -44,6 +47,9 @@ class CriarOrcamentoServiceTest {
     @Mock
     private ServicoRepositoryJpa servicoRepositoryJpa;
 
+    @Mock
+    private PecaInsumoRepositoryJpa pecaInsumoRepositoryJpa;
+
     @InjectMocks
     private CriarOrcamentoService criarOrcamentoService;
 
@@ -51,6 +57,7 @@ class CriarOrcamentoServiceTest {
     void deveCriarOrcamento() {
         var orcamento = OrcamentoTestFactory.umOrcamento();
         orcamento.adicionarServico(OrcamentoTestFactory.umOrcamentoItemServico(orcamento.getId()));
+        orcamento.adicionaPecaInsumo(OrcamentoTestFactory.umOrcamentoItemPecaInsumo(orcamento.getId()));
 
         when(orcamentoRepositoryJpa.save(any(Orcamento.class))).thenReturn(orcamento);
 
@@ -59,6 +66,7 @@ class CriarOrcamentoServiceTest {
 
         when(clienteRepositoryJpa.findByIdOrThrowNotFound(any(UUID.class))).thenReturn(cliente);
         when(servicoRepositoryJpa.findByIdOrThrowNotFound(any(UUID.class))).thenReturn(ServicoTestFactory.umServico());
+        when(pecaInsumoRepositoryJpa.findByIdOrThrowNotFound(any(UUID.class))).thenReturn(PecaInsumoTestFactory.umPecaInsumo());
 
         var orcamentoCriado = criarOrcamentoService.handle(OrcamentoTestFactory.umCriarOrcamentoCommand());
 
@@ -81,7 +89,7 @@ class CriarOrcamentoServiceTest {
 
         when(clienteRepositoryJpa.findByIdOrThrowNotFound(any(UUID.class))).thenReturn(cliente);
 
-        var cmd = new CriarOrcamentoCommand(DESCRICAO, CLIENTE_ID, UUID.randomUUID(), HODOMENTO, Set.of(umOrcamentoItemServicoCommand()));
+        var cmd = new CriarOrcamentoCommand(DESCRICAO, CLIENTE_ID, UUID.randomUUID(), HODOMENTO, Set.of(umOrcamentoItemServicoCommand()), Set.of(umOrcamentoItemPecaInsumoCommand()));
 
         var thrown = catchThrowable(() -> criarOrcamentoService.handle(cmd));
         assertThat(thrown).isInstanceOf(VeiculoNaoPertenceAoClienteException.class);

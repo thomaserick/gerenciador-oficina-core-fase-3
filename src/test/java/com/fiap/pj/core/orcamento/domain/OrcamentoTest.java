@@ -1,10 +1,11 @@
 package com.fiap.pj.core.orcamento.domain;
 
 import com.fiap.pj.core.orcamento.util.factory.OrcamentoTestFactory;
-import com.fiap.pj.core.servico.util.factory.ServicoTestFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+
+import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -18,6 +19,7 @@ class OrcamentoTest {
     void deveCriarServico() {
         var orcamento = OrcamentoTestFactory.umOrcamento();
         orcamento.adicionarServico(OrcamentoTestFactory.umOrcamentoItemServico(orcamento.getId()));
+        orcamento.adicionaPecaInsumo(OrcamentoTestFactory.umOrcamentoItemPecaInsumo(orcamento.getId()));
 
         assertEquals(OrcamentoTestFactory.ID, orcamento.getId());
         assertEquals(OrcamentoTestFactory.DESCRICAO, orcamento.getDescricao());
@@ -25,7 +27,7 @@ class OrcamentoTest {
         assertEquals(OrcamentoTestFactory.VEICULO_ID, orcamento.getVeiculoId());
         assertEquals(OrcamentoTestFactory.HODOMENTO, orcamento.getHodometro());
         assertEquals(OrcamentoTestFactory.ORCAMENTO_STATUS, orcamento.getStatus());
-        assertEquals(ServicoTestFactory.PRECO, orcamento.getValorTotal());
+        assertEquals(new BigDecimal("524.00"), orcamento.getValorTotal());
         assertFalse(orcamento.getServicos().isEmpty());
     }
 

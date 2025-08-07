@@ -23,12 +23,11 @@ public class CriarClienteService implements CriarClienteUserCase {
     @Override
     public Cliente handle(CriarClienteCommand cmd) {
 
-        if (repository.existsByIDocumentoIdentificacaoNumero(cmd.getDocumentoIdentificacao())) {
+        if (this.repository.existsByIDocumentoIdentificacaoNumero(cmd.getDocumentoIdentificacao())) {
             throw new DocumentoIdentificacaoDuplicadoException();
         }
 
-        var documentoIdentificacao = DocumentoIdentificacao.build(
-                cmd.getDocumentoIdentificacao());
+        var documentoIdentificacao = DocumentoIdentificacao.build(cmd.getDocumentoIdentificacao());
 
         var cliente = Cliente.builder()
                 .id(UUID.randomUUID())
@@ -40,6 +39,6 @@ public class CriarClienteService implements CriarClienteUserCase {
                 .documentoIdentificacao(documentoIdentificacao)
                 .build();
 
-        return repository.save(cliente);
+        return this.repository.save(cliente);
     }
 }

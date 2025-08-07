@@ -1,6 +1,6 @@
 package com.fiap.pj.util;
 
-import com.fiap.pj.GerenciadorOficinaCoreApplication;
+import com.fiap.pj.Application;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Tag;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -25,7 +25,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-@ContextConfiguration(classes = GerenciadorOficinaCoreApplication.class)
+@ContextConfiguration(classes = Application.class)
 @Transactional
 public @interface IntegrationTest {
 

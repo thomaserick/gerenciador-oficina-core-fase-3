@@ -1,11 +1,13 @@
 package com.fiap.pj.core.orcamento.app;
 
+import com.fiap.pj.core.cliente.domain.Cliente;
 import com.fiap.pj.core.cliente.domain.ClienteDomainRepository;
 import com.fiap.pj.core.orcamento.domain.Orcamento;
 import com.fiap.pj.core.orcamento.domain.OrcamentoDomainRepository;
 import com.fiap.pj.core.orcamento.domain.enums.OrcamentoStatus;
 import com.fiap.pj.core.orcamento.usecase.CriarOrcamentoUseCase;
 import com.fiap.pj.core.orcamento.usecase.command.CriarOrcamentoCommand;
+import com.fiap.pj.core.orcamento.usecase.command.OrcamentoCommand;
 import com.fiap.pj.core.pecainsumo.domain.PecaInsumoDomainRepository;
 import com.fiap.pj.core.servico.domain.ServicoDomainRepository;
 import jakarta.transaction.Transactional;
@@ -31,22 +33,23 @@ public class CriarOrcamentoService extends OrcamentoService implements CriarOrca
     @Override
     public Orcamento handle(CriarOrcamentoCommand cmd) {
 
-        var cliente = clienteDomainRepository.findByIdOrThrowNotFound(cmd.getClienteId());
+        Cliente cliente = this.clienteDomainRepository.findByIdOrThrowNotFound(cmd.getClienteId());
         cliente.validarVeiculo(cmd.getVeiculoId());
 
-        var orcamento = Orcamento.builder()
+        Orcamento orcamento = Orcamento.builder()
                 .id(UUID.randomUUID())
                 .descricao(cmd.getDescricao())
                 .clienteId(cmd.getClienteId())
                 .veiculoId(cmd.getVeiculoId())
+                .ordemServicoId(cmd.getOrdemServicoId())
                 .status(OrcamentoStatus.AGUARDANDO_APROVACAO)
                 .hodometro(cmd.getHodometro())
                 .build();
 
-        buildItemServico(orcamento, cmd.getServicos());
-        buildItemPecaInsumo(orcamento, cmd.getPecasInsumos());
+        super.buildItemServico(orcamento, cmd.getServicos());
+        super.buildItemPecaInsumo(orcamento, cmd.getPecasInsumos());
 
-        return repository.save(orcamento);
+        return this.repository.save(orcamento);
     }
 
 

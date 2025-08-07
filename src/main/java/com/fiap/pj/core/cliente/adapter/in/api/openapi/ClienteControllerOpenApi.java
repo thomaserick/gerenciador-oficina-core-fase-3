@@ -49,6 +49,4 @@ public interface ClienteControllerOpenApi {
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Cliente excluido com sucesso."),
             @ApiResponse(responseCode = "400", description = "O  Cliente não pode ser excluido.")})
     ResponseEntity<Void> excluirCliente(@PathVariable UUID id);
-
-
 }

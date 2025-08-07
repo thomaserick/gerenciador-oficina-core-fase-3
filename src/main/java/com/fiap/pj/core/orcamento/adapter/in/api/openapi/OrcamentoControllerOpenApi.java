@@ -17,17 +17,22 @@ public interface OrcamentoControllerOpenApi {
 
     @Operation(description = "Cria um novo Orcamento", method = "POST")
     @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "Orcamento criado com sucesso."),
-            @ApiResponse(responseCode = "400", description = "O  Orcamento não pode ser criado.")})
+            @ApiResponse(responseCode = "400", description = "O Orcamento não pode ser criado.")})
     ResponseEntity<ResponseId> criarOrcamento(@Valid @RequestBody CriarOrcamentoCommand cmd);
 
     @Operation(description = "Reprovar Orcamento", method = "POST")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Orcamento criado com sucesso."),
-            @ApiResponse(responseCode = "400", description = "O  Orcamento não pode ser criado.")})
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Orcamento reprovado com sucesso."),
+            @ApiResponse(responseCode = "400", description = "O Orcamento não pode ser reprovado.")})
     ResponseEntity<Void> reprovarOrcamento(@PathVariable UUID id);
+
+    @Operation(description = "Aprovar Orcamento", method = "POST")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Orcamento aprovado com sucesso."),
+            @ApiResponse(responseCode = "400", description = "O Orcamento não pode ser aprovado.")})
+    ResponseEntity<Void> aprovarOrcamento(@PathVariable UUID id);
 
     @Operation(description = "Alterar Orcamento", method = "PUT")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Orcamento alterado com sucesso."),
-            @ApiResponse(responseCode = "400", description = "O  Orcamento não pode ser alterado.")})
+            @ApiResponse(responseCode = "400", description = "O Orcamento não pode ser alterado.")})
     ResponseEntity<Void> alterarOrcamento(@PathVariable UUID id, @Valid @RequestBody AlterarOrcamentoCommand cmd);
 
 

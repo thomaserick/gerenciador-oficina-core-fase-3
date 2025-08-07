@@ -1,6 +1,8 @@
 package com.fiap.pj.core.orcamento.app;
 
+import com.fiap.pj.core.cliente.domain.Cliente;
 import com.fiap.pj.core.cliente.domain.ClienteDomainRepository;
+import com.fiap.pj.core.orcamento.domain.Orcamento;
 import com.fiap.pj.core.orcamento.domain.OrcamentoDomainRepository;
 import com.fiap.pj.core.orcamento.usecase.AlterarOrcamentoUseCase;
 import com.fiap.pj.core.orcamento.usecase.command.AlterarOrcamentoCommand;
@@ -26,14 +28,17 @@ public class AlterarOrcamentoService extends OrcamentoService implements Alterar
 
     @Override
     public void handle(AlterarOrcamentoCommand cmd) {
-        var orcamento = repository.findByIdOrThrowNotFound(cmd.getId());
-        var cliente = clienteDomainRepository.findByIdOrThrowNotFound(cmd.getClienteId());
+        Orcamento orcamento = this.repository.findByIdOrThrowNotFound(cmd.getId());
+        Cliente cliente = this.clienteDomainRepository.findByIdOrThrowNotFound(cmd.getClienteId());
+
         cliente.validarVeiculo(cmd.getVeiculoId());
 
         orcamento.alterar(cmd.getDescricao(), cmd.getClienteId(), cmd.getVeiculoId(), cmd.getHodometro());
-        buildItemServico(orcamento, cmd.getServicos());
-        buildItemPecaInsumo(orcamento, cmd.getPecasInsumos());
-        repository.save(orcamento);
+
+        super.buildItemServico(orcamento, cmd.getServicos());
+        super.buildItemPecaInsumo(orcamento, cmd.getPecasInsumos());
+
+        this.repository.save(orcamento);
     }
 
 }

@@ -7,7 +7,6 @@ import lombok.Getter;
 @Getter
 public class CriarClienteCommand extends ClienteCommand {
 
-
     @NotBlank(message = "Numero do Documento de identificacão não pode estar vazio.")
     @CPFCNPJ
     private String documentoIdentificacao;

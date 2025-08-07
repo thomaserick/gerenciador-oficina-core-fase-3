@@ -2,7 +2,7 @@ package com.fiap.pj.core.orcamento.domain;
 
 import com.fiap.pj.core.orcamento.domain.enums.OrcamentoStatus;
 import com.fiap.pj.core.orcamento.exception.OrcamentoExceptions.AlterarOrcamentoStatusInvalidoException;
-import com.fiap.pj.core.orcamento.exception.OrcamentoExceptions.ReprovarOrcamentoStatusInvalidoException;
+import com.fiap.pj.core.orcamento.exception.OrcamentoExceptions.AprovarOrcamentoStatusInvalidoException;
 import com.fiap.pj.core.util.DateTimeUtils;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -61,26 +61,6 @@ public class Orcamento {
         this.dataCriacao = DateTimeUtils.getNow();
     }
 
-    public void adicionarServico(OrcamentoItemServico servico) {
-        this.servicos.add(servico);
-    }
-
-    public void adicionaPecaInsumo(OrcamentoItemPecaInsumo pecaInsumo) {
-        this.pecasInsumos.add(pecaInsumo);
-    }
-
-    public BigDecimal getValorTotal() {
-        var totalPecasInsumo = this.getPecasInsumos().stream().map(OrcamentoItemPecaInsumo::valorTotal).reduce(BigDecimal.ZERO, BigDecimal::add);
-        return this.getServicos().stream().map(OrcamentoItemServico::valorTotal).reduce(BigDecimal.ZERO, BigDecimal::add).add(totalPecasInsumo);
-    }
-
-    public void reprovar() {
-        if (!this.status.isAguardandoAprovacao()) {
-            throw new ReprovarOrcamentoStatusInvalidoException();
-        }
-        this.status = OrcamentoStatus.REPROVADO;
-    }
-
     public void alterar(String descricao, UUID clienteId, UUID veiculoId, int hodometro) {
         if (!this.status.isAguardandoAprovacao()) {
             throw new AlterarOrcamentoStatusInvalidoException();
@@ -89,5 +69,32 @@ public class Orcamento {
         this.clienteId = requireNonNull(clienteId);
         this.veiculoId = requireNonNull(veiculoId);
         this.hodometro = hodometro;
+    }
+
+    public void adicionarServico(OrcamentoItemServico servico) {
+        this.servicos.add(servico);
+    }
+
+    public void adicionaPecaInsumo(OrcamentoItemPecaInsumo pecaInsumo) {
+        this.pecasInsumos.add(pecaInsumo);
+    }
+
+    public void aprovar() {
+        if (!this.status.isAguardandoAprovacao()) {
+            throw new AlterarOrcamentoStatusInvalidoException();
+        }
+        this.status = OrcamentoStatus.APROVADO;
+    }
+
+    public void reprovar() {
+        if (!this.status.isAguardandoAprovacao()) {
+            throw new AprovarOrcamentoStatusInvalidoException();
+        }
+        this.status = OrcamentoStatus.APROVADO;
+    }
+
+    public BigDecimal getValorTotal() {
+        var totalPecasInsumo = this.getPecasInsumos().stream().map(OrcamentoItemPecaInsumo::valorTotal).reduce(BigDecimal.ZERO, BigDecimal::add);
+        return this.getServicos().stream().map(OrcamentoItemServico::valorTotal).reduce(BigDecimal.ZERO, BigDecimal::add).add(totalPecasInsumo);
     }
 }

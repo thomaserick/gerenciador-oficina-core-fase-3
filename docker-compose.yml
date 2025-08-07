@@ -18,17 +18,17 @@ services:
       timeout: 5s
       retries: 5
 
-  app:
-    container_name: gerenciador-oficina-core
-    build: .
-    ports:
-      - "8081:8081"
-    depends_on:
-      - postgres
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/gerenciador-oficina
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: oficina@123
+#  app:
+#    container_name: gerenciador-oficina-core
+#    build: .
+#    ports:
+#      - "8081:8081"
+#    depends_on:
+#      - postgres
+#    environment:
+#      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/gerenciador-oficina
+#      SPRING_DATASOURCE_USERNAME: postgres
+#      SPRING_DATASOURCE_PASSWORD: oficina@123
 
 volumes:
   postgres_data:

@@ -49,7 +49,6 @@ public class ClienteController implements ClienteControllerOpenApi {
     private final ListarClienteUseCase listarClienteUseCase;
     private final ExcluirClienteUserCase excluirClienteUserCase;
 
-
     @Override
     @PostMapping
     public ResponseEntity<ResponseId> criarCliente(@Valid @RequestBody CriarClienteCommand cmd) {

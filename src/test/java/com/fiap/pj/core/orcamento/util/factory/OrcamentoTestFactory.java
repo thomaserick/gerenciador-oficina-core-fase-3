@@ -20,7 +20,6 @@ import java.util.UUID;
 
 public class OrcamentoTestFactory {
 
-
     public static final UUID ID = UUID.randomUUID();
     public static final UUID ITEM_SERVICO_ID = UUID.randomUUID();
     public static final BigDecimal ITEM_SERVICO_QUANTIDADE = BigDecimal.ONE;
@@ -54,7 +53,6 @@ public class OrcamentoTestFactory {
                 .clienteId(CLIENTE_ID).build();
     }
 
-
     public static OrcamentoItemServico umOrcamentoItemServico(UUID orcamentoId) {
         return new OrcamentoItemServico(ITEM_SERVICO_ID, ServicoTestFactory.ID, orcamentoId, ServicoTestFactory.DESCRICAO, ServicoTestFactory.PRECO, ITEM_SERVICO_QUANTIDADE);
     }
@@ -64,8 +62,7 @@ public class OrcamentoTestFactory {
     }
 
     public static CriarOrcamentoCommand umCriarOrcamentoCommand() {
-        return new CriarOrcamentoCommand(DESCRICAO, CLIENTE_ID, VEICULO_ID, HODOMENTO, Set.of(umOrcamentoItemServicoCommand()), Set.of(umOrcamentoItemPecaInsumoCommand()));
-
+        return new CriarOrcamentoCommand(DESCRICAO, CLIENTE_ID, VEICULO_ID, null, HODOMENTO, Set.of(umOrcamentoItemServicoCommand()), Set.of(umOrcamentoItemPecaInsumoCommand()));
     }
 
     public static AlterarOrcamentoCommand umAlterarOrcamentoCommand(UUID id) {
@@ -83,5 +80,4 @@ public class OrcamentoTestFactory {
     public static ReprovarOrcamentoCommand umReprovarOrcamentoCommand() {
         return new ReprovarOrcamentoCommand(ID);
     }
-
 }

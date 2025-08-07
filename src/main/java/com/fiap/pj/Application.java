@@ -7,10 +7,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @EnableJpaRepositories(repositoryBaseClass = ExtendedRepositoryImpl.class)
-public class GerenciadorOficinaCoreApplication {
+public class Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(GerenciadorOficinaCoreApplication.class, args);
+        SpringApplication.run(Application.class, args);
     }
 
 }

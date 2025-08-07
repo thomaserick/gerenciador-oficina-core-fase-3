@@ -29,7 +29,7 @@ class InativarUsuarioServiceTest {
     @Test
     void deveInativarUsuario() {
         var id = UUID.randomUUID();
-        when(usuarioRepositoryJpa.findByIdOrThrowNotFound(id)).thenReturn(UserTestFactory.oneUser());
+        when(usuarioRepositoryJpa.findByIdOrThrowNotFound(id)).thenReturn(UserTestFactory.umUsuario());
         desativarUsuarioService.handle(new InativarUsuarioCommand(id));
         verify(usuarioRepositoryJpa).save(Mockito.any(Usuario.class));
 

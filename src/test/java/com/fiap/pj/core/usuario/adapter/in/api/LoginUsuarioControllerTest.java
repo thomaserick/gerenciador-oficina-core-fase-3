@@ -1,7 +1,7 @@
 package com.fiap.pj.core.usuario.adapter.in.api;
 
 
-import com.fiap.pj.core.usuario.usecase.AlterarUsuarioUseCase;
+import com.fiap.pj.core.usuario.usecase.LoginUsuarioUseCase;
 import com.fiap.pj.core.util.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,35 +13,33 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.UUID;
-
-import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.umCriarUsuarioCommand;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.umLoginUsuarioCommand;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
-class AlterarUsuarioControllerTest {
+class LoginUsuarioControllerTest {
 
     @Mock
-    private AlterarUsuarioUseCase alterarUsuarioUseCase;
+    private LoginUsuarioUseCase loginUsuarioUseCase;
 
     @InjectMocks
-    private UsuarioController userController;
+    private UsuarioLoginController usuarioLoginController;
 
     private MockMvc mock;
 
     @BeforeEach
     void setup() {
-        mock = MockMvcBuilders.standaloneSetup(userController).build();
+        mock = MockMvcBuilders.standaloneSetup(usuarioLoginController).build();
     }
 
     @Test
-    void deveAlterarUser() throws Exception {
-
-        mock.perform(put(
-                TestUtils.buildURL(UsuarioController.PATH, UUID.randomUUID().toString()))
+    void deveEfetuarLoginUsuario() throws Exception {
+        mock.perform(post(
+                TestUtils.buildURL(UsuarioLoginController.PATH))
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(TestUtils.objectToJson(umCriarUsuarioCommand()))).andExpect(status().is2xxSuccessful());
+                .content(TestUtils.objectToJson(umLoginUsuarioCommand()))).andExpect(status().is2xxSuccessful());
+
 
     }
 

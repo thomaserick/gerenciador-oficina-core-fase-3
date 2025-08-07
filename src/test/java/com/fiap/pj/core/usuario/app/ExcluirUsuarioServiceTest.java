@@ -29,7 +29,7 @@ class ExcluirUsuarioServiceTest {
     @Test
     void deveExcluirUsuario() {
         var id = UUID.randomUUID();
-        when(usuarioRepositoryJpa.findByIdOrThrowNotFound(id)).thenReturn(UserTestFactory.oneUser());
+        when(usuarioRepositoryJpa.findByIdOrThrowNotFound(id)).thenReturn(UserTestFactory.umUsuario());
         excluirUsuarioService.handle(new ExcluirUsuarioCommand(id));
         verify(usuarioRepositoryJpa).delete(Mockito.any(Usuario.class));
     }

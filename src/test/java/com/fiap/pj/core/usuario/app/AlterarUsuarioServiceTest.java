@@ -47,10 +47,10 @@ class AlterarUsuarioServiceTest {
     @WithMockUser(username = "testuser", roles = {"ADMIN"})
     void deveAlterarUsuario() {
         when(passwordEncoder.encode(anyString())).thenReturn("4321");
-        var user = UserTestFactory.oneUser();
+        var user = UserTestFactory.umUsuario();
         when(usuarioRepositoryJpa.findByIdOrThrowNotFound(user.getId())).thenReturn(user);
 
-        alterarUsuarioService.handle(UserTestFactory.umUpdateUserCommand(user.getId()));
+        alterarUsuarioService.handle(UserTestFactory.UmAlterarUsuarioCommand(user.getId()));
 
         verify(usuarioRepositoryJpa).save(userCaptor.capture());
         Usuario usuario = userCaptor.getValue();
@@ -67,13 +67,13 @@ class AlterarUsuarioServiceTest {
 
     @Test
     void deveRetornarUsuarioNaoEncontratoException() {
-        var user = UserTestFactory.oneUser();
+        var user = UserTestFactory.umUsuario();
 
         Mockito.doThrow(new UsuarioNaoEncontradoException())
                 .when(usuarioRepositoryJpa)
                 .findByIdOrThrowNotFound(user.getId());
 
-        var thrown = catchThrowable(() -> alterarUsuarioService.handle(UserTestFactory.umUpdateUserCommand(user.getId())));
+        var thrown = catchThrowable(() -> alterarUsuarioService.handle(UserTestFactory.UmAlterarUsuarioCommand(user.getId())));
         assertThat(thrown).isInstanceOf(UsuarioNaoEncontradoException.class);
 
     }

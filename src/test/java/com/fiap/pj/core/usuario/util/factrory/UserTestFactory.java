@@ -5,6 +5,7 @@ import com.fiap.pj.core.usuario.domain.Usuario;
 import com.fiap.pj.core.usuario.domain.enums.Perfil;
 import com.fiap.pj.core.usuario.usecase.command.AlterarUsuarioCommand;
 import com.fiap.pj.core.usuario.usecase.command.CriarUsuarioCommand;
+import com.fiap.pj.core.usuario.usecase.command.LoginUsuarioCommand;
 
 import java.util.List;
 import java.util.Set;
@@ -25,17 +26,21 @@ public class UserTestFactory {
     public static final String ALTER_PASSWORD = "4321";
     public static final Perfil ALTER_USER_ROLE = Perfil.ATENDENTE;
 
-    public static Usuario oneUser() {
+    public static Usuario umUsuario() {
         var usuario = new Usuario(ID, NAME, LAST_NAME, E_MAIL, PASSWORD, true);
         usuario.adicionarPerfils(List.of(USER_ROLE));
         return usuario;
     }
 
-    public static CriarUsuarioCommand oneCreateUserCommand() {
+    public static CriarUsuarioCommand umCriarUsuarioCommand() {
         return new CriarUsuarioCommand(NAME, LAST_NAME, E_MAIL, PASSWORD, true, Set.of(USER_ROLE));
     }
 
-    public static AlterarUsuarioCommand umUpdateUserCommand(UUID id) {
+    public static AlterarUsuarioCommand UmAlterarUsuarioCommand(UUID id) {
         return new AlterarUsuarioCommand(id, ALTER_NAME, ALTER_LAST_NAME, ALTER_E_MAIL, ALTER_PASSWORD, true, Set.of(ALTER_USER_ROLE));
+    }
+
+    public static LoginUsuarioCommand umLoginUsuarioCommand() {
+        return new LoginUsuarioCommand(E_MAIL, "2025");
     }
 }

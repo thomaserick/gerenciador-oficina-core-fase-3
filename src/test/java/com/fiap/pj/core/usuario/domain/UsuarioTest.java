@@ -21,7 +21,7 @@ class UsuarioTest {
     @DisplayName("Deve criar com sucesso uma instância de usuario.")
     void deveCriarUsuario() {
 
-        var usuario = UserTestFactory.oneUser();
+        var usuario = UserTestFactory.umUsuario();
 
         assertEquals(NAME, usuario.getNome());
         assertEquals(LAST_NAME, usuario.getSobreNome());

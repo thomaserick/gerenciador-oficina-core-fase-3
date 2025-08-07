@@ -39,9 +39,9 @@ class CriarUsuarioServiceTest {
     @Test
     void deveCriarUsuarior() {
         when(passwordEncoder.encode(anyString())).thenReturn("1234");
-        when(usuarioRepositoryJpa.save(any(Usuario.class))).thenReturn(UserTestFactory.oneUser());
+        when(usuarioRepositoryJpa.save(any(Usuario.class))).thenReturn(UserTestFactory.umUsuario());
 
-        var usuario = criarUsuarioService.handle(UserTestFactory.oneCreateUserCommand());
+        var usuario = criarUsuarioService.handle(UserTestFactory.umCriarUsuarioCommand());
 
         assertNotNull(usuario);
         assertEquals(ID, usuario.getId());

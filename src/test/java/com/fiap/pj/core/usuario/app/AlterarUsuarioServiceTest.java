@@ -4,7 +4,7 @@ package com.fiap.pj.core.usuario.app;
 import com.fiap.pj.core.usuario.adapter.out.db.UsuarioRepositoryJpa;
 import com.fiap.pj.core.usuario.domain.Usuario;
 import com.fiap.pj.core.usuario.exception.UsuarioExceptions.UsuarioNaoEncontradoException;
-import com.fiap.pj.core.usuario.util.factrory.UserTestFactory;
+import com.fiap.pj.core.usuario.util.factrory.UsuarioTestFactory;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -16,11 +16,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 
-import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.ALTER_LAST_NAME;
-import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.ALTER_NAME;
-import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.ALTER_PASSWORD;
-import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.ALTER_USER_ROLE;
-import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.ID;
+import static com.fiap.pj.core.usuario.util.factrory.UsuarioTestFactory.ALTER_LAST_NAME;
+import static com.fiap.pj.core.usuario.util.factrory.UsuarioTestFactory.ALTER_NAME;
+import static com.fiap.pj.core.usuario.util.factrory.UsuarioTestFactory.ALTER_PASSWORD;
+import static com.fiap.pj.core.usuario.util.factrory.UsuarioTestFactory.ALTER_USER_ROLE;
+import static com.fiap.pj.core.usuario.util.factrory.UsuarioTestFactory.ID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -47,10 +47,10 @@ class AlterarUsuarioServiceTest {
     @WithMockUser(username = "testuser", roles = {"ADMIN"})
     void deveAlterarUsuario() {
         when(passwordEncoder.encode(anyString())).thenReturn("4321");
-        var user = UserTestFactory.umUsuario();
+        var user = UsuarioTestFactory.umUsuario();
         when(usuarioRepositoryJpa.findByIdOrThrowNotFound(user.getId())).thenReturn(user);
 
-        alterarUsuarioService.handle(UserTestFactory.UmAlterarUsuarioCommand(user.getId()));
+        alterarUsuarioService.handle(UsuarioTestFactory.UmAlterarUsuarioCommand(user.getId()));
 
         verify(usuarioRepositoryJpa).save(userCaptor.capture());
         Usuario usuario = userCaptor.getValue();
@@ -67,13 +67,13 @@ class AlterarUsuarioServiceTest {
 
     @Test
     void deveRetornarUsuarioNaoEncontratoException() {
-        var user = UserTestFactory.umUsuario();
+        var user = UsuarioTestFactory.umUsuario();
 
         Mockito.doThrow(new UsuarioNaoEncontradoException())
                 .when(usuarioRepositoryJpa)
                 .findByIdOrThrowNotFound(user.getId());
 
-        var thrown = catchThrowable(() -> alterarUsuarioService.handle(UserTestFactory.UmAlterarUsuarioCommand(user.getId())));
+        var thrown = catchThrowable(() -> alterarUsuarioService.handle(UsuarioTestFactory.UmAlterarUsuarioCommand(user.getId())));
         assertThat(thrown).isInstanceOf(UsuarioNaoEncontradoException.class);
 
     }

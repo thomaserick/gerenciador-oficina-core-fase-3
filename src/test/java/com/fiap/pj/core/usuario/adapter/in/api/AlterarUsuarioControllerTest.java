@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.UUID;
 
-import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.umCriarUsuarioCommand;
+import static com.fiap.pj.core.usuario.util.factrory.UsuarioTestFactory.umCriarUsuarioCommand;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 

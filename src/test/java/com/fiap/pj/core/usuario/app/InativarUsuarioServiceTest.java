@@ -4,7 +4,7 @@ package com.fiap.pj.core.usuario.app;
 import com.fiap.pj.core.usuario.adapter.out.db.UsuarioRepositoryJpa;
 import com.fiap.pj.core.usuario.domain.Usuario;
 import com.fiap.pj.core.usuario.usecase.command.InativarUsuarioCommand;
-import com.fiap.pj.core.usuario.util.factrory.UserTestFactory;
+import com.fiap.pj.core.usuario.util.factrory.UsuarioTestFactory;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -29,7 +29,7 @@ class InativarUsuarioServiceTest {
     @Test
     void deveInativarUsuario() {
         var id = UUID.randomUUID();
-        when(usuarioRepositoryJpa.findByIdOrThrowNotFound(id)).thenReturn(UserTestFactory.umUsuario());
+        when(usuarioRepositoryJpa.findByIdOrThrowNotFound(id)).thenReturn(UsuarioTestFactory.umUsuario());
         desativarUsuarioService.handle(new InativarUsuarioCommand(id));
         verify(usuarioRepositoryJpa).save(Mockito.any(Usuario.class));
 

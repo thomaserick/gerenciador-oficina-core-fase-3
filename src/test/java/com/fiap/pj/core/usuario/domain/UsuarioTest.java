@@ -1,15 +1,15 @@
 package com.fiap.pj.core.usuario.domain;
 
-import com.fiap.pj.core.usuario.util.factrory.UserTestFactory;
+import com.fiap.pj.core.usuario.util.factrory.UsuarioTestFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.E_MAIL;
-import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.LAST_NAME;
-import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.NAME;
-import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.PASSWORD;
-import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.USER_ROLE;
+import static com.fiap.pj.core.usuario.util.factrory.UsuarioTestFactory.E_MAIL;
+import static com.fiap.pj.core.usuario.util.factrory.UsuarioTestFactory.LAST_NAME;
+import static com.fiap.pj.core.usuario.util.factrory.UsuarioTestFactory.NAME;
+import static com.fiap.pj.core.usuario.util.factrory.UsuarioTestFactory.PASSWORD;
+import static com.fiap.pj.core.usuario.util.factrory.UsuarioTestFactory.USER_ROLE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -21,7 +21,7 @@ class UsuarioTest {
     @DisplayName("Deve criar com sucesso uma instância de usuario.")
     void deveCriarUsuario() {
 
-        var usuario = UserTestFactory.umUsuario();
+        var usuario = UsuarioTestFactory.umUsuario();
 
         assertEquals(NAME, usuario.getNome());
         assertEquals(LAST_NAME, usuario.getSobreNome());
@@ -37,7 +37,7 @@ class UsuarioTest {
         @Test
         void deveFalharComNomeInvalido() {
             assertThrows(NullPointerException.class,
-                    () -> new Usuario(UserTestFactory.ID,
+                    () -> new Usuario(UsuarioTestFactory.ID,
                             null,
                             null,
                             null, null, true));
@@ -46,7 +46,7 @@ class UsuarioTest {
         @Test
         void deveFalharComEmailInvalido() {
             assertThrows(NullPointerException.class,
-                    () -> new Usuario(UserTestFactory.ID,
+                    () -> new Usuario(UsuarioTestFactory.ID,
                             NAME,
                             LAST_NAME,
                             null, null, true));
@@ -55,7 +55,7 @@ class UsuarioTest {
         @Test
         void deveFalharComSenhaInvalida() {
             assertThrows(NullPointerException.class,
-                    () -> new Usuario(UserTestFactory.ID,
+                    () -> new Usuario(UsuarioTestFactory.ID,
                             NAME,
                             LAST_NAME,
                             E_MAIL, null, true));

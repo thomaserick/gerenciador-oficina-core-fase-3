@@ -3,7 +3,7 @@ package com.fiap.pj.core.usuario.app;
 
 import com.fiap.pj.core.usuario.adapter.out.db.UsuarioRepositoryJpa;
 import com.fiap.pj.core.usuario.domain.Usuario;
-import com.fiap.pj.core.usuario.util.factrory.UserTestFactory;
+import com.fiap.pj.core.usuario.util.factrory.UsuarioTestFactory;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -11,12 +11,12 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.E_MAIL;
-import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.ID;
-import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.LAST_NAME;
-import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.NAME;
-import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.PASSWORD;
-import static com.fiap.pj.core.usuario.util.factrory.UserTestFactory.USER_ROLE;
+import static com.fiap.pj.core.usuario.util.factrory.UsuarioTestFactory.E_MAIL;
+import static com.fiap.pj.core.usuario.util.factrory.UsuarioTestFactory.ID;
+import static com.fiap.pj.core.usuario.util.factrory.UsuarioTestFactory.LAST_NAME;
+import static com.fiap.pj.core.usuario.util.factrory.UsuarioTestFactory.NAME;
+import static com.fiap.pj.core.usuario.util.factrory.UsuarioTestFactory.PASSWORD;
+import static com.fiap.pj.core.usuario.util.factrory.UsuarioTestFactory.USER_ROLE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -39,9 +39,9 @@ class CriarUsuarioServiceTest {
     @Test
     void deveCriarUsuarior() {
         when(passwordEncoder.encode(anyString())).thenReturn("1234");
-        when(usuarioRepositoryJpa.save(any(Usuario.class))).thenReturn(UserTestFactory.umUsuario());
+        when(usuarioRepositoryJpa.save(any(Usuario.class))).thenReturn(UsuarioTestFactory.umUsuario());
 
-        var usuario = criarUsuarioService.handle(UserTestFactory.umCriarUsuarioCommand());
+        var usuario = criarUsuarioService.handle(UsuarioTestFactory.umCriarUsuarioCommand());
 
         assertNotNull(usuario);
         assertEquals(ID, usuario.getId());

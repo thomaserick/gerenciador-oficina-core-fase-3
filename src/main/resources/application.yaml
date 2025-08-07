@@ -47,23 +47,22 @@ spring:
         max-page-size: 50
         default-page-size: 10
 
-
-  springdoc:
-    default-produces-media-type: application/json
-    api-docs:
-      path: /swagger-ui/v3/api-docs
-    swagger-ui:
-      title: Gerenciador de Oficina
-      doc-expansion: none
-      display-request-duration: true
-      groups-order: DESC
-      operationsSorter: alpha
-      tagsSorter: alpha
-      disable-swagger-default-url: true
-      path: /swagger-ui
-    group-configs:
-      - group: v1 - api
-        paths-to-match: /api/**
+springdoc:
+  default-produces-media-type: application/json
+  api-docs:
+    path: /swagger-ui/v3/api-docs
+  swagger-ui:
+    title: Gerenciador de Oficina
+    doc-expansion: none
+    display-request-duration: true
+    groups-order: DESC
+    operationsSorter: alpha
+    tagsSorter: alpha
+    disable-swagger-default-url: true
+    path: /swagger-ui
+  group-configs:
+    - group: v1 - api
+      paths-to-match: /v1/**
 
 api:
   security:

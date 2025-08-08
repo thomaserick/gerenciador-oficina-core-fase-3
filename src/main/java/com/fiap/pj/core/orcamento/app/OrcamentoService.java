@@ -16,7 +16,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @AllArgsConstructor
-public abstract class OrcamentoServico {
+public abstract class OrcamentoService {
 
     private final ServicoDomainRepository servicoDomainRepository;
     private final PecaInsumoDomainRepository pecaInsumoDomainRepository;
@@ -29,12 +29,12 @@ public abstract class OrcamentoServico {
 
             OrcamentoItemPecaInsumo pecaInsumoOrcamento = OrcamentoItemPecaInsumo
                     .builder()
-                        .id(UUID.randomUUID())
-                        .pecasInsumosId(pecaInsumo.getId())
-                        .orcamentoId(orcamento.getId())
-                        .quantidade(cmd.quantidade())
-                        .descricao(pecaInsumo.getDescricao())
-                        .preco(pecaInsumo.getValorUnitario())
+                    .id(UUID.randomUUID())
+                    .pecasInsumosId(pecaInsumo.getId())
+                    .orcamentoId(orcamento.getId())
+                    .quantidade(cmd.quantidade())
+                    .descricao(pecaInsumo.getDescricao())
+                    .preco(pecaInsumo.getValorUnitario())
                     .build();
 
             orcamento.adicionaPecaInsumo(pecaInsumoOrcamento);
@@ -50,12 +50,12 @@ public abstract class OrcamentoServico {
 
             OrcamentoItemServico servicoOrcamento = OrcamentoItemServico
                     .builder()
-                        .id(UUID.randomUUID())
-                        .orcamentoId(orcamento.getId())
-                        .preco(servico.getPreco())
-                        .quantidade(cmd.quantidade())
-                        .descricao(servico.getDescricao())
-                        .servicoId(servico.getId())
+                    .id(UUID.randomUUID())
+                    .orcamentoId(orcamento.getId())
+                    .preco(servico.getPreco())
+                    .quantidade(cmd.quantidade())
+                    .descricao(servico.getDescricao())
+                    .servicoId(servico.getId())
                     .build();
 
             orcamento.adicionarServico(servicoOrcamento);

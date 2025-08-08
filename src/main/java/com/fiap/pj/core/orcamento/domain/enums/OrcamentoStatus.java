@@ -12,4 +12,8 @@ public enum OrcamentoStatus {
     public boolean isReprovado() {
         return this.equals(REPROVADO);
     }
+
+    public boolean isAprovado() {
+        return this.equals(APROVADO);
+    }
 }

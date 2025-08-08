@@ -6,6 +6,7 @@ import com.fiap.pj.core.orcamento.domain.OrcamentoItemPecaInsumo;
 import com.fiap.pj.core.orcamento.domain.OrcamentoItemServico;
 import com.fiap.pj.core.orcamento.domain.enums.OrcamentoStatus;
 import com.fiap.pj.core.orcamento.usecase.command.AlterarOrcamentoCommand;
+import com.fiap.pj.core.orcamento.usecase.command.AprovarOrcamentoCommand;
 import com.fiap.pj.core.orcamento.usecase.command.CriarOrcamentoCommand;
 import com.fiap.pj.core.orcamento.usecase.command.OrcamentoItemPecaInsumoCommand;
 import com.fiap.pj.core.orcamento.usecase.command.OrcamentoItemServicoCommand;
@@ -83,5 +84,9 @@ public class OrcamentoTestFactory {
 
     public static ReprovarOrcamentoCommand umReprovarOrcamentoCommand() {
         return new ReprovarOrcamentoCommand(ID);
+    }
+
+    public static AprovarOrcamentoCommand umAprovarOrcamentoCommand() {
+        return new AprovarOrcamentoCommand(ID);
     }
 }

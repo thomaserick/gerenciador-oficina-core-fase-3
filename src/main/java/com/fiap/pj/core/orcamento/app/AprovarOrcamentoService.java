@@ -6,7 +6,7 @@ import com.fiap.pj.core.orcamento.usecase.AprovarOrcamentoUseCase;
 import com.fiap.pj.core.orcamento.usecase.command.AprovarOrcamentoCommand;
 import com.fiap.pj.core.ordemservico.domain.OrdemServico;
 import com.fiap.pj.core.ordemservico.domain.OrdemServicoDomainRepository;
-import com.fiap.pj.core.usuario.domain.Usuario;
+import com.fiap.pj.core.util.security.SecurityContextUtils;
 import com.fiap.pj.infra.security.UserDetailsServiceImpl;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -29,12 +29,11 @@ public class AprovarOrcamentoService implements AprovarOrcamentoUseCase {
         orcamento.aprovar();
 
         if (isNull(orcamento.getOrdemServicoId())) {
-            Usuario usuario = this.userDetailsService.loadUsuarioFromSecurityContext();
 
             OrdemServico ordemServico = OrdemServico.builder()
                     .clienteId(orcamento.getClienteId())
                     .veiculoId(orcamento.getVeiculoId())
-                    .usuarioId(usuario.getId())
+                    .usuarioId(SecurityContextUtils.getUsuarioId())
                     .build();
 
             this.ordemServicoRepository.save(ordemServico);

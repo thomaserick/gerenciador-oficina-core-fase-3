@@ -13,6 +13,7 @@ import com.fiap.pj.core.servico.adapter.out.db.ServicoRepositoryJpa;
 import com.fiap.pj.core.servico.util.factory.ServicoTestFactory;
 import com.fiap.pj.core.veiculo.exception.VeiculoExceptions.VeiculoNaoPertenceAoClienteException;
 import com.fiap.pj.core.veiculo.util.factory.VeiculoTestFactory;
+import com.fiap.pj.util.TestSecurityConfig;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -55,6 +56,9 @@ class CriarOrcamentoServicoTest {
 
     @Test
     void deveCriarOrcamento() {
+
+        TestSecurityConfig.setAuthentication();
+
         var orcamento = OrcamentoTestFactory.umOrcamento();
         orcamento.adicionarServico(OrcamentoTestFactory.umOrcamentoItemServico(orcamento.getId()));
         orcamento.adicionaPecaInsumo(OrcamentoTestFactory.umOrcamentoItemPecaInsumo(orcamento.getId()));

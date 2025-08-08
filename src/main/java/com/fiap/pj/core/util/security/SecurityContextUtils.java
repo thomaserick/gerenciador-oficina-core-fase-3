@@ -5,6 +5,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.UUID;
+
 public class SecurityContextUtils {
 
     private SecurityContextUtils() {
@@ -17,5 +19,10 @@ public class SecurityContextUtils {
     public static String getLogin() {
         UserDetails user = (UserDetailsImpl) getAuthentication().getPrincipal();
         return user.getUsername();
+    }
+
+    public static UUID getUsuarioId() {
+        UserDetailsImpl user = (UserDetailsImpl) getAuthentication().getPrincipal();
+        return user.getId();
     }
 }

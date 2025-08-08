@@ -9,8 +9,7 @@ import com.fiap.pj.core.orcamento.usecase.CriarOrcamentoUseCase;
 import com.fiap.pj.core.orcamento.usecase.command.CriarOrcamentoCommand;
 import com.fiap.pj.core.pecainsumo.domain.PecaInsumoDomainRepository;
 import com.fiap.pj.core.servico.domain.ServicoDomainRepository;
-import com.fiap.pj.core.usuario.domain.Usuario;
-import com.fiap.pj.infra.security.UserDetailsServiceImpl;
+import com.fiap.pj.core.util.security.SecurityContextUtils;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -23,14 +22,13 @@ public class CriarOrcamentoService extends OrcamentoServico implements CriarOrca
 
     private final OrcamentoDomainRepository repository;
     private final ClienteDomainRepository clienteDomainRepository;
-    private final UserDetailsServiceImpl userDetailsService;
 
     public CriarOrcamentoService(ServicoDomainRepository servicoDomainRepository, PecaInsumoDomainRepository pecaInsumoDomainRepository,
-                                 OrcamentoDomainRepository repository, ClienteDomainRepository clienteDomainRepository, UserDetailsServiceImpl userDetailsService) {
+                                 OrcamentoDomainRepository repository, ClienteDomainRepository clienteDomainRepository) {
         super(servicoDomainRepository, pecaInsumoDomainRepository);
         this.repository = repository;
         this.clienteDomainRepository = clienteDomainRepository;
-        this.userDetailsService = userDetailsService;
+
     }
 
     @Override
@@ -39,14 +37,12 @@ public class CriarOrcamentoService extends OrcamentoServico implements CriarOrca
         Cliente cliente = this.clienteDomainRepository.findByIdOrThrowNotFound(cmd.getClienteId());
         cliente.validarVeiculo(cmd.getVeiculoId());
 
-        Usuario usuario = this.userDetailsService.loadUsuarioFromSecurityContext();
-
         Orcamento orcamento = Orcamento.builder()
                 .id(UUID.randomUUID())
                 .descricao(cmd.getDescricao())
                 .clienteId(cmd.getClienteId())
                 .veiculoId(cmd.getVeiculoId())
-                .usuarioId(usuario.getId())
+                .usuarioId(SecurityContextUtils.getUsuarioId())
                 .ordemServicoId(cmd.getOrdemServicoId())
                 .status(OrcamentoStatus.AGUARDANDO_APROVACAO)
                 .hodometro(cmd.getHodometro())

@@ -19,7 +19,7 @@ public class ListarOrcamentoService implements ListarOrcamentoUseCase {
 
     @Override
     public Slice<OrcamentoResponse> handle(ListarOrcamentoRequest request) {
-        var result = repository.findAllByClienteId(request.getClienteId(), request.getPageable());
-        return new Slice<>(result.hasNext(), result.getContent());
+        return repository.findProjectedBy(request.buildSpecification(), request.getPageable(), OrcamentoResponse.class);
+
     }
 }

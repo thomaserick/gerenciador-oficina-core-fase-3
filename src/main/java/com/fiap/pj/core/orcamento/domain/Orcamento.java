@@ -1,9 +1,11 @@
 package com.fiap.pj.core.orcamento.domain;
 
+import com.fiap.pj.core.cliente.domain.Cliente;
 import com.fiap.pj.core.orcamento.domain.enums.OrcamentoStatus;
 import com.fiap.pj.core.orcamento.exception.OrcamentoExceptions.AlterarOrcamentoStatusInvalidoException;
 import com.fiap.pj.core.orcamento.exception.OrcamentoExceptions.ReprovarOrcamentoStatusInvalidoException;
 import com.fiap.pj.core.util.DateTimeUtils;
+import com.fiap.pj.core.veiculo.domain.Veiculo;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -11,6 +13,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
@@ -41,6 +44,14 @@ public class Orcamento {
     private OrcamentoStatus status;
     private UUID ordemServicoId;
     private ZonedDateTime dataCriacao;
+
+    @OneToOne
+    @JoinColumn(name = "clienteId", referencedColumnName = "id", insertable = false, updatable = false)
+    private Cliente cliente;
+
+    @OneToOne
+    @JoinColumn(name = "veiculoId", referencedColumnName = "id", insertable = false, updatable = false)
+    private Veiculo veiculo;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "orcamentoId")

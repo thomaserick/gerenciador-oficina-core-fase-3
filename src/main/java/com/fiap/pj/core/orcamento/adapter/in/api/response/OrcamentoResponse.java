@@ -1,8 +1,6 @@
 package com.fiap.pj.core.orcamento.adapter.in.api.response;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fiap.pj.core.orcamento.domain.enums.OrcamentoStatus;
 
@@ -18,36 +16,10 @@ public interface OrcamentoResponse {
 
     String getDescricao();
 
-    @JsonIgnore
-    UUID getClienteId();
 
-    @JsonIgnore
-    String getClienteNome();
+    ClienteResponse getCliente();
 
-    @JsonProperty("id")
-    String getVeiculoId();
-
-    @JsonIgnore
-    String getPlaca();
-
-    @JsonIgnore
-    String getModelo();
-
-    @JsonIgnore
-    String getMarca();
-
-    @JsonIgnore
-    Integer getAno();
-
-    @JsonProperty("cliente")
-    default ClienteResponse getClienteResponse() {
-        return new ClienteResponse(getClienteId(), getClienteNome());
-    }
-
-    @JsonProperty("veiculo")
-    default VeiculoResponse getVeiculoResponse() {
-        return new VeiculoResponse(getVeiculoId(), getPlaca(), getModelo(), getMarca(), getAno());
-    }
+    VeiculoResponse getVeiculo();
 
     Collection<OrcamentoServicoResponse> getServicos();
 
@@ -59,23 +31,26 @@ public interface OrcamentoResponse {
 
     ZonedDateTime getDataCriacao();
 
-    default BigDecimal getValorTotal() {
-        var totalPecasInsumo = this.getPecasInsumos().stream().map(pecaInsumo -> pecaInsumo.getPreco().multiply(pecaInsumo.getQuantidade()))
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-        return this.getServicos().stream().map(servico -> servico.getPreco().multiply(servico.getQuantidade()))
-                .reduce(BigDecimal.ZERO, BigDecimal::add).add(totalPecasInsumo);
+    BigDecimal getValorTotal();
+
+    interface ClienteResponse {
+
+        UUID getId();
+
+        String getNome();
     }
 
-    record ClienteResponse(
-            @JsonProperty("id")
-            UUID clienteId,
-            @JsonProperty("nome")
-            String clienteNome) {
-    }
+    interface VeiculoResponse {
 
-    record VeiculoResponse(
-            @JsonProperty("id")
-            String veiculoId, String placa, String modelo, String marca, Integer ano) {
+        String getId();
+
+        String getPlaca();
+
+        String getModelo();
+
+        String getMarca();
+
+        Integer getAno();
     }
 
     @JsonPropertyOrder({"id", "descricao", "preco", "quantidade"})

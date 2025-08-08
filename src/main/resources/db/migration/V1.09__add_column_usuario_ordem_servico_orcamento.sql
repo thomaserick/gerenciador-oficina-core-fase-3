@@ -1,0 +1,5 @@
+ALTER TABLE IF EXISTS orcamento
+    ADD COLUMN IF NOT EXISTS usuario_id UUID;
+
+ALTER TABLE IF EXISTS ordem_servico
+    ADD COLUMN IF NOT EXISTS usuario_id UUID;

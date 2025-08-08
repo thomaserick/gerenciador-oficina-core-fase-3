@@ -40,7 +40,7 @@ class OrcamentoTest {
                     () -> new Orcamento(null,
                             null,
                             null,
-                            null, 0, null, null));
+                            null, null,0, null, null));
         }
 
         @Test
@@ -49,7 +49,7 @@ class OrcamentoTest {
                     () -> new Orcamento(OrcamentoTestFactory.ID,
                             null,
                             null,
-                            null, 0, null, null));
+                            null, null, 0, null, null));
         }
 
         @Test
@@ -58,7 +58,7 @@ class OrcamentoTest {
                     () -> new Orcamento(OrcamentoTestFactory.ID,
                             null,
                             OrcamentoTestFactory.CLIENTE_ID,
-                            null, 0, null, null));
+                            null, null, 0, null, null));
         }
 
         @Test
@@ -67,7 +67,7 @@ class OrcamentoTest {
                     () -> new Orcamento(OrcamentoTestFactory.ID,
                             null,
                             OrcamentoTestFactory.CLIENTE_ID,
-                            OrcamentoTestFactory.VEICULO_ID, 0, null, null));
+                            OrcamentoTestFactory.VEICULO_ID, null, 0, null, null));
         }
 
 

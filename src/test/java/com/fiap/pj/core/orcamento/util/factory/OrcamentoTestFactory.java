@@ -12,6 +12,7 @@ import com.fiap.pj.core.orcamento.usecase.command.OrcamentoItemServicoCommand;
 import com.fiap.pj.core.orcamento.usecase.command.ReprovarOrcamentoCommand;
 import com.fiap.pj.core.pecainsumo.util.factory.PecaInsumoTestFactory;
 import com.fiap.pj.core.servico.util.factory.ServicoTestFactory;
+import com.fiap.pj.core.usuario.util.factrory.UsuarioTestFactory;
 import com.fiap.pj.core.veiculo.util.factory.VeiculoTestFactory;
 
 import java.math.BigDecimal;
@@ -27,6 +28,7 @@ public class OrcamentoTestFactory {
     public static final BigDecimal ITEM_PECA_INSUMO_QUANTIDADE = BigDecimal.TEN;
     public static final UUID CLIENTE_ID = ClienteTestFactory.ID;
     public static final UUID VEICULO_ID = VeiculoTestFactory.ID;
+    public static final UUID USUARIO_ID = UsuarioTestFactory.ID;
     public static final String DESCRICAO = "Verificar Freios";
     public static final int HODOMENTO = 21052024;
     public static final OrcamentoStatus ORCAMENTO_STATUS = OrcamentoStatus.AGUARDANDO_APROVACAO;
@@ -50,7 +52,9 @@ public class OrcamentoTestFactory {
                 .descricao(DESCRICAO)
                 .hodometro(HODOMENTO)
                 .veiculoId(VEICULO_ID)
-                .clienteId(CLIENTE_ID).build();
+                .clienteId(CLIENTE_ID)
+                .usuarioId(USUARIO_ID)
+                .build();
     }
 
     public static OrcamentoItemServico umOrcamentoItemServico(UUID orcamentoId) {

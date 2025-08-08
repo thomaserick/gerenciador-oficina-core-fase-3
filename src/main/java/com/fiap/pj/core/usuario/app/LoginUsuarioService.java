@@ -28,11 +28,12 @@ public class LoginUsuarioService implements LoginUsuarioUseCase {
     @Override
     public LoginUsuarioResponse handle(LoginUsuarioCommand cmd) {
         try {
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(cmd.email(), cmd.senha()));
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(cmd.email(), cmd.senha()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
+
             UserDetailsImpl userDetailsImpl = (UserDetailsImpl) authentication.getPrincipal();
             final String jwt = jwtUtil.generateToken(userDetailsImpl);
+
             return new LoginUsuarioResponse(jwt);
         } catch (AuthenticationException e) {
             throw new CredenciaisInvalidasException("Credenciais inválidas");

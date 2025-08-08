@@ -51,7 +51,7 @@ class CriarOrcamentoServicoTest {
     private PecaInsumoRepositoryJpa pecaInsumoRepositoryJpa;
 
     @InjectMocks
-    private CriarOrcamentoServico criarOrcamentoService;
+    private CriarOrcamentoService criarOrcamentoService;
 
     @Test
     void deveCriarOrcamento() {

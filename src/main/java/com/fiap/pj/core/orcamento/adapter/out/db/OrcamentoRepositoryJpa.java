@@ -16,31 +16,31 @@ import java.util.UUID;
 
 public interface OrcamentoRepositoryJpa extends OrcamentoDomainRepository, Repository<Orcamento, UUID> {
 
-    String SQL = """
+    String SELECT_ALL_ORCAMENTO = """
             SELECT
-            orc.id           AS id,
-            orc.descricao    AS descricao,
-            orc.hodometro    AS hodometro,
-            orc.status       AS status,
-            orc.dataCriacao AS dataCriacao,
-            cl.id            AS clienteId,
-            cl.nome          AS clienteNome,
-            vei.id           AS veiculoId,
-            vei.placa        AS placa,
-            vei.marca        AS marca,
-            vei.modelo       AS modelo,
-            vei.ano          AS ano,
-            os               AS servicos,
-            opi              AS pecasInsumos
+                orc.id           AS id,
+                orc.descricao    AS descricao,
+                orc.hodometro    AS hodometro,
+                orc.status       AS status,
+                orc.dataCriacao AS dataCriacao,
+                cl.id            AS clienteId,
+                cl.nome          AS clienteNome,
+                vei.id           AS veiculoId,
+                vei.placa        AS placa,
+                vei.marca        AS marca,
+                vei.modelo       AS modelo,
+                vei.ano          AS ano,
+                os               AS servicos,
+                opi              AS pecasInsumos
             FROM Orcamento orc
-            INNER JOIN Cliente cl
-                            ON orc.clienteId = cl.id
-            INNER JOIN Veiculo vei
-                            ON orc.veiculoId = vei.id
-            LEFT JOIN OrcamentoItemServico os
-                            ON orc.id = os.orcamentoId
-            LEFT JOIN OrcamentoItemPecaInsumo opi
-                            ON orc.id = opi.orcamentoId
+                INNER JOIN Cliente cl
+                                ON orc.clienteId = cl.id
+                INNER JOIN Veiculo vei
+                                ON orc.veiculoId = vei.id
+                LEFT JOIN OrcamentoItemServico os
+                                ON orc.id = os.orcamentoId
+                LEFT JOIN OrcamentoItemPecaInsumo opi
+                                ON orc.id = opi.orcamentoId
             WHERE (cast(:clienteId as uuid) IS NULL OR orc.clienteId = :clienteId)
             """;
 
@@ -51,6 +51,6 @@ public interface OrcamentoRepositoryJpa extends OrcamentoDomainRepository, Repos
     }
 
     @Override
-    @Query(value = SQL)
+    @Query(value = SELECT_ALL_ORCAMENTO)
     Slice<OrcamentoResponse> findAllByClienteId(@Param("clienteId") UUID clienteId, Pageable pageable);
 }

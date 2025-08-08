@@ -28,6 +28,7 @@ public class OrdemServico {
     private UUID id;
     private UUID clienteId;
     private UUID veiculoId;
+    private UUID usuarioId;
     @Enumerated(EnumType.STRING)
     private OrdemServicoStatus status;
     private ZonedDateTime dataCriacao;
@@ -42,11 +43,13 @@ public class OrdemServico {
     @Builder
     public OrdemServico(
             UUID clienteId,
-            UUID veiculoId
+            UUID veiculoId,
+            UUID usuarioId
     ) {
         this.id = UUID.randomUUID();
         this.clienteId = clienteId;
         this.veiculoId = veiculoId;
+        this.usuarioId = usuarioId;
         this.status = OrdemServicoStatus.CRIADA;
         this.dataCriacao = DateTimeUtils.getNow();
         this.dataConclusao = DateTimeUtils.getNow().plusDays(1);

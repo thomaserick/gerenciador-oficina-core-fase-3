@@ -40,8 +40,6 @@ class AtivarUsuarioControllerTest {
                 TestUtils.buildURL(UsuarioController.PATH, UUID.randomUUID().toString(), "ativar"))
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
         ).andExpect(status().is2xxSuccessful());
-
-
     }
 
 }

@@ -35,6 +35,7 @@ public class Orcamento {
     private String descricao;
     private UUID clienteId;
     private UUID veiculoId;
+    private UUID usuarioId;
     private int hodometro;
     @Enumerated(EnumType.STRING)
     private OrcamentoStatus status;
@@ -45,21 +46,22 @@ public class Orcamento {
     @JoinColumn(name = "orcamentoId")
     private Set<OrcamentoItemServico> servicos = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "orcamentoId")
-    private Set<OrcamentoItemPecaInsumo> pecasInsumos = new HashSet<>();
-
     @Builder
-    public Orcamento(UUID id, String descricao, UUID clienteId, UUID veiculoId, int hodometro, OrcamentoStatus status, UUID ordemServicoId) {
+    public Orcamento(UUID id, String descricao, UUID clienteId, UUID veiculoId, UUID usuarioId, int hodometro, OrcamentoStatus status, UUID ordemServicoId) {
         this.id = requireNonNull(id);
         this.descricao = descricao;
         this.clienteId = requireNonNull(clienteId);
         this.veiculoId = requireNonNull(veiculoId);
+        this.usuarioId = requireNonNull(usuarioId);
         this.hodometro = hodometro;
         this.status = requireNonNull(status);
         this.ordemServicoId = ordemServicoId;
         this.dataCriacao = DateTimeUtils.getNow();
     }
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "orcamentoId")
+    private Set<OrcamentoItemPecaInsumo> pecasInsumos = new HashSet<>();
 
     public void alterar(String descricao, UUID clienteId, UUID veiculoId, int hodometro) {
         if (!this.status.isAguardandoAprovacao()) {
@@ -91,6 +93,10 @@ public class Orcamento {
             throw new ReprovarOrcamentoStatusInvalidoException();
         }
         this.status = OrcamentoStatus.REPROVADO;
+    }
+
+    public void vincularOrdemServico(UUID ordemServicoId) {
+        this.ordemServicoId = requireNonNull(ordemServicoId);
     }
 
     public BigDecimal getValorTotal() {

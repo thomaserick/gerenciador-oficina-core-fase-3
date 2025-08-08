@@ -20,6 +20,7 @@ public class AprovarOrcamentoService implements AprovarOrcamentoUseCase {
     private final OrcamentoDomainRepository repository;
     private final CriarOrdemServicoUseCase criarOrdemServicoUseCase;
 
+
     @Override
     public void handle(AprovarOrcamentoCommand cmd) {
         Orcamento orcamento = this.repository.findByIdOrThrowNotFound(cmd.id());
@@ -28,8 +29,10 @@ public class AprovarOrcamentoService implements AprovarOrcamentoUseCase {
         if (isNull(orcamento.getOrdemServicoId())) {
             var ordemServicoId = criarOrdemServicoUseCase.handle(new CriarOrdemServicoCommand(orcamento.getClienteId(),
                     orcamento.getVeiculoId()));
+
             orcamento.vincularOrdemServico(ordemServicoId);
         }
+
         this.repository.save(orcamento);
     }
 }

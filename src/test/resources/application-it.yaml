@@ -2,7 +2,7 @@ spring:
   datasource:
     URL: jdbc:postgresql://localhost:5432/gerenciador-oficina
     username: postgres
-    password: totvs@123
+    password: oficina@123
 
   jpa:
     show-sql: true

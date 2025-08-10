@@ -19,9 +19,14 @@ public class AlterarOrcamentoServico extends OrcamentoServico implements Alterar
     private final OrcamentoDomainRepository repository;
     private final ClienteDomainRepository clienteDomainRepository;
 
-    public AlterarOrcamentoServico(ServicoDomainRepository servicoDomainRepository, PecaInsumoDomainRepository pecaInsumoDomainRepository,
-                                   OrcamentoDomainRepository repository, ClienteDomainRepository clienteDomainRepository) {
+    public AlterarOrcamentoServico(
+            ServicoDomainRepository servicoDomainRepository,
+            PecaInsumoDomainRepository pecaInsumoDomainRepository,
+            OrcamentoDomainRepository repository,
+            ClienteDomainRepository clienteDomainRepository
+    ) {
         super(servicoDomainRepository, pecaInsumoDomainRepository);
+
         this.repository = repository;
         this.clienteDomainRepository = clienteDomainRepository;
     }
@@ -40,5 +45,4 @@ public class AlterarOrcamentoServico extends OrcamentoServico implements Alterar
 
         this.repository.save(orcamento);
     }
-
 }

@@ -14,27 +14,39 @@ import lombok.AllArgsConstructor;
 
 import java.util.Set;
 import java.util.UUID;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
+import static com.fiap.pj.core.util.CollectionUtils.nullSafeStream;
 
 @AllArgsConstructor
-public abstract class OrcamentoServico {
+public class OrcamentoServico {
 
     private final ServicoDomainRepository servicoDomainRepository;
     private final PecaInsumoDomainRepository pecaInsumoDomainRepository;
 
     protected void buildItemPecaInsumo(Orcamento orcamento, Set<OrcamentoItemPecaInsumoCommand> pecasInsumos) {
-        orcamento.getPecasInsumos().clear();
+        Set<OrcamentoItemPecaInsumo> orcamentoItemPecaInsumoIdRemovidoSet = nullSafeStream(orcamento.getPecasInsumos())
+                .filter(this.predicatePecasInsumosRemovidos(pecasInsumos)).collect(Collectors.toSet());
 
-        pecasInsumos.forEach(cmd -> {
-            PecaInsumo pecaInsumo = this.pecaInsumoDomainRepository.findByIdOrThrowNotFound(cmd.pecaInsumoId());
+        orcamento.getPecasInsumos().removeAll(orcamentoItemPecaInsumoIdRemovidoSet);
+        this.addQuantidadeRemovidaNoEstoque(orcamentoItemPecaInsumoIdRemovidoSet);
+
+        nullSafeStream(pecasInsumos).forEach(cmd -> {
+            PecaInsumo pecaInsumo = this.pecaInsumoDomainRepository.findByIdOrThrowNotFoundWithLocky(cmd.pecaInsumoId());
+
+            this.controleEstoquePecaInsumo(orcamento, cmd, pecaInsumo);
+
+            this.pecaInsumoDomainRepository.save(pecaInsumo);
 
             OrcamentoItemPecaInsumo pecaInsumoOrcamento = OrcamentoItemPecaInsumo
                     .builder()
-                        .id(UUID.randomUUID())
-                        .pecasInsumosId(pecaInsumo.getId())
-                        .orcamentoId(orcamento.getId())
-                        .quantidade(cmd.quantidade())
-                        .descricao(pecaInsumo.getDescricao())
-                        .preco(pecaInsumo.getValorUnitario())
+                    .id(UUID.randomUUID())
+                    .pecasInsumosId(pecaInsumo.getId())
+                    .orcamentoId(orcamento.getId())
+                    .quantidade(cmd.quantidade())
+                    .descricao(pecaInsumo.getDescricao())
+                    .preco(pecaInsumo.getValorUnitario())
                     .build();
 
             orcamento.adicionaPecaInsumo(pecaInsumoOrcamento);
@@ -44,7 +56,7 @@ public abstract class OrcamentoServico {
     protected void buildItemServico(Orcamento orcamento, Set<OrcamentoItemServicoCommand> servicos) {
         orcamento.getServicos().clear();
 
-        servicos.forEach(cmd -> {
+        nullSafeStream(servicos).forEach(cmd -> {
 
             Servico servico = this.servicoDomainRepository.findByIdOrThrowNotFound(cmd.servicoId());
 
@@ -60,5 +72,44 @@ public abstract class OrcamentoServico {
 
             orcamento.adicionarServico(servicoOrcamento);
         });
+    }
+
+    protected void roolbackPecasInsumos(Orcamento orcamento) {
+        orcamento.getPecasInsumos()
+                .forEach(orcamentoItemPecaInsumo -> {
+                    PecaInsumo pecaInsumo = this.pecaInsumoDomainRepository.findByIdOrThrowNotFoundWithLocky(orcamentoItemPecaInsumo.getPecasInsumosId());
+                    pecaInsumo.adicionarEstoque(orcamentoItemPecaInsumo.getQuantidade());
+                    this.pecaInsumoDomainRepository.save(pecaInsumo);
+                });
+    }
+
+    private Predicate<OrcamentoItemPecaInsumo> predicatePecasInsumosRemovidos(Set<OrcamentoItemPecaInsumoCommand> pecasInsumos) {
+        return item ->
+                pecasInsumos
+                        .stream()
+                        .noneMatch(cmd -> cmd.pecaInsumoId().equals(item.getId()));
+    }
+
+    private void addQuantidadeRemovidaNoEstoque(Set<OrcamentoItemPecaInsumo> orcamentoItemPecaInsumoIdRemovidoSet) {
+        orcamentoItemPecaInsumoIdRemovidoSet.forEach(orcamentoPecaInsumo -> {
+            PecaInsumo pecaInsumo = this.pecaInsumoDomainRepository.findByIdOrThrowNotFoundWithLocky(orcamentoPecaInsumo.getPecasInsumosId());
+            pecaInsumo.adicionarEstoque(orcamentoPecaInsumo.getQuantidade());
+
+            this.pecaInsumoDomainRepository.save(pecaInsumo);
+        });
+    }
+
+    private void controleEstoquePecaInsumo(Orcamento orcamento, OrcamentoItemPecaInsumoCommand cmd, PecaInsumo pecaInsumo) {
+        orcamento.getPecasInsumos().stream()
+                .filter(item -> item.getPecasInsumosId().equals(cmd.pecaInsumoId()))
+                .findFirst().ifPresentOrElse(item -> {
+                    if (item.getQuantidade() < cmd.quantidade()) {
+                        Integer diferenca = cmd.quantidade() - item.getQuantidade();
+                        pecaInsumo.removerEstoque(diferenca);
+                    } else if (item.getQuantidade() > cmd.quantidade()) {
+                        Integer diferenca = item.getQuantidade() - cmd.quantidade();
+                        pecaInsumo.adicionarEstoque(diferenca);
+                    }
+                }, () -> pecaInsumo.removerEstoque(cmd.quantidade()));
     }
 }

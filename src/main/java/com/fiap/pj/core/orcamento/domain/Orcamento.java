@@ -57,6 +57,10 @@ public class Orcamento {
     @JoinColumn(name = "orcamentoId")
     private Set<OrcamentoItemServico> servicos = new HashSet<>();
 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "orcamentoId")
+    private Set<OrcamentoItemPecaInsumo> pecasInsumos = new HashSet<>();
+
     @Builder
     public Orcamento(UUID id, String descricao, UUID clienteId, UUID veiculoId, UUID usuarioId, int hodometro, OrcamentoStatus status, UUID ordemServicoId) {
         this.id = requireNonNull(id);
@@ -69,10 +73,6 @@ public class Orcamento {
         this.ordemServicoId = ordemServicoId;
         this.dataCriacao = DateTimeUtils.getNow();
     }
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "orcamentoId")
-    private Set<OrcamentoItemPecaInsumo> pecasInsumos = new HashSet<>();
 
     public void alterar(String descricao, UUID clienteId, UUID veiculoId, int hodometro) {
         if (!this.status.isAguardandoAprovacao()) {
@@ -89,6 +89,10 @@ public class Orcamento {
     }
 
     public void adicionaPecaInsumo(OrcamentoItemPecaInsumo pecaInsumo) {
+        if (pecaInsumo.getQuantidade() <= 0) {
+            throw new IllegalArgumentException("A Quantidade da peca ou insumo deve ser maior que zero");
+        }
+
         this.pecasInsumos.add(pecaInsumo);
     }
 

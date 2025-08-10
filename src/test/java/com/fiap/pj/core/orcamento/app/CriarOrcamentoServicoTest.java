@@ -70,7 +70,7 @@ class CriarOrcamentoServicoTest {
 
         when(clienteRepositoryJpa.findByIdOrThrowNotFound(any(UUID.class))).thenReturn(cliente);
         when(servicoRepositoryJpa.findByIdOrThrowNotFound(any(UUID.class))).thenReturn(ServicoTestFactory.umServico());
-        when(pecaInsumoRepositoryJpa.findByIdOrThrowNotFound(any(UUID.class))).thenReturn(PecaInsumoTestFactory.umPecaInsumo());
+        when(pecaInsumoRepositoryJpa.findByIdOrThrowNotFoundWithLocky(any(UUID.class))).thenReturn(PecaInsumoTestFactory.umPecaInsumo());
 
         var orcamentoCriado = criarOrcamentoService.handle(OrcamentoTestFactory.umCriarOrcamentoCommand());
 

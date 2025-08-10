@@ -70,10 +70,9 @@ class AlterarOrcamentoServicoTest {
         when(orcamentoRepositoryJpa.findByIdOrThrowNotFound(any(UUID.class))).thenReturn(orcamento);
         when(clienteRepositoryJpa.findByIdOrThrowNotFound(any(UUID.class))).thenReturn(cliente);
         when(servicoRepositoryJpa.findByIdOrThrowNotFound(any(UUID.class))).thenReturn(ServicoTestFactory.umServico());
-        when(pecaInsumoRepositoryJpa.findByIdOrThrowNotFound(any(UUID.class))).thenReturn(PecaInsumoTestFactory.umPecaInsumo());
+        when(pecaInsumoRepositoryJpa.findByIdOrThrowNotFoundWithLocky(any(UUID.class))).thenReturn(PecaInsumoTestFactory.umPecaInsumo());
 
         alterarOrcamentoService.handle(OrcamentoTestFactory.umAlterarOrcamentoCommand(orcamento.getId()));
-
 
         verify(orcamentoRepositoryJpa).save(orcamentoArgumentCaptor.capture());
         Orcamento orcamentoAlterado = orcamentoArgumentCaptor.getValue();

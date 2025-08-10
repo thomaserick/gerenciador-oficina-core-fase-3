@@ -69,8 +69,6 @@ class OrcamentoTest {
                             OrcamentoTestFactory.CLIENTE_ID,
                             OrcamentoTestFactory.VEICULO_ID, null, 0, null, null));
         }
-
-
     }
 }
 

@@ -8,4 +8,6 @@ public interface PecaInsumoDomainRepository extends BaseCrudRepository<PecaInsum
 
     @Override
     PecaInsumo findByIdOrThrowNotFound(UUID id);
-} 
+
+    PecaInsumo findByIdOrThrowNotFoundWithLocky(UUID id);
+}

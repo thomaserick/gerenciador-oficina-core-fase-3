@@ -23,12 +23,16 @@ public class CriarOrcamentoService extends OrcamentoServico implements CriarOrca
     private final OrcamentoDomainRepository repository;
     private final ClienteDomainRepository clienteDomainRepository;
 
-    public CriarOrcamentoService(ServicoDomainRepository servicoDomainRepository, PecaInsumoDomainRepository pecaInsumoDomainRepository,
-                                 OrcamentoDomainRepository repository, ClienteDomainRepository clienteDomainRepository) {
+    public CriarOrcamentoService(
+            ServicoDomainRepository servicoDomainRepository,
+            PecaInsumoDomainRepository pecaInsumoDomainRepository,
+            OrcamentoDomainRepository repository,
+            ClienteDomainRepository clienteDomainRepository
+    ) {
         super(servicoDomainRepository, pecaInsumoDomainRepository);
+
         this.repository = repository;
         this.clienteDomainRepository = clienteDomainRepository;
-
     }
 
     @Override

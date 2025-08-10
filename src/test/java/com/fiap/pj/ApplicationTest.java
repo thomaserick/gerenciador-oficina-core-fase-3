@@ -5,6 +5,6 @@ import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
 @ActiveProfiles({"it"})
-class GerenciadorOficinaCoreApplicationTest {
+class ApplicationTest {
 
 }

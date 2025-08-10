@@ -25,7 +25,7 @@ public class OrcamentoTestFactory {
     public static final UUID ITEM_SERVICO_ID = UUID.randomUUID();
     public static final BigDecimal ITEM_SERVICO_QUANTIDADE = BigDecimal.ONE;
     public static final UUID ITEM_PECA_INSUMO_ID = UUID.randomUUID();
-    public static final BigDecimal ITEM_PECA_INSUMO_QUANTIDADE = BigDecimal.TEN;
+    public static final Integer ITEM_PECA_INSUMO_QUANTIDADE = 10;
     public static final UUID CLIENTE_ID = ClienteTestFactory.ID;
     public static final UUID VEICULO_ID = VeiculoTestFactory.ID;
     public static final UUID USUARIO_ID = UsuarioTestFactory.ID;

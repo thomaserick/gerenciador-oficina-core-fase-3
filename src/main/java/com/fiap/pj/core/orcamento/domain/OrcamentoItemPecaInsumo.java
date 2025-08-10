@@ -25,10 +25,10 @@ public class OrcamentoItemPecaInsumo {
     private UUID orcamentoId;
     private String descricao;
     private BigDecimal preco;
-    private BigDecimal quantidade;
+    private Integer quantidade;
 
     @Builder
-    public OrcamentoItemPecaInsumo(UUID id, UUID pecasInsumosId, UUID orcamentoId, String descricao, BigDecimal preco, BigDecimal quantidade) {
+    public OrcamentoItemPecaInsumo(UUID id, UUID pecasInsumosId, UUID orcamentoId, String descricao, BigDecimal preco, Integer quantidade) {
         this.id = requireNonNull(id);
         this.pecasInsumosId = requireNonNull(pecasInsumosId);
         this.orcamentoId = requireNonNull(orcamentoId);
@@ -38,6 +38,6 @@ public class OrcamentoItemPecaInsumo {
     }
 
     public BigDecimal valorTotal() {
-        return this.getPreco().multiply(this.getQuantidade());
+        return this.getPreco().multiply(BigDecimal.valueOf(quantidade));
     }
 }

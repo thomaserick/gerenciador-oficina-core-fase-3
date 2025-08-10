@@ -40,9 +40,17 @@
         <mockito.version>4.5.1</mockito.version>
         <spring-cloud.version>2025.0.0</spring-cloud.version>
         <jwt.version>0.11.2</jwt.version>
+
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.release>${java.version}</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Plugins de Qualidade -->
+        <sonar.maven.plugin.version>3.11.0.3922</sonar.maven.plugin.version>
+        <jacoco.version>0.8.12</jacoco.version>
+        <maven.surefire.version>3.2.5</maven.surefire.version>
+        <maven.failsafe.version>3.2.5</maven.failsafe.version>
     </properties>
 
     <dependencies>
@@ -51,6 +59,7 @@
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>${openapi.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-batch</artifactId>
@@ -71,6 +80,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web-services</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
@@ -79,10 +89,12 @@
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-database-postgresql</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-stream</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -100,11 +112,14 @@
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
+
+        <!-- Testes -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -125,10 +140,15 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-launcher</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-inline</artifactId>
+            <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -150,14 +170,6 @@
             <version>${jwt.version}</version>
             <scope>runtime</scope>
         </dependency>
-
-        <!-- Mockito -->
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-inline</artifactId>
-            <version>${mockito.version}</version>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -174,10 +186,11 @@
 
     <build>
         <plugins>
-
+            <!-- Compilação -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
                 <configuration>
                     <annotationProcessorPaths>
                         <path>
@@ -185,9 +198,13 @@
                             <artifactId>lombok</artifactId>
                         </path>
                     </annotationProcessorPaths>
+                    <release>${maven.compiler.release}</release>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <parameters>true</parameters>
                 </configuration>
             </plugin>
 
+            <!-- Boot -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -201,7 +218,114 @@
                 </configuration>
             </plugin>
 
+            <!-- Testes Unitários -->
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven.surefire.version}</version>
+                <configuration>
+                    <useModulePath>false</useModulePath>
+                    <argLine>@{surefireArgLine}</argLine>
+                </configuration>
+            </plugin>
+
+            <!-- Testes de Integração (se houver IT) -->
+            <plugin>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${maven.failsafe.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <useModulePath>false</useModulePath>
+                    <argLine>@{failsafeArgLine}</argLine>
+                </configuration>
+            </plugin>
+
+            <!-- Cobertura Jacoco -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco.version}</version>
+                <executions>
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                        <configuration>
+                            <propertyName>surefireArgLine</propertyName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>prepare-agent-integration</id>
+                        <goals>
+                            <goal>prepare-agent-integration</goal>
+                        </goals>
+                        <configuration>
+                            <propertyName>failsafeArgLine</propertyName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>report</goal>
+                            <goal>report-integration</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- SonarQube Scanner -->
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>${sonar.maven.plugin.version}</version>
+            </plugin>
         </plugins>
     </build>
 
+    <!-- Profile para análise Sonar -->
+    <profiles>
+        <profile>
+            <id>sonar</id>
+            <properties>
+                <sonar.projectKey>com.fiap.pj:app</sonar.projectKey>
+                <sonar.projectName>pj-app</sonar.projectName>
+                <sonar.host.url>http://localhost:9000</sonar.host.url>
+
+                <sonar.sources>src/main/java</sonar.sources>
+                <sonar.tests>src/test/java</sonar.tests>
+                <sonar.sourceEncoding>${project.build.sourceEncoding}</sonar.sourceEncoding>
+
+                <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+                <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+
+                <!-- Ajuste com parcimônia: evite excluir camadas de domínio/usecases -->
+                <sonar.exclusions>
+                    **/generated/**,
+                    **/build/**,
+                    **/target/**,
+                    **/dto/**,
+                    **/config/**,
+                    **/infra/**,
+                    **/core/**/adapter/in/api/openapi/**
+                </sonar.exclusions>
+
+                <sonar.test.exclusions>
+                    **/integration/**,
+                    **/it/**,
+                    **/infra/**,
+                    **/core/**/adapter/in/api/openapi/**
+                </sonar.test.exclusions>
+
+                <sonar.test.inclusions>**/*Test.java, **/*IT.java</sonar.test.inclusions>
+            </properties>
+        </profile>
+    </profiles>
 </project>

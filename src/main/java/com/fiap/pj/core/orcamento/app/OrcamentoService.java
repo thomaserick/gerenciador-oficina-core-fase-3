@@ -75,7 +75,7 @@ public abstract class OrcamentoService {
     }
 
     protected void roolbackPecasInsumos(Orcamento orcamento) {
-        orcamento.getPecasInsumos()
+        nullSafeStream(orcamento.getPecasInsumos())
                 .forEach(orcamentoItemPecaInsumo -> {
                     PecaInsumo pecaInsumo = this.pecaInsumoDomainRepository.findByIdOrThrowNotFoundWithLocky(orcamentoItemPecaInsumo.getPecasInsumosId());
                     pecaInsumo.adicionarEstoque(orcamentoItemPecaInsumo.getQuantidade());

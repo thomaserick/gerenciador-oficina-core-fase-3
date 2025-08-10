@@ -17,5 +17,4 @@ public class OrcamentoSpecification {
         return (root, criteriaQuery, builder) ->
                 builder.equal(root.get(FIELD_CLIENTE_ID), clienteId);
     }
-
 }

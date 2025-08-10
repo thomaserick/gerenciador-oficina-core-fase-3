@@ -19,6 +19,6 @@ public class ListarClienteService implements ListarClienteUseCase {
 
     @Override
     public Slice<ClienteResponse> handle(ListarClienteRequest request) {
-        return repository.findProjectedBy(request.buildSpecification(), request.getPageable(), ClienteResponse.class);
+        return this.repository.findProjectedBy(request.buildSpecification(), request.getPageable(), ClienteResponse.class);
     }
 }

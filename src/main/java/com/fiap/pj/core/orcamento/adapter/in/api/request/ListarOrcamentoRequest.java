@@ -18,8 +18,8 @@ import static com.fiap.pj.core.orcamento.domain.specification.OrcamentoSpecifica
 @AllArgsConstructor
 public class ListarOrcamentoRequest {
 
-
     private UUID clienteId;
+
     @Setter
     @JsonIgnore
     private Pageable pageable;

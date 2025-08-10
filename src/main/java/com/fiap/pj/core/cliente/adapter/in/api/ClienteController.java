@@ -95,6 +95,4 @@ public class ClienteController implements ClienteControllerOpenApi {
         }
         return ResponseEntity.ok().build();
     }
-
-
 }

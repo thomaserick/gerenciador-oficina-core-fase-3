@@ -9,4 +9,10 @@ public class OrdemServicoExceptions {
             super("Ordem serviço não encontrado.");
         }
     }
+
+    public static class OrdemServicoStatusInvalidoDianosticoException extends RuntimeException {
+        public OrdemServicoStatusInvalidoDianosticoException() {
+            super("Ordem serviço não pode receber um diagnóstico no status atual.");
+        }
+    }
 }

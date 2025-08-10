@@ -1,6 +1,7 @@
 package com.fiap.pj.core.ordemservico.domain;
 
 import com.fiap.pj.core.ordemservico.domain.enums.OrdemServicoStatus;
+import com.fiap.pj.core.ordemservico.exception.OrdemServicoExceptions.OrdemServicoStatusInvalidoDianosticoException;
 import com.fiap.pj.core.util.DateTimeUtils;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -56,7 +57,14 @@ public class OrdemServico {
     }
 
     public void realizarDiagnostico(String descricao) {
+        this.validarStatusParaInserirDiagnostico();
         Diagnostico diagnosticoCriado = new Diagnostico(this.id, descricao);
         this.diagnostico = diagnosticoCriado;
+    }
+
+    private void validarStatusParaInserirDiagnostico() {
+        if (!OrdemServicoStatus.EM_DIAGNOSTICO.equals(this.status)) {
+            throw new OrdemServicoStatusInvalidoDianosticoException();
+        }
     }
 }

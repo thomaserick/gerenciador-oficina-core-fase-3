@@ -39,7 +39,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class AlterarOrcamentoServicoTest {
+class AlterarOrcamentoServiceTest {
 
     @Captor
     ArgumentCaptor<Orcamento> orcamentoArgumentCaptor;
@@ -57,7 +57,7 @@ class AlterarOrcamentoServicoTest {
     private PecaInsumoRepositoryJpa pecaInsumoRepositoryJpa;
 
     @InjectMocks
-    private AlterarOrcamentoServico alterarOrcamentoService;
+    private AlterarOrcamentoService alterarOrcamentoService;
 
     @Test
     void deveAlterarOrcamento() {

@@ -4,12 +4,13 @@ import com.fiap.pj.core.orcamento.domain.Orcamento;
 import com.fiap.pj.core.orcamento.domain.OrcamentoDomainRepository;
 import com.fiap.pj.core.orcamento.usecase.AprovarOrcamentoUseCase;
 import com.fiap.pj.core.orcamento.usecase.command.AprovarOrcamentoCommand;
-import com.fiap.pj.core.ordemservico.domain.OrdemServico;
-import com.fiap.pj.core.ordemservico.domain.OrdemServicoDomainRepository;
-import com.fiap.pj.core.util.security.SecurityContextUtils;
+import com.fiap.pj.core.ordemservico.usecase.CriarOrdemServicoUseCase;
+import com.fiap.pj.core.ordemservico.usecase.command.CriarOrdemServicoCommand;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 import static java.util.Objects.isNull;
 
@@ -19,7 +20,7 @@ import static java.util.Objects.isNull;
 public class AprovarOrcamentoService implements AprovarOrcamentoUseCase {
 
     private final OrcamentoDomainRepository repository;
-    private final OrdemServicoDomainRepository ordemServicoRepository;
+    private final CriarOrdemServicoUseCase criarOrdemServicoUseCase;
 
     @Override
     public void handle(AprovarOrcamentoCommand cmd) {
@@ -27,16 +28,14 @@ public class AprovarOrcamentoService implements AprovarOrcamentoUseCase {
         orcamento.aprovar();
 
         if (isNull(orcamento.getOrdemServicoId())) {
+            UUID ordemServicoId = this.criarOrdemServicoUseCase.handle(
+                    new CriarOrdemServicoCommand(
+                            orcamento.getClienteId(),
+                            orcamento.getVeiculoId()
+                    )
+            );
 
-            OrdemServico ordemServico = OrdemServico.builder()
-                    .clienteId(orcamento.getClienteId())
-                    .veiculoId(orcamento.getVeiculoId())
-                    .usuarioId(SecurityContextUtils.getUsuarioId())
-                    .build();
-
-            this.ordemServicoRepository.save(ordemServico);
-
-            orcamento.vincularOrdemServico(ordemServico.getId());
+            orcamento.vincularOrdemServico(ordemServicoId);
         }
 
         this.repository.save(orcamento);

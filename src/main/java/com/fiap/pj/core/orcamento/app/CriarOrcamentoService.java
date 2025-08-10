@@ -18,7 +18,7 @@ import java.util.UUID;
 
 @Service
 @Transactional
-public class CriarOrcamentoService extends OrcamentoServico implements CriarOrcamentoUseCase {
+public class CriarOrcamentoService extends OrcamentoService implements CriarOrcamentoUseCase {
 
     private final OrcamentoDomainRepository repository;
     private final ClienteDomainRepository clienteDomainRepository;

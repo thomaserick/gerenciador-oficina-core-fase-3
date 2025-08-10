@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 import static com.fiap.pj.core.util.CollectionUtils.nullSafeStream;
 
 @AllArgsConstructor
-public class OrcamentoServico {
+public abstract class OrcamentoService {
 
     private final ServicoDomainRepository servicoDomainRepository;
     private final PecaInsumoDomainRepository pecaInsumoDomainRepository;
@@ -62,12 +62,12 @@ public class OrcamentoServico {
 
             OrcamentoItemServico servicoOrcamento = OrcamentoItemServico
                     .builder()
-                        .id(UUID.randomUUID())
-                        .orcamentoId(orcamento.getId())
-                        .preco(servico.getPreco())
-                        .quantidade(cmd.quantidade())
-                        .descricao(servico.getDescricao())
-                        .servicoId(servico.getId())
+                    .id(UUID.randomUUID())
+                    .orcamentoId(orcamento.getId())
+                    .preco(servico.getPreco())
+                    .quantidade(cmd.quantidade())
+                    .descricao(servico.getDescricao())
+                    .servicoId(servico.getId())
                     .build();
 
             orcamento.adicionarServico(servicoOrcamento);

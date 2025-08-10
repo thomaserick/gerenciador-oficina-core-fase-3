@@ -13,9 +13,9 @@ public record AdicionarVeiculoClienteCommand(@JsonIgnore UUID clienteId,
                                              String placa,
                                              String marca,
                                              String modelo,
-                                             @NotNull(message = "O ano não pode ser nulo")
-                                             @Min(value = 1900, message = "O ano deve ser maior ou igual a 1900")
-                                             @Max(value = 2100, message = "O ano deve ser menor ou igual a 2100")
+                                             @NotNull(message = "O ano não pode ser nulo.")
+                                             @Min(value = 1900, message = "O ano deve ser maior ou igual a 1900.")
+                                             @Max(value = 2100, message = "O ano deve ser menor ou igual a 2100.")
                                              int ano) {
 
     public AdicionarVeiculoClienteCommand comClienteId(UUID clienteId) {

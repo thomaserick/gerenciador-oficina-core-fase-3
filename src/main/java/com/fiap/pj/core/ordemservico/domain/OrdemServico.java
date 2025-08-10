@@ -2,6 +2,7 @@ package com.fiap.pj.core.ordemservico.domain;
 
 import com.fiap.pj.core.ordemservico.domain.enums.OrdemServicoStatus;
 import com.fiap.pj.core.util.DateTimeUtils;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -33,10 +34,9 @@ public class OrdemServico {
     private OrdemServicoStatus status;
     private ZonedDateTime dataCriacao;
     private ZonedDateTime dataConclusao;
-    private UUID diagnosticoId;
 
-    @OneToOne
-    @JoinColumn(name = "diagnosticoId", referencedColumnName = "id", updatable = false, insertable = false)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "diagnosticoId", referencedColumnName = "id")
     @NotFound(action = NotFoundAction.IGNORE)
     private Diagnostico diagnostico;
 
@@ -53,5 +53,10 @@ public class OrdemServico {
         this.status = OrdemServicoStatus.CRIADA;
         this.dataCriacao = DateTimeUtils.getNow();
         this.dataConclusao = DateTimeUtils.getNow().plusDays(1);
+    }
+
+    public void realizarDiagnostico(String descricao) {
+        Diagnostico diagnosticoCriado = new Diagnostico(this.id, descricao);
+        this.diagnostico = diagnosticoCriado;
     }
 }

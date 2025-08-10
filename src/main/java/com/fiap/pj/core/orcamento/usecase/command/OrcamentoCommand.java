@@ -13,10 +13,10 @@ public abstract class OrcamentoCommand {
 
     protected String descricao;
 
-    @NotNull(message = "Identificador do cliente não pode ser nulo")
+    @NotNull(message = "Identificador do cliente não pode ser nulo.")
     protected UUID clienteId;
 
-    @NotNull(message = "Identificador do veiculo não pode ser nulo")
+    @NotNull(message = "Identificador do veiculo não pode ser nulo.")
     protected UUID veiculoId;
 
     protected UUID ordemServicoId;

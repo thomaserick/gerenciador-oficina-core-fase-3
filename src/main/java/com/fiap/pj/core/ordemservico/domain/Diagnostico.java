@@ -11,7 +11,7 @@ import java.time.ZonedDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "diagnostico")
+@Table(name = "diagnosticos")
 @NoArgsConstructor
 @Getter
 public class Diagnostico {

@@ -1,4 +1,4 @@
-CREATE TABLE situacao_ordem_servico
+CREATE TABLE situacoes_ordens_servico
 (
     id                UUID         NOT NULL,
     status            VARCHAR(32)  NOT NULL,
@@ -6,8 +6,8 @@ CREATE TABLE situacao_ordem_servico
     data_criacao      TIMESTAMPTZ  NOT NULL,
     usuario_id        UUID         NOT NULL,
 
-    CONSTRAINT situacao_ordem_servico_pkey  PRIMARY KEY (id)
+    CONSTRAINT situacoes_ordens_servico_pkey  PRIMARY KEY (id)
 );
 
 -- Índices para melhor performance
-CREATE INDEX idx_situacao_ordem_servico_ordem_servico ON situacao_ordem_servico(ordem_servico_id);
+CREATE INDEX idx_situacoes_ordens_servico_ordens_servico ON situacoes_ordens_servico(ordem_servico_id);

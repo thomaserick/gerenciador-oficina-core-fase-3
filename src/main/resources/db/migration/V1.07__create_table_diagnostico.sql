@@ -1,4 +1,4 @@
-CREATE TABLE diagnostico
+CREATE TABLE diagnosticos
 (
     id                  UUID            NOT NULL,
     descricao           VARCHAR(255)    NOT NULL,
@@ -8,4 +8,4 @@ CREATE TABLE diagnostico
 );
 
 -- Índices para melhor performance
-CREATE INDEX idx_ordem_servico ON diagnostico(ordem_servico_id);
+CREATE INDEX idx_diagnosticos_ordem_servico ON diagnosticos(ordem_servico_id);

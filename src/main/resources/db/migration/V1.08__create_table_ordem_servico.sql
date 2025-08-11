@@ -1,4 +1,4 @@
-CREATE TABLE ordem_servico
+CREATE TABLE ordens_servico
 (
     id               UUID         NOT NULL,
     cliente_id       UUID         NOT NULL,
@@ -7,6 +7,6 @@ CREATE TABLE ordem_servico
     data_criacao     TIMESTAMPTZ  NOT NULL,
     data_conclusao   TIMESTAMPTZ,
     diagnostico_id   UUID,
-    CONSTRAINT ordem_servico_pkey  PRIMARY KEY (id),
-    CONSTRAINT fk_ordem_servico_diagnostico FOREIGN KEY (diagnostico_id) REFERENCES diagnostico(id)
+    CONSTRAINT ordens_servico_pkey  PRIMARY KEY (id),
+    CONSTRAINT fk_ordens_servico_diagnostico FOREIGN KEY (diagnostico_id) REFERENCES diagnosticos(id)
 );

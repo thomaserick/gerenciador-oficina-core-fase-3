@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 import java.util.UUID;
 
 @Entity
-@Table(name = "situacao_ordem_servico")
+@Table(name = "situacoes_ordens_servico")
 @NoArgsConstructor
 @Getter
 public class SituacaoOrdemServico {

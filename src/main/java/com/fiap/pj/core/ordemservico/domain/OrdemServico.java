@@ -1,5 +1,6 @@
 package com.fiap.pj.core.ordemservico.domain;
 
+import com.fiap.pj.core.cliente.domain.Cliente;
 import com.fiap.pj.core.ordemservico.domain.enums.OrdemServicoStatus;
 import com.fiap.pj.core.ordemservico.exception.OrdemServicoExceptions.OrdemServicoStatusInvalidoAguardandoAprovacaoException;
 import com.fiap.pj.core.ordemservico.exception.OrdemServicoExceptions.OrdemServicoStatusInvalidoAguardandoRetiradaException;
@@ -7,7 +8,9 @@ import com.fiap.pj.core.ordemservico.exception.OrdemServicoExceptions.OrdemServi
 import com.fiap.pj.core.ordemservico.exception.OrdemServicoExceptions.OrdemServicoStatusInvalidoEmExecucaoException;
 import com.fiap.pj.core.ordemservico.exception.OrdemServicoExceptions.OrdemServicoStatusInvalidoEntregueException;
 import com.fiap.pj.core.ordemservico.exception.OrdemServicoExceptions.OrdemServicoStatusInvalidoFinalizadaException;
+import com.fiap.pj.core.usuario.domain.Usuario;
 import com.fiap.pj.core.util.DateTimeUtils;
+import com.fiap.pj.core.veiculo.domain.Veiculo;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -34,7 +37,7 @@ import static com.fiap.pj.core.ordemservico.domain.enums.OrdemServicoStatus.EM_E
 import static com.fiap.pj.core.ordemservico.domain.enums.OrdemServicoStatus.FINALIZADA;
 
 @Entity
-@Table(name = "ordem_servico")
+@Table(name = "ordens_servico")
 @NoArgsConstructor
 @Getter
 public class OrdemServico {
@@ -48,6 +51,18 @@ public class OrdemServico {
     private OrdemServicoStatus status;
     private ZonedDateTime dataCriacao;
     private ZonedDateTime dataConclusao;
+
+    @OneToOne
+    @JoinColumn(name = "clienteId", referencedColumnName = "id", insertable = false, updatable = false)
+    private Cliente cliente;
+
+    @OneToOne
+    @JoinColumn(name = "veiculoId", referencedColumnName = "id", insertable = false, updatable = false)
+    private Veiculo veiculo;
+
+    @OneToOne
+    @JoinColumn(name = "usuarioId", referencedColumnName = "id", insertable = false, updatable = false)
+    private Usuario usuario;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "diagnosticoId", referencedColumnName = "id")

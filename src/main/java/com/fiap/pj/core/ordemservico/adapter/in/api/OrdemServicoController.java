@@ -4,6 +4,11 @@ import com.fiap.pj.core.ordemservico.adapter.in.api.openapi.OrdemServicoControll
 import com.fiap.pj.core.ordemservico.adapter.in.api.request.ListarOrdemServicoRequest;
 import com.fiap.pj.core.ordemservico.adapter.in.api.response.OrdemServicoResponse;
 import com.fiap.pj.core.ordemservico.usecase.ListarOrdemServicoUseCase;
+import com.fiap.pj.core.ordemservico.usecase.MoverAguardandoAprovacaoUseCase;
+import com.fiap.pj.core.ordemservico.usecase.MoverAguardandoRetiradaUseCase;
+import com.fiap.pj.core.ordemservico.usecase.MoverEmDiagnosticoUseCase;
+import com.fiap.pj.core.ordemservico.usecase.MoverEntregueUseCase;
+import com.fiap.pj.core.ordemservico.usecase.MoverFinalizadaUseCase;
 import com.fiap.pj.core.ordemservico.usecase.RealizarDiagnosticoOrdemServicoUseCase;
 import com.fiap.pj.core.ordemservico.usecase.command.RealizarDiagnosticoOrdemServicoCommand;
 import com.fiap.pj.infra.api.Slice;
@@ -29,12 +34,59 @@ public class OrdemServicoController implements OrdemServicoControllerOpenApi {
 
     private final ListarOrdemServicoUseCase listarClienteUseCase;
     private final RealizarDiagnosticoOrdemServicoUseCase realizarDiagnosticoOrdemServicoUseCase;
+    private final MoverEmDiagnosticoUseCase moverEmDiagnosticoUseCase;
+    private final MoverAguardandoAprovacaoUseCase moverAguardandoAprovacaoUseCase;
+    private final MoverFinalizadaUseCase moverFinalizadaUseCase;
+    private final MoverAguardandoRetiradaUseCase moverAguardandoRetiradaUseCase;
+    private final MoverEntregueUseCase moverEntregueUseCase;
 
     @Override
     @PostMapping
     public Slice<OrdemServicoResponse> listarOrdemServico(@ParameterObject ListarOrdemServicoRequest filterRequest, @ParameterObject Pageable pageable) {
         filterRequest.setPageable(pageable);
         return this.listarClienteUseCase.handle(filterRequest);
+    }
+
+    @Override
+    @PostMapping
+    public ResponseEntity<Void> moverEmDiagnostico(@Valid @PathVariable UUID id) {
+        this.moverEmDiagnosticoUseCase.handle(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @Override
+    @PostMapping
+    public ResponseEntity<Void> moverAguardandoAprovacao(@Valid @PathVariable UUID id) {
+        this.moverAguardandoAprovacaoUseCase.handle(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @Override
+    @PostMapping
+    public ResponseEntity<Void> moverEmExecucao(@Valid @PathVariable UUID id) {
+        this.moverAguardandoAprovacaoUseCase.handle(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @Override
+    @PostMapping
+    public ResponseEntity<Void> moverFinalizada(@Valid @PathVariable UUID id) {
+        this.moverFinalizadaUseCase.handle(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @Override
+    @PostMapping
+    public ResponseEntity<Void> moverAguardandoRetirada(@Valid @PathVariable UUID id) {
+        this.moverAguardandoRetiradaUseCase.handle(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @Override
+    @PostMapping
+    public ResponseEntity<Void> moverEntregue(@Valid @PathVariable UUID id) {
+        this.moverEntregueUseCase.handle(id);
+        return ResponseEntity.ok().build();
     }
 
     @Override

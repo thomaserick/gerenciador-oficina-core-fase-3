@@ -115,7 +115,7 @@ public class Orcamento {
     }
 
     public BigDecimal getValorTotal() {
-        var totalPecasInsumo = this.getPecasInsumos().stream().map(OrcamentoItemPecaInsumo::valorTotal).reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal totalPecasInsumo = this.getPecasInsumos().stream().map(OrcamentoItemPecaInsumo::valorTotal).reduce(BigDecimal.ZERO, BigDecimal::add);
         return this.getServicos().stream().map(OrcamentoItemServico::valorTotal).reduce(BigDecimal.ZERO, BigDecimal::add).add(totalPecasInsumo);
     }
 }

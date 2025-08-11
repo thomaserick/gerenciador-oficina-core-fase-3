@@ -1,9 +1,8 @@
-
 package com.fiap.pj.core.ordemservico.app;
 
 import com.fiap.pj.core.ordemservico.domain.OrdemServico;
 import com.fiap.pj.core.ordemservico.domain.OrdemServicoDomainRepository;
-import com.fiap.pj.core.ordemservico.usecase.MoverFinalizadaUseCase;
+import com.fiap.pj.core.ordemservico.usecase.MoverEntregueUseCase;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,7 +12,7 @@ import java.util.UUID;
 @Service
 @Transactional
 @AllArgsConstructor
-public class MoverEntregueService implements MoverFinalizadaUseCase {
+public class MoverEntregueService implements MoverEntregueUseCase {
 
     private final OrdemServicoDomainRepository ordemServicoRepository;
 

@@ -3,7 +3,7 @@ package com.fiap.pj.core.ordemservico.adapter.out.db;
 
 import com.fiap.pj.core.ordemservico.domain.OrdemServico;
 import com.fiap.pj.core.ordemservico.domain.OrdemServicoDomainRepository;
-import com.fiap.pj.core.ordemservico.exception.OrdemServicoExceptions.OrdemServicoEncontradoException;
+import com.fiap.pj.core.ordemservico.exception.OrdemServicoExceptions.OrdemServicoNaoEncontradaException;
 import org.springframework.data.repository.Repository;
 
 import java.util.UUID;
@@ -13,6 +13,6 @@ public interface OrdemServicoRepositoryJpa extends OrdemServicoDomainRepository,
 
     @Override
     default OrdemServico findByIdOrThrowNotFound(UUID id) {
-        return findById(id).orElseThrow(OrdemServicoEncontradoException::new);
+        return findById(id).orElseThrow(OrdemServicoNaoEncontradaException::new);
     }
 }

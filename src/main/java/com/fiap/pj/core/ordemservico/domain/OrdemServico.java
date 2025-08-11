@@ -48,15 +48,16 @@ public class OrdemServico {
 
     @Builder
     public OrdemServico(
+            UUID id,
             UUID clienteId,
             UUID veiculoId,
-            UUID usuarioId
+            UUID usuarioId, OrdemServicoStatus status
     ) {
-        this.id = UUID.randomUUID();
+        this.id = id;
         this.clienteId = clienteId;
         this.veiculoId = veiculoId;
         this.usuarioId = usuarioId;
-        this.status = OrdemServicoStatus.CRIADA;
+        this.status = status;
         this.dataCriacao = DateTimeUtils.getNow();
         this.dataConclusao = DateTimeUtils.getNow().plusDays(1);
     }
@@ -76,10 +77,13 @@ public class OrdemServico {
     }
 
     public void moverEmExecucao() {
-        if (!OrdemServicoStatus.AGUARDANDO_APROVACAO.equals(this.status) || !OrdemServicoStatus.EM_DIAGNOSTICO.equals(this.status)) {
+        if (OrdemServicoStatus.AGUARDANDO_APROVACAO.equals(this.status) ||
+                OrdemServicoStatus.EM_DIAGNOSTICO.equals(this.status)) {
+            this.status = OrdemServicoStatus.EM_EXECUCAO;
+        } else {
             throw new OrdemServicoStatusInvalidoEmExecucaoException();
         }
-        this.status = OrdemServicoStatus.EM_EXECUCAO;
+
     }
 
     public void moverFinalizada() {

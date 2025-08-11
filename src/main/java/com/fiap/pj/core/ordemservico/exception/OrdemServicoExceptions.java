@@ -4,8 +4,8 @@ public class OrdemServicoExceptions {
     private OrdemServicoExceptions() {
     }
 
-    public static class OrdemServicoEncontradoException extends RuntimeException {
-        public OrdemServicoEncontradoException() {
+    public static class OrdemServicoNaoEncontradaException extends RuntimeException {
+        public OrdemServicoNaoEncontradaException() {
             super("Ordem serviço não encontrado.");
         }
     }

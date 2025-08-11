@@ -22,6 +22,7 @@ import java.util.UUID;
 
 import static com.fiap.pj.core.ordemservico.domain.enums.OrdemServicoStatus.AGUARDANDO_APROVACAO;
 import static com.fiap.pj.core.ordemservico.domain.enums.OrdemServicoStatus.CRIADA;
+import static com.fiap.pj.core.ordemservico.domain.enums.OrdemServicoStatus.EM_DIAGNOSTICO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.Mockito.verify;
@@ -43,6 +44,23 @@ class MoverEmExecucaoServiceTest {
     void deveAlteraStatusOsEmExecucao() {
         TestSecurityConfig.setAuthentication();
         var ordemServico = OrdemServicoTestFactory.umaOrdemServico(AGUARDANDO_APROVACAO);
+
+        when(ordemServicoRepositoryJpa.findByIdOrThrowNotFound(ordemServico.getId())).thenReturn(ordemServico);
+
+        moverEmExecucaoService.handle(ordemServico.getId());
+
+        verify(ordemServicoRepositoryJpa).save(ordemServicoArgumentCaptor.capture());
+        OrdemServico ordemServicoAlterada = ordemServicoArgumentCaptor.getValue();
+
+        Assertions.assertNotNull(ordemServico);
+        Assertions.assertEquals(OrdemServicoStatus.EM_EXECUCAO, ordemServicoAlterada.getStatus());
+
+    }
+
+    @Test
+    void deveAlteraStatusOsEmExecucaoComSatusAtualEmDiagnostico() {
+        TestSecurityConfig.setAuthentication();
+        var ordemServico = OrdemServicoTestFactory.umaOrdemServico(EM_DIAGNOSTICO);
 
         when(ordemServicoRepositoryJpa.findByIdOrThrowNotFound(ordemServico.getId())).thenReturn(ordemServico);
 

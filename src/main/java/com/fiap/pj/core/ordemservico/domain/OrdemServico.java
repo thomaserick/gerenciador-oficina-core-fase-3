@@ -14,6 +14,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Builder;
@@ -23,7 +24,14 @@ import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
 import java.time.ZonedDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
+
+import static com.fiap.pj.core.ordemservico.domain.enums.OrdemServicoStatus.AGUARDANDO_APROVACAO;
+import static com.fiap.pj.core.ordemservico.domain.enums.OrdemServicoStatus.EM_DIAGNOSTICO;
+import static com.fiap.pj.core.ordemservico.domain.enums.OrdemServicoStatus.EM_EXECUCAO;
+import static com.fiap.pj.core.ordemservico.domain.enums.OrdemServicoStatus.FINALIZADA;
 
 @Entity
 @Table(name = "ordem_servico")
@@ -46,6 +54,10 @@ public class OrdemServico {
     @NotFound(action = NotFoundAction.IGNORE)
     private Diagnostico diagnostico;
 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "ordemServicoId")
+    private Set<SituacaoOrdemServico> historicoSituacao = new HashSet<>();
+
     @Builder
     public OrdemServico(
             UUID id,
@@ -66,20 +78,20 @@ public class OrdemServico {
         if (!OrdemServicoStatus.CRIADA.equals(this.status)) {
             throw new OrdemServicoStatusInvalidoDiagnosticoException();
         }
-        this.status = OrdemServicoStatus.EM_DIAGNOSTICO;
+        novaSituacao(EM_DIAGNOSTICO);
     }
 
     public void moverAguardandoAprovacao() {
         if (!OrdemServicoStatus.EM_DIAGNOSTICO.equals(this.status)) {
             throw new OrdemServicoStatusInvalidoAguardandoAprovacaoException();
         }
-        this.status = OrdemServicoStatus.AGUARDANDO_APROVACAO;
+        novaSituacao(AGUARDANDO_APROVACAO);
     }
 
     public void moverEmExecucao() {
         if (OrdemServicoStatus.AGUARDANDO_APROVACAO.equals(this.status) ||
                 OrdemServicoStatus.EM_DIAGNOSTICO.equals(this.status)) {
-            this.status = OrdemServicoStatus.EM_EXECUCAO;
+            novaSituacao(EM_EXECUCAO);
         } else {
             throw new OrdemServicoStatusInvalidoEmExecucaoException();
         }
@@ -90,32 +102,39 @@ public class OrdemServico {
         if (!OrdemServicoStatus.EM_EXECUCAO.equals(this.status)) {
             throw new OrdemServicoStatusInvalidoFinalizadaException();
         }
-        this.status = OrdemServicoStatus.FINALIZADA;
+        novaSituacao(FINALIZADA);
     }
 
     public void moverAguardandoRetirada() {
-        if (!OrdemServicoStatus.FINALIZADA.equals(this.status)) {
+        if (!FINALIZADA.equals(this.status)) {
             throw new OrdemServicoStatusInvalidoAguardandoRetiradaException();
         }
-        this.status = OrdemServicoStatus.AGUARDANDO_RETIRADA;
+
+        novaSituacao(OrdemServicoStatus.AGUARDANDO_RETIRADA);
     }
 
     public void moverEntregue() {
         if (!OrdemServicoStatus.AGUARDANDO_RETIRADA.equals(this.status)) {
             throw new OrdemServicoStatusInvalidoEntregueException();
         }
-        this.status = OrdemServicoStatus.ENTREGUE;
+
+        novaSituacao(OrdemServicoStatus.ENTREGUE);
     }
 
     public void realizarDiagnostico(String descricao) {
         this.validarStatusParaInserirDiagnostico();
-        Diagnostico diagnosticoCriado = new Diagnostico(this.id, descricao);
-        this.diagnostico = diagnosticoCriado;
+        this.diagnostico = new Diagnostico(this.id, descricao);
     }
 
     private void validarStatusParaInserirDiagnostico() {
         if (!OrdemServicoStatus.EM_DIAGNOSTICO.equals(this.status)) {
             throw new OrdemServicoStatusInvalidoDiagnosticoException();
         }
+    }
+
+    private void novaSituacao(OrdemServicoStatus status) {
+        var situacao = new SituacaoOrdemServico(status, this.getId());
+        this.getHistoricoSituacao().add(situacao);
+        this.status = status;
     }
 }

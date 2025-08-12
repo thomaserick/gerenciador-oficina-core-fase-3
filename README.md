@@ -12,7 +12,8 @@ API para gerenciamento de uma oficina com autenticação e controle de estoque.
 - [Tecnologias](#-tecnologias)
 - [Instalação](#-instalação)
 - [Autenticação](#-autenticação)
-- [Documentação](#-documentação-da-api)
+- [Documentação APIs](#-documentação-da-api)
+- [Documentação DDD](#documentação-ddd)
 
 ## 🛠 Tecnologias
 
@@ -70,6 +71,13 @@ utilizar o endpoint `/usuarios`.
 
 ## 📚 Documentação da API
 
-### [Swagger](http://localhost:8081/swagger-ui/index.html) 
+### [Swagger](http://localhost:8081/swagger-ui/index.html)
+
+## 📚 Documentação DDD
+
+### [EventStorming](https://miro.com/app/board/uXjVIhTYiq8=/?share_link_id=963111040580)
+
+### [Diagrama](https://drive.google.com/file/d/1gpGtB9AUglij6xUx8oZw5JVPN-rvoWDh/view)
+
 
 

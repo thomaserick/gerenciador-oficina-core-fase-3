@@ -63,24 +63,34 @@ public class ListarOrdemServicoRequest {
                 specs = specs.and(queContenhaStatusIgualA(this.status));
             }
 
-            if (nonNull(this.dataCriacaoDe)) {
-                specs = specs.and(comDataCriacaoDe(this.dataCriacaoDe));
-            }
+            specs = buildFiltrosData(specs);
 
-            if (nonNull(this.dataCriacaoAte)) {
-                specs = specs.and(comDataCriacaoAte(this.dataCriacaoAte));
-            }
 
-            if (nonNull(this.dataConclusaoDe)) {
-                specs = specs.and(comDataConclusaoDe(this.dataConclusaoDe));
-            }
-
-            if (nonNull(this.dataConclusaoAte)) {
-                specs = specs.and(comDataConclusaoAte(this.dataConclusaoAte));
-            }
         }
 
         return specs;
+    }
+
+    private Specification<OrdemServico> buildFiltrosData(Specification<OrdemServico> specs) {
+
+        if (nonNull(this.dataCriacaoDe)) {
+            specs = specs.and(comDataCriacaoDe(this.dataCriacaoDe));
+        }
+
+        if (nonNull(this.dataCriacaoAte)) {
+            specs = specs.and(comDataCriacaoAte(this.dataCriacaoAte));
+        }
+
+        if (nonNull(this.dataConclusaoDe)) {
+            specs = specs.and(comDataConclusaoDe(this.dataConclusaoDe));
+        }
+
+        if (nonNull(this.dataConclusaoAte)) {
+            specs = specs.and(comDataConclusaoAte(this.dataConclusaoAte));
+        }
+
+        return specs;
+
     }
 
 }

@@ -35,7 +35,7 @@ API para gerenciamento de uma oficina com autenticação e controle de estoque.
 - Docker 24.0+
 - Docker Compose 2.20+
 
-### Comandos para rodar o projeto local com Docker Compose
+### Comandos para rodar o projeto local com Docker
 
 1 Suba os containers:
 

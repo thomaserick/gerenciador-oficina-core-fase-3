@@ -77,12 +77,12 @@ API para gerenciamento de uma oficina com autenticação e controle de estoque.
 
 O sistema rodará na porta `localhost:8081`.
 
+## 🔑 Autenticação
+
 ### Endpoints Públicos
 
 - `/usuarios` (POST)
 - `/usuarios/login`
-
-## 🔑 Autenticação
 
 Você precisará se autenticar no endpoint `/usuarios/login`, caso não tenha usuário cadastado
 utilizar o endpoint `/usuarios`.

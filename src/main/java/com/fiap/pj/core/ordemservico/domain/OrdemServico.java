@@ -19,6 +19,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
@@ -71,6 +72,7 @@ public class OrdemServico {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "ordemServicoId")
+    @OrderBy("dataCriacao DESC")
     private Set<SituacaoOrdemServico> historicoSituacao = new HashSet<>();
 
     @Builder

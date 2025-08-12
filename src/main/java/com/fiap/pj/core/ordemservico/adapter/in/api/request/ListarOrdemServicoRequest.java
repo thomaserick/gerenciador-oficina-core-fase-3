@@ -9,7 +9,6 @@ import lombok.Setter;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
@@ -84,7 +83,4 @@ public class ListarOrdemServicoRequest {
         return specs;
     }
 
-    public static void main(String[] args) {
-        System.out.println(LocalDateTime.now());
-    }
 }

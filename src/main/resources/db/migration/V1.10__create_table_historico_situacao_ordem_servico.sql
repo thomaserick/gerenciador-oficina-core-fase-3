@@ -6,7 +6,8 @@ CREATE TABLE situacoes_ordens_servico
     data_criacao      TIMESTAMPTZ  NOT NULL,
     usuario_id        UUID         NOT NULL,
 
-    CONSTRAINT situacoes_ordens_servico_pkey  PRIMARY KEY (id)
+    CONSTRAINT situacoes_ordens_servico_pkey  PRIMARY KEY (id),
+    CONSTRAINT fk_situacoes_ordens_servico FOREIGN KEY (ordem_servico_id) REFERENCES ordens_servico(id)
 );
 
 -- Índices para melhor performance

@@ -1,9 +1,12 @@
 package com.fiap.pj.core.ordemservico.adapter.in.api;
 
 import com.fiap.pj.core.ordemservico.adapter.in.api.openapi.OrdemServicoControllerOpenApi;
+import com.fiap.pj.core.ordemservico.adapter.in.api.request.BuscarAcompanhamentoByOrdemServicoIdRequest;
 import com.fiap.pj.core.ordemservico.adapter.in.api.request.ListarOrdemServicoRequest;
+import com.fiap.pj.core.ordemservico.adapter.in.api.response.AcompanhamentoOrdemServicoResponse;
 import com.fiap.pj.core.ordemservico.adapter.in.api.response.OrdemServicoResponse;
 import com.fiap.pj.core.ordemservico.usecase.AlterarStatusOsAguardandoAprovacaoUseCase;
+import com.fiap.pj.core.ordemservico.usecase.BuscarAcompanhamentoByOrdemServicoIdUseCase;
 import com.fiap.pj.core.ordemservico.usecase.ListarOrdemServicoUseCase;
 import com.fiap.pj.core.ordemservico.usecase.MoverAguardandoRetiradaUseCase;
 import com.fiap.pj.core.ordemservico.usecase.MoverEmDiagnosticoUseCase;
@@ -25,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -42,12 +46,19 @@ public class OrdemServicoController implements OrdemServicoControllerOpenApi {
     private final MoverAguardandoRetiradaUseCase moverAguardandoRetiradaUseCase;
     private final MoverEntregueUseCase moverEntregueUseCase;
     private final MoverEmExecucaoUseCase moverEmExecucaoUseCase;
+    private final BuscarAcompanhamentoByOrdemServicoIdUseCase buscarAcompanhamentoByOrdemServicoIdUseCase;
 
     @Override
     @GetMapping
     public Slice<OrdemServicoResponse> listarOrdemServico(@ParameterObject ListarOrdemServicoRequest filterRequest, @ParameterObject Pageable pageable) {
         filterRequest.setPageable(pageable);
         return this.listarClienteUseCase.handle(filterRequest);
+    }
+
+    @Override
+    @GetMapping("/{id}/acompanhamento")
+    public Optional<AcompanhamentoOrdemServicoResponse> buscarAcompanhamentoByOrdemServicoId(@PathVariable UUID id, Pageable pageable) {
+        return this.buscarAcompanhamentoByOrdemServicoIdUseCase.handle(new BuscarAcompanhamentoByOrdemServicoIdRequest(id, pageable));
     }
 
     @Override

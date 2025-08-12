@@ -2,15 +2,20 @@ package com.fiap.pj.core.ordemservico.domain;
 
 
 import com.fiap.pj.core.ordemservico.domain.enums.OrdemServicoStatus;
+import com.fiap.pj.core.usuario.domain.Usuario;
+import com.fiap.pj.core.util.DateTimeUtils;
 import com.fiap.pj.core.util.security.SecurityContextUtils;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.ZonedDateTime;
 import java.util.UUID;
 
 @Entity
@@ -29,10 +34,17 @@ public class SituacaoOrdemServico {
 
     private UUID ordemServicoId;
 
+    private ZonedDateTime dataCriacao;
+
+    @OneToOne
+    @JoinColumn(name = "usuarioId", referencedColumnName = "id", insertable = false, updatable = false)
+    private Usuario usuario;
+
     public SituacaoOrdemServico(OrdemServicoStatus status, UUID ordemServicoId) {
         this.id = UUID.randomUUID();
         this.status = status;
         this.usuarioId = SecurityContextUtils.getUsuarioId();
         this.ordemServicoId = ordemServicoId;
+        this.dataCriacao = DateTimeUtils.getNow();
     }
 }

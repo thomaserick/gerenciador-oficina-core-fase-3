@@ -55,6 +55,7 @@ class ListarOrdemServicoControllerIT {
                         TestUtils.buildURL(OrdemServicoController.PATH)).param("clienteId", "113e83b4-02e3-4059-8498-f4beafbb5ed9")
                         .param("usuarioId", "ace50297-1785-4a7d-ae6d-8ec2dc450af6")
                         .param("veiculoId", "e30facee-4403-4494-b506-89feddf52ab1")
+                        .param("status", "EM_EXECUCAO")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                 ).andExpect(status().isOk())
                 .andExpect(jsonPath("$.hasNext", is(false)))

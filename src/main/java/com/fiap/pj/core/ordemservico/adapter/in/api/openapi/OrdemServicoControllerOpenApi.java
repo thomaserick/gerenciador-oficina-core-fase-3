@@ -1,6 +1,7 @@
 package com.fiap.pj.core.ordemservico.adapter.in.api.openapi;
 
 import com.fiap.pj.core.ordemservico.adapter.in.api.request.ListarOrdemServicoRequest;
+import com.fiap.pj.core.ordemservico.adapter.in.api.response.AcompanhamentoOrdemServicoResponse;
 import com.fiap.pj.core.ordemservico.adapter.in.api.response.OrdemServicoResponse;
 import com.fiap.pj.core.ordemservico.usecase.command.RealizarDiagnosticoOrdemServicoCommand;
 import com.fiap.pj.infra.api.Slice;
@@ -13,12 +14,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public interface OrdemServicoControllerOpenApi {
 
     @Operation(description = "Retorna uma lista de Ordem de Serviço.", method = "GET")
     Slice<OrdemServicoResponse> listarOrdemServico(@ParameterObject ListarOrdemServicoRequest filterRequest, @ParameterObject Pageable pageable);
+
+    @Operation(description = "Retorna uma lista de Acompanhamento da Ordem de Serviço.", method = "GET")
+    Optional<AcompanhamentoOrdemServicoResponse> buscarAcompanhamentoByOrdemServicoId(@PathVariable UUID id, @ParameterObject Pageable pageable);
 
     @Operation(description = "Mover Ordem de serviço para em diagnóstico", method = "POST")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Ordem de serviço movida para em diagnóstico."),

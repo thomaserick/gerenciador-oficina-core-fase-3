@@ -13,7 +13,7 @@ API para gerenciamento de uma oficina com autenticação e controle de estoque.
 - [Instalação](#-instalação)
 - [Autenticação](#-autenticação)
 - [Documentação APIs](#-documentação-da-api)
-- [Documentação DDD](#documentação-ddd)
+- [Documentação DDD](#-documentação-ddd)
 
 ## 🛠 Tecnologias
 

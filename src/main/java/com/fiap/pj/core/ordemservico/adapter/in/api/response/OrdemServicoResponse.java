@@ -21,6 +21,8 @@ public interface OrdemServicoResponse {
 
     OrdemServicoStatus getStatus();
 
+    DiagnosticoResponse getDiagnostico();
+
     ZonedDateTime getDataCriacao();
 
     ZonedDateTime getDataConclusao();
@@ -30,5 +32,13 @@ public interface OrdemServicoResponse {
         UUID getId();
 
         String getNome();
+    }
+
+    interface DiagnosticoResponse {
+        UUID getId();
+
+        String getDescricao();
+
+        ZonedDateTime getDataCriacao();
     }
 }

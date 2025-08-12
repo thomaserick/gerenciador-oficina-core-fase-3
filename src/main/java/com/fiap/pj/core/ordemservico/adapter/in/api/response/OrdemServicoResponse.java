@@ -14,7 +14,7 @@ import java.time.ZonedDateTime;
 import java.util.Collection;
 import java.util.UUID;
 
-@JsonPropertyOrder({"id", "cliente", "veiculo", "usuario", "status", "servicos", "pecasInsumos", "valorTotal", "dataCriacao", "dataConclusao"})
+@JsonPropertyOrder({"id", "cliente", "veiculo", "usuario", "status", "diagnostico", "servicos", "pecasInsumos", "valorTotal", "dataCriacao", "dataConclusao"})
 public interface OrdemServicoResponse {
 
     UUID getId();

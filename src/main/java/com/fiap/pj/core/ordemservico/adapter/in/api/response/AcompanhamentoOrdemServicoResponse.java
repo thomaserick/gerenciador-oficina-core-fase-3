@@ -9,12 +9,12 @@ import java.time.ZonedDateTime;
 import java.util.Collection;
 import java.util.UUID;
 
-@JsonPropertyOrder({"id", "acompanhamento"})
+@JsonPropertyOrder({"id", "acompanhamentos"})
 public interface AcompanhamentoOrdemServicoResponse {
 
     UUID getId();
 
-    @JsonProperty("acompanhamento")
+    @JsonProperty("acompanhamentos")
     Collection<SituacaoResponse> getHistoricoSituacao();
 
     @JsonPropertyOrder({"id", "status", "usuario", "dataCriacao"})

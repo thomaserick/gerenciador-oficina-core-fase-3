@@ -57,8 +57,8 @@ public class OrdemServicoController implements OrdemServicoControllerOpenApi {
 
     @Override
     @GetMapping("/{id}/acompanhamento")
-    public Optional<AcompanhamentoOrdemServicoResponse> buscarAcompanhamentoByOrdemServicoId(@PathVariable UUID id, Pageable pageable) {
-        return this.buscarAcompanhamentoByOrdemServicoIdUseCase.handle(new BuscarAcompanhamentoByOrdemServicoIdRequest(id, pageable));
+    public Optional<AcompanhamentoOrdemServicoResponse> buscarAcompanhamentoByOrdemServicoId(@PathVariable UUID id) {
+        return this.buscarAcompanhamentoByOrdemServicoIdUseCase.handle(new BuscarAcompanhamentoByOrdemServicoIdRequest(id));
     }
 
     @Override

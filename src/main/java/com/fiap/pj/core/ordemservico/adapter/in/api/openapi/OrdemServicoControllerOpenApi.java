@@ -23,7 +23,7 @@ public interface OrdemServicoControllerOpenApi {
     Slice<OrdemServicoResponse> listarOrdemServico(@ParameterObject ListarOrdemServicoRequest filterRequest, @ParameterObject Pageable pageable);
 
     @Operation(description = "Retorna uma lista de Acompanhamento da Ordem de Serviço.", method = "GET")
-    Optional<AcompanhamentoOrdemServicoResponse> buscarAcompanhamentoByOrdemServicoId(@PathVariable UUID id, @ParameterObject Pageable pageable);
+    Optional<AcompanhamentoOrdemServicoResponse> buscarAcompanhamentoByOrdemServicoId(@PathVariable UUID id);
 
     @Operation(description = "Mover Ordem de serviço para em diagnóstico", method = "POST")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Ordem de serviço movida para em diagnóstico."),

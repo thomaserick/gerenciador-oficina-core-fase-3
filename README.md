@@ -11,14 +11,21 @@ API para gerenciamento de uma oficina com autenticação e controle de estoque.
 
 - [Tecnologias](#-tecnologias)
 - [Instalação](#-instalação)
+- [Autenticação](#-autenticação)
+- [Documentação](#-documentação-da-api)
 
 ## 🛠 Tecnologias
 
 - **Java 17+** - Linguagem principal
 - **Spring Boot 3.3** - Framework backend
-- **PostgreSQL ** - Banco de dados
+- **Spring Security**
+- **JWT**
+- **JPA/Hibernate**
+- **PostgreSQL** - Banco de dados
 - **Docker** - Containerização
 - **Flyway** - Migrações de banco
+- **OpenAPI/Swagger** - Documentação APIs
+- **Mockito** - Testes unitários
 
 ## ⚙️ Instalação
 
@@ -26,6 +33,40 @@ API para gerenciamento de uma oficina com autenticação e controle de estoque.
 
 - Docker 24.0+
 - Docker Compose 2.20+
+
+### Comandos para rodar o Docker Compose
+
+1 Suba os containers:
+
+```bash
+  docker-compose up 
+```
+
+O sistema rodará na porta `localhost:8081`.
+
+### Endpoints Públicos
+
+- `/usuarios` (POST)
+- `/usuarios/login`
+
+## 🔑 Autenticação
+
+Você precisará se autenticar no endpoint `/usuarios/login`, caso não tenha usuário cadastado
+utilizar o endpoint `/usuarios`.
+
+```
+{
+  "nome": "Severino",
+  "sobreNome": "da silva",
+  "email": "severino@fiap.com.br",
+  "senha": "Fiap@1234",
+  "ativo": true,
+  "perfis": [
+    "ADM"
+  ]
+}
+
+```
 
 ## 📚 Documentação da API
 

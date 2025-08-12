@@ -29,7 +29,7 @@ class BuscarAcompanhamentoByOrdemServicoIdControllerIT {
     @WithMockUser(username = "testuser", roles = {"ADMIN"})
     void deveListarOrdemServicoPorId() throws Exception {
         mock.perform(get(
-                        TestUtils.buildURL(OrdemServicoController.PATH, "01bd50f7-2c6d-45f5-bee2-cea5b7e0be9a", "acompanhamento"))
+                        TestUtils.buildURL(OrdemServicoController.PATH, "01bd50f7-2c6d-45f5-bee2-cea5b7e0be9a", "acompanhamentos"))
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                 ).andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is("01bd50f7-2c6d-45f5-bee2-cea5b7e0be9a")))

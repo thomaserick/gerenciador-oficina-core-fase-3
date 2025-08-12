@@ -1,8 +1,8 @@
-package com.fiap.pj.core.servico.app;
+package com.fiap.pj.core.usuario.app;
 
-import com.fiap.pj.core.servico.adapter.in.api.request.ListarServicoRequest;
-import com.fiap.pj.core.servico.adapter.in.api.response.ServicoResponse;
-import com.fiap.pj.core.servico.adapter.out.db.ServicoRepositoryJpa;
+import com.fiap.pj.core.usuario.adapter.in.api.request.ListarUsuarioRequest;
+import com.fiap.pj.core.usuario.adapter.in.api.response.UsuarioReponse;
+import com.fiap.pj.core.usuario.adapter.out.db.UsuarioRepositoryJpa;
 import com.fiap.pj.infra.api.Slice;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,24 +20,24 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class ListarServicoServiceTest {
+class ListarUsuarioServiceTest {
 
     @Mock
-    private ServicoRepositoryJpa servicoRepositoryJpa;
-
+    private UsuarioRepositoryJpa usuarioRepositoryJpa;
+    
     @InjectMocks
-    private ListarServicoService listarServicoService;
+    private ListarUsuariorService listarUsuariorService;
 
     @Test
-    void deveListarServicos() {
-        var request = new ListarServicoRequest("Troca Óleo", PageRequest.of(0, 10), true);
+    void deveListarUsuarios() {
+        var request = new ListarUsuarioRequest("Teddy", PageRequest.of(0, 10), true);
 
-        var slice = new Slice<ServicoResponse>(false, List.of());
+        var slice = new Slice<UsuarioReponse>(false, List.of());
 
-        when(servicoRepositoryJpa.findProjectedBy(any(Specification.class), any(PageRequest.class), any(Class.class)))
+        when(usuarioRepositoryJpa.findProjectedBy(any(Specification.class), any(PageRequest.class), any(Class.class)))
                 .thenReturn(slice);
 
-        var result = listarServicoService.handle(request);
+        var result = listarUsuariorService.handle(request);
 
         assertNotNull(result);
         assertEquals(0, result.getItems().size());

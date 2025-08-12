@@ -1,6 +1,7 @@
 package com.fiap.pj.core.ordemservico.domain;
 
 import com.fiap.pj.core.cliente.domain.Cliente;
+import com.fiap.pj.core.orcamento.domain.Orcamento;
 import com.fiap.pj.core.ordemservico.domain.enums.OrdemServicoStatus;
 import com.fiap.pj.core.ordemservico.exception.OrdemServicoExceptions.OrdemServicoStatusInvalidoAguardandoAprovacaoException;
 import com.fiap.pj.core.ordemservico.exception.OrdemServicoExceptions.OrdemServicoStatusInvalidoAguardandoRetiradaException;
@@ -74,6 +75,10 @@ public class OrdemServico {
     @JoinColumn(name = "ordemServicoId")
     @OrderBy("dataCriacao DESC")
     private Set<SituacaoOrdemServico> historicoSituacao = new HashSet<>();
+
+    @OneToMany
+    @JoinColumn(name = "ordemServicoId", insertable = false, updatable = false)
+    private Set<Orcamento> orcamentos = new HashSet<>();
 
     @Builder
     public OrdemServico(

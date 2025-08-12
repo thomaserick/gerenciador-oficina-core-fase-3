@@ -46,11 +46,8 @@
         <maven.compiler.release>${java.version}</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <!-- Plugins de Qualidade -->
-        <sonar.maven.plugin.version>3.11.0.3922</sonar.maven.plugin.version>
-        <jacoco.version>0.8.12</jacoco.version>
-        <maven.surefire.version>3.2.5</maven.surefire.version>
-        <maven.failsafe.version>3.2.5</maven.failsafe.version>
+        <sonar.organization>caiomc</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
 
     <dependencies>
@@ -218,114 +215,34 @@
                 </configuration>
             </plugin>
 
-            <!-- Testes Unitários -->
-            <plugin>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>${maven.surefire.version}</version>
-                <configuration>
-                    <useModulePath>false</useModulePath>
-                    <argLine>@{surefireArgLine}</argLine>
-                </configuration>
-            </plugin>
-
-            <!-- Testes de Integração (se houver IT) -->
-            <plugin>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <version>${maven.failsafe.version}</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>integration-test</goal>
-                            <goal>verify</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <useModulePath>false</useModulePath>
-                    <argLine>@{failsafeArgLine}</argLine>
-                </configuration>
-            </plugin>
-
-            <!-- Cobertura Jacoco -->
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>${jacoco.version}</version>
-                <executions>
-                    <execution>
-                        <id>prepare-agent</id>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                        <configuration>
-                            <propertyName>surefireArgLine</propertyName>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>prepare-agent-integration</id>
-                        <goals>
-                            <goal>prepare-agent-integration</goal>
-                        </goals>
-                        <configuration>
-                            <propertyName>failsafeArgLine</propertyName>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>report</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>report</goal>
-                            <goal>report-integration</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!-- SonarQube Scanner -->
+            <!-- Sonar -->
             <plugin>
                 <groupId>org.sonarsource.scanner.maven</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
-                <version>${sonar.maven.plugin.version}</version>
+                <version>3.10.0.2594</version>
+            </plugin>
+
+            <!-- Jacoco para cobertura de testes -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.7</version>
+                <executions>
+                    <execution>
+                        <id>jacoco-initialize</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>jacoco-site</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
-
-    <!-- Profile para análise Sonar -->
-    <profiles>
-        <profile>
-            <id>sonar</id>
-            <properties>
-                <sonar.projectKey>com.fiap.pj:app</sonar.projectKey>
-                <sonar.projectName>pj-app</sonar.projectName>
-                <sonar.host.url>http://localhost:9000</sonar.host.url>
-
-                <sonar.sources>src/main/java</sonar.sources>
-                <sonar.tests>src/test/java</sonar.tests>
-                <sonar.sourceEncoding>${project.build.sourceEncoding}</sonar.sourceEncoding>
-
-                <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
-                <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
-
-                <!-- Ajuste com parcimônia: evite excluir camadas de domínio/usecases -->
-                <sonar.exclusions>
-                    **/generated/**,
-                    **/build/**,
-                    **/target/**,
-                    **/dto/**,
-                    **/config/**,
-                    **/infra/**,
-                    **/core/**/adapter/in/api/openapi/**
-                </sonar.exclusions>
-
-                <sonar.test.exclusions>
-                    **/integration/**,
-                    **/it/**,
-                    **/infra/**,
-                    **/core/**/adapter/in/api/openapi/**
-                </sonar.test.exclusions>
-
-                <sonar.test.inclusions>**/*Test.java, **/*IT.java</sonar.test.inclusions>
-            </properties>
-        </profile>
-    </profiles>
 </project>

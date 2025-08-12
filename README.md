@@ -35,13 +35,45 @@ API para gerenciamento de uma oficina com autenticação e controle de estoque.
 - Docker 24.0+
 - Docker Compose 2.20+
 
-### Comandos para rodar o Docker Compose
+### Comandos para rodar o projeto local com Docker Compose
 
 1 Suba os containers:
 
 ```bash
   docker-compose up 
 ```
+
+### Comandos para rodar o projeto local
+
+#### Pré-requisitos
+
+- **Java** 17+
+- **PostgreSQL** para banco de dados
+- **Maven** para gerenciar as dependências do projeto
+
+#### Passos para rodar
+
+1. Clone o repositório
+
+   SSH
+
+    ```
+    git@github.com:CaioMC/gerenciador-oficina-core.git
+    ```
+   Http
+    ```
+    https://github.com/CaioMC/gerenciador-oficina-core.git
+    ```
+2. Configure o Banco de Dados
+   ```
+    psql -U postgres
+    CREATE DATABASE gerenciador-oficina;
+   ```
+3. Configura o profile como `dev`
+
+    ```
+    spring.profiles.active=dev
+    ```
 
 O sistema rodará na porta `localhost:8081`.
 

@@ -23,7 +23,6 @@ public class ListarClienteRequest {
     private String nome;
     private String documentoIdentificacao;
     private String placa;
-    
     @Setter
     @JsonIgnore
     private Pageable pageable;

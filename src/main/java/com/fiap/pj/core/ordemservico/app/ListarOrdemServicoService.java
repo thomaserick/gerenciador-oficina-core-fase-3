@@ -4,7 +4,7 @@ import com.fiap.pj.core.ordemservico.adapter.in.api.request.ListarOrdemServicoRe
 import com.fiap.pj.core.ordemservico.adapter.in.api.response.OrdemServicoResponse;
 import com.fiap.pj.core.ordemservico.domain.OrdemServicoDomainRepository;
 import com.fiap.pj.core.ordemservico.usecase.ListarOrdemServicoUseCase;
-import com.fiap.pj.infra.api.Slice;
+import com.fiap.pj.infra.sk.api.Slice;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

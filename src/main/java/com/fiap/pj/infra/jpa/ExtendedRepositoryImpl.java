@@ -1,6 +1,6 @@
 package com.fiap.pj.infra.jpa;
 
-import com.fiap.pj.infra.api.Slice;
+import com.fiap.pj.infra.sk.api.Slice;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.springframework.data.domain.Pageable;

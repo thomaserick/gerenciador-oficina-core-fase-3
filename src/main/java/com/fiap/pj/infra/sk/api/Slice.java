@@ -1,4 +1,4 @@
-package com.fiap.pj.infra.api;
+package com.fiap.pj.infra.sk.api;
 
 import lombok.Getter;
 

@@ -40,11 +40,10 @@ public class Usuario implements Serializable {
     }
 
     public void alterar(String nome, String sobreNome, boolean ativo, String senha, Set<Perfil> perfis) {
-
-        this.nome = nome;
+        this.nome = requireNonNull(nome);
         this.sobreNome = sobreNome;
         this.ativo = ativo;
-        this.senha = senha;
+        this.senha = requireNonNull(senha);
         alterarPerfis(perfis);
     }
 
@@ -52,7 +51,4 @@ public class Usuario implements Serializable {
         CollectionUtils.instanceNonNullCollection(this.perfis, perfis);
     }
 
-    public String getNomeCompleto() {
-        return this.nome + " " + this.sobreNome;
-    }
 }

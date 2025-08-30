@@ -5,7 +5,7 @@ import com.fiap.pj.core.cliente.adapter.in.api.response.ClienteResponse;
 import com.fiap.pj.core.cliente.usecase.command.AlterarClienteCommand;
 import com.fiap.pj.core.cliente.usecase.command.CriarClienteCommand;
 import com.fiap.pj.core.sk.web.ResponseEntityUtils.ResponseId;
-import com.fiap.pj.infra.api.Slice;
+import com.fiap.pj.infra.sk.api.Slice;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

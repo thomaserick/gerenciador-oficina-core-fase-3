@@ -1,13 +1,17 @@
 package com.fiap.pj.infra.usuario.controller.openapi;
 
 import com.fiap.pj.core.sk.web.ResponseEntityUtils.ResponseId;
-import com.fiap.pj.core.usuario.usecase.command.CriarUsuarioCommand;
+import com.fiap.pj.core.usuario.app.usecase.command.AlterarUsuarioCommand;
+import com.fiap.pj.core.usuario.app.usecase.command.CriarUsuarioCommand;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.UUID;
 
 public interface UsuarioControllerOpenApi {
 
@@ -16,11 +20,11 @@ public interface UsuarioControllerOpenApi {
             @ApiResponse(responseCode = "400", description = "O  Usuário não pode ser criado.")})
     ResponseEntity<ResponseId> criarUsuario(@Valid @RequestBody CriarUsuarioCommand cmd);
 
-//
-//    @Operation(description = "Alterar um  usuário", method = "PUT")
-//    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Usuario alterado com sucesso."),
-//            @ApiResponse(responseCode = "400", description = "O  Usuário não pode ser alterado.")})
-//    ResponseEntity<Void> alteraUsuario(@Valid @PathVariable UUID id, @RequestBody AlterarUsuarioCommand cmd);
+
+    @Operation(description = "Alterar um  usuário", method = "PUT")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Usuario alterado com sucesso."),
+            @ApiResponse(responseCode = "400", description = "O  Usuário não pode ser alterado.")})
+    ResponseEntity<Void> alteraUsuario(@Valid @PathVariable UUID id, @RequestBody AlterarUsuarioCommand cmd);
 //
 //    @Operation(description = "Desativar um usuário", method = "POST")
 //    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Usuario desativado com sucesso."),

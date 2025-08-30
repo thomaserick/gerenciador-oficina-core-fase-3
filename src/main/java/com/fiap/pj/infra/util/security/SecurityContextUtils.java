@@ -1,4 +1,4 @@
-package com.fiap.pj.core.util.security;
+package com.fiap.pj.infra.util.security;
 
 import com.fiap.pj.infra.security.UserDetailsImpl;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

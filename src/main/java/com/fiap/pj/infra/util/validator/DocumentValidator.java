@@ -1,11 +1,11 @@
-package com.fiap.pj.infra.validator;
+package com.fiap.pj.infra.util.validator;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
 public class DocumentValidator implements ConstraintValidator<CPFCNPJ, String> {
 
-   
+
     @Override
     public boolean isValid(String documento, ConstraintValidatorContext context) {
         if (documento == null || documento.isEmpty()) {

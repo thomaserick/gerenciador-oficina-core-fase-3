@@ -3,8 +3,8 @@ package com.fiap.pj.core.ordemservico.domain;
 
 import com.fiap.pj.core.ordemservico.domain.enums.OrdemServicoStatus;
 import com.fiap.pj.core.util.DateTimeUtils;
-import com.fiap.pj.core.util.security.SecurityContextUtils;
 import com.fiap.pj.infra.usuario.persistence.UsuarioEntity;
+import com.fiap.pj.infra.util.security.SecurityContextUtils;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

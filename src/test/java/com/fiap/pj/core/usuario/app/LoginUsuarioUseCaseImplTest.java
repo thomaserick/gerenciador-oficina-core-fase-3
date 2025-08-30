@@ -1,6 +1,7 @@
 package com.fiap.pj.core.usuario.app;
 
 
+import com.fiap.pj.core.usuario.app.usecase.LoginUsuarioUseCaseImpl;
 import com.fiap.pj.infra.helpers.JwtUtil;
 import com.fiap.pj.infra.security.UserDetailsImpl;
 import org.junit.jupiter.api.Test;

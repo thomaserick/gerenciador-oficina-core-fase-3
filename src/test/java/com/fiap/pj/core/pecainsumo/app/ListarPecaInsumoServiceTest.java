@@ -3,7 +3,7 @@ package com.fiap.pj.core.pecainsumo.app;
 import com.fiap.pj.core.pecainsumo.adapter.in.api.request.ListarPecaInsumoRequest;
 import com.fiap.pj.core.pecainsumo.adapter.in.api.response.PecaInsumoResponse;
 import com.fiap.pj.core.pecainsumo.adapter.out.db.PecaInsumoRepositoryJpa;
-import com.fiap.pj.infra.api.Slice;
+import com.fiap.pj.infra.sk.api.Slice;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

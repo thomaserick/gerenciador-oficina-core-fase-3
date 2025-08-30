@@ -4,7 +4,7 @@ import com.fiap.pj.core.pecainsumo.adapter.in.api.request.ListarPecaInsumoReques
 import com.fiap.pj.core.pecainsumo.adapter.in.api.response.PecaInsumoResponse;
 import com.fiap.pj.core.pecainsumo.domain.PecaInsumoDomainRepository;
 import com.fiap.pj.core.pecainsumo.usecase.ListarPecaInsumoUseCase;
-import com.fiap.pj.infra.api.Slice;
+import com.fiap.pj.infra.sk.api.Slice;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

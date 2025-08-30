@@ -5,7 +5,7 @@ import com.fiap.pj.core.servico.adapter.in.api.response.ServicoResponse;
 import com.fiap.pj.core.servico.usecase.command.AlterarServicoCommand;
 import com.fiap.pj.core.servico.usecase.command.CriarServicoCommand;
 import com.fiap.pj.core.sk.web.ResponseEntityUtils.ResponseId;
-import com.fiap.pj.infra.api.Slice;
+import com.fiap.pj.infra.sk.api.Slice;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

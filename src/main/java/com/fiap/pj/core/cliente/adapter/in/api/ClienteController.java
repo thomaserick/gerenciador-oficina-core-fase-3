@@ -17,7 +17,7 @@ import com.fiap.pj.core.cliente.usecase.command.ExcluirClienteCommand;
 import com.fiap.pj.core.cliente.usecase.command.InativarClienteCommand;
 import com.fiap.pj.core.sk.web.ResponseEntityUtils;
 import com.fiap.pj.core.sk.web.ResponseEntityUtils.ResponseId;
-import com.fiap.pj.infra.api.Slice;
+import com.fiap.pj.infra.sk.api.Slice;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;

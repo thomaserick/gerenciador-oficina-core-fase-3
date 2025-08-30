@@ -1,6 +1,6 @@
 package com.fiap.pj.core.cliente.usecase.command;
 
-import com.fiap.pj.infra.validator.CPFCNPJ;
+import com.fiap.pj.infra.util.validator.CPFCNPJ;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 

@@ -5,7 +5,7 @@ import com.fiap.pj.core.ordemservico.domain.OrdemServicoDomainRepository;
 import com.fiap.pj.core.ordemservico.domain.enums.OrdemServicoStatus;
 import com.fiap.pj.core.ordemservico.usecase.CriarOrdemServicoUseCase;
 import com.fiap.pj.core.ordemservico.usecase.command.CriarOrdemServicoCommand;
-import com.fiap.pj.core.util.security.SecurityContextUtils;
+import com.fiap.pj.infra.util.security.SecurityContextUtils;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

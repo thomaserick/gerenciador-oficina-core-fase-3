@@ -1,4 +1,4 @@
-package com.fiap.pj.core.usuario.usecase.command;
+package com.fiap.pj.core.usuario.app.usecase.command;
 
 
 import com.fiap.pj.core.usuario.domain.enums.Perfil;
@@ -17,9 +17,6 @@ public abstract class UserCommand {
 
     protected String sobreNome;
 
-    @NotBlank(message = "E-mail do usuário não pode estar vazio.")
-    protected String email;
-
     @NotBlank(message = "Senha do usuário não pode estar vazio.")
     protected String senha;
 
@@ -27,10 +24,9 @@ public abstract class UserCommand {
 
     protected Set<Perfil> perfis;
 
-    protected UserCommand(String nome, String sobreNome, String email, String senha, boolean ativo, Set<Perfil> perfis) {
+    protected UserCommand(String nome, String sobreNome, String senha, boolean ativo, Set<Perfil> perfis) {
         this.nome = requireNonNull(nome);
         this.sobreNome = sobreNome;
-        this.email = requireNonNull(email);
         this.senha = requireNonNull(senha);
         this.ativo = ativo;
         this.perfis = requireNonNull(perfis);

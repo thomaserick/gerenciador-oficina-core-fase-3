@@ -5,7 +5,7 @@ import com.fiap.pj.core.orcamento.adapter.in.api.response.OrcamentoResponse;
 import com.fiap.pj.core.orcamento.usecase.command.AlterarOrcamentoCommand;
 import com.fiap.pj.core.orcamento.usecase.command.CriarOrcamentoCommand;
 import com.fiap.pj.core.sk.web.ResponseEntityUtils.ResponseId;
-import com.fiap.pj.infra.api.Slice;
+import com.fiap.pj.infra.sk.api.Slice;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

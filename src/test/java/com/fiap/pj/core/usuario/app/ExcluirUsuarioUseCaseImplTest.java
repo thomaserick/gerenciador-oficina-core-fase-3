@@ -1,8 +1,9 @@
 package com.fiap.pj.core.usuario.app;
 
 
+import com.fiap.pj.core.usuario.app.usecase.ExcluirUsuarioUseCaseImpl;
+import com.fiap.pj.core.usuario.app.usecase.command.ExcluirUsuarioCommand;
 import com.fiap.pj.core.usuario.domain.Usuario;
-import com.fiap.pj.core.usuario.usecase.command.ExcluirUsuarioCommand;
 import com.fiap.pj.core.usuario.util.factrory.UsuarioTestFactory;
 import com.fiap.pj.infra.usuario.persistence.UsuarioRepositoryJpa;
 import org.junit.jupiter.api.Test;

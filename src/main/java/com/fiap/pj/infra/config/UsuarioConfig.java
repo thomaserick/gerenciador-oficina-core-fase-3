@@ -2,6 +2,7 @@ package com.fiap.pj.infra.config;
 
 
 import com.fiap.pj.core.usuario.app.gateways.UsuarioGateway;
+import com.fiap.pj.core.usuario.app.usecase.AlterarUsuarioUseCaseImpl;
 import com.fiap.pj.core.usuario.app.usecase.CriarUsuarioUseCaseImpl;
 import com.fiap.pj.infra.usuario.gateways.UsuarioRepositoryGatewayImpl;
 import com.fiap.pj.infra.usuario.gateways.UsuarioRepositoryMapper;
@@ -15,9 +16,15 @@ public class UsuarioConfig {
 
 
     @Bean
-    CriarUsuarioUseCaseImpl criarUsuarioInteractor(UsuarioGateway usuarioGateway
+    CriarUsuarioUseCaseImpl criarUsuarioUseCase(UsuarioGateway usuarioGateway
     ) {
         return new CriarUsuarioUseCaseImpl(usuarioGateway);
+    }
+
+    @Bean
+    AlterarUsuarioUseCaseImpl alterarUsuarioUseCase(UsuarioGateway usuarioGateway
+    ) {
+        return new AlterarUsuarioUseCaseImpl(usuarioGateway);
     }
 
     @Bean

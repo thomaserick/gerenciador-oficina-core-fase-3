@@ -1,8 +1,7 @@
-package com.fiap.pj.core.usuario.app;
+package com.fiap.pj.core.usuario.app.usecase;
 
 
-import com.fiap.pj.core.usuario.usecase.ExcluirUsuarioUseCase;
-import com.fiap.pj.core.usuario.usecase.command.ExcluirUsuarioCommand;
+import com.fiap.pj.core.usuario.app.usecase.command.ExcluirUsuarioCommand;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

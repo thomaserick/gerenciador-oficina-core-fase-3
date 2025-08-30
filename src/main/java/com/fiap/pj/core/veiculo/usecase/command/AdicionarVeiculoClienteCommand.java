@@ -1,7 +1,7 @@
 package com.fiap.pj.core.veiculo.usecase.command;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fiap.pj.infra.validator.Plate;
+import com.fiap.pj.infra.util.validator.Plate;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;

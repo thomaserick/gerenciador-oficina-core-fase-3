@@ -4,7 +4,7 @@ import com.fiap.pj.core.ordemservico.adapter.in.api.request.ListarOrdemServicoRe
 import com.fiap.pj.core.ordemservico.adapter.in.api.response.AcompanhamentoOrdemServicoResponse;
 import com.fiap.pj.core.ordemservico.adapter.in.api.response.OrdemServicoResponse;
 import com.fiap.pj.core.ordemservico.usecase.command.RealizarDiagnosticoOrdemServicoCommand;
-import com.fiap.pj.infra.api.Slice;
+import com.fiap.pj.infra.sk.api.Slice;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

@@ -9,7 +9,7 @@ import com.fiap.pj.core.orcamento.usecase.CriarOrcamentoUseCase;
 import com.fiap.pj.core.orcamento.usecase.command.CriarOrcamentoCommand;
 import com.fiap.pj.core.pecainsumo.domain.PecaInsumoDomainRepository;
 import com.fiap.pj.core.servico.domain.ServicoDomainRepository;
-import com.fiap.pj.core.util.security.SecurityContextUtils;
+import com.fiap.pj.infra.util.security.SecurityContextUtils;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 

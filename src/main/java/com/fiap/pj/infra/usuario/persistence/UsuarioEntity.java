@@ -56,5 +56,8 @@ public class UsuarioEntity implements Serializable {
         this.perfis = requireNonNull(perfis);
     }
 
+    public String getNomeCompleto() {
+        return this.nome + " " + this.sobreNome;
+    }
 
 }

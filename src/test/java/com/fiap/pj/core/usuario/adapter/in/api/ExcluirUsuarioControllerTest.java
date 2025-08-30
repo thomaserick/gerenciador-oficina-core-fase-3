@@ -1,9 +1,9 @@
 package com.fiap.pj.core.usuario.adapter.in.api;
 
 
+import com.fiap.pj.core.usuario.app.usecase.ExcluirUsuarioUseCase;
+import com.fiap.pj.core.usuario.app.usecase.command.ExcluirUsuarioCommand;
 import com.fiap.pj.core.usuario.exception.UsuarioExceptions.UsuarioComRelacionamentoException;
-import com.fiap.pj.core.usuario.usecase.ExcluirUsuarioUseCase;
-import com.fiap.pj.core.usuario.usecase.command.ExcluirUsuarioCommand;
 import com.fiap.pj.core.util.TestUtils;
 import com.fiap.pj.infra.usuario.controller.UsuarioController;
 import org.junit.jupiter.api.BeforeEach;

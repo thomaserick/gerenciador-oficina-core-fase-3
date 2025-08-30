@@ -1,6 +1,6 @@
 package com.fiap.pj.core.usuario.app.usecase;
 
-import com.fiap.pj.core.usuario.usecase.command.CriarUsuarioCommand;
+import com.fiap.pj.core.usuario.app.usecase.command.CriarUsuarioCommand;
 
 import java.util.UUID;
 

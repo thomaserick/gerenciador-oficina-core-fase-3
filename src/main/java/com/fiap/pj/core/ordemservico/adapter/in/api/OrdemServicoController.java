@@ -15,7 +15,7 @@ import com.fiap.pj.core.ordemservico.usecase.MoverEntregueUseCase;
 import com.fiap.pj.core.ordemservico.usecase.MoverFinalizadaUseCase;
 import com.fiap.pj.core.ordemservico.usecase.RealizarDiagnosticoUseCase;
 import com.fiap.pj.core.ordemservico.usecase.command.RealizarDiagnosticoOrdemServicoCommand;
-import com.fiap.pj.infra.api.Slice;
+import com.fiap.pj.infra.sk.api.Slice;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;

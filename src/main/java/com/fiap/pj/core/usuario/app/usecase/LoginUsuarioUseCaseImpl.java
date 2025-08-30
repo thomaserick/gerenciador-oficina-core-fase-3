@@ -1,8 +1,7 @@
-package com.fiap.pj.core.usuario.app;
+package com.fiap.pj.core.usuario.app.usecase;
 
 
-import com.fiap.pj.core.usuario.usecase.LoginUsuarioUseCase;
-import com.fiap.pj.core.usuario.usecase.command.LoginUsuarioCommand;
+import com.fiap.pj.core.usuario.app.usecase.command.LoginUsuarioCommand;
 import com.fiap.pj.infra.exception.CredenciaisInvalidasException;
 import com.fiap.pj.infra.helpers.JwtUtil;
 import com.fiap.pj.infra.security.UserDetailsImpl;

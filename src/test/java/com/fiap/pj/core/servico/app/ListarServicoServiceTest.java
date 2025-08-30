@@ -3,7 +3,7 @@ package com.fiap.pj.core.servico.app;
 import com.fiap.pj.core.servico.adapter.in.api.request.ListarServicoRequest;
 import com.fiap.pj.core.servico.adapter.in.api.response.ServicoResponse;
 import com.fiap.pj.core.servico.adapter.out.db.ServicoRepositoryJpa;
-import com.fiap.pj.infra.api.Slice;
+import com.fiap.pj.infra.sk.api.Slice;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

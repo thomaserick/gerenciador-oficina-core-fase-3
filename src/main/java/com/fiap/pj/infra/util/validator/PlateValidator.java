@@ -1,4 +1,4 @@
-package com.fiap.pj.infra.validator;
+package com.fiap.pj.infra.util.validator;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;

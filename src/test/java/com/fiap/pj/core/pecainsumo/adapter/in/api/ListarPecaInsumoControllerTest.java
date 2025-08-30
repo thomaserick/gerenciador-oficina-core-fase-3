@@ -4,7 +4,7 @@ import com.fiap.pj.core.pecainsumo.adapter.in.api.request.ListarPecaInsumoReques
 import com.fiap.pj.core.pecainsumo.adapter.in.api.response.PecaInsumoResponse;
 import com.fiap.pj.core.pecainsumo.usecase.ListarPecaInsumoUseCase;
 import com.fiap.pj.core.util.TestUtils;
-import com.fiap.pj.infra.api.Slice;
+import com.fiap.pj.infra.sk.api.Slice;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

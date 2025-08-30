@@ -1,9 +1,9 @@
 package com.fiap.pj.infra.usuario.controller;
 
-import com.fiap.pj.infra.usuario.controller.response.LoginUsuarioResponse;
-import com.fiap.pj.core.usuario.usecase.LoginUsuarioUseCase;
-import com.fiap.pj.core.usuario.usecase.command.LoginUsuarioCommand;
+import com.fiap.pj.core.usuario.app.usecase.LoginUsuarioUseCase;
+import com.fiap.pj.core.usuario.app.usecase.command.LoginUsuarioCommand;
 import com.fiap.pj.infra.usuario.controller.openapi.UsuarioLoginControllerOpenApi;
+import com.fiap.pj.infra.usuario.controller.response.LoginUsuarioResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

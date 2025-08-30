@@ -1,4 +1,4 @@
-package com.fiap.pj.core.usuario.usecase.command;
+package com.fiap.pj.core.usuario.app.usecase.command;
 
 import jakarta.validation.constraints.NotBlank;
 

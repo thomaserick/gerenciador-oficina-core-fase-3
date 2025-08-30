@@ -1,4 +1,4 @@
-package com.fiap.pj.core.usuario.usecase.command;
+package com.fiap.pj.core.usuario.app.usecase.command;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -17,8 +17,8 @@ public class AlterarUsuarioCommand extends UserCommand {
     @JsonIgnore
     private UUID id;
 
-    public AlterarUsuarioCommand(UUID id, String nome, String sobreNome, String email, String senha, boolean ativo, Set<Perfil> perfis) {
-        super(nome, sobreNome, email, senha, ativo, perfis);
+    public AlterarUsuarioCommand(UUID id, String nome, String sobreNome, String senha, boolean ativo, Set<Perfil> perfis) {
+        super(nome, sobreNome, senha, ativo, perfis);
         this.id = id;
     }
 }

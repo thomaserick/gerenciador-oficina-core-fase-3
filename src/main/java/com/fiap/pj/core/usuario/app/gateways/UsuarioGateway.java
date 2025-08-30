@@ -10,6 +10,8 @@ public interface UsuarioGateway {
 
     void alterar(Usuario usuario);
 
+    void excluir(Usuario usuario);
+
     Usuario buscarPorIdIdOrThrowNotFound(UUID id);
 
 }

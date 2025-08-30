@@ -33,6 +33,12 @@ public class UsuarioRepositoryGatewayImpl implements UsuarioGateway {
     }
 
     @Override
+    public void excluir(Usuario usuario) {
+        var usuarioEntity = usuarioRepositoryMapper.mapToTable(usuario, passwordEncoder);
+        repository.delete(usuarioEntity);
+    }
+
+    @Override
     public Usuario buscarPorIdIdOrThrowNotFound(UUID id) {
         return repository.findById(id)
                 .map(usuarioRepositoryMapper::mapToDomain)

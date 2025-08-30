@@ -3,6 +3,7 @@ package com.fiap.pj.core.usuario.adapter.in.api;
 
 import com.fiap.pj.core.util.TestUtils;
 import com.fiap.pj.infra.helpers.JwtUtil;
+import com.fiap.pj.infra.usuario.controller.UsuarioController;
 import com.fiap.pj.util.IntegrationTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

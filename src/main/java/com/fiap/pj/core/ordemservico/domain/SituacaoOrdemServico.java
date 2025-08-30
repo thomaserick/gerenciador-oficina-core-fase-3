@@ -2,9 +2,9 @@ package com.fiap.pj.core.ordemservico.domain;
 
 
 import com.fiap.pj.core.ordemservico.domain.enums.OrdemServicoStatus;
-import com.fiap.pj.core.usuario.domain.Usuario;
 import com.fiap.pj.core.util.DateTimeUtils;
 import com.fiap.pj.core.util.security.SecurityContextUtils;
+import com.fiap.pj.infra.usuario.persistence.UsuarioEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -38,7 +38,7 @@ public class SituacaoOrdemServico {
 
     @OneToOne
     @JoinColumn(name = "usuarioId", referencedColumnName = "id", insertable = false, updatable = false)
-    private Usuario usuario;
+    private UsuarioEntity usuario;
 
     public SituacaoOrdemServico(OrdemServicoStatus status, UUID ordemServicoId) {
         this.id = UUID.randomUUID();

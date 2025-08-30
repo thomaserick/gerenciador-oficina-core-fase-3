@@ -3,6 +3,7 @@ package com.fiap.pj.core.usuario.adapter.in.api;
 
 import com.fiap.pj.core.usuario.usecase.AlterarUsuarioUseCase;
 import com.fiap.pj.core.util.TestUtils;
+import com.fiap.pj.infra.usuario.controller.UsuarioController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

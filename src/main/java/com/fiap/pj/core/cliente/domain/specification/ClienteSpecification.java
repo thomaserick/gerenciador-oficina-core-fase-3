@@ -5,7 +5,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
-import static com.fiap.pj.core.util.SpecificationUtils.likeTerm;
+import static com.fiap.pj.infra.util.SpecificationUtils.likeTerm;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ClienteSpecification {

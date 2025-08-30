@@ -9,9 +9,9 @@ import com.fiap.pj.core.ordemservico.exception.OrdemServicoExceptions.OrdemServi
 import com.fiap.pj.core.ordemservico.exception.OrdemServicoExceptions.OrdemServicoStatusInvalidoEmExecucaoException;
 import com.fiap.pj.core.ordemservico.exception.OrdemServicoExceptions.OrdemServicoStatusInvalidoEntregueException;
 import com.fiap.pj.core.ordemservico.exception.OrdemServicoExceptions.OrdemServicoStatusInvalidoFinalizadaException;
-import com.fiap.pj.core.usuario.domain.Usuario;
 import com.fiap.pj.core.util.DateTimeUtils;
 import com.fiap.pj.core.veiculo.domain.Veiculo;
+import com.fiap.pj.infra.usuario.persistence.UsuarioEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -64,7 +64,7 @@ public class OrdemServico {
 
     @OneToOne
     @JoinColumn(name = "usuarioId", referencedColumnName = "id", insertable = false, updatable = false)
-    private Usuario usuario;
+    private UsuarioEntity usuario;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "diagnosticoId", referencedColumnName = "id")

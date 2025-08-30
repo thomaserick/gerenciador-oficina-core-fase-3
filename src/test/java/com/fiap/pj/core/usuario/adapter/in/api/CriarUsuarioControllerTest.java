@@ -1,10 +1,11 @@
 package com.fiap.pj.core.usuario.adapter.in.api;
 
 
-import com.fiap.pj.core.usuario.usecase.CriarUsuarioUseCase;
+import com.fiap.pj.core.usuario.app.usecase.CriarUsuarioUseCase;
 import com.fiap.pj.core.usuario.usecase.command.CriarUsuarioCommand;
 import com.fiap.pj.core.usuario.util.factrory.UsuarioTestFactory;
 import com.fiap.pj.core.util.TestUtils;
+import com.fiap.pj.infra.usuario.controller.UsuarioController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

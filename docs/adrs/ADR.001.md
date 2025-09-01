@@ -30,6 +30,8 @@ A estrutura básica foi estabelecida da seguinte forma:
 │   ├── 📁exception             // Implementação de exceptions customizadas
 │   └──📁sk                     // código compartilhado entre os demais pacotes; deve conter, preferencialmente, identificadores e valores de objetos. 
 └── 📁infra                     // código de configuração de recursos técnicos que não fazem parte da implementação de negócio em si, como por exemplo configuração de bibliotecas parceiras.
+    ├── 📁controller            // Controllers da feature.    
+    │   └── 📁openapi           // Classes com anotações de documentação relacionadas ao swagger das nossas controllers.
 
 ```
 

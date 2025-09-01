@@ -1,22 +1,22 @@
 package com.fiap.pj.core.usuario.app.usecase;
 
 
+import com.fiap.pj.core.usuario.app.gateways.UsuarioGateway;
 import com.fiap.pj.infra.sk.api.Slice;
 import com.fiap.pj.infra.usuario.controller.request.ListarUsuarioRequest;
 import com.fiap.pj.infra.usuario.controller.response.UsuarioReponse;
-import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
 
-@Service
-@Transactional
-@AllArgsConstructor
+
 public class ListarUsuariorUseCaseImpl implements ListarUsuarioUseCase {
 
+    private final UsuarioGateway usuarioGateway;
+
+    public ListarUsuariorUseCaseImpl(UsuarioGateway usuarioGateway) {
+        this.usuarioGateway = usuarioGateway;
+    }
 
     @Override
     public Slice<UsuarioReponse> handle(ListarUsuarioRequest request) {
-//        return repository.findProjectedBy(request.buildSpecification(), request.getPageable(), UsuarioReponse.class);
-        return null;
+        return usuarioGateway.listarUsuarios(request);
     }
 }

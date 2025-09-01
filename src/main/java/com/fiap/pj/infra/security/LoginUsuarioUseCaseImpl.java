@@ -1,10 +1,10 @@
-package com.fiap.pj.core.usuario.app.usecase;
+package com.fiap.pj.infra.security;
 
 
+import com.fiap.pj.core.usuario.app.usecase.LoginUsuarioUseCase;
 import com.fiap.pj.core.usuario.app.usecase.command.LoginUsuarioCommand;
 import com.fiap.pj.infra.exception.CredenciaisInvalidasException;
 import com.fiap.pj.infra.helpers.JwtUtil;
-import com.fiap.pj.infra.security.UserDetailsImpl;
 import com.fiap.pj.infra.usuario.controller.response.LoginUsuarioResponse;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;

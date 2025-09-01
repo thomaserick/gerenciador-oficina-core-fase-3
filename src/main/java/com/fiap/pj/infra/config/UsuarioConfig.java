@@ -5,6 +5,7 @@ import com.fiap.pj.core.usuario.app.gateways.UsuarioGateway;
 import com.fiap.pj.core.usuario.app.usecase.AlterarUsuarioUseCaseImpl;
 import com.fiap.pj.core.usuario.app.usecase.CriarUsuarioUseCaseImpl;
 import com.fiap.pj.core.usuario.app.usecase.ExcluirUsuarioUseCaseImpl;
+import com.fiap.pj.core.usuario.app.usecase.ListarUsuariorUseCaseImpl;
 import com.fiap.pj.infra.usuario.gateways.UsuarioRepositoryGatewayImpl;
 import com.fiap.pj.infra.usuario.gateways.UsuarioRepositoryMapper;
 import com.fiap.pj.infra.usuario.persistence.UsuarioRepositoryJpa;
@@ -32,6 +33,12 @@ public class UsuarioConfig {
     ExcluirUsuarioUseCaseImpl excluirUsuarioUseCase(UsuarioGateway usuarioGateway
     ) {
         return new ExcluirUsuarioUseCaseImpl(usuarioGateway);
+    }
+
+    @Bean
+    ListarUsuariorUseCaseImpl listarUsuarioUseCase(UsuarioGateway usuarioGateway
+    ) {
+        return new ListarUsuariorUseCaseImpl(usuarioGateway);
     }
 
     @Bean

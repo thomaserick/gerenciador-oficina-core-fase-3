@@ -1,11 +1,9 @@
-package com.fiap.pj.core.usuario.adapter.in.api;
+package com.fiap.pj.infra.usuario.controller;
 
 
 import com.fiap.pj.core.usuario.app.usecase.CriarUsuarioUseCase;
 import com.fiap.pj.core.usuario.app.usecase.command.CriarUsuarioCommand;
-import com.fiap.pj.core.usuario.util.factrory.UsuarioTestFactory;
 import com.fiap.pj.core.util.TestUtils;
-import com.fiap.pj.infra.usuario.controller.UsuarioController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,6 +14,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import java.util.UUID;
 
 import static com.fiap.pj.core.usuario.util.factrory.UsuarioTestFactory.umCriarUsuarioCommand;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -40,7 +40,7 @@ class CriarUsuarioControllerTest {
     @Test
     void deveCriarUsuario() throws Exception {
 
-        Mockito.when(criarUsuarioUseCase.handle(Mockito.any(CriarUsuarioCommand.class))).thenReturn(UsuarioTestFactory.umUsuario());
+        Mockito.when(criarUsuarioUseCase.handle(Mockito.any(CriarUsuarioCommand.class))).thenReturn(UUID.randomUUID());
 
         mock.perform(post(
                 TestUtils.buildURL(UsuarioController.PATH))

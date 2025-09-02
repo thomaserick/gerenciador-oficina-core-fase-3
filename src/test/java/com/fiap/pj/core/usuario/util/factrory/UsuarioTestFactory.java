@@ -6,6 +6,7 @@ import com.fiap.pj.core.usuario.app.usecase.command.CriarUsuarioCommand;
 import com.fiap.pj.core.usuario.app.usecase.command.LoginUsuarioCommand;
 import com.fiap.pj.core.usuario.domain.Usuario;
 import com.fiap.pj.core.usuario.domain.enums.Perfil;
+import com.fiap.pj.infra.usuario.persistence.UsuarioEntity;
 
 import java.util.List;
 import java.util.Set;
@@ -30,6 +31,10 @@ public class UsuarioTestFactory {
         var usuario = new Usuario(ID, NAME, LAST_NAME, E_MAIL, PASSWORD, true);
         usuario.adicionarPerfils(List.of(USER_ROLE));
         return usuario;
+    }
+
+    public static UsuarioEntity umUsuarioEntity() {
+        return new UsuarioEntity(ID, NAME, LAST_NAME, E_MAIL, PASSWORD, true, Set.of(USER_ROLE));
     }
 
     public static CriarUsuarioCommand umCriarUsuarioCommand() {

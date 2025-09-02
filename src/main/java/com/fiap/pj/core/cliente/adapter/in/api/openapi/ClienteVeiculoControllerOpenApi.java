@@ -1,8 +1,8 @@
 package com.fiap.pj.core.cliente.adapter.in.api.openapi;
 
-import com.fiap.pj.core.sk.web.ResponseEntityUtils.ResponseId;
 import com.fiap.pj.core.veiculo.usecase.command.AdicionarVeiculoClienteCommand;
 import com.fiap.pj.core.veiculo.usecase.command.RemoverVeiculoClienteCommand;
+import com.fiap.pj.infra.sk.web.ResponseEntityUtils.ResponseId;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

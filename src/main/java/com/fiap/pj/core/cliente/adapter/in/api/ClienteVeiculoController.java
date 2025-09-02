@@ -1,12 +1,12 @@
 package com.fiap.pj.core.cliente.adapter.in.api;
 
 import com.fiap.pj.core.cliente.adapter.in.api.openapi.ClienteVeiculoControllerOpenApi;
-import com.fiap.pj.core.sk.web.ResponseEntityUtils;
-import com.fiap.pj.core.sk.web.ResponseEntityUtils.ResponseId;
 import com.fiap.pj.core.veiculo.usecase.AdicionarVeiculoClienteUseCase;
 import com.fiap.pj.core.veiculo.usecase.RemoverVeiculoClienteUseCase;
 import com.fiap.pj.core.veiculo.usecase.command.AdicionarVeiculoClienteCommand;
 import com.fiap.pj.core.veiculo.usecase.command.RemoverVeiculoClienteCommand;
+import com.fiap.pj.infra.sk.web.ResponseEntityUtils;
+import com.fiap.pj.infra.sk.web.ResponseEntityUtils.ResponseId;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;

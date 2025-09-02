@@ -1,4 +1,4 @@
-package com.fiap.pj.core.sk.web;
+package com.fiap.pj.infra.sk.web;
 
 import lombok.experimental.UtilityClass;
 import org.springframework.http.ResponseEntity;

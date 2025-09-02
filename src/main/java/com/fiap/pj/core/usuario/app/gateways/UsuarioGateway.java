@@ -18,6 +18,4 @@ public interface UsuarioGateway {
     Usuario buscarPorIdIdOrThrowNotFound(UUID id);
 
     Slice<UsuarioReponse> listarUsuarios(ListarUsuarioRequest request);
-
-
 }

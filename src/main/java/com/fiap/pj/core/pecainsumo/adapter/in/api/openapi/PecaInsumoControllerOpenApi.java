@@ -4,8 +4,8 @@ import com.fiap.pj.core.pecainsumo.adapter.in.api.request.ListarPecaInsumoReques
 import com.fiap.pj.core.pecainsumo.adapter.in.api.response.PecaInsumoResponse;
 import com.fiap.pj.core.pecainsumo.usecase.command.AlterarPecaInsumoCommand;
 import com.fiap.pj.core.pecainsumo.usecase.command.CriarPecaInsumoCommand;
-import com.fiap.pj.core.sk.web.ResponseEntityUtils.ResponseId;
 import com.fiap.pj.infra.sk.api.Slice;
+import com.fiap.pj.infra.sk.web.ResponseEntityUtils.ResponseId;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;

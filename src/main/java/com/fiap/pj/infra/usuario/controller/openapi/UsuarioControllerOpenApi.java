@@ -1,9 +1,9 @@
 package com.fiap.pj.infra.usuario.controller.openapi;
 
-import com.fiap.pj.core.sk.web.ResponseEntityUtils.ResponseId;
 import com.fiap.pj.core.usuario.app.usecase.command.AlterarUsuarioCommand;
 import com.fiap.pj.core.usuario.app.usecase.command.CriarUsuarioCommand;
 import com.fiap.pj.infra.sk.api.Slice;
+import com.fiap.pj.infra.sk.web.ResponseEntityUtils.ResponseId;
 import com.fiap.pj.infra.usuario.controller.request.ListarUsuarioRequest;
 import com.fiap.pj.infra.usuario.controller.response.UsuarioReponse;
 import io.swagger.v3.oas.annotations.Operation;

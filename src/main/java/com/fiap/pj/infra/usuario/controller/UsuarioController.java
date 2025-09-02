@@ -1,7 +1,5 @@
 package com.fiap.pj.infra.usuario.controller;
 
-import com.fiap.pj.core.sk.web.ResponseEntityUtils;
-import com.fiap.pj.core.sk.web.ResponseEntityUtils.ResponseId;
 import com.fiap.pj.core.usuario.app.usecase.AlterarUsuarioUseCase;
 import com.fiap.pj.core.usuario.app.usecase.CriarUsuarioUseCase;
 import com.fiap.pj.core.usuario.app.usecase.ExcluirUsuarioUseCase;
@@ -10,6 +8,8 @@ import com.fiap.pj.core.usuario.app.usecase.command.AlterarUsuarioCommand;
 import com.fiap.pj.core.usuario.app.usecase.command.CriarUsuarioCommand;
 import com.fiap.pj.core.usuario.app.usecase.command.ExcluirUsuarioCommand;
 import com.fiap.pj.infra.sk.api.Slice;
+import com.fiap.pj.infra.sk.web.ResponseEntityUtils;
+import com.fiap.pj.infra.sk.web.ResponseEntityUtils.ResponseId;
 import com.fiap.pj.infra.usuario.controller.openapi.UsuarioControllerOpenApi;
 import com.fiap.pj.infra.usuario.controller.request.ListarUsuarioRequest;
 import com.fiap.pj.infra.usuario.controller.response.UsuarioReponse;

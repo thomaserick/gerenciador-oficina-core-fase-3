@@ -1,6 +1,7 @@
 package com.fiap.pj.core.cliente.app;
 
 
+import com.fiap.pj.core.cliente.app.gateways.ClienteGateway;
 import com.fiap.pj.core.cliente.app.usecase.ListarClienteUseCase;
 import com.fiap.pj.infra.cliente.controller.request.ListarClienteRequest;
 import com.fiap.pj.infra.cliente.controller.response.ClienteResponse;
@@ -14,9 +15,10 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class ListarClienteUseCaseImpl implements ListarClienteUseCase {
 
+    private final ClienteGateway clienteGateway;
 
     @Override
     public Slice<ClienteResponse> handle(ListarClienteRequest request) {
-        return null; // this.repository.findProjectedBy(request.buildSpecification(), request.getPageable(), ClienteResponse.class);
+        return clienteGateway.listarUsuarios(request);
     }
 }

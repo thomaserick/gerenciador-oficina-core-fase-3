@@ -1,7 +1,6 @@
 package com.fiap.pj.core.cliente.app;
 
 
-import com.fiap.pj.core.cliente.app.usecase.CriarClienteUseCaseImpl;
 import com.fiap.pj.core.cliente.domain.Cliente;
 import com.fiap.pj.core.cliente.exception.ClienteExceptions.DocumentoIdentificacaoDuplicadoException;
 import com.fiap.pj.core.cliente.util.factory.ClienteTestFactory;

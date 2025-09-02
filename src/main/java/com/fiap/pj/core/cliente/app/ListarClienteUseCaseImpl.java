@@ -1,6 +1,7 @@
-package com.fiap.pj.core.cliente.app.usecase;
+package com.fiap.pj.core.cliente.app;
 
 
+import com.fiap.pj.core.cliente.app.usecase.ListarClienteUseCase;
 import com.fiap.pj.infra.cliente.controller.request.ListarClienteRequest;
 import com.fiap.pj.infra.cliente.controller.response.ClienteResponse;
 import com.fiap.pj.infra.sk.api.Slice;

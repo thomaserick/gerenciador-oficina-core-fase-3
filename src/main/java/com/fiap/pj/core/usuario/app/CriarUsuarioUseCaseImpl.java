@@ -1,7 +1,8 @@
-package com.fiap.pj.core.usuario.app.usecase;
+package com.fiap.pj.core.usuario.app;
 
 
 import com.fiap.pj.core.usuario.app.gateways.UsuarioGateway;
+import com.fiap.pj.core.usuario.app.usecase.CriarUsuarioUseCase;
 import com.fiap.pj.core.usuario.app.usecase.command.CriarUsuarioCommand;
 import com.fiap.pj.core.usuario.domain.Usuario;
 

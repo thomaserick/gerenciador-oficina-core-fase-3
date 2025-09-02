@@ -1,7 +1,8 @@
-package com.fiap.pj.core.usuario.app.usecase;
+package com.fiap.pj.core.usuario.app;
 
 
 import com.fiap.pj.core.usuario.app.gateways.UsuarioGateway;
+import com.fiap.pj.core.usuario.app.usecase.ListarUsuarioUseCase;
 import com.fiap.pj.infra.sk.api.Slice;
 import com.fiap.pj.infra.usuario.controller.request.ListarUsuarioRequest;
 import com.fiap.pj.infra.usuario.controller.response.UsuarioReponse;

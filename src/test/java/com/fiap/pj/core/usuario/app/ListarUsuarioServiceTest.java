@@ -1,7 +1,6 @@
 package com.fiap.pj.core.usuario.app;
 
 import com.fiap.pj.core.usuario.app.gateways.UsuarioGateway;
-import com.fiap.pj.core.usuario.app.usecase.ListarUsuariorUseCaseImpl;
 import com.fiap.pj.core.usuario.util.factrory.UsuarioTestFactory;
 import com.fiap.pj.infra.sk.api.Slice;
 import com.fiap.pj.infra.usuario.controller.request.ListarUsuarioRequest;

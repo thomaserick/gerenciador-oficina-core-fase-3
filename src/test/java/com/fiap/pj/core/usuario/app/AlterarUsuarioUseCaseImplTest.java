@@ -2,7 +2,6 @@ package com.fiap.pj.core.usuario.app;
 
 
 import com.fiap.pj.core.usuario.app.gateways.UsuarioGateway;
-import com.fiap.pj.core.usuario.app.usecase.AlterarUsuarioUseCaseImpl;
 import com.fiap.pj.core.usuario.domain.Usuario;
 import com.fiap.pj.core.usuario.exception.UsuarioExceptions.UsuarioNaoEncontradoException;
 import com.fiap.pj.core.usuario.util.factrory.UsuarioTestFactory;

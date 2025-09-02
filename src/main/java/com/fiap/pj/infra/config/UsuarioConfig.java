@@ -1,11 +1,11 @@
 package com.fiap.pj.infra.config;
 
 
+import com.fiap.pj.core.usuario.app.AlterarUsuarioUseCaseImpl;
+import com.fiap.pj.core.usuario.app.CriarUsuarioUseCaseImpl;
+import com.fiap.pj.core.usuario.app.ExcluirUsuarioUseCaseImpl;
+import com.fiap.pj.core.usuario.app.ListarUsuariorUseCaseImpl;
 import com.fiap.pj.core.usuario.app.gateways.UsuarioGateway;
-import com.fiap.pj.core.usuario.app.usecase.AlterarUsuarioUseCaseImpl;
-import com.fiap.pj.core.usuario.app.usecase.CriarUsuarioUseCaseImpl;
-import com.fiap.pj.core.usuario.app.usecase.ExcluirUsuarioUseCaseImpl;
-import com.fiap.pj.core.usuario.app.usecase.ListarUsuariorUseCaseImpl;
 import com.fiap.pj.infra.usuario.gateways.UsuarioRepositoryGatewayImpl;
 import com.fiap.pj.infra.usuario.gateways.UsuarioRepositoryMapper;
 import com.fiap.pj.infra.usuario.persistence.UsuarioRepositoryJpa;

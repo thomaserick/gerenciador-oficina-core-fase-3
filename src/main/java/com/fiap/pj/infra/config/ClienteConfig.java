@@ -1,12 +1,12 @@
 package com.fiap.pj.infra.config;
 
 
+import com.fiap.pj.core.cliente.app.AlterarClienteUseCaseImpl;
+import com.fiap.pj.core.cliente.app.AtivarClienteUseCaseImpl;
+import com.fiap.pj.core.cliente.app.CriarClienteUseCaseImpl;
+import com.fiap.pj.core.cliente.app.ExcluirClienteUseCaseImpl;
+import com.fiap.pj.core.cliente.app.InativarClienteUseCaseImpl;
 import com.fiap.pj.core.cliente.app.gateways.ClienteGateway;
-import com.fiap.pj.core.cliente.app.usecase.AlterarClienteUseCaseImpl;
-import com.fiap.pj.core.cliente.app.usecase.AtivarClienteUseCaseImpl;
-import com.fiap.pj.core.cliente.app.usecase.CriarClienteUseCaseImpl;
-import com.fiap.pj.core.cliente.app.usecase.ExcluirClienteUseCaseImpl;
-import com.fiap.pj.core.cliente.app.usecase.InativarClienteUseCaseImpl;
 import com.fiap.pj.infra.cliente.gateways.ClienteRepositoryGatewayImpl;
 import com.fiap.pj.infra.cliente.gateways.ClienteRepositoryMapper;
 import com.fiap.pj.infra.cliente.persistence.ClienteRepositoryJpa;

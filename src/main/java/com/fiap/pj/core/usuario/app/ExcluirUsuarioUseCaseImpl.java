@@ -1,7 +1,8 @@
-package com.fiap.pj.core.usuario.app.usecase;
+package com.fiap.pj.core.usuario.app;
 
 
 import com.fiap.pj.core.usuario.app.gateways.UsuarioGateway;
+import com.fiap.pj.core.usuario.app.usecase.ExcluirUsuarioUseCase;
 import com.fiap.pj.core.usuario.app.usecase.command.ExcluirUsuarioCommand;
 import com.fiap.pj.core.usuario.exception.UsuarioExceptions.UsuarioComRelacionamentoException;
 import org.springframework.dao.DataIntegrityViolationException;

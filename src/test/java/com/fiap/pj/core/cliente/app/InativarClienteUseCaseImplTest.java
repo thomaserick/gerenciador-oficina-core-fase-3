@@ -1,7 +1,6 @@
 package com.fiap.pj.core.cliente.app;
 
 
-import com.fiap.pj.core.cliente.app.usecase.InativarClienteUseCaseImpl;
 import com.fiap.pj.core.cliente.app.usecase.command.InativarClienteCommand;
 import com.fiap.pj.core.cliente.domain.Cliente;
 import com.fiap.pj.core.cliente.exception.ClienteExceptions.ClienteNaoEncontradoException;

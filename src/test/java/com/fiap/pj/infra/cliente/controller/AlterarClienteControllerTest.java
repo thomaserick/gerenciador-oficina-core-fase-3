@@ -1,9 +1,9 @@
-package com.fiap.pj.core.cliente.adapter.in.api;
+package com.fiap.pj.infra.cliente.controller;
 
 
-import com.fiap.pj.core.cliente.app.usecase.InativarClienteUserCase;
+import com.fiap.pj.core.cliente.app.usecase.AlterarClienteUserCase;
+import com.fiap.pj.core.cliente.util.factory.ClienteTestFactory;
 import com.fiap.pj.core.util.TestUtils;
-import com.fiap.pj.infra.cliente.controller.ClienteController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,15 +16,16 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.UUID;
 
-import static com.fiap.pj.core.cliente.util.factory.ClienteTestFactory.umCriarClienteCommand;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static com.fiap.pj.core.cliente.util.factory.ClienteTestFactory.umAlterarClienteCommand;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
-class InativarClienteControllerTest {
+class AlterarClienteControllerTest {
 
     @Mock
-    private InativarClienteUserCase inativarClienteUserCase;
+    private AlterarClienteUserCase alterarClienteUserCase;
+
     @InjectMocks
     private ClienteController clienteController;
 
@@ -36,12 +37,13 @@ class InativarClienteControllerTest {
     }
 
     @Test
-    void deveInativarCliente() throws Exception {
+    void deveAlterarCliente() throws Exception {
 
-        mock.perform(post(
-                TestUtils.buildURL(ClienteController.PATH, UUID.randomUUID().toString(), "inativar"))
+        mock.perform(put(
+                TestUtils.buildURL(ClienteController.PATH, UUID.randomUUID().toString()))
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(TestUtils.objectToJson(umCriarClienteCommand()))).andExpect(status().is2xxSuccessful());
+                .content(TestUtils.objectToJson(umAlterarClienteCommand(ClienteTestFactory.ID)))).andExpect(status().is2xxSuccessful());
     }
+
 
 }

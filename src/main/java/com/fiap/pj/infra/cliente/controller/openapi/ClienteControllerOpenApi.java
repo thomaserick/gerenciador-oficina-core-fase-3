@@ -2,11 +2,16 @@ package com.fiap.pj.infra.cliente.controller.openapi;
 
 import com.fiap.pj.core.cliente.app.usecase.command.AlterarClienteCommand;
 import com.fiap.pj.core.cliente.app.usecase.command.CriarClienteCommand;
+import com.fiap.pj.infra.cliente.controller.request.ListarClienteRequest;
+import com.fiap.pj.infra.cliente.controller.response.ClienteResponse;
+import com.fiap.pj.infra.sk.api.Slice;
 import com.fiap.pj.infra.sk.web.ResponseEntityUtils.ResponseId;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
+import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,9 +40,9 @@ public interface ClienteControllerOpenApi {
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Cliente Ativado com sucesso."),
             @ApiResponse(responseCode = "400", description = "O  Cliente não pode ser ativado.")})
     ResponseEntity<Void> ativarCliente(@PathVariable UUID id);
-//
-//    @Operation(description = "Retorna uma lista de Clientes.", method = "GET")
-//    Slice<ClienteResponse> listarCliente(@ParameterObject ListarClienteRequest filterRequest, @ParameterObject Pageable pageable);
+
+    @Operation(description = "Retorna uma lista de Clientes.", method = "GET")
+    Slice<ClienteResponse> listarCliente(@ParameterObject ListarClienteRequest filterRequest, @ParameterObject Pageable pageable);
 
 
     @Operation(description = "Excluir um Cliente", method = "POST")

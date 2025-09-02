@@ -1,10 +1,10 @@
 package com.fiap.pj.core.cliente.app;
 
 
+import com.fiap.pj.core.cliente.app.gateways.ClienteGateway;
 import com.fiap.pj.core.cliente.domain.Cliente;
 import com.fiap.pj.core.cliente.exception.ClienteExceptions.ClienteNaoEncontradoException;
 import com.fiap.pj.core.cliente.util.factory.ClienteTestFactory;
-import com.fiap.pj.infra.cliente.persistence.ClienteRepositoryJpa;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -13,6 +13,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -28,18 +30,18 @@ class AlterarClienteUseCaseImplTest {
     @Captor
     ArgumentCaptor<Cliente> clienteCaptor;
     @Mock
-    private ClienteRepositoryJpa clienteRepositoryJpa;
+    private ClienteGateway clienteGateway;
     @InjectMocks
     private AlterarClienteUseCaseImpl alterarClienteUseCaseImpl;
 
     @Test
     void deveAlteraCliente() {
         var cliente = ClienteTestFactory.umCliente();
-        when(clienteRepositoryJpa.findByIdOrThrowNotFound(cliente.getId())).thenReturn(cliente);
+        when(clienteGateway.buscarPorId(cliente.getId())).thenReturn(Optional.of(cliente));
 
         alterarClienteUseCaseImpl.handle(ClienteTestFactory.umAlterarClienteCommand(cliente.getId()));
 
-        verify(clienteRepositoryJpa).save(clienteCaptor.capture());
+        verify(clienteGateway).salvar(clienteCaptor.capture());
         Cliente clienteUpdated = clienteCaptor.getValue();
 
         assertNotNull(clienteUpdated);
@@ -49,9 +51,6 @@ class AlterarClienteUseCaseImplTest {
         assertEquals(ClienteTestFactory.E_MAIL_ALTERADO, clienteUpdated.getEmail());
         assertEquals(ClienteTestFactory.ENDERECO_ALTERADO, clienteUpdated.getEndereco());
 
-
-        verify(clienteRepositoryJpa).save(cliente);
-
     }
 
     @Test
@@ -59,8 +58,8 @@ class AlterarClienteUseCaseImplTest {
         var cliente = ClienteTestFactory.umCliente();
 
         Mockito.doThrow(new ClienteNaoEncontradoException())
-                .when(clienteRepositoryJpa)
-                .findByIdOrThrowNotFound(cliente.getId());
+                .when(clienteGateway)
+                .buscarPorId(cliente.getId());
 
         var thrown = catchThrowable(() -> alterarClienteUseCaseImpl.handle(ClienteTestFactory.umAlterarClienteCommand(cliente.getId())));
         assertThat(thrown).isInstanceOf(ClienteNaoEncontradoException.class);

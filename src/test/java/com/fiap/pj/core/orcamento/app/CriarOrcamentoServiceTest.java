@@ -1,6 +1,7 @@
 package com.fiap.pj.core.orcamento.app;
 
 
+import com.fiap.pj.core.cliente.app.gateways.ClienteGateway;
 import com.fiap.pj.core.cliente.util.factory.ClienteTestFactory;
 import com.fiap.pj.core.orcamento.adapter.out.db.OrcamentoRepositoryJpa;
 import com.fiap.pj.core.orcamento.domain.Orcamento;
@@ -12,7 +13,6 @@ import com.fiap.pj.core.servico.adapter.out.db.ServicoRepositoryJpa;
 import com.fiap.pj.core.servico.util.factory.ServicoTestFactory;
 import com.fiap.pj.core.veiculo.exception.VeiculoExceptions.VeiculoNaoPertenceAoClienteException;
 import com.fiap.pj.core.veiculo.util.factory.VeiculoTestFactory;
-import com.fiap.pj.infra.cliente.persistence.ClienteRepositoryJpa;
 import com.fiap.pj.util.TestSecurityConfig;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,6 +20,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -43,7 +44,7 @@ class CriarOrcamentoServiceTest {
     private OrcamentoRepositoryJpa orcamentoRepositoryJpa;
 
     @Mock
-    private ClienteRepositoryJpa clienteRepositoryJpa;
+    private ClienteGateway clienteGateway;
 
     @Mock
     private ServicoRepositoryJpa servicoRepositoryJpa;
@@ -68,7 +69,7 @@ class CriarOrcamentoServiceTest {
         var cliente = ClienteTestFactory.umCliente();
         cliente.adicionarVeiculo(VeiculoTestFactory.umVeiculo(cliente.getId()));
 
-        when(clienteRepositoryJpa.findByIdOrThrowNotFound(any(UUID.class))).thenReturn(cliente);
+        when(clienteGateway.buscarPorId(any(UUID.class))).thenReturn(Optional.of(cliente));
         when(servicoRepositoryJpa.findByIdOrThrowNotFound(any(UUID.class))).thenReturn(ServicoTestFactory.umServico());
         when(pecaInsumoRepositoryJpa.findByIdOrThrowNotFoundWithLocky(any(UUID.class))).thenReturn(PecaInsumoTestFactory.umPecaInsumo());
 
@@ -91,7 +92,7 @@ class CriarOrcamentoServiceTest {
         var cliente = ClienteTestFactory.umCliente();
         cliente.adicionarVeiculo(VeiculoTestFactory.umVeiculo(cliente.getId()));
 
-        when(clienteRepositoryJpa.findByIdOrThrowNotFound(any(UUID.class))).thenReturn(cliente);
+        when(clienteGateway.buscarPorId(any(UUID.class))).thenReturn(Optional.of(cliente));
 
         var cmd = new CriarOrcamentoCommand(DESCRICAO, CLIENTE_ID, UUID.randomUUID(), null, HODOMENTO, Set.of(umOrcamentoItemServicoCommand()), Set.of(umOrcamentoItemPecaInsumoCommand()));
 

@@ -5,6 +5,7 @@ import com.fiap.pj.core.cliente.app.usecase.AtivarClienteUserCase;
 import com.fiap.pj.core.cliente.app.usecase.CriarClienteUserCase;
 import com.fiap.pj.core.cliente.app.usecase.ExcluirClienteUserCase;
 import com.fiap.pj.core.cliente.app.usecase.InativarClienteUserCase;
+import com.fiap.pj.core.cliente.app.usecase.ListarClienteUseCase;
 import com.fiap.pj.core.cliente.app.usecase.command.AlterarClienteCommand;
 import com.fiap.pj.core.cliente.app.usecase.command.AtivarClienteCommand;
 import com.fiap.pj.core.cliente.app.usecase.command.CriarClienteCommand;
@@ -12,13 +13,19 @@ import com.fiap.pj.core.cliente.app.usecase.command.ExcluirClienteCommand;
 import com.fiap.pj.core.cliente.app.usecase.command.InativarClienteCommand;
 import com.fiap.pj.core.cliente.exception.ClienteExceptions.ClienteComRelacionamentoException;
 import com.fiap.pj.infra.cliente.controller.openapi.ClienteControllerOpenApi;
+import com.fiap.pj.infra.cliente.controller.request.ListarClienteRequest;
+import com.fiap.pj.infra.cliente.controller.response.ClienteResponse;
+import com.fiap.pj.infra.sk.api.Slice;
 import com.fiap.pj.infra.sk.web.ResponseEntityUtils;
 import com.fiap.pj.infra.sk.web.ResponseEntityUtils.ResponseId;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -39,7 +46,7 @@ public class ClienteController implements ClienteControllerOpenApi {
     private final AtivarClienteUserCase ativarClienteUserCase;
     private final InativarClienteUserCase inativarClienteUserCase;
     private final AlterarClienteUserCase alterarClienteUserCase;
-    //    private final ListarClienteUseCase listarClienteUseCase;
+    private final ListarClienteUseCase listarClienteUseCase;
     private final ExcluirClienteUserCase excluirClienteUserCase;
 
     @Override
@@ -71,12 +78,12 @@ public class ClienteController implements ClienteControllerOpenApi {
         return ResponseEntity.ok().build();
     }
 
-//    @Override
-//    @GetMapping
-//    public Slice<ClienteResponse> listarCliente(@ParameterObject ListarClienteRequest filterRequest, @ParameterObject Pageable pageable) {
-//        filterRequest.setPageable(pageable);
-//        return listarClienteUseCase.handle(filterRequest);
-//    }
+    @Override
+    @GetMapping
+    public Slice<ClienteResponse> listarCliente(@ParameterObject ListarClienteRequest filterRequest, @ParameterObject Pageable pageable) {
+        filterRequest.setPageable(pageable);
+        return listarClienteUseCase.handle(filterRequest);
+    }
 
     @Override
     @DeleteMapping("/{id}")

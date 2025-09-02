@@ -1,12 +1,12 @@
 package com.fiap.pj.core.veiculo.app;
 
 
+import com.fiap.pj.core.cliente.app.gateways.ClienteGateway;
 import com.fiap.pj.core.cliente.domain.Cliente;
 import com.fiap.pj.core.cliente.util.factory.ClienteTestFactory;
 import com.fiap.pj.core.veiculo.adapter.out.db.VeiculoRepositoryJpa;
 import com.fiap.pj.core.veiculo.exception.VeiculoExceptions.VeiucloPlacaDuplicadaException;
 import com.fiap.pj.core.veiculo.util.factory.VeiculoTestFactory;
-import com.fiap.pj.infra.cliente.persistence.ClienteRepositoryJpa;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -16,10 +16,14 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+import java.util.UUID;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -29,7 +33,7 @@ class AdicionarVeiculoClienteServiceTest {
     @Captor
     ArgumentCaptor<Cliente> clienteArgumentCaptor;
     @Mock
-    private ClienteRepositoryJpa clienteRepositoryJpa;
+    private ClienteGateway clienteGateway;
     @Mock
     private VeiculoRepositoryJpa veiculoRepositoryJpa;
 
@@ -39,10 +43,10 @@ class AdicionarVeiculoClienteServiceTest {
     @Test
     void deveAdicionarVeiculoAoCliente() {
         var cliente = ClienteTestFactory.umCliente();
-        when(clienteRepositoryJpa.findByIdOrThrowNotFound(cliente.getId())).thenReturn(cliente);
+        when(clienteGateway.buscarPorId(any(UUID.class))).thenReturn(Optional.of(cliente));
         adicionarVeiculoClienteService.handle(VeiculoTestFactory.umAdicionarVeiculoClienteCommand(cliente.getId()));
 
-        verify(clienteRepositoryJpa).save(clienteArgumentCaptor.capture());
+        verify(clienteGateway).alterar(clienteArgumentCaptor.capture());
         Cliente clienteUpdated = clienteArgumentCaptor.getValue();
 
         assertNotNull(clienteUpdated);

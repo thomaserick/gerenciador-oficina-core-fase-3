@@ -1,10 +1,10 @@
 package com.fiap.pj.core.cliente.app;
 
 
+import com.fiap.pj.core.cliente.app.gateways.ClienteGateway;
 import com.fiap.pj.core.cliente.domain.Cliente;
 import com.fiap.pj.core.cliente.exception.ClienteExceptions.DocumentoIdentificacaoDuplicadoException;
 import com.fiap.pj.core.cliente.util.factory.ClienteTestFactory;
-import com.fiap.pj.infra.cliente.persistence.ClienteRepositoryJpa;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,14 +28,14 @@ import static org.mockito.Mockito.when;
 class CriarClienteUseCaseImplTest {
 
     @Mock
-    private ClienteRepositoryJpa clienteRepositoryJpa;
+    private ClienteGateway clienteGateway;
 
     @InjectMocks
     private CriarClienteUseCaseImpl criarClienteUseCaseImpl;
 
     @Test
     void deveCriarCliente() {
-        when(clienteRepositoryJpa.save(any(Cliente.class))).thenReturn(ClienteTestFactory.umCliente());
+        when(clienteGateway.salvar(any(Cliente.class))).thenReturn(ClienteTestFactory.umCliente());
 
         var cliente = criarClienteUseCaseImpl.handle(ClienteTestFactory.umCriarClienteCommand());
 
@@ -50,7 +50,7 @@ class CriarClienteUseCaseImplTest {
     @Test
     void deveRetornarDocumentoIdentificacaoDuplicadoException() {
 
-        Mockito.when(clienteRepositoryJpa.existsByDocumentoIdentificacaoNumero(Mockito.anyString())).thenReturn(true);
+        Mockito.when(clienteGateway.existsByDocumentoIdentificacaoNumero(Mockito.anyString())).thenReturn(true);
 
         var thrown = catchThrowable(() -> criarClienteUseCaseImpl.handle(ClienteTestFactory.umCriarClienteCommand()));
         assertThat(thrown).isInstanceOf(DocumentoIdentificacaoDuplicadoException.class);

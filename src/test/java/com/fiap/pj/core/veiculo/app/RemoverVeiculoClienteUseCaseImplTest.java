@@ -3,10 +3,10 @@ package com.fiap.pj.core.veiculo.app;
 import com.fiap.pj.core.cliente.app.gateways.ClienteGateway;
 import com.fiap.pj.core.cliente.domain.Cliente;
 import com.fiap.pj.core.cliente.util.factory.ClienteTestFactory;
-import com.fiap.pj.core.veiculo.adapter.out.db.VeiculoRepositoryJpa;
+import com.fiap.pj.core.veiculo.app.gateways.VeiculoGateway;
+import com.fiap.pj.core.veiculo.app.usecase.command.RemoverVeiculoClienteCommand;
 import com.fiap.pj.core.veiculo.domain.Veiculo;
 import com.fiap.pj.core.veiculo.exception.VeiculoExceptions.VeiculoNaoPertenceAoClienteException;
-import com.fiap.pj.core.veiculo.usecase.command.RemoverVeiculoClienteCommand;
 import com.fiap.pj.core.veiculo.util.factory.VeiculoTestFactory;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,7 +27,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class RemoverVeiculoClienteServiceTest {
+class RemoverVeiculoClienteUseCaseImplTest {
 
     @Captor
     ArgumentCaptor<Cliente> clienteArgumentCaptor;
@@ -37,10 +37,10 @@ class RemoverVeiculoClienteServiceTest {
     @Mock
     private ClienteGateway clienteGateway;
     @Mock
-    private VeiculoRepositoryJpa veiculoRepositoryJpa;
+    private VeiculoGateway veiculoGateway;
 
     @InjectMocks
-    private RemoverVeiculoClienteService removerVeiculoClienteService;
+    private RemoverVeiculoClienteUseCaseImpl removerVeiculoClienteUseCaseImpl;
 
     @Test
     void deveRemoverVeiculoDoCliente() {
@@ -49,13 +49,13 @@ class RemoverVeiculoClienteServiceTest {
         cliente.adicionarVeiculo(veiculo);
 
         when(clienteGateway.buscarPorId(any(UUID.class))).thenReturn(Optional.of(cliente));
-        when(veiculoRepositoryJpa.findByIdOrThrowNotFound(veiculo.getId())).thenReturn(veiculo);
+        when(veiculoGateway.buscarPorId(veiculo.getId())).thenReturn(Optional.of(veiculo));
 
         var command = new RemoverVeiculoClienteCommand(cliente.getId(), veiculo.getId());
-        removerVeiculoClienteService.handle(command);
+        removerVeiculoClienteUseCaseImpl.handle(command);
 
         verify(clienteGateway).alterar(clienteArgumentCaptor.capture());
-        verify(veiculoRepositoryJpa).delete(veiculoArgumentCaptor.capture());
+        verify(veiculoGateway).excluir(veiculoArgumentCaptor.capture());
 
         Cliente clienteUpdated = clienteArgumentCaptor.getValue();
         Veiculo veiculoDeleted = veiculoArgumentCaptor.getValue();
@@ -72,10 +72,10 @@ class RemoverVeiculoClienteServiceTest {
         var veiculo = VeiculoTestFactory.umVeiculo(UUID.randomUUID()); // Veículo de outro cliente
 
         when(clienteGateway.buscarPorId(any(UUID.class))).thenReturn(Optional.of(cliente));
-        when(veiculoRepositoryJpa.findByIdOrThrowNotFound(veiculo.getId())).thenReturn(veiculo);
+        when(veiculoGateway.buscarPorId(veiculo.getId())).thenReturn(Optional.of(veiculo));
 
         var command = new RemoverVeiculoClienteCommand(cliente.getId(), veiculo.getId());
-        var thrown = catchThrowable(() -> removerVeiculoClienteService.handle(command));
+        var thrown = catchThrowable(() -> removerVeiculoClienteUseCaseImpl.handle(command));
 
         assertThat(thrown).isInstanceOf(VeiculoNaoPertenceAoClienteException.class);
     }

@@ -6,9 +6,9 @@ import com.fiap.pj.core.cliente.app.AtivarClienteUseCaseImpl;
 import com.fiap.pj.core.cliente.app.CriarClienteUseCaseImpl;
 import com.fiap.pj.core.cliente.app.ExcluirClienteUseCaseImpl;
 import com.fiap.pj.core.cliente.app.InativarClienteUseCaseImpl;
+import com.fiap.pj.core.cliente.app.ListarClienteUseCaseImpl;
 import com.fiap.pj.core.cliente.app.gateways.ClienteGateway;
 import com.fiap.pj.infra.cliente.gateways.ClienteRepositoryGatewayImpl;
-import com.fiap.pj.infra.cliente.gateways.ClienteRepositoryMapper;
 import com.fiap.pj.infra.cliente.persistence.ClienteRepositoryJpa;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -45,20 +45,15 @@ public class ClienteConfig {
         return new ExcluirClienteUseCaseImpl(clienteGateway);
     }
 
-//    @Bean
-//    ListarClienterUseCaseImpl listarClienteUseCase(ClienteGateway clienteGateway
-//    ) {
-//        return new ListarClienterUseCaseImpl(clienteGateway);
-//    }
-
     @Bean
-    ClienteGateway clienteGateway(ClienteRepositoryJpa repository,
-                                  ClienteRepositoryMapper clienteRepositoryMapper) {
-        return new ClienteRepositoryGatewayImpl(repository, clienteRepositoryMapper);
+    ListarClienteUseCaseImpl listarClienteUseCase(ClienteGateway clienteGateway
+    ) {
+        return new ListarClienteUseCaseImpl(clienteGateway);
     }
 
     @Bean
-    ClienteRepositoryMapper clienteMapper() {
-        return new ClienteRepositoryMapper();
+    ClienteGateway clienteGateway(ClienteRepositoryJpa repository
+    ) {
+        return new ClienteRepositoryGatewayImpl(repository);
     }
 }

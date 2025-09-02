@@ -4,7 +4,7 @@ package com.fiap.pj.core.veiculo.app;
 import com.fiap.pj.core.cliente.app.gateways.ClienteGateway;
 import com.fiap.pj.core.cliente.domain.Cliente;
 import com.fiap.pj.core.cliente.util.factory.ClienteTestFactory;
-import com.fiap.pj.core.veiculo.adapter.out.db.VeiculoRepositoryJpa;
+import com.fiap.pj.core.veiculo.app.gateways.VeiculoGateway;
 import com.fiap.pj.core.veiculo.exception.VeiculoExceptions.VeiucloPlacaDuplicadaException;
 import com.fiap.pj.core.veiculo.util.factory.VeiculoTestFactory;
 import org.junit.jupiter.api.Test;
@@ -24,27 +24,32 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class AdicionarVeiculoClienteServiceTest {
+class AdicionarVeiculoClienteUseCaseImplTest {
 
     @Captor
     ArgumentCaptor<Cliente> clienteArgumentCaptor;
     @Mock
     private ClienteGateway clienteGateway;
+
     @Mock
-    private VeiculoRepositoryJpa veiculoRepositoryJpa;
+    private VeiculoGateway veiculoGateway;
+
 
     @InjectMocks
-    private AdicionarVeiculoClienteService adicionarVeiculoClienteService;
+    private AdicionarVeiculoClienteUseCaseImpl adicionarVeiculoClienteUseCaseImpl;
 
     @Test
     void deveAdicionarVeiculoAoCliente() {
         var cliente = ClienteTestFactory.umCliente();
         when(clienteGateway.buscarPorId(any(UUID.class))).thenReturn(Optional.of(cliente));
-        adicionarVeiculoClienteService.handle(VeiculoTestFactory.umAdicionarVeiculoClienteCommand(cliente.getId()));
+        Mockito.when(veiculoGateway.existsByPlaca(anyString())).thenReturn(false);
+
+        adicionarVeiculoClienteUseCaseImpl.handle(VeiculoTestFactory.umAdicionarVeiculoClienteCommand(cliente.getId()));
 
         verify(clienteGateway).alterar(clienteArgumentCaptor.capture());
         Cliente clienteUpdated = clienteArgumentCaptor.getValue();
@@ -61,8 +66,8 @@ class AdicionarVeiculoClienteServiceTest {
     @Test
     void deveRetonarVeiucloPlacaDuplicadaException() {
         var veiculo = VeiculoTestFactory.umVeiculo(ClienteTestFactory.ID);
-        Mockito.when(veiculoRepositoryJpa.existsByPlaca(veiculo.getPlaca())).thenReturn(true);
-        var thrown = catchThrowable(() -> adicionarVeiculoClienteService.handle(VeiculoTestFactory.umAdicionarVeiculoClienteCommand(ClienteTestFactory.ID)));
+        Mockito.when(veiculoGateway.existsByPlaca(veiculo.getPlaca())).thenReturn(true);
+        var thrown = catchThrowable(() -> adicionarVeiculoClienteUseCaseImpl.handle(VeiculoTestFactory.umAdicionarVeiculoClienteCommand(ClienteTestFactory.ID)));
         assertThat(thrown).isInstanceOf(VeiucloPlacaDuplicadaException.class);
     }
 

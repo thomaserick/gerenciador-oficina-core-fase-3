@@ -1,9 +1,9 @@
 package com.fiap.pj.infra.cliente.controller;
 
-import com.fiap.pj.core.veiculo.usecase.AdicionarVeiculoClienteUseCase;
-import com.fiap.pj.core.veiculo.usecase.RemoverVeiculoClienteUseCase;
-import com.fiap.pj.core.veiculo.usecase.command.AdicionarVeiculoClienteCommand;
-import com.fiap.pj.core.veiculo.usecase.command.RemoverVeiculoClienteCommand;
+import com.fiap.pj.core.veiculo.app.usecase.AdicionarVeiculoClienteUseCase;
+import com.fiap.pj.core.veiculo.app.usecase.RemoverVeiculoClienteUseCase;
+import com.fiap.pj.core.veiculo.app.usecase.command.AdicionarVeiculoClienteCommand;
+import com.fiap.pj.core.veiculo.app.usecase.command.RemoverVeiculoClienteCommand;
 import com.fiap.pj.infra.cliente.controller.openapi.ClienteVeiculoControllerOpenApi;
 import com.fiap.pj.infra.sk.web.ResponseEntityUtils;
 import com.fiap.pj.infra.sk.web.ResponseEntityUtils.ResponseId;

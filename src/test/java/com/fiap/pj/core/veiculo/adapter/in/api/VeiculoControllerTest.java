@@ -3,10 +3,10 @@ package com.fiap.pj.core.veiculo.adapter.in.api;
 
 import com.fiap.pj.core.cliente.util.factory.ClienteTestFactory;
 import com.fiap.pj.core.util.TestUtils;
-import com.fiap.pj.core.veiculo.usecase.AdicionarVeiculoClienteUseCase;
-import com.fiap.pj.core.veiculo.usecase.RemoverVeiculoClienteUseCase;
-import com.fiap.pj.core.veiculo.usecase.command.AdicionarVeiculoClienteCommand;
-import com.fiap.pj.core.veiculo.usecase.command.RemoverVeiculoClienteCommand;
+import com.fiap.pj.core.veiculo.app.usecase.AdicionarVeiculoClienteUseCase;
+import com.fiap.pj.core.veiculo.app.usecase.RemoverVeiculoClienteUseCase;
+import com.fiap.pj.core.veiculo.app.usecase.command.AdicionarVeiculoClienteCommand;
+import com.fiap.pj.core.veiculo.app.usecase.command.RemoverVeiculoClienteCommand;
 import com.fiap.pj.core.veiculo.util.factory.VeiculoTestFactory;
 import com.fiap.pj.infra.cliente.controller.ClienteVeiculoController;
 import org.junit.jupiter.api.BeforeEach;

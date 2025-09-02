@@ -14,35 +14,33 @@ import java.util.UUID;
 public class ClienteRepositoryGatewayImpl implements ClienteGateway {
 
     private final ClienteRepositoryJpa repository;
-    private final ClienteRepositoryMapper clienteRepositoryMapper;
 
-    public ClienteRepositoryGatewayImpl(ClienteRepositoryJpa repository, ClienteRepositoryMapper clienteRepositoryMapper) {
+    public ClienteRepositoryGatewayImpl(ClienteRepositoryJpa repository) {
         this.repository = repository;
-        this.clienteRepositoryMapper = clienteRepositoryMapper;
     }
 
     @Override
     public Cliente salvar(Cliente cliente) {
-        var clienteEntity = clienteRepositoryMapper.mapToTable(cliente);
-        return clienteRepositoryMapper.mapToDomain(repository.save(clienteEntity));
+        var clienteEntity = ClienteRepositoryMapper.mapToTable(cliente);
+        return ClienteRepositoryMapper.mapToDomain(repository.save(clienteEntity));
     }
 
     @Override
     public void alterar(Cliente cliente) {
-        var clienteEntity = clienteRepositoryMapper.mapToTable(cliente);
+        var clienteEntity = ClienteRepositoryMapper.mapToTable(cliente);
         repository.save(clienteEntity);
     }
 
     @Override
     public void excluir(Cliente cliente) {
-        var clienteEntity = clienteRepositoryMapper.mapToTable(cliente);
+        var clienteEntity = ClienteRepositoryMapper.mapToTable(cliente);
         repository.delete(clienteEntity);
     }
 
     @Override
     public Optional<Cliente> buscarPorId(UUID id) {
         return repository.findById(id)
-                .map(clienteRepositoryMapper::mapToDomain);
+                .map(ClienteRepositoryMapper::mapToDomain);
 
     }
 

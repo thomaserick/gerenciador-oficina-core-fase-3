@@ -2,7 +2,7 @@ package com.fiap.pj.infra.cliente.persistence;
 
 
 import com.fiap.pj.core.sk.documentoidentificacao.domain.DocumentoIdentificacao;
-import com.fiap.pj.core.veiculo.domain.Veiculo;
+import com.fiap.pj.infra.veiculo.persistence.VeiculoEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -38,9 +38,9 @@ public class ClienteEntity {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "clienteId")
-    private Set<Veiculo> veiculos = new HashSet<>();
+    private Set<VeiculoEntity> veiculos = new HashSet<>();
 
-    public ClienteEntity(UUID id, String nome, String email, String telefone, boolean ativo, String endereco, DocumentoIdentificacao documentoIdentificacao, Set<Veiculo> veiculos) {
+    public ClienteEntity(UUID id, String nome, String email, String telefone, boolean ativo, String endereco, DocumentoIdentificacao documentoIdentificacao, Set<VeiculoEntity> veiculos) {
         this.id = requireNonNull(id);
         this.nome = requireNonNull(nome);
         this.email = email;

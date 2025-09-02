@@ -1,4 +1,4 @@
-package com.fiap.pj.core.veiculo.usecase.command;
+package com.fiap.pj.core.veiculo.app.usecase.command;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fiap.pj.infra.util.validator.Plate;

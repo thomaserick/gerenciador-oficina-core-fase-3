@@ -1,10 +1,11 @@
 package com.fiap.pj.core.cliente.adapter.in.api;
 
 
-import com.fiap.pj.core.cliente.usecase.CriarClienteUserCase;
-import com.fiap.pj.core.cliente.usecase.command.CriarClienteCommand;
+import com.fiap.pj.core.cliente.app.usecase.CriarClienteUserCase;
+import com.fiap.pj.core.cliente.app.usecase.command.CriarClienteCommand;
 import com.fiap.pj.core.cliente.util.factory.ClienteTestFactory;
 import com.fiap.pj.core.util.TestUtils;
+import com.fiap.pj.infra.cliente.controller.ClienteController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

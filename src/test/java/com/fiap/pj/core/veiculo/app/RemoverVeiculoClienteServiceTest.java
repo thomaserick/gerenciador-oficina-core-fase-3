@@ -1,13 +1,13 @@
 package com.fiap.pj.core.veiculo.app;
 
-import com.fiap.pj.core.cliente.adapter.out.db.ClienteRepositoryJpa;
 import com.fiap.pj.core.cliente.domain.Cliente;
 import com.fiap.pj.core.cliente.util.factory.ClienteTestFactory;
 import com.fiap.pj.core.veiculo.adapter.out.db.VeiculoRepositoryJpa;
 import com.fiap.pj.core.veiculo.domain.Veiculo;
 import com.fiap.pj.core.veiculo.exception.VeiculoExceptions.VeiculoNaoPertenceAoClienteException;
-import com.fiap.pj.core.veiculo.util.factory.VeiculoTestFactory;
 import com.fiap.pj.core.veiculo.usecase.command.RemoverVeiculoClienteCommand;
+import com.fiap.pj.core.veiculo.util.factory.VeiculoTestFactory;
+import com.fiap.pj.infra.cliente.persistence.ClienteRepositoryJpa;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;

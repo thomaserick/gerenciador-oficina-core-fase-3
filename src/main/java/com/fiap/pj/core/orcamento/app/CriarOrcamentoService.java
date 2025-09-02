@@ -1,7 +1,8 @@
 package com.fiap.pj.core.orcamento.app;
 
+import com.fiap.pj.core.cliente.app.gateways.ClienteGateway;
 import com.fiap.pj.core.cliente.domain.Cliente;
-import com.fiap.pj.core.cliente.domain.ClienteDomainRepository;
+import com.fiap.pj.core.cliente.exception.ClienteExceptions.ClienteNaoEncontradoException;
 import com.fiap.pj.core.orcamento.domain.Orcamento;
 import com.fiap.pj.core.orcamento.domain.OrcamentoDomainRepository;
 import com.fiap.pj.core.orcamento.domain.enums.OrcamentoStatus;
@@ -21,24 +22,25 @@ import java.util.UUID;
 public class CriarOrcamentoService extends OrcamentoService implements CriarOrcamentoUseCase {
 
     private final OrcamentoDomainRepository repository;
-    private final ClienteDomainRepository clienteDomainRepository;
+    private final ClienteGateway clienteGateway;
 
     public CriarOrcamentoService(
             ServicoDomainRepository servicoDomainRepository,
             PecaInsumoDomainRepository pecaInsumoDomainRepository,
             OrcamentoDomainRepository repository,
-            ClienteDomainRepository clienteDomainRepository
+            ClienteGateway clienteGateway
     ) {
         super(servicoDomainRepository, pecaInsumoDomainRepository);
 
         this.repository = repository;
-        this.clienteDomainRepository = clienteDomainRepository;
+        this.clienteGateway = clienteGateway;
+
     }
 
     @Override
     public Orcamento handle(CriarOrcamentoCommand cmd) {
 
-        Cliente cliente = this.clienteDomainRepository.findByIdOrThrowNotFound(cmd.getClienteId());
+        Cliente cliente = clienteGateway.buscarPorId(cmd.getClienteId()).orElseThrow(ClienteNaoEncontradoException::new);
         cliente.validarVeiculo(cmd.getVeiculoId());
 
         Orcamento orcamento = Orcamento.builder()

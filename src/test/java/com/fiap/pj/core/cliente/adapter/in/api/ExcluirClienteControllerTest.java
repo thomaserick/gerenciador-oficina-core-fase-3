@@ -2,9 +2,10 @@ package com.fiap.pj.core.cliente.adapter.in.api;
 
 
 import com.fiap.pj.core.cliente.exception.ClienteExceptions.ClienteComRelacionamentoException;
-import com.fiap.pj.core.cliente.usecase.ExcluirClienteUserCase;
-import com.fiap.pj.core.cliente.usecase.command.ExcluirClienteCommand;
+import com.fiap.pj.core.cliente.app.usecase.ExcluirClienteUserCase;
+import com.fiap.pj.core.cliente.app.usecase.command.ExcluirClienteCommand;
 import com.fiap.pj.core.util.TestUtils;
+import com.fiap.pj.infra.cliente.controller.ClienteController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

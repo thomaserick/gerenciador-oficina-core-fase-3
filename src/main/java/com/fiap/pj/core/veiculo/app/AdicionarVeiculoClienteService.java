@@ -1,7 +1,8 @@
 package com.fiap.pj.core.veiculo.app;
 
 
-import com.fiap.pj.core.cliente.domain.ClienteDomainRepository;
+import com.fiap.pj.core.cliente.app.gateways.ClienteGateway;
+import com.fiap.pj.core.cliente.exception.ClienteExceptions.ClienteNaoEncontradoException;
 import com.fiap.pj.core.veiculo.domain.Veiculo;
 import com.fiap.pj.core.veiculo.domain.VeiculoDomainRepository;
 import com.fiap.pj.core.veiculo.exception.VeiculoExceptions.VeiucloPlacaDuplicadaException;
@@ -18,7 +19,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class AdicionarVeiculoClienteService implements AdicionarVeiculoClienteUseCase {
 
-    private final ClienteDomainRepository clienteDomainRepository;
+    private final ClienteGateway clienteGateway;
     private final VeiculoDomainRepository repository;
 
     @Override
@@ -28,7 +29,7 @@ public class AdicionarVeiculoClienteService implements AdicionarVeiculoClienteUs
             throw new VeiucloPlacaDuplicadaException();
         }
 
-        var cliente = clienteDomainRepository.findByIdOrThrowNotFound(cmd.clienteId());
+        var cliente = clienteGateway.buscarPorId(cmd.clienteId()).orElseThrow(ClienteNaoEncontradoException::new);
 
         var veiculo = Veiculo.builder().id(UUID.randomUUID())
                 .placa(cmd.placa())
@@ -40,7 +41,7 @@ public class AdicionarVeiculoClienteService implements AdicionarVeiculoClienteUs
 
         cliente.adicionarVeiculo(veiculo);
 
-        clienteDomainRepository.save(cliente);
+        clienteGateway.alterar(cliente);
 
         return veiculo;
 

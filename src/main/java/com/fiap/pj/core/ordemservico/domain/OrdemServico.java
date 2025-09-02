@@ -1,6 +1,5 @@
 package com.fiap.pj.core.ordemservico.domain;
 
-import com.fiap.pj.core.cliente.domain.Cliente;
 import com.fiap.pj.core.orcamento.domain.Orcamento;
 import com.fiap.pj.core.ordemservico.domain.enums.OrdemServicoStatus;
 import com.fiap.pj.core.ordemservico.exception.OrdemServicoExceptions.OrdemServicoStatusInvalidoAguardandoAprovacaoException;
@@ -11,6 +10,7 @@ import com.fiap.pj.core.ordemservico.exception.OrdemServicoExceptions.OrdemServi
 import com.fiap.pj.core.ordemservico.exception.OrdemServicoExceptions.OrdemServicoStatusInvalidoFinalizadaException;
 import com.fiap.pj.core.util.DateTimeUtils;
 import com.fiap.pj.core.veiculo.domain.Veiculo;
+import com.fiap.pj.infra.cliente.persistence.ClienteEntity;
 import com.fiap.pj.infra.usuario.persistence.UsuarioEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -56,7 +56,7 @@ public class OrdemServico {
 
     @OneToOne
     @JoinColumn(name = "clienteId", referencedColumnName = "id", insertable = false, updatable = false)
-    private Cliente cliente;
+    private ClienteEntity cliente;
 
     @OneToOne
     @JoinColumn(name = "veiculoId", referencedColumnName = "id", insertable = false, updatable = false)

@@ -1,7 +1,6 @@
 package com.fiap.pj.core.orcamento.app;
 
 
-import com.fiap.pj.core.cliente.adapter.out.db.ClienteRepositoryJpa;
 import com.fiap.pj.core.cliente.util.factory.ClienteTestFactory;
 import com.fiap.pj.core.orcamento.adapter.out.db.OrcamentoRepositoryJpa;
 import com.fiap.pj.core.orcamento.domain.Orcamento;
@@ -15,6 +14,7 @@ import com.fiap.pj.core.servico.adapter.out.db.ServicoRepositoryJpa;
 import com.fiap.pj.core.servico.util.factory.ServicoTestFactory;
 import com.fiap.pj.core.veiculo.exception.VeiculoExceptions.VeiculoNaoPertenceAoClienteException;
 import com.fiap.pj.core.veiculo.util.factory.VeiculoTestFactory;
+import com.fiap.pj.infra.cliente.persistence.ClienteRepositoryJpa;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;

@@ -11,7 +11,6 @@ import com.fiap.pj.core.cliente.app.usecase.command.AtivarClienteCommand;
 import com.fiap.pj.core.cliente.app.usecase.command.CriarClienteCommand;
 import com.fiap.pj.core.cliente.app.usecase.command.ExcluirClienteCommand;
 import com.fiap.pj.core.cliente.app.usecase.command.InativarClienteCommand;
-import com.fiap.pj.core.cliente.exception.ClienteExceptions.ClienteComRelacionamentoException;
 import com.fiap.pj.infra.cliente.controller.openapi.ClienteControllerOpenApi;
 import com.fiap.pj.infra.cliente.controller.request.ListarClienteRequest;
 import com.fiap.pj.infra.cliente.controller.response.ClienteResponse;
@@ -21,7 +20,6 @@ import com.fiap.pj.infra.sk.web.ResponseEntityUtils.ResponseId;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -88,11 +86,7 @@ public class ClienteController implements ClienteControllerOpenApi {
     @Override
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> excluirCliente(@PathVariable UUID id) {
-        try {
-            excluirClienteUserCase.handle(new ExcluirClienteCommand(id));
-        } catch (DataIntegrityViolationException e) {
-            throw new ClienteComRelacionamentoException();
-        }
+        excluirClienteUserCase.handle(new ExcluirClienteCommand(id));
         return ResponseEntity.ok().build();
     }
 }

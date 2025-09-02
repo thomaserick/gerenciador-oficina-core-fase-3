@@ -4,6 +4,7 @@ package com.fiap.pj.core.cliente.domain;
 import com.fiap.pj.core.sk.documentoidentificacao.domain.DocumentoIdentificacao;
 import com.fiap.pj.core.veiculo.domain.Veiculo;
 import com.fiap.pj.core.veiculo.exception.VeiculoExceptions.VeiculoNaoPertenceAoClienteException;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -15,6 +16,7 @@ import static java.util.Objects.requireNonNull;
 
 
 @Getter
+@AllArgsConstructor
 public class Cliente {
 
     private UUID id;
@@ -35,17 +37,6 @@ public class Cliente {
         this.ativo = ativo;
         this.endereco = requireNonNull(endereco);
         this.documentoIdentificacao = requireNonNull(documentoIdentificacao);
-    }
-
-    public Cliente(UUID id, String nome, String email, String telefone, boolean ativo, String endereco, DocumentoIdentificacao documentoIdentificacao, Set<Veiculo> veiculos) {
-        this.id = id;
-        this.nome = nome;
-        this.email = email;
-        this.telefone = telefone;
-        this.ativo = ativo;
-        this.endereco = endereco;
-        this.documentoIdentificacao = documentoIdentificacao;
-        this.veiculos = veiculos;
     }
 
     public void ativar() {

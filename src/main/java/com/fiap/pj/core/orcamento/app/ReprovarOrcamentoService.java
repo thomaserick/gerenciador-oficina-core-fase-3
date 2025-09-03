@@ -5,7 +5,7 @@ import com.fiap.pj.core.orcamento.domain.OrcamentoDomainRepository;
 import com.fiap.pj.core.orcamento.usecase.ReprovarOrcamentoUseCase;
 import com.fiap.pj.core.orcamento.usecase.command.ReprovarOrcamentoCommand;
 import com.fiap.pj.core.pecainsumo.domain.PecaInsumoDomainRepository;
-import com.fiap.pj.core.servico.domain.ServicoDomainRepository;
+import com.fiap.pj.core.servico.app.gateways.ServicoGateway;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +17,10 @@ public class ReprovarOrcamentoService extends OrcamentoService implements Reprov
     private final OrcamentoDomainRepository repository;
 
     public ReprovarOrcamentoService(
-            ServicoDomainRepository servicoDomainRepository,
+            ServicoGateway servicoGateway,
             PecaInsumoDomainRepository pecaInsumoDomainRepository, OrcamentoDomainRepository repository
     ) {
-        super(servicoDomainRepository, pecaInsumoDomainRepository);
+        super(servicoGateway, pecaInsumoDomainRepository);
         this.repository = repository;
     }
 

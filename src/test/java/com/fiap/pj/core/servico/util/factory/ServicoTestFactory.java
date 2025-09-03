@@ -1,8 +1,8 @@
 package com.fiap.pj.core.servico.util.factory;
 
 import com.fiap.pj.core.servico.domain.Servico;
-import com.fiap.pj.core.servico.usecase.command.AlterarServicoCommand;
-import com.fiap.pj.core.servico.usecase.command.CriarServicoCommand;
+import com.fiap.pj.core.servico.app.usecase.command.AlterarServicoCommand;
+import com.fiap.pj.core.servico.app.usecase.command.CriarServicoCommand;
 
 import java.math.BigDecimal;
 import java.util.UUID;

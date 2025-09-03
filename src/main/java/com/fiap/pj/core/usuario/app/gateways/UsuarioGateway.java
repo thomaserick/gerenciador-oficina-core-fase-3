@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public interface UsuarioGateway {
 
-    Usuario criar(Usuario usuario);
+    Usuario salvar(Usuario usuario);
 
     void alterar(Usuario usuario);
 

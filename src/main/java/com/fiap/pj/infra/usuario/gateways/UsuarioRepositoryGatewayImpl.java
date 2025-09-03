@@ -25,7 +25,7 @@ public class UsuarioRepositoryGatewayImpl implements UsuarioGateway {
     }
 
     @Override
-    public Usuario criar(Usuario usuario) {
+    public Usuario salvar(Usuario usuario) {
         var usuarioEntity = usuarioRepositoryMapper.mapToTable(usuario, passwordEncoder);
         return usuarioRepositoryMapper.mapToDomain(repository.save(usuarioEntity));
     }

@@ -2,24 +2,17 @@ package com.fiap.pj.core.servico.domain;
 
 
 import com.fiap.pj.core.servico.exception.ServicoExceptions.StatusServicoNaoPermiteAlterarException;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
 import static java.util.Objects.requireNonNull;
 
-@Entity
-@Table(name = "servicos")
-@NoArgsConstructor
 @Getter
 public class Servico {
 
-    @Id
+
     private UUID id;
     private String descricao;
     private BigDecimal preco;

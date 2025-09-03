@@ -42,8 +42,8 @@ public class UsuarioConfig {
     }
 
     @Bean
-    UsuarioGateway usuarioGateway(UsuarioRepositoryJpa repository,
-                                  UsuarioRepositoryMapper usuarioRepositoryMapper, PasswordEncoder passwordEncoder) {
+    UsuarioRepositoryGatewayImpl usuarioGateway(UsuarioRepositoryJpa repository,
+                                                UsuarioRepositoryMapper usuarioRepositoryMapper, PasswordEncoder passwordEncoder) {
         return new UsuarioRepositoryGatewayImpl(repository, usuarioRepositoryMapper, passwordEncoder);
     }
 

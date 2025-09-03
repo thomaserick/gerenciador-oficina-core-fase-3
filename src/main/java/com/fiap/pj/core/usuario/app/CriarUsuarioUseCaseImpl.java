@@ -22,7 +22,7 @@ public class CriarUsuarioUseCaseImpl implements CriarUsuarioUseCase {
     public UUID handle(CriarUsuarioCommand cmd) {
         var usuario = new Usuario(UUID.randomUUID(), cmd.getNome(), cmd.getSobreNome(), cmd.getEmail(), cmd.getSenha(), cmd.isAtivo());
         usuario.adicionarPerfils(cmd.getPerfis());
-        usuarioGateway.criar(usuario);
+        usuarioGateway.salvar(usuario);
         return usuario.getId();
     }
 }

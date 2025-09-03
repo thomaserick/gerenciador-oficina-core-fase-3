@@ -11,7 +11,7 @@ import com.fiap.pj.core.orcamento.usecase.command.AlterarOrcamentoCommand;
 import com.fiap.pj.core.orcamento.util.factory.OrcamentoTestFactory;
 import com.fiap.pj.core.pecainsumo.adapter.out.db.PecaInsumoRepositoryJpa;
 import com.fiap.pj.core.pecainsumo.util.factory.PecaInsumoTestFactory;
-import com.fiap.pj.core.servico.adapter.out.db.ServicoRepositoryJpa;
+import com.fiap.pj.core.servico.app.gateways.ServicoGateway;
 import com.fiap.pj.core.servico.util.factory.ServicoTestFactory;
 import com.fiap.pj.core.veiculo.exception.VeiculoExceptions.VeiculoNaoPertenceAoClienteException;
 import com.fiap.pj.core.veiculo.util.factory.VeiculoTestFactory;
@@ -52,7 +52,7 @@ class AlterarOrcamentoServiceTest {
     private ClienteGateway clienteGateway;
 
     @Mock
-    private ServicoRepositoryJpa servicoRepositoryJpa;
+    private ServicoGateway servicoGateway;
 
     @Mock
     private PecaInsumoRepositoryJpa pecaInsumoRepositoryJpa;
@@ -70,7 +70,7 @@ class AlterarOrcamentoServiceTest {
 
         when(orcamentoRepositoryJpa.findByIdOrThrowNotFound(any(UUID.class))).thenReturn(orcamento);
         when(clienteGateway.buscarPorId(any(UUID.class))).thenReturn(Optional.of(cliente));
-        when(servicoRepositoryJpa.findByIdOrThrowNotFound(any(UUID.class))).thenReturn(ServicoTestFactory.umServico());
+        when(servicoGateway.buscarPorId(any(UUID.class))).thenReturn(Optional.of(ServicoTestFactory.umServico()));
         when(pecaInsumoRepositoryJpa.findByIdOrThrowNotFoundWithLocky(any(UUID.class))).thenReturn(PecaInsumoTestFactory.umPecaInsumo());
 
         alterarOrcamentoService.handle(OrcamentoTestFactory.umAlterarOrcamentoCommand(orcamento.getId()));

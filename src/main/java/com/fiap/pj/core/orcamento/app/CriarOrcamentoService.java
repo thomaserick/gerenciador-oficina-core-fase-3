@@ -9,7 +9,7 @@ import com.fiap.pj.core.orcamento.domain.enums.OrcamentoStatus;
 import com.fiap.pj.core.orcamento.usecase.CriarOrcamentoUseCase;
 import com.fiap.pj.core.orcamento.usecase.command.CriarOrcamentoCommand;
 import com.fiap.pj.core.pecainsumo.domain.PecaInsumoDomainRepository;
-import com.fiap.pj.core.servico.domain.ServicoDomainRepository;
+import com.fiap.pj.core.servico.app.gateways.ServicoGateway;
 import com.fiap.pj.infra.util.security.SecurityContextUtils;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -25,12 +25,12 @@ public class CriarOrcamentoService extends OrcamentoService implements CriarOrca
     private final ClienteGateway clienteGateway;
 
     public CriarOrcamentoService(
-            ServicoDomainRepository servicoDomainRepository,
+            ServicoGateway servicoGateway,
             PecaInsumoDomainRepository pecaInsumoDomainRepository,
             OrcamentoDomainRepository repository,
             ClienteGateway clienteGateway
     ) {
-        super(servicoDomainRepository, pecaInsumoDomainRepository);
+        super(servicoGateway, pecaInsumoDomainRepository);
 
         this.repository = repository;
         this.clienteGateway = clienteGateway;

@@ -39,7 +39,7 @@ class ExcluirUsuarioUseCaseImplTest {
     }
 
     @Test
-    void deveRetornarServicoComRelacionamentoException() {
+    void deveRetornarUsuarioComRelacionamentoException() {
         var id = UUID.randomUUID();
 
         when(usuarioGateway.buscarPorIdIdOrThrowNotFound(id)).thenReturn(UsuarioTestFactory.umUsuario());

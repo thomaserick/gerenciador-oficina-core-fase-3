@@ -8,8 +8,9 @@ import com.fiap.pj.core.orcamento.usecase.command.OrcamentoItemPecaInsumoCommand
 import com.fiap.pj.core.orcamento.usecase.command.OrcamentoItemServicoCommand;
 import com.fiap.pj.core.pecainsumo.domain.PecaInsumo;
 import com.fiap.pj.core.pecainsumo.domain.PecaInsumoDomainRepository;
+import com.fiap.pj.core.servico.app.gateways.ServicoGateway;
 import com.fiap.pj.core.servico.domain.Servico;
-import com.fiap.pj.core.servico.domain.ServicoDomainRepository;
+import com.fiap.pj.core.servico.exception.ServicoExceptions.ServicoNaoEncontradoException;
 import lombok.AllArgsConstructor;
 
 import java.util.Set;
@@ -22,7 +23,7 @@ import static com.fiap.pj.core.util.CollectionUtils.nullSafeStream;
 @AllArgsConstructor
 public abstract class OrcamentoService {
 
-    private final ServicoDomainRepository servicoDomainRepository;
+    private final ServicoGateway servicoGateway;
     private final PecaInsumoDomainRepository pecaInsumoDomainRepository;
 
     protected void buildItemPecaInsumo(Orcamento orcamento, Set<OrcamentoItemPecaInsumoCommand> pecasInsumos) {
@@ -58,7 +59,7 @@ public abstract class OrcamentoService {
 
         nullSafeStream(servicos).forEach(cmd -> {
 
-            Servico servico = this.servicoDomainRepository.findByIdOrThrowNotFound(cmd.servicoId());
+            Servico servico = this.servicoGateway.buscarPorId(cmd.servicoId()).orElseThrow(ServicoNaoEncontradoException::new);
 
             OrcamentoItemServico servicoOrcamento = OrcamentoItemServico
                     .builder()

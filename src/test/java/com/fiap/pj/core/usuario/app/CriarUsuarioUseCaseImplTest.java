@@ -26,7 +26,7 @@ class CriarUsuarioUseCaseImplTest {
 
     @Test
     void deveCriarUsuarior() {
-        when(usuarioGateway.criar(any(Usuario.class))).thenReturn(UsuarioTestFactory.umUsuario());
+        when(usuarioGateway.salvar(any(Usuario.class))).thenReturn(UsuarioTestFactory.umUsuario());
 
         var usuarioId = criarUsuarioUseCaseImpl.handle(UsuarioTestFactory.umCriarUsuarioCommand());
         assertNotNull(usuarioId);

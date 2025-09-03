@@ -6,6 +6,7 @@ import com.fiap.pj.core.cliente.util.factory.ClienteTestFactory;
 import com.fiap.pj.core.veiculo.app.gateways.VeiculoGateway;
 import com.fiap.pj.core.veiculo.app.usecase.command.RemoverVeiculoClienteCommand;
 import com.fiap.pj.core.veiculo.domain.Veiculo;
+import com.fiap.pj.core.veiculo.exception.VeiculoExceptions.VeiculoNaoEncontradoException;
 import com.fiap.pj.core.veiculo.exception.VeiculoExceptions.VeiculoNaoPertenceAoClienteException;
 import com.fiap.pj.core.veiculo.util.factory.VeiculoTestFactory;
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
@@ -78,5 +80,22 @@ class RemoverVeiculoClienteUseCaseImplTest {
         var thrown = catchThrowable(() -> removerVeiculoClienteUseCaseImpl.handle(command));
 
         assertThat(thrown).isInstanceOf(VeiculoNaoPertenceAoClienteException.class);
+    }
+
+    @Test
+    void deveRetornarVeiculoNaoEncontradoException() {
+        var cliente = ClienteTestFactory.umCliente();
+        var veiculo = VeiculoTestFactory.umVeiculo(UUID.randomUUID());
+
+        when(clienteGateway.buscarPorId(any(UUID.class))).thenReturn(Optional.of(cliente));
+       
+        Mockito.doThrow(new VeiculoNaoEncontradoException())
+                .when(veiculoGateway)
+                .buscarPorId(veiculo.getId());
+
+        var command = new RemoverVeiculoClienteCommand(cliente.getId(), veiculo.getId());
+        var thrown = catchThrowable(() -> removerVeiculoClienteUseCaseImpl.handle(command));
+
+        assertThat(thrown).isInstanceOf(VeiculoNaoEncontradoException.class);
     }
 } 

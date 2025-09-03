@@ -5,6 +5,7 @@ import com.fiap.pj.infra.sk.api.Slice;
 import com.fiap.pj.infra.usuario.controller.request.ListarUsuarioRequest;
 import com.fiap.pj.infra.usuario.controller.response.UsuarioReponse;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public interface UsuarioGateway {
@@ -15,7 +16,7 @@ public interface UsuarioGateway {
 
     void excluir(Usuario usuario);
 
-    Usuario buscarPorIdIdOrThrowNotFound(UUID id);
+    Optional<Usuario> buscarPorId(UUID id);
 
     Slice<UsuarioReponse> listarUsuarios(ListarUsuarioRequest request);
 }

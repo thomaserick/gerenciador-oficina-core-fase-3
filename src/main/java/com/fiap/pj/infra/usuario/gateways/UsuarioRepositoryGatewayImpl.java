@@ -2,7 +2,6 @@ package com.fiap.pj.infra.usuario.gateways;
 
 import com.fiap.pj.core.usuario.app.gateways.UsuarioGateway;
 import com.fiap.pj.core.usuario.domain.Usuario;
-import com.fiap.pj.core.usuario.exception.UsuarioExceptions.UsuarioNaoEncontradoException;
 import com.fiap.pj.infra.sk.api.Slice;
 import com.fiap.pj.infra.usuario.controller.request.ListarUsuarioRequest;
 import com.fiap.pj.infra.usuario.controller.response.UsuarioReponse;
@@ -10,6 +9,7 @@ import com.fiap.pj.infra.usuario.persistence.UsuarioRepositoryJpa;
 import com.fiap.pj.infra.usuario.persistence.specification.UsuarioSpecification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public class UsuarioRepositoryGatewayImpl implements UsuarioGateway {
@@ -43,10 +43,9 @@ public class UsuarioRepositoryGatewayImpl implements UsuarioGateway {
     }
 
     @Override
-    public Usuario buscarPorIdIdOrThrowNotFound(UUID id) {
+    public Optional<Usuario> buscarPorId(UUID id) {
         return repository.findById(id)
-                .map(usuarioRepositoryMapper::mapToDomain)
-                .orElseThrow(UsuarioNaoEncontradoException::new);
+                .map(usuarioRepositoryMapper::mapToDomain);
     }
 
     @Override

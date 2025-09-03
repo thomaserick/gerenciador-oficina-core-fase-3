@@ -13,7 +13,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.security.test.context.support.WithMockUser;
+
+import java.util.Optional;
 
 import static com.fiap.pj.core.usuario.util.factrory.UsuarioTestFactory.ALTER_LAST_NAME;
 import static com.fiap.pj.core.usuario.util.factrory.UsuarioTestFactory.ALTER_NAME;
@@ -42,10 +43,9 @@ class AlterarUsuarioUseCaseImplTest {
     private AlterarUsuarioUseCaseImpl alterarUsuarioUseCaseImpl;
 
     @Test
-    @WithMockUser(username = "testuser", roles = {"ADMIN"})
     void deveAlterarUsuario() {
         var user = UsuarioTestFactory.umUsuario();
-        when(usuarioGateway.buscarPorIdIdOrThrowNotFound(user.getId())).thenReturn(user);
+        when(usuarioGateway.buscarPorId(user.getId())).thenReturn(Optional.of(user));
 
         alterarUsuarioUseCaseImpl.handle(UsuarioTestFactory.UmAlterarUsuarioCommand(user.getId()));
 
@@ -66,7 +66,7 @@ class AlterarUsuarioUseCaseImplTest {
 
         Mockito.doThrow(new UsuarioNaoEncontradoException())
                 .when(usuarioGateway)
-                .buscarPorIdIdOrThrowNotFound(user.getId());
+                .buscarPorId(user.getId());
 
         var thrown = catchThrowable(() -> alterarUsuarioUseCaseImpl.handle(UsuarioTestFactory.UmAlterarUsuarioCommand(user.getId())));
         assertThat(thrown).isInstanceOf(UsuarioNaoEncontradoException.class);

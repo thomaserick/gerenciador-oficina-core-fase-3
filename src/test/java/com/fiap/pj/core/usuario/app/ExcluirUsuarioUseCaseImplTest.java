@@ -14,6 +14,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.dao.DataIntegrityViolationException;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -33,7 +34,7 @@ class ExcluirUsuarioUseCaseImplTest {
     @Test
     void deveExcluirUsuario() {
         var id = UUID.randomUUID();
-        when(usuarioGateway.buscarPorIdIdOrThrowNotFound(id)).thenReturn(UsuarioTestFactory.umUsuario());
+        when(usuarioGateway.buscarPorId(id)).thenReturn(Optional.of(UsuarioTestFactory.umUsuario()));
         excluirUsuarioUseCaseImpl.handle(new ExcluirUsuarioCommand(id));
         verify(usuarioGateway).excluir(Mockito.any(Usuario.class));
     }
@@ -42,7 +43,7 @@ class ExcluirUsuarioUseCaseImplTest {
     void deveRetornarUsuarioComRelacionamentoException() {
         var id = UUID.randomUUID();
 
-        when(usuarioGateway.buscarPorIdIdOrThrowNotFound(id)).thenReturn(UsuarioTestFactory.umUsuario());
+        when(usuarioGateway.buscarPorId(id)).thenReturn(Optional.of(UsuarioTestFactory.umUsuario()));
         Mockito.doThrow(DataIntegrityViolationException.class)
                 .when(usuarioGateway).excluir(Mockito.any(Usuario.class));
         Throwable thrown = catchThrowable(() -> excluirUsuarioUseCaseImpl.handle(new ExcluirUsuarioCommand(id)));

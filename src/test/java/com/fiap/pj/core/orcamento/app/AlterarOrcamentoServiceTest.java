@@ -9,7 +9,7 @@ import com.fiap.pj.core.orcamento.domain.enums.OrcamentoStatus;
 import com.fiap.pj.core.orcamento.exception.OrcamentoExceptions.AlterarOrcamentoStatusInvalidoException;
 import com.fiap.pj.core.orcamento.usecase.command.AlterarOrcamentoCommand;
 import com.fiap.pj.core.orcamento.util.factory.OrcamentoTestFactory;
-import com.fiap.pj.core.pecainsumo.adapter.out.db.PecaInsumoRepositoryJpa;
+import com.fiap.pj.core.pecainsumo.app.gateways.PecaInsumoGateway;
 import com.fiap.pj.core.pecainsumo.util.factory.PecaInsumoTestFactory;
 import com.fiap.pj.core.servico.app.gateways.ServicoGateway;
 import com.fiap.pj.core.servico.util.factory.ServicoTestFactory;
@@ -55,7 +55,7 @@ class AlterarOrcamentoServiceTest {
     private ServicoGateway servicoGateway;
 
     @Mock
-    private PecaInsumoRepositoryJpa pecaInsumoRepositoryJpa;
+    private PecaInsumoGateway pecaInsumoGateway;
 
     @InjectMocks
     private AlterarOrcamentoService alterarOrcamentoService;
@@ -71,7 +71,7 @@ class AlterarOrcamentoServiceTest {
         when(orcamentoRepositoryJpa.findByIdOrThrowNotFound(any(UUID.class))).thenReturn(orcamento);
         when(clienteGateway.buscarPorId(any(UUID.class))).thenReturn(Optional.of(cliente));
         when(servicoGateway.buscarPorId(any(UUID.class))).thenReturn(Optional.of(ServicoTestFactory.umServico()));
-        when(pecaInsumoRepositoryJpa.findByIdOrThrowNotFoundWithLocky(any(UUID.class))).thenReturn(PecaInsumoTestFactory.umPecaInsumo());
+        when(pecaInsumoGateway.buscarPorId(any(UUID.class))).thenReturn(Optional.of(PecaInsumoTestFactory.umPecaInsumo()));
 
         alterarOrcamentoService.handle(OrcamentoTestFactory.umAlterarOrcamentoCommand(orcamento.getId()));
 

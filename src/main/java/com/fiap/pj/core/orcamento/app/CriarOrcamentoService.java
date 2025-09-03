@@ -8,7 +8,7 @@ import com.fiap.pj.core.orcamento.domain.OrcamentoDomainRepository;
 import com.fiap.pj.core.orcamento.domain.enums.OrcamentoStatus;
 import com.fiap.pj.core.orcamento.usecase.CriarOrcamentoUseCase;
 import com.fiap.pj.core.orcamento.usecase.command.CriarOrcamentoCommand;
-import com.fiap.pj.core.pecainsumo.domain.PecaInsumoDomainRepository;
+import com.fiap.pj.core.pecainsumo.app.gateways.PecaInsumoGateway;
 import com.fiap.pj.core.servico.app.gateways.ServicoGateway;
 import com.fiap.pj.infra.util.security.SecurityContextUtils;
 import jakarta.transaction.Transactional;
@@ -26,11 +26,11 @@ public class CriarOrcamentoService extends OrcamentoService implements CriarOrca
 
     public CriarOrcamentoService(
             ServicoGateway servicoGateway,
-            PecaInsumoDomainRepository pecaInsumoDomainRepository,
+            PecaInsumoGateway pecaInsumoGateway,
             OrcamentoDomainRepository repository,
             ClienteGateway clienteGateway
     ) {
-        super(servicoGateway, pecaInsumoDomainRepository);
+        super(servicoGateway, pecaInsumoGateway);
 
         this.repository = repository;
         this.clienteGateway = clienteGateway;

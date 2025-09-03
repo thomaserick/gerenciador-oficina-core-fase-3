@@ -7,7 +7,7 @@ import com.fiap.pj.core.orcamento.domain.Orcamento;
 import com.fiap.pj.core.orcamento.domain.OrcamentoDomainRepository;
 import com.fiap.pj.core.orcamento.usecase.AlterarOrcamentoUseCase;
 import com.fiap.pj.core.orcamento.usecase.command.AlterarOrcamentoCommand;
-import com.fiap.pj.core.pecainsumo.domain.PecaInsumoDomainRepository;
+import com.fiap.pj.core.pecainsumo.app.gateways.PecaInsumoGateway;
 import com.fiap.pj.core.servico.app.gateways.ServicoGateway;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -22,11 +22,11 @@ public class AlterarOrcamentoService extends OrcamentoService implements Alterar
 
     public AlterarOrcamentoService(
             ServicoGateway servicoGateway,
-            PecaInsumoDomainRepository pecaInsumoDomainRepository,
+            PecaInsumoGateway pecaInsumoGateway,
             OrcamentoDomainRepository repository,
             ClienteGateway clienteGateway
     ) {
-        super(servicoGateway, pecaInsumoDomainRepository);
+        super(servicoGateway, pecaInsumoGateway);
 
         this.repository = repository;
         this.clienteGateway = clienteGateway;

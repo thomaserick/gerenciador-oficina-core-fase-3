@@ -6,8 +6,9 @@ import com.fiap.pj.core.orcamento.domain.OrcamentoItemPecaInsumo;
 import com.fiap.pj.core.orcamento.domain.OrcamentoItemServico;
 import com.fiap.pj.core.orcamento.usecase.command.OrcamentoItemPecaInsumoCommand;
 import com.fiap.pj.core.orcamento.usecase.command.OrcamentoItemServicoCommand;
+import com.fiap.pj.core.pecainsumo.app.gateways.PecaInsumoGateway;
 import com.fiap.pj.core.pecainsumo.domain.PecaInsumo;
-import com.fiap.pj.core.pecainsumo.domain.PecaInsumoDomainRepository;
+import com.fiap.pj.core.pecainsumo.exception.PecaInsumoExceptions.PecaInsumoNaoEncontradoException;
 import com.fiap.pj.core.servico.app.gateways.ServicoGateway;
 import com.fiap.pj.core.servico.domain.Servico;
 import com.fiap.pj.core.servico.exception.ServicoExceptions.ServicoNaoEncontradoException;
@@ -24,7 +25,7 @@ import static com.fiap.pj.core.util.CollectionUtils.nullSafeStream;
 public abstract class OrcamentoService {
 
     private final ServicoGateway servicoGateway;
-    private final PecaInsumoDomainRepository pecaInsumoDomainRepository;
+    private final PecaInsumoGateway pecaInsumoGateway;
 
     protected void buildItemPecaInsumo(Orcamento orcamento, Set<OrcamentoItemPecaInsumoCommand> pecasInsumos) {
         Set<OrcamentoItemPecaInsumo> orcamentoItemPecaInsumoIdRemovidoSet = nullSafeStream(orcamento.getPecasInsumos())
@@ -34,11 +35,11 @@ public abstract class OrcamentoService {
         this.addQuantidadeRemovidaNoEstoque(orcamentoItemPecaInsumoIdRemovidoSet);
 
         nullSafeStream(pecasInsumos).forEach(cmd -> {
-            PecaInsumo pecaInsumo = this.pecaInsumoDomainRepository.findByIdOrThrowNotFoundWithLocky(cmd.pecaInsumoId());
+            PecaInsumo pecaInsumo = this.pecaInsumoGateway.buscarPorId(cmd.pecaInsumoId()).orElseThrow(PecaInsumoNaoEncontradoException::new);
 
             this.controleEstoquePecaInsumo(orcamento, cmd, pecaInsumo);
 
-            this.pecaInsumoDomainRepository.save(pecaInsumo);
+            this.pecaInsumoGateway.salvar(pecaInsumo);
 
             OrcamentoItemPecaInsumo pecaInsumoOrcamento = OrcamentoItemPecaInsumo
                     .builder()
@@ -78,9 +79,9 @@ public abstract class OrcamentoService {
     protected void roolbackPecasInsumos(Orcamento orcamento) {
         nullSafeStream(orcamento.getPecasInsumos())
                 .forEach(orcamentoItemPecaInsumo -> {
-                    PecaInsumo pecaInsumo = this.pecaInsumoDomainRepository.findByIdOrThrowNotFoundWithLocky(orcamentoItemPecaInsumo.getPecasInsumosId());
+                    PecaInsumo pecaInsumo = this.pecaInsumoGateway.buscarPorId(orcamentoItemPecaInsumo.getPecasInsumosId()).orElseThrow(PecaInsumoNaoEncontradoException::new);
                     pecaInsumo.adicionarEstoque(orcamentoItemPecaInsumo.getQuantidade());
-                    this.pecaInsumoDomainRepository.save(pecaInsumo);
+                    this.pecaInsumoGateway.salvar(pecaInsumo);
                 });
     }
 
@@ -93,10 +94,10 @@ public abstract class OrcamentoService {
 
     private void addQuantidadeRemovidaNoEstoque(Set<OrcamentoItemPecaInsumo> orcamentoItemPecaInsumoIdRemovidoSet) {
         orcamentoItemPecaInsumoIdRemovidoSet.forEach(orcamentoPecaInsumo -> {
-            PecaInsumo pecaInsumo = this.pecaInsumoDomainRepository.findByIdOrThrowNotFoundWithLocky(orcamentoPecaInsumo.getPecasInsumosId());
+            PecaInsumo pecaInsumo = this.pecaInsumoGateway.buscarPorId(orcamentoPecaInsumo.getPecasInsumosId()).orElseThrow(PecaInsumoNaoEncontradoException::new);
             pecaInsumo.adicionarEstoque(orcamentoPecaInsumo.getQuantidade());
 
-            this.pecaInsumoDomainRepository.save(pecaInsumo);
+            this.pecaInsumoGateway.salvar(pecaInsumo);
         });
     }
 

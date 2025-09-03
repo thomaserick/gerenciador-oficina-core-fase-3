@@ -13,8 +13,8 @@ de negócio.
 A estrutura básica foi estabelecida da seguinte forma:
 
 ```plaintext
-📁core
-├── 📁feature-name 
+📁core                          // Esta camada contem as regras de negócios e os casos de uso da nossa aplicação,
+├── 📁feature-name              
 │   ├── 📁app                   // Esta camada contém a implementação dos nossos casos de uso.
 │   │   ├── 📁gateways          //A camada de interface adapters (Portas)
 │   │   └── 📁usecase           // Interfaces de casos de uso, onde temos as assinaturas dos métodos que serão utilizados nas services.

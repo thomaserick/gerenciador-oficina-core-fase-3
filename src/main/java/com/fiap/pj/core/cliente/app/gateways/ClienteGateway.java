@@ -4,20 +4,10 @@ import com.fiap.pj.core.cliente.domain.Cliente;
 import com.fiap.pj.infra.cliente.controller.request.ListarClienteRequest;
 import com.fiap.pj.infra.cliente.controller.response.ClienteResponse;
 import com.fiap.pj.infra.sk.api.Slice;
+import com.fiap.pj.infra.sk.jpa.BaseRepositoryGateway;
 
-import java.util.Optional;
-import java.util.UUID;
+public interface ClienteGateway extends BaseRepositoryGateway<Cliente> {
 
-public interface ClienteGateway {
-
-    Cliente salvar(Cliente cliente);
-
-
-    void alterar(Cliente cliente);
-
-    void excluir(Cliente cliente);
-
-    Optional<Cliente> buscarPorId(UUID id);
 
     boolean existsByDocumentoIdentificacaoNumero(String documento);
 

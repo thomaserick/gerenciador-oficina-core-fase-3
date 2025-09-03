@@ -1,6 +1,6 @@
 package com.fiap.pj.core.pecainsumo.domain;
 
-import com.fiap.pj.infra.jpa.BaseCrudRepository;
+import com.fiap.pj.infra.sk.jpa.BaseCrudRepository;
 
 import java.util.UUID;
 

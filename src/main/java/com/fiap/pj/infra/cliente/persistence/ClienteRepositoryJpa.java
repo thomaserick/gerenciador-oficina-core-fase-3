@@ -1,7 +1,7 @@
 package com.fiap.pj.infra.cliente.persistence;
 
 
-import com.fiap.pj.infra.jpa.ExtendedRepository;
+import com.fiap.pj.infra.sk.jpa.ExtendedRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

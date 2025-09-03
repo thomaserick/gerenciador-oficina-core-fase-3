@@ -1,4 +1,4 @@
-package com.fiap.pj.infra.jpa;
+package com.fiap.pj.infra.sk.jpa;
 
 import com.fiap.pj.infra.sk.api.Slice;
 import org.springframework.data.domain.Pageable;

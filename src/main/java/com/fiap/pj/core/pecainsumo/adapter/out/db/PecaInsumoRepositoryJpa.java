@@ -3,7 +3,7 @@ package com.fiap.pj.core.pecainsumo.adapter.out.db;
 import com.fiap.pj.core.pecainsumo.domain.PecaInsumo;
 import com.fiap.pj.core.pecainsumo.domain.PecaInsumoDomainRepository;
 import com.fiap.pj.core.pecainsumo.exception.PecaInsumoExceptions.PecaInsumoNaoEncontradoException;
-import com.fiap.pj.infra.jpa.ExtendedRepository;
+import com.fiap.pj.infra.sk.jpa.ExtendedRepository;
 import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Lock;

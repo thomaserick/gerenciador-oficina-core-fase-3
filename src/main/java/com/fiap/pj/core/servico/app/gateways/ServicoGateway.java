@@ -4,19 +4,9 @@ import com.fiap.pj.core.servico.domain.Servico;
 import com.fiap.pj.infra.servico.controller.request.ListarServicoRequest;
 import com.fiap.pj.infra.servico.controller.response.ServicoResponse;
 import com.fiap.pj.infra.sk.api.Slice;
+import com.fiap.pj.infra.sk.jpa.BaseRepositoryGateway;
 
-import java.util.Optional;
-import java.util.UUID;
-
-public interface ServicoGateway {
-
-    Servico salvar(Servico servico);
-
-    void alterar(Servico servico);
-
-    void excluir(Servico servico);
-
-    Optional<Servico> buscarPorId(UUID id);
+public interface ServicoGateway extends BaseRepositoryGateway<Servico> {
 
     Slice<ServicoResponse> listarServico(ListarServicoRequest request);
 

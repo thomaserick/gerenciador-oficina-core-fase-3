@@ -1,7 +1,11 @@
-package com.fiap.pj.core.orcamento.domain;
+package com.fiap.pj.infra.orcamento.persistence;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -9,9 +13,13 @@ import java.util.UUID;
 import static java.util.Objects.requireNonNull;
 
 
+@Entity
+@Table(name = "orcamentos_pecas_insumos")
+@NoArgsConstructor
 @Getter
-public class OrcamentoItemPecaInsumo {
+public class OrcamentoItemPecaInsumoEntity {
 
+    @Id
     private UUID id;
     private UUID pecasInsumosId;
     private UUID orcamentoId;
@@ -20,12 +28,16 @@ public class OrcamentoItemPecaInsumo {
     private Integer quantidade;
 
     @Builder
-    public OrcamentoItemPecaInsumo(UUID id, UUID pecasInsumosId, UUID orcamentoId, String descricao, BigDecimal preco, Integer quantidade) {
+    public OrcamentoItemPecaInsumoEntity(UUID id, UUID pecasInsumosId, UUID orcamentoId, String descricao, BigDecimal preco, Integer quantidade) {
         this.id = requireNonNull(id);
         this.pecasInsumosId = requireNonNull(pecasInsumosId);
         this.orcamentoId = requireNonNull(orcamentoId);
         this.descricao = requireNonNull(descricao);
         this.preco = requireNonNull(preco);
         this.quantidade = requireNonNull(quantidade);
+    }
+
+    public BigDecimal valorTotal() {
+        return this.getPreco().multiply(BigDecimal.valueOf(quantidade));
     }
 }

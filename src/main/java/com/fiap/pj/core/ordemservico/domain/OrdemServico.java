@@ -1,6 +1,5 @@
 package com.fiap.pj.core.ordemservico.domain;
 
-import com.fiap.pj.core.orcamento.domain.Orcamento;
 import com.fiap.pj.core.ordemservico.domain.enums.OrdemServicoStatus;
 import com.fiap.pj.core.ordemservico.exception.OrdemServicoExceptions.OrdemServicoStatusInvalidoAguardandoAprovacaoException;
 import com.fiap.pj.core.ordemservico.exception.OrdemServicoExceptions.OrdemServicoStatusInvalidoAguardandoRetiradaException;
@@ -10,6 +9,7 @@ import com.fiap.pj.core.ordemservico.exception.OrdemServicoExceptions.OrdemServi
 import com.fiap.pj.core.ordemservico.exception.OrdemServicoExceptions.OrdemServicoStatusInvalidoFinalizadaException;
 import com.fiap.pj.core.util.DateTimeUtils;
 import com.fiap.pj.infra.cliente.persistence.ClienteEntity;
+import com.fiap.pj.infra.orcamento.persistence.OrcamentoEntity;
 import com.fiap.pj.infra.usuario.persistence.UsuarioEntity;
 import com.fiap.pj.infra.veiculo.persistence.VeiculoEntity;
 import jakarta.persistence.CascadeType;
@@ -78,7 +78,7 @@ public class OrdemServico {
 
     @OneToMany
     @JoinColumn(name = "ordemServicoId", insertable = false, updatable = false)
-    private Set<Orcamento> orcamentos = new HashSet<>();
+    private Set<OrcamentoEntity> orcamentos = new HashSet<>();
 
     @Builder
     public OrdemServico(

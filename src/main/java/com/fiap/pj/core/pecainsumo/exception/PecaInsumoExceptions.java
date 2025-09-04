@@ -18,7 +18,7 @@ public class PecaInsumoExceptions {
 
     public static class PecasInsumoQuantidadeMenorIgualAZeroException extends RuntimeException {
         public PecasInsumoQuantidadeMenorIgualAZeroException() {
-            super("Quantidade deve ser maior que zero");
+            super("Quantidade de Peça/Insumo deve ser maior que zero");
         }
     }
 

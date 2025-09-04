@@ -3,23 +3,13 @@ package com.fiap.pj.core.orcamento.domain;
 import com.fiap.pj.core.orcamento.domain.enums.OrcamentoStatus;
 import com.fiap.pj.core.orcamento.exception.OrcamentoExceptions.AlterarOrcamentoStatusInvalidoException;
 import com.fiap.pj.core.orcamento.exception.OrcamentoExceptions.ReprovarOrcamentoStatusInvalidoException;
+import com.fiap.pj.core.pecainsumo.exception.PecaInsumoExceptions.PecasInsumoQuantidadeMenorIgualAZeroException;
 import com.fiap.pj.core.util.DateTimeUtils;
-import com.fiap.pj.infra.cliente.persistence.ClienteEntity;
-import com.fiap.pj.infra.veiculo.persistence.VeiculoEntity;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -27,9 +17,7 @@ import java.util.UUID;
 
 import static java.util.Objects.requireNonNull;
 
-@Entity
-@Table(name = "orcamentos")
-@NoArgsConstructor
+
 @Getter
 public class Orcamento {
 
@@ -40,25 +28,16 @@ public class Orcamento {
     private UUID veiculoId;
     private UUID usuarioId;
     private int hodometro;
-    @Enumerated(EnumType.STRING)
     private OrcamentoStatus status;
     private UUID ordemServicoId;
+
+    @Setter
     private ZonedDateTime dataCriacao;
 
-    @OneToOne
-    @JoinColumn(name = "clienteId", referencedColumnName = "id", insertable = false, updatable = false)
-    private ClienteEntity cliente;
-
-    @OneToOne
-    @JoinColumn(name = "veiculoId", referencedColumnName = "id", insertable = false, updatable = false)
-    private VeiculoEntity veiculo;
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "orcamentoId")
+    @Setter
     private Set<OrcamentoItemServico> servicos = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "orcamentoId")
+    @Setter
     private Set<OrcamentoItemPecaInsumo> pecasInsumos = new HashSet<>();
 
     @Builder
@@ -90,7 +69,7 @@ public class Orcamento {
 
     public void adicionaPecaInsumo(OrcamentoItemPecaInsumo pecaInsumo) {
         if (pecaInsumo.getQuantidade() <= 0) {
-            throw new IllegalArgumentException("A Quantidade da peca ou insumo deve ser maior que zero");
+            throw new PecasInsumoQuantidadeMenorIgualAZeroException();
         }
 
         this.pecasInsumos.add(pecaInsumo);
@@ -112,10 +91,5 @@ public class Orcamento {
 
     public void vincularOrdemServico(UUID ordemServicoId) {
         this.ordemServicoId = requireNonNull(ordemServicoId);
-    }
-
-    public BigDecimal getValorTotal() {
-        BigDecimal totalPecasInsumo = this.getPecasInsumos().stream().map(OrcamentoItemPecaInsumo::valorTotal).reduce(BigDecimal.ZERO, BigDecimal::add);
-        return this.getServicos().stream().map(OrcamentoItemServico::valorTotal).reduce(BigDecimal.ZERO, BigDecimal::add).add(totalPecasInsumo);
     }
 }

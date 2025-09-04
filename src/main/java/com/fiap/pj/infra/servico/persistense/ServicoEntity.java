@@ -21,14 +21,14 @@ public class ServicoEntity {
     @Id
     private UUID id;
     private String descricao;
-    private BigDecimal preco;
+    private BigDecimal valorUnitario;
     private String observacao;
     private boolean ativo;
 
-    public ServicoEntity(UUID id, String descricao, BigDecimal preco, String observacao, boolean ativo) {
+    public ServicoEntity(UUID id, String descricao, BigDecimal valorUnitario, String observacao, boolean ativo) {
         this.id = requireNonNull(id);
         this.descricao = requireNonNull(descricao);
-        this.preco = preco;
+        this.valorUnitario = valorUnitario;
         this.observacao = observacao;
         this.ativo = ativo;
     }

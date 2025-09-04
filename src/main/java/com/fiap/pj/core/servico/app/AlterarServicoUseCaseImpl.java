@@ -19,7 +19,7 @@ public class AlterarServicoUseCaseImpl implements AlterarServicoUseCase {
     @Override
     public void handle(AlterarServicoCommand cmd) {
         var servico = servicoGateway.buscarPorId(cmd.getId()).orElseThrow(ServicoNaoEncontradoException::new);
-        servico.alterar(cmd.getDescricao(), cmd.getPreco(), cmd.getObservacao());
+        servico.alterar(cmd.getDescricao(), cmd.getValorUnitario(), cmd.getObservacao());
         servicoGateway.alterar(servico);
     }
 }

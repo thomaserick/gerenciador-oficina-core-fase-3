@@ -15,14 +15,14 @@ public class Servico {
 
     private UUID id;
     private String descricao;
-    private BigDecimal preco;
+    private BigDecimal valorUnitario;
     private String observacao;
     private boolean ativo;
 
-    public Servico(UUID id, String descricao, BigDecimal preco, String observacao, boolean ativo) {
+    public Servico(UUID id, String descricao, BigDecimal valorUnitario, String observacao, boolean ativo) {
         this.id = requireNonNull(id);
         this.descricao = requireNonNull(descricao);
-        this.preco = preco;
+        this.valorUnitario = valorUnitario;
         this.observacao = observacao;
         this.ativo = ativo;
     }
@@ -35,12 +35,12 @@ public class Servico {
         this.ativo = false;
     }
 
-    public void alterar(String descricao, BigDecimal preco, String observacao) {
+    public void alterar(String descricao, BigDecimal valorUnitario, String observacao) {
         if (!this.ativo) {
             throw new StatusServicoNaoPermiteAlterarException();
         }
         this.descricao = descricao;
-        this.preco = preco;
+        this.valorUnitario = valorUnitario;
         this.observacao = observacao;
     }
 }

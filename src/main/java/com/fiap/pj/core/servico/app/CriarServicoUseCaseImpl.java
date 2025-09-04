@@ -18,7 +18,7 @@ public class CriarServicoUseCaseImpl implements CriarServicoUseCase {
 
     @Override
     public Servico handle(CriarServicoCommand cmd) {
-        var service = new Servico(UUID.randomUUID(), cmd.getDescricao(), cmd.getPreco(), cmd.getObservacao(), true);
+        var service = new Servico(UUID.randomUUID(), cmd.getDescricao(), cmd.getValorUnitario(), cmd.getObservacao(), true);
         return servicoGateway.salvar(service);
     }
 }

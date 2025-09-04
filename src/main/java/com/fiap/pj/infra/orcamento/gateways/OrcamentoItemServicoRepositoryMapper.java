@@ -17,7 +17,7 @@ public class OrcamentoItemServicoRepositoryMapper {
                 .servicoId(domain.getServicoId())
                 .orcamentoId(domain.getOrcamentoId())
                 .descricao(domain.getDescricao())
-                .preco(domain.getPreco())
+                .valorUnitario(domain.getValorUnitario())
                 .quantidade(domain.getQuantidade())
                 .build();
     }
@@ -28,7 +28,7 @@ public class OrcamentoItemServicoRepositoryMapper {
                 .servicoId(entity.getServicoId())
                 .orcamentoId(entity.getOrcamentoId())
                 .descricao(entity.getDescricao())
-                .preco(entity.getPreco())
+                .valorUnitario(entity.getValorUnitario())
                 .quantidade(entity.getQuantidade())
                 .build();
     }

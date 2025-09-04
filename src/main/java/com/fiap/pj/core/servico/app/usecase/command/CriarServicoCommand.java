@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 @Getter
 public class CriarServicoCommand extends ServicoCommand {
 
-    public CriarServicoCommand(String descricao, BigDecimal preco, String observacao) {
-        super(descricao, preco, observacao);
+    public CriarServicoCommand(String descricao, BigDecimal valorUnitario, String observacao) {
+        super(descricao, valorUnitario, observacao);
     }
 }

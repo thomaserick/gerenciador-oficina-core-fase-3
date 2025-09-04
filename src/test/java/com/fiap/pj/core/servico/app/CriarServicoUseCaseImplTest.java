@@ -33,7 +33,7 @@ class CriarServicoUseCaseImplTest {
         assertNotNull(service);
         assertEquals(ServicoTestFactory.ID, service.getId());
         assertEquals(ServicoTestFactory.DESCRICAO, service.getDescricao());
-        assertEquals(ServicoTestFactory.PRECO, service.getPreco());
+        assertEquals(ServicoTestFactory.VALOR_UNITARIO, service.getValorUnitario());
         assertEquals(ServicoTestFactory.OBSERVACAO, service.getObservacao());
 
     }

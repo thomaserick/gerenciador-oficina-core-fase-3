@@ -35,7 +35,7 @@ class ListarServicoUseCaseImplTest {
         ServicoResponse servicoResponseMock = mock(ServicoResponse.class);
         when(servicoResponseMock.getId()).thenReturn(ServicoTestFactory.ID.toString());
         when(servicoResponseMock.getDescricao()).thenReturn(DESCRICAO);
-        when(servicoResponseMock.getPreco()).thenReturn(ServicoTestFactory.PRECO);
+        when(servicoResponseMock.getValorUnitario()).thenReturn(ServicoTestFactory.VALOR_UNITARIO);
         when(servicoResponseMock.getObservacao()).thenReturn(ServicoTestFactory.OBSERVACAO);
 
         var slice = new Slice<>(false, List.of(servicoResponseMock));
@@ -51,7 +51,7 @@ class ListarServicoUseCaseImplTest {
 
         assertEquals(ServicoTestFactory.ID.toString(), item.getId());
         assertEquals(DESCRICAO, item.getDescricao());
-        assertEquals(ServicoTestFactory.PRECO, item.getPreco());
+        assertEquals(ServicoTestFactory.VALOR_UNITARIO, item.getValorUnitario());
         assertEquals(ServicoTestFactory.OBSERVACAO, item.getObservacao());
     }
 

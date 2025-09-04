@@ -18,12 +18,12 @@ CREATE INDEX IF NOT EXISTS idx_orcamentos_ordem_servico_id ON orcamentos(ordem_s
 
 CREATE TABLE orcamentos_servicos
 (
-    id            UUID         NOT NULL,
-    servico_id    UUID         NOT NULL,
-    orcamento_id  UUID ,
-    descricao     VARCHAR(255) NOT NULL,
-    preco         NUMERIC      NOT NULL,
-    quantidade    NUMERIC      NOT NULL,
+    id             UUID         NOT NULL,
+    servico_id     UUID         NOT NULL,
+    orcamento_id   UUID ,
+    descricao      VARCHAR(255) NOT NULL,
+    valor_unitario NUMERIC      NOT NULL,
+    quantidade     NUMERIC      NOT NULL,
     CONSTRAINT orcamentos_servicos_pkey  PRIMARY KEY (id),
     CONSTRAINT fk_orcamentos_servicos FOREIGN KEY (servico_id) REFERENCES servicos(id)
 );

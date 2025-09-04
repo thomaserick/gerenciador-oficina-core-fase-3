@@ -15,8 +15,8 @@ public class AlterarServicoCommand extends ServicoCommand {
     @Setter
     private UUID id;
 
-    public AlterarServicoCommand(String descricao, BigDecimal preco, String observacao, UUID id) {
-        super(descricao, preco, observacao);
+    public AlterarServicoCommand(String descricao, BigDecimal valorUnitario, String observacao, UUID id) {
+        super(descricao, valorUnitario, observacao);
         this.id = id;
     }
 

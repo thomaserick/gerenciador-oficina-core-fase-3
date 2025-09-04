@@ -16,7 +16,7 @@ public class OrcamentoItemPecaInsumoRepositoryMapper {
                 .pecasInsumosId(domain.getPecasInsumosId())
                 .orcamentoId(domain.getOrcamentoId())
                 .descricao(domain.getDescricao())
-                .preco(domain.getPreco())
+                .valorUnitario(domain.getValorUnitario())
                 .quantidade(domain.getQuantidade())
                 .build();
     }
@@ -27,7 +27,7 @@ public class OrcamentoItemPecaInsumoRepositoryMapper {
                 .pecasInsumosId(entity.getPecasInsumosId())
                 .orcamentoId(entity.getOrcamentoId())
                 .descricao(entity.getDescricao())
-                .preco(entity.getPreco())
+                .valorUnitario(entity.getValorUnitario())
                 .quantidade(entity.getQuantidade())
                 .build();
     }

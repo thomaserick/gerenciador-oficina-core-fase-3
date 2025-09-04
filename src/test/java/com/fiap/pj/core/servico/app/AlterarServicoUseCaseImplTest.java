@@ -21,7 +21,7 @@ import java.util.UUID;
 import static com.fiap.pj.core.servico.util.factory.ServicoTestFactory.DESCRICAO;
 import static com.fiap.pj.core.servico.util.factory.ServicoTestFactory.ID;
 import static com.fiap.pj.core.servico.util.factory.ServicoTestFactory.OBSERVACAO;
-import static com.fiap.pj.core.servico.util.factory.ServicoTestFactory.PRECO;
+import static com.fiap.pj.core.servico.util.factory.ServicoTestFactory.VALOR_UNITARIO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -54,14 +54,14 @@ class AlterarServicoUseCaseImplTest {
         assertNotNull(servicoAlterado);
         assertEquals(ID, servicoAlterado.getId());
         assertEquals(ServicoTestFactory.DESCRICAO_ALTERADA, servicoAlterado.getDescricao());
-        assertEquals(ServicoTestFactory.PRECO_ALTERADO, servicoAlterado.getPreco());
+        assertEquals(ServicoTestFactory.VALOR_UNITARIO_ALTERADO, servicoAlterado.getValorUnitario());
         assertEquals(ServicoTestFactory.OBSERVACAO_ALTERADA, servicoAlterado.getObservacao());
 
     }
 
     @Test
     void deveRetornarStatusServicoNaoPermiteAlterarException() {
-        var servico = new Servico(ID, DESCRICAO, PRECO, OBSERVACAO, false);
+        var servico = new Servico(ID, DESCRICAO, VALOR_UNITARIO, OBSERVACAO, false);
 
         when(servicoGateway.buscarPorId(any(UUID.class))).thenReturn(Optional.of(servico));
 

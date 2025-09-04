@@ -53,26 +53,26 @@ public interface OrcamentoResponse {
         Integer getAno();
     }
 
-    @JsonPropertyOrder({"id", "descricao", "preco", "quantidade"})
+    @JsonPropertyOrder({"id", "descricao", "valorUnitario", "quantidade"})
     interface OrcamentoServicoResponse {
 
         UUID getId();
 
         String getDescricao();
 
-        BigDecimal getPreco();
+        BigDecimal getValorUnitario();
 
         BigDecimal getQuantidade();
     }
 
-    @JsonPropertyOrder({"id", "descricao", "preco", "quantidade"})
+    @JsonPropertyOrder({"id", "descricao", "valorUnitario", "quantidade"})
     interface OrcamentoPecaInsumoResponse {
 
         UUID getId();
 
         String getDescricao();
 
-        BigDecimal getPreco();
+        BigDecimal getValorUnitario();
 
         BigDecimal getQuantidade();
     }

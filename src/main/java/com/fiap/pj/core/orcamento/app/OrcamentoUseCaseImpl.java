@@ -52,7 +52,7 @@ public abstract class OrcamentoUseCaseImpl {
                     .orcamentoId(orcamento.getId())
                     .quantidade(cmd.quantidade())
                     .descricao(pecaInsumo.getDescricao())
-                    .preco(pecaInsumo.getValorUnitario())
+                    .valorUnitario(pecaInsumo.getValorUnitario())
                     .build();
 
             orcamento.adicionaPecaInsumo(pecaInsumoOrcamento);
@@ -70,7 +70,7 @@ public abstract class OrcamentoUseCaseImpl {
                     .builder()
                     .id(UUID.randomUUID())
                     .orcamentoId(orcamento.getId())
-                    .preco(servico.getPreco())
+                    .valorUnitario(servico.getValorUnitario())
                     .quantidade(cmd.quantidade())
                     .descricao(servico.getDescricao())
                     .servicoId(servico.getId())

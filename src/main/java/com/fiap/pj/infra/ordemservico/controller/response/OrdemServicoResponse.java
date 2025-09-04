@@ -72,19 +72,19 @@ public interface OrdemServicoResponse {
         ZonedDateTime getDataCriacao();
     }
 
-    @JsonPropertyOrder({"id", "descricao", "preco", "quantidade"})
+    @JsonPropertyOrder({"id", "descricao", "valorUnitario", "quantidade"})
     record ItensResponse
             (UUID id,
              String descricao,
-             BigDecimal preco,
+             BigDecimal valorUnitario,
              int getQuantidade) {
 
         ItensResponse(OrcamentoItemServicoEntity servico) {
-            this(servico.getId(), servico.getDescricao(), servico.getPreco(), servico.getQuantidade());
+            this(servico.getId(), servico.getDescricao(), servico.getValorUnitario(), servico.getQuantidade());
         }
 
         ItensResponse(OrcamentoItemPecaInsumoEntity pecaInsumo) {
-            this(pecaInsumo.getId(), pecaInsumo.getDescricao(), pecaInsumo.getPreco(), pecaInsumo.getQuantidade());
+            this(pecaInsumo.getId(), pecaInsumo.getDescricao(), pecaInsumo.getValorUnitario(), pecaInsumo.getQuantidade());
         }
     }
 }

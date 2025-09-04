@@ -5,14 +5,14 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import java.math.BigDecimal;
 
-@JsonPropertyOrder({"id", "descricao", "preco", "observacao", "ativo"})
+@JsonPropertyOrder({"id", "descricao", "valorUnitario", "observacao", "ativo"})
 public interface ServicoResponse {
 
     String getId();
 
     String getDescricao();
 
-    BigDecimal getPreco();
+    BigDecimal getValorUnitario();
 
     String getObservacao();
 

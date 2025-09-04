@@ -10,12 +10,12 @@ public abstract class ServicoCommand {
 
     @NotBlank(message = "Descricao do servico não pode estar vazio.")
     protected String descricao;
-    protected BigDecimal preco;
+    protected BigDecimal valorUnitario;
     protected String observacao;
 
-    protected ServicoCommand(String descricao, BigDecimal preco, String observacao) {
+    protected ServicoCommand(String descricao, BigDecimal valorUnitario, String observacao) {
         this.descricao = descricao;
-        this.preco = preco;
+        this.valorUnitario = valorUnitario;
         this.observacao = observacao;
     }
 }

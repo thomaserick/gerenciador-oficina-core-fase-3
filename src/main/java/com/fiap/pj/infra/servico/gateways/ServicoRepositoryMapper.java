@@ -11,7 +11,7 @@ public class ServicoRepositoryMapper {
         return new ServicoEntity(
                 servico.getId(),
                 servico.getDescricao(),
-                servico.getPreco(),
+                servico.getValorUnitario(),
                 servico.getObservacao(),
                 servico.isAtivo()
         );
@@ -21,7 +21,7 @@ public class ServicoRepositoryMapper {
         return new Servico(
                 entity.getId(),
                 entity.getDescricao(),
-                entity.getPreco(),
+                entity.getValorUnitario(),
                 entity.getObservacao(),
                 entity.isAtivo()
         );

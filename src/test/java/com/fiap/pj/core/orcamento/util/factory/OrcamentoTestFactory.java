@@ -58,7 +58,7 @@ public class OrcamentoTestFactory {
     }
 
     public static OrcamentoItemServico umOrcamentoItemServico(UUID orcamentoId) {
-        return new OrcamentoItemServico(ITEM_SERVICO_ID, ServicoTestFactory.ID, orcamentoId, ServicoTestFactory.DESCRICAO, ServicoTestFactory.PRECO, ITEM_SERVICO_QUANTIDADE);
+        return new OrcamentoItemServico(ITEM_SERVICO_ID, ServicoTestFactory.ID, orcamentoId, ServicoTestFactory.DESCRICAO, ServicoTestFactory.VALOR_UNITARIO, ITEM_SERVICO_QUANTIDADE);
     }
 
     public static OrcamentoItemPecaInsumo umOrcamentoItemPecaInsumo(UUID orcamentoId) {

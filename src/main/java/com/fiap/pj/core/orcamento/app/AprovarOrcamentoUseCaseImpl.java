@@ -5,8 +5,8 @@ import com.fiap.pj.core.orcamento.app.usecase.AprovarOrcamentoUseCase;
 import com.fiap.pj.core.orcamento.app.usecase.command.AprovarOrcamentoCommand;
 import com.fiap.pj.core.orcamento.domain.Orcamento;
 import com.fiap.pj.core.orcamento.exception.OrcamentoExceptions.OrcamentoNaoEncontradoException;
-import com.fiap.pj.core.ordemservico.usecase.CriarOrdemServicoUseCase;
-import com.fiap.pj.core.ordemservico.usecase.command.CriarOrdemServicoCommand;
+import com.fiap.pj.core.ordemservico.app.usecase.CriarOrdemServicoUseCase;
+import com.fiap.pj.core.ordemservico.app.usecase.command.CriarOrdemServicoCommand;
 
 import java.util.UUID;
 

@@ -1,5 +1,6 @@
 package com.fiap.pj.core.ordemservico.domain;
 
+import com.fiap.pj.core.orcamento.domain.Orcamento;
 import com.fiap.pj.core.ordemservico.domain.enums.OrdemServicoStatus;
 import com.fiap.pj.core.ordemservico.exception.OrdemServicoExceptions.OrdemServicoStatusInvalidoAguardandoAprovacaoException;
 import com.fiap.pj.core.ordemservico.exception.OrdemServicoExceptions.OrdemServicoStatusInvalidoAguardandoRetiradaException;
@@ -8,25 +9,9 @@ import com.fiap.pj.core.ordemservico.exception.OrdemServicoExceptions.OrdemServi
 import com.fiap.pj.core.ordemservico.exception.OrdemServicoExceptions.OrdemServicoStatusInvalidoEntregueException;
 import com.fiap.pj.core.ordemservico.exception.OrdemServicoExceptions.OrdemServicoStatusInvalidoFinalizadaException;
 import com.fiap.pj.core.util.DateTimeUtils;
-import com.fiap.pj.infra.cliente.persistence.ClienteEntity;
-import com.fiap.pj.infra.orcamento.persistence.OrcamentoEntity;
-import com.fiap.pj.infra.usuario.persistence.UsuarioEntity;
-import com.fiap.pj.infra.veiculo.persistence.VeiculoEntity;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.OrderBy;
-import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
 
 import java.time.ZonedDateTime;
 import java.util.HashSet;
@@ -38,47 +23,20 @@ import static com.fiap.pj.core.ordemservico.domain.enums.OrdemServicoStatus.EM_D
 import static com.fiap.pj.core.ordemservico.domain.enums.OrdemServicoStatus.EM_EXECUCAO;
 import static com.fiap.pj.core.ordemservico.domain.enums.OrdemServicoStatus.FINALIZADA;
 
-@Entity
-@Table(name = "ordens_servico")
-@NoArgsConstructor
 @Getter
+@AllArgsConstructor
 public class OrdemServico {
 
-    @Id
     private UUID id;
     private UUID clienteId;
     private UUID veiculoId;
     private UUID usuarioId;
-    @Enumerated(EnumType.STRING)
     private OrdemServicoStatus status;
     private ZonedDateTime dataCriacao;
     private ZonedDateTime dataConclusao;
-
-    @OneToOne
-    @JoinColumn(name = "clienteId", referencedColumnName = "id", insertable = false, updatable = false)
-    private ClienteEntity cliente;
-
-    @OneToOne
-    @JoinColumn(name = "veiculoId", referencedColumnName = "id", insertable = false, updatable = false)
-    private VeiculoEntity veiculo;
-
-    @OneToOne
-    @JoinColumn(name = "usuarioId", referencedColumnName = "id", insertable = false, updatable = false)
-    private UsuarioEntity usuario;
-
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "diagnosticoId", referencedColumnName = "id")
-    @NotFound(action = NotFoundAction.IGNORE)
     private Diagnostico diagnostico;
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "ordemServicoId")
-    @OrderBy("dataCriacao DESC")
     private Set<SituacaoOrdemServico> historicoSituacao = new HashSet<>();
-
-    @OneToMany
-    @JoinColumn(name = "ordemServicoId", insertable = false, updatable = false)
-    private Set<OrcamentoEntity> orcamentos = new HashSet<>();
+    private Set<Orcamento> orcamentos = new HashSet<>();
 
     @Builder
     public OrdemServico(

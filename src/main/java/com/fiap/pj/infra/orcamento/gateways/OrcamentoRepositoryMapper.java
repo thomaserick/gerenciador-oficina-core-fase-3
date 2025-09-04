@@ -4,6 +4,8 @@ import com.fiap.pj.core.orcamento.domain.Orcamento;
 import com.fiap.pj.infra.orcamento.persistence.OrcamentoEntity;
 import lombok.experimental.UtilityClass;
 
+import java.util.Set;
+
 @UtilityClass
 public class OrcamentoRepositoryMapper {
 
@@ -36,6 +38,14 @@ public class OrcamentoRepositoryMapper {
         orcamento.setPecasInsumos(OrcamentoItemPecaInsumoRepositoryMapper.mapToDomainSet(entity.getPecasInsumos()));
         orcamento.setDataCriacao(entity.getDataCriacao());
         return orcamento;
+    }
+
+    public static Set<OrcamentoEntity> mapToTableSet(Set<Orcamento> orcamentos) {
+        return orcamentos.stream().map(OrcamentoRepositoryMapper::mapToTable).collect(java.util.stream.Collectors.toSet());
+    }
+
+    public static Set<Orcamento> mapToDomainSet(Set<OrcamentoEntity> entities) {
+        return entities.stream().map(OrcamentoRepositoryMapper::mapToDomain).collect(java.util.stream.Collectors.toSet());
     }
 
 }

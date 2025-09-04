@@ -1,6 +1,6 @@
 package com.fiap.pj.core.ordemservico.domain;
 
-import com.fiap.pj.core.ordemservico.adapter.in.api.response.AcompanhamentoOrdemServicoResponse;
+import com.fiap.pj.infra.ordemservico.controller.response.AcompanhamentoOrdemServicoResponse;
 import com.fiap.pj.infra.sk.jpa.BaseCrudRepository;
 
 import java.util.Optional;

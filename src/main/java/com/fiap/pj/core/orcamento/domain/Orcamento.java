@@ -30,10 +30,8 @@ public class Orcamento {
     private int hodometro;
     private OrcamentoStatus status;
     private UUID ordemServicoId;
-
     @Setter
     private ZonedDateTime dataCriacao;
-
     @Setter
     private Set<OrcamentoItemServico> servicos = new HashSet<>();
 

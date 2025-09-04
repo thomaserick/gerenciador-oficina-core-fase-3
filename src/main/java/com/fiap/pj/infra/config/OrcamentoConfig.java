@@ -13,7 +13,7 @@ import com.fiap.pj.core.orcamento.app.usecase.AprovarOrcamentoUseCase;
 import com.fiap.pj.core.orcamento.app.usecase.CriarOrcamentoUseCase;
 import com.fiap.pj.core.orcamento.app.usecase.ListarOrcamentoUseCase;
 import com.fiap.pj.core.orcamento.app.usecase.ReprovarOrcamentoUseCase;
-import com.fiap.pj.core.ordemservico.usecase.CriarOrdemServicoUseCase;
+import com.fiap.pj.core.ordemservico.app.usecase.CriarOrdemServicoUseCase;
 import com.fiap.pj.core.pecainsumo.app.gateways.PecaInsumoGateway;
 import com.fiap.pj.core.servico.app.gateways.ServicoGateway;
 import com.fiap.pj.infra.orcamento.gateways.OrcamentoRepositoryGatewayImpl;

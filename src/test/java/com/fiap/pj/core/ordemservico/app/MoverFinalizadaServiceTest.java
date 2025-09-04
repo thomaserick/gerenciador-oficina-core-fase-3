@@ -1,7 +1,7 @@
 package com.fiap.pj.core.ordemservico.app;
 
 
-import com.fiap.pj.core.ordemservico.adapter.out.db.OrdemServicoRepositoryJpa;
+import com.fiap.pj.core.ordemservico.app.gateways.OrdemServicoGateway;
 import com.fiap.pj.core.ordemservico.domain.OrdemServico;
 import com.fiap.pj.core.ordemservico.domain.enums.OrdemServicoStatus;
 import com.fiap.pj.core.ordemservico.exception.OrdemServicoExceptions.OrdemServicoStatusInvalidoFinalizadaException;
@@ -15,6 +15,8 @@ import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.Optional;
 
 import static com.fiap.pj.core.ordemservico.domain.enums.OrdemServicoStatus.CRIADA;
 import static com.fiap.pj.core.ordemservico.domain.enums.OrdemServicoStatus.EM_EXECUCAO;
@@ -30,21 +32,21 @@ class MoverFinalizadaServiceTest {
     ArgumentCaptor<OrdemServico> ordemServicoArgumentCaptor;
 
     @Mock
-    private OrdemServicoRepositoryJpa ordemServicoRepositoryJpa;
+    private OrdemServicoGateway ordemServicoGateway;
 
     @InjectMocks
-    private MoverFinalizadaService moverFinalizadaService;
+    private MoverFinalizadaUseCaseImpl moverFinalizadaUseCaseImpl;
 
     @Test
     void deveAlteraStatusOsFinalizada() {
         TestSecurityConfig.setAuthentication();
         var ordemServico = OrdemServicoTestFactory.umaOrdemServico(EM_EXECUCAO);
 
-        when(ordemServicoRepositoryJpa.findByIdOrThrowNotFound(ordemServico.getId())).thenReturn(ordemServico);
+        when(ordemServicoGateway.buscarPorId(ordemServico.getId())).thenReturn(Optional.of(ordemServico));
 
-        moverFinalizadaService.handle(ordemServico.getId());
+        moverFinalizadaUseCaseImpl.handle(ordemServico.getId());
 
-        verify(ordemServicoRepositoryJpa).save(ordemServicoArgumentCaptor.capture());
+        verify(ordemServicoGateway).salvar(ordemServicoArgumentCaptor.capture());
         OrdemServico ordemServicoAlterada = ordemServicoArgumentCaptor.getValue();
 
         Assertions.assertNotNull(ordemServico);
@@ -55,9 +57,9 @@ class MoverFinalizadaServiceTest {
     @Test
     void deveRetornarOrdemServicoStatusInvalidoFinalizadaException() {
         var ordemServico = OrdemServicoTestFactory.umaOrdemServico(CRIADA);
-        when(ordemServicoRepositoryJpa.findByIdOrThrowNotFound(ordemServico.getId())).thenReturn(ordemServico);
+        when(ordemServicoGateway.buscarPorId(ordemServico.getId())).thenReturn(Optional.of(ordemServico));
 
-        var thrown = catchThrowable(() -> moverFinalizadaService.handle(ordemServico.getId()));
+        var thrown = catchThrowable(() -> moverFinalizadaUseCaseImpl.handle(ordemServico.getId()));
         assertThat(thrown).isInstanceOf(OrdemServicoStatusInvalidoFinalizadaException.class);
     }
 

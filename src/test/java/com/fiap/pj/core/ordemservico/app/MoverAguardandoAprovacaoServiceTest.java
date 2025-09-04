@@ -1,7 +1,7 @@
 package com.fiap.pj.core.ordemservico.app;
 
 
-import com.fiap.pj.core.ordemservico.adapter.out.db.OrdemServicoRepositoryJpa;
+import com.fiap.pj.core.ordemservico.app.gateways.OrdemServicoGateway;
 import com.fiap.pj.core.ordemservico.domain.OrdemServico;
 import com.fiap.pj.core.ordemservico.domain.enums.OrdemServicoStatus;
 import com.fiap.pj.core.ordemservico.exception.OrdemServicoExceptions.OrdemServicoStatusInvalidoAguardandoAprovacaoException;
@@ -15,6 +15,8 @@ import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.Optional;
 
 import static com.fiap.pj.core.ordemservico.domain.enums.OrdemServicoStatus.CRIADA;
 import static com.fiap.pj.core.ordemservico.domain.enums.OrdemServicoStatus.EM_DIAGNOSTICO;
@@ -30,21 +32,21 @@ class MoverAguardandoAprovacaoServiceTest {
     ArgumentCaptor<OrdemServico> ordemServicoArgumentCaptor;
 
     @Mock
-    private OrdemServicoRepositoryJpa ordemServicoRepositoryJpa;
+    private OrdemServicoGateway ordemServicoGateway;
 
     @InjectMocks
-    private MoverAguardandoAprovacaoService moverAguardandoAprovacaoService;
+    private MoverAguardandoAprovacaoUseCaseImpl moverAguardandoAprovacaoUseCaseImpl;
 
     @Test
     void deveAlteraStatusOsAguardandoAprovacao() {
         TestSecurityConfig.setAuthentication();
         var ordemServico = OrdemServicoTestFactory.umaOrdemServico(EM_DIAGNOSTICO);
 
-        when(ordemServicoRepositoryJpa.findByIdOrThrowNotFound(ordemServico.getId())).thenReturn(ordemServico);
+        when(ordemServicoGateway.buscarPorId(ordemServico.getId())).thenReturn(Optional.of(ordemServico));
 
-        moverAguardandoAprovacaoService.handle(ordemServico.getId());
+        moverAguardandoAprovacaoUseCaseImpl.handle(ordemServico.getId());
 
-        verify(ordemServicoRepositoryJpa).save(ordemServicoArgumentCaptor.capture());
+        verify(ordemServicoGateway).salvar(ordemServicoArgumentCaptor.capture());
         OrdemServico ordemServicoAlterada = ordemServicoArgumentCaptor.getValue();
 
         Assertions.assertNotNull(ordemServico);
@@ -55,9 +57,9 @@ class MoverAguardandoAprovacaoServiceTest {
     @Test
     void deveRetornarOrdemServicoStatusInvalidoAguardandoAprovacaoException() {
         var ordemServico = OrdemServicoTestFactory.umaOrdemServico(CRIADA);
-        when(ordemServicoRepositoryJpa.findByIdOrThrowNotFound(ordemServico.getId())).thenReturn(ordemServico);
+        when(ordemServicoGateway.buscarPorId(ordemServico.getId())).thenReturn(Optional.of(ordemServico));
 
-        var thrown = catchThrowable(() -> moverAguardandoAprovacaoService.handle(ordemServico.getId()));
+        var thrown = catchThrowable(() -> moverAguardandoAprovacaoUseCaseImpl.handle(ordemServico.getId()));
         assertThat(thrown).isInstanceOf(OrdemServicoStatusInvalidoAguardandoAprovacaoException.class);
     }
 

@@ -38,8 +38,11 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
-      - name: Run Docker Compose
-        run: docker compose up -d
+      - name: Run Docker File
+        run: docker build -t nome_da_imagem:versão_da_imagem .
+
+      - name: Push Docker Image
+        run: docker push nome_da_imagem:versão_da_imagem
 
       - name: Mvn Clean and Install
         run: mvn clean package install && mvn clean install

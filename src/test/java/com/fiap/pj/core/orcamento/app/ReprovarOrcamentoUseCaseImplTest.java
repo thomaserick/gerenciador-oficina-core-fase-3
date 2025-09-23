@@ -1,6 +1,9 @@
 package com.fiap.pj.core.orcamento.app;
 
 
+import com.fiap.pj.core.cliente.app.gateways.ClienteGateway;
+import com.fiap.pj.core.cliente.util.factory.ClienteTestFactory;
+import com.fiap.pj.core.email.app.usecase.EnviarEmailUseCase;
 import com.fiap.pj.core.orcamento.app.gateways.OrcamentoGateway;
 import com.fiap.pj.core.orcamento.domain.Orcamento;
 import com.fiap.pj.core.orcamento.exception.OrcamentoExceptions.OrcamentoNaoEncontradoException;
@@ -34,6 +37,11 @@ class ReprovarOrcamentoUseCaseImplTest {
     @Mock
     private OrcamentoGateway orcamentoGateway;
 
+    @Mock
+    private ClienteGateway clienteGateway;
+
+    @Mock
+    private EnviarEmailUseCase enviarEmailUseCase;
 
     @InjectMocks
     private ReprovarOrcamentoUseCaseImpl reprovarOrcamentoService;
@@ -42,7 +50,11 @@ class ReprovarOrcamentoUseCaseImplTest {
     void deveReprovarOrcamento() {
         var orcamento = OrcamentoTestFactory.umOrcamento();
         orcamento.adicionarServico(OrcamentoTestFactory.umOrcamentoItemServico(orcamento.getId()));
+
+        var cliente = ClienteTestFactory.umCliente();
+
         when(orcamentoGateway.buscarPorId(any(UUID.class))).thenReturn(Optional.of(orcamento));
+        when(clienteGateway.buscarPorId(any(UUID.class))).thenReturn(Optional.of(cliente));
 
         reprovarOrcamentoService.handle(OrcamentoTestFactory.umReprovarOrcamentoCommand());
 
@@ -71,6 +83,4 @@ class ReprovarOrcamentoUseCaseImplTest {
         var thrown = catchThrowable(() -> reprovarOrcamentoService.handle(OrcamentoTestFactory.umReprovarOrcamentoCommand()));
         assertThat(thrown).isInstanceOf(OrcamentoNaoEncontradoException.class);
     }
-
-
 }

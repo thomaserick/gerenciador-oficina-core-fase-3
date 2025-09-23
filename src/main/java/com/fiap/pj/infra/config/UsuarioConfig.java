@@ -1,6 +1,7 @@
 package com.fiap.pj.infra.config;
 
 
+import com.fiap.pj.core.email.app.usecase.EnviarEmailUseCase;
 import com.fiap.pj.core.usuario.app.AlterarUsuarioUseCaseImpl;
 import com.fiap.pj.core.usuario.app.CriarUsuarioUseCaseImpl;
 import com.fiap.pj.core.usuario.app.ExcluirUsuarioUseCaseImpl;
@@ -18,9 +19,10 @@ public class UsuarioConfig {
 
 
     @Bean
-    CriarUsuarioUseCaseImpl criarUsuarioUseCase(UsuarioGateway usuarioGateway
+    CriarUsuarioUseCaseImpl criarUsuarioUseCase(UsuarioGateway usuarioGateway,
+                                                EnviarEmailUseCase enviarEmailUseCase
     ) {
-        return new CriarUsuarioUseCaseImpl(usuarioGateway);
+        return new CriarUsuarioUseCaseImpl(usuarioGateway, enviarEmailUseCase);
     }
 
     @Bean

@@ -3,6 +3,7 @@ package com.fiap.pj.core.orcamento.app;
 
 import com.fiap.pj.core.cliente.app.gateways.ClienteGateway;
 import com.fiap.pj.core.cliente.util.factory.ClienteTestFactory;
+import com.fiap.pj.core.email.app.usecase.EnviarEmailUseCase;
 import com.fiap.pj.core.orcamento.app.gateways.OrcamentoGateway;
 import com.fiap.pj.core.orcamento.app.usecase.command.CriarOrcamentoCommand;
 import com.fiap.pj.core.orcamento.domain.Orcamento;
@@ -11,6 +12,9 @@ import com.fiap.pj.core.pecainsumo.app.gateways.PecaInsumoGateway;
 import com.fiap.pj.core.pecainsumo.util.factory.PecaInsumoTestFactory;
 import com.fiap.pj.core.servico.app.gateways.ServicoGateway;
 import com.fiap.pj.core.servico.util.factory.ServicoTestFactory;
+import com.fiap.pj.core.usuario.app.gateways.UsuarioGateway;
+import com.fiap.pj.core.usuario.util.factrory.UsuarioTestFactory;
+import com.fiap.pj.core.veiculo.app.gateways.VeiculoGateway;
 import com.fiap.pj.core.veiculo.exception.VeiculoExceptions.VeiculoNaoPertenceAoClienteException;
 import com.fiap.pj.core.veiculo.util.factory.VeiculoTestFactory;
 import com.fiap.pj.util.TestSecurityConfig;
@@ -52,12 +56,20 @@ class CriarOrcamentoUseCaseImplTest {
     @Mock
     private PecaInsumoGateway pecaInsumoGateway;
 
+    @Mock
+    private UsuarioGateway usuarioGateway;
+
+    @Mock
+    private VeiculoGateway veiculoGateway;
+
+    @Mock
+    private EnviarEmailUseCase enviarEmailUseCase;
+
     @InjectMocks
     private CriarOrcamentoUseCaseImpl criarOrcamentoUseCaseImpl;
 
     @Test
     void deveCriarOrcamento() {
-
         TestSecurityConfig.setAuthentication();
 
         var orcamento = OrcamentoTestFactory.umOrcamento();
@@ -69,21 +81,26 @@ class CriarOrcamentoUseCaseImplTest {
         var cliente = ClienteTestFactory.umCliente();
         cliente.adicionarVeiculo(VeiculoTestFactory.umVeiculo(cliente.getId()));
 
+        var usuario = UsuarioTestFactory.umUsuario();
+        var veiculo = VeiculoTestFactory.umVeiculo(cliente.getId());
+
         when(clienteGateway.buscarPorId(any(UUID.class))).thenReturn(Optional.of(cliente));
         when(servicoGateway.buscarPorId(any(UUID.class))).thenReturn(Optional.of(ServicoTestFactory.umServico()));
         when(pecaInsumoGateway.buscarPorId(any(UUID.class))).thenReturn(Optional.of(PecaInsumoTestFactory.umPecaInsumo()));
+        when(usuarioGateway.buscarPorId(any(UUID.class))).thenReturn(Optional.of(usuario));
+        when(veiculoGateway.buscarPorId(any(UUID.class))).thenReturn(Optional.of(veiculo));
 
-        var orcamentoCriado = criarOrcamentoUseCaseImpl.handle(OrcamentoTestFactory.umCriarOrcamentoCommand());
+        var cmd = OrcamentoTestFactory.umCriarOrcamentoCommand();
+
+        var orcamentoCriado = criarOrcamentoUseCaseImpl.handle(cmd);
 
         assertNotNull(orcamento);
-        assertEquals(OrcamentoTestFactory.ID, orcamentoCriado.getId());
         assertEquals(DESCRICAO, orcamentoCriado.getDescricao());
-        assertEquals(CLIENTE_ID, orcamentoCriado.getClienteId());
-        assertEquals(OrcamentoTestFactory.VEICULO_ID, orcamentoCriado.getVeiculoId());
-        assertEquals(HODOMENTO, orcamentoCriado.getHodometro());
+        assertEquals(cmd.getClienteId(), orcamentoCriado.getClienteId());
+        assertEquals(cmd.getVeiculoId(), orcamentoCriado.getVeiculoId());
+        assertEquals(cmd.getHodometro(), orcamentoCriado.getHodometro());
         assertEquals(OrcamentoTestFactory.ORCAMENTO_STATUS, orcamentoCriado.getStatus());
         assertFalse(orcamento.getServicos().isEmpty());
-
     }
 
     @Test

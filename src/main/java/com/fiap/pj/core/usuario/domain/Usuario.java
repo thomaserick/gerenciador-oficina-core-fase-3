@@ -35,20 +35,20 @@ public class Usuario implements Serializable {
         this.ativo = ativo;
     }
 
-    public void adicionarPerfils(Collection<Perfil> perfis) {
-        this.perfis.addAll(perfis);
-    }
-
     public void alterar(String nome, String sobreNome, boolean ativo, String senha, Set<Perfil> perfis) {
         this.nome = requireNonNull(nome);
         this.sobreNome = sobreNome;
         this.ativo = ativo;
         this.senha = requireNonNull(senha);
-        alterarPerfis(perfis);
+
+        this.alterarPerfis(perfis);
+    }
+
+    public void adicionarPerfils(Collection<Perfil> perfis) {
+        this.perfis.addAll(perfis);
     }
 
     public void alterarPerfis(Set<Perfil> perfis) {
         CollectionUtils.instanceNonNullCollection(this.perfis, perfis);
     }
-
 }

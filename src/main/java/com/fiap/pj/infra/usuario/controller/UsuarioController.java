@@ -41,7 +41,6 @@ public class UsuarioController implements UsuarioControllerOpenApi {
     private final ListarUsuarioUseCase listarUsuarioUseCase;
     private final ExcluirUsuarioUseCase excluirUsuarioUseCase;
 
-
     @PostMapping
     public ResponseEntity<ResponseId> criarUsuario(@Valid @RequestBody CriarUsuarioCommand cmd) {
         var usuarioId = criarUsuarioUseCase.handle(cmd);
@@ -54,7 +53,6 @@ public class UsuarioController implements UsuarioControllerOpenApi {
         alterarUsuarioUseCase.handle(cmd);
         return ResponseEntity.ok().build();
     }
-
 
     @Override
     @GetMapping

@@ -5,6 +5,9 @@ import com.fiap.pj.core.cliente.app.usecase.CriarClienteUserCase;
 import com.fiap.pj.core.cliente.app.usecase.command.CriarClienteCommand;
 import com.fiap.pj.core.cliente.domain.Cliente;
 import com.fiap.pj.core.cliente.exception.ClienteExceptions.DocumentoIdentificacaoDuplicadoException;
+import com.fiap.pj.core.email.app.usecase.EnviarEmailUseCase;
+import com.fiap.pj.core.email.app.usecase.command.EnviarEmailCommand;
+import com.fiap.pj.core.email.domain.enums.Template;
 import com.fiap.pj.core.sk.documentoidentificacao.domain.DocumentoIdentificacao;
 
 import java.util.UUID;
@@ -13,9 +16,11 @@ import java.util.UUID;
 public class CriarClienteUseCaseImpl implements CriarClienteUserCase {
 
     private ClienteGateway clienteGateway;
+    private EnviarEmailUseCase enviarEmailUseCase;
 
-    public CriarClienteUseCaseImpl(ClienteGateway clienteGateway) {
+    public CriarClienteUseCaseImpl(ClienteGateway clienteGateway, EnviarEmailUseCase enviarEmailUseCase) {
         this.clienteGateway = clienteGateway;
+        this.enviarEmailUseCase = enviarEmailUseCase;
     }
 
     @Override
@@ -37,6 +42,16 @@ public class CriarClienteUseCaseImpl implements CriarClienteUserCase {
                 .documentoIdentificacao(documentoIdentificacao)
                 .build();
 
-        return clienteGateway.salvar(cliente);
+        clienteGateway.salvar(cliente);
+
+        this.enviarEmailUseCase.handle(
+                new EnviarEmailCommand(
+                        cliente.getEmail(),
+                        Template.BOAS_VINDAS,
+                        null
+                )
+        );
+
+        return cliente;
     }
 }

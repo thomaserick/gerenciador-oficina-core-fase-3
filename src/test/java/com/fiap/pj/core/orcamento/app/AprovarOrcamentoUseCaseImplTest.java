@@ -1,6 +1,9 @@
 package com.fiap.pj.core.orcamento.app;
 
 
+import com.fiap.pj.core.cliente.app.gateways.ClienteGateway;
+import com.fiap.pj.core.cliente.util.factory.ClienteTestFactory;
+import com.fiap.pj.core.email.app.usecase.EnviarEmailUseCase;
 import com.fiap.pj.core.orcamento.app.gateways.OrcamentoGateway;
 import com.fiap.pj.core.orcamento.domain.Orcamento;
 import com.fiap.pj.core.orcamento.domain.enums.OrcamentoStatus;
@@ -40,6 +43,11 @@ class AprovarOrcamentoUseCaseImplTest {
     @Mock
     private CriarOrdemServicoUseCase criarOrdemServicoUseCase;
 
+    @Mock
+    private ClienteGateway clienteGateway;
+
+    @Mock
+    private EnviarEmailUseCase enviarEmailUseCase;
 
     @InjectMocks
     private AprovarOrcamentoUseCaseImpl aprovarOrcamentoUseCaseImpl;
@@ -48,8 +56,12 @@ class AprovarOrcamentoUseCaseImplTest {
     void deveAprovarOrcamento() {
         var orcamento = OrcamentoTestFactory.umOrcamento();
         orcamento.adicionarServico(OrcamentoTestFactory.umOrcamentoItemServico(orcamento.getId()));
+
+        var cliente = ClienteTestFactory.umCliente();
+
         when(orcamentoGateway.buscarPorId(any(UUID.class))).thenReturn(Optional.of(orcamento));
         when(criarOrdemServicoUseCase.handle(any(CriarOrdemServicoCommand.class))).thenReturn(UUID.randomUUID());
+        when(clienteGateway.buscarPorId(any(UUID.class))).thenReturn(Optional.of(cliente));
 
         aprovarOrcamentoUseCaseImpl.handle(OrcamentoTestFactory.umAprovarOrcamentoCommand());
 

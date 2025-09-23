@@ -5,6 +5,7 @@ import com.fiap.pj.core.cliente.app.gateways.ClienteGateway;
 import com.fiap.pj.core.cliente.domain.Cliente;
 import com.fiap.pj.core.cliente.exception.ClienteExceptions.DocumentoIdentificacaoDuplicadoException;
 import com.fiap.pj.core.cliente.util.factory.ClienteTestFactory;
+import com.fiap.pj.core.email.app.usecase.EnviarEmailUseCase;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -30,12 +31,16 @@ class CriarClienteUseCaseImplTest {
     @Mock
     private ClienteGateway clienteGateway;
 
+    @Mock
+    private EnviarEmailUseCase enviarEmailUseCase;
+
     @InjectMocks
     private CriarClienteUseCaseImpl criarClienteUseCaseImpl;
 
     @Test
     void deveCriarCliente() {
         when(clienteGateway.salvar(any(Cliente.class))).thenReturn(ClienteTestFactory.umCliente());
+
 
         var cliente = criarClienteUseCaseImpl.handle(ClienteTestFactory.umCriarClienteCommand());
 

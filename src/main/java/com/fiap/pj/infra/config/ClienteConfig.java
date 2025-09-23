@@ -8,6 +8,7 @@ import com.fiap.pj.core.cliente.app.ExcluirClienteUseCaseImpl;
 import com.fiap.pj.core.cliente.app.InativarClienteUseCaseImpl;
 import com.fiap.pj.core.cliente.app.ListarClienteUseCaseImpl;
 import com.fiap.pj.core.cliente.app.gateways.ClienteGateway;
+import com.fiap.pj.core.email.app.usecase.EnviarEmailUseCase;
 import com.fiap.pj.infra.cliente.gateways.ClienteRepositoryGatewayImpl;
 import com.fiap.pj.infra.cliente.persistence.ClienteRepositoryJpa;
 import org.springframework.context.annotation.Bean;
@@ -18,9 +19,10 @@ public class ClienteConfig {
 
 
     @Bean
-    CriarClienteUseCaseImpl criarClienteUseCase(ClienteGateway clienteGateway
+    CriarClienteUseCaseImpl criarClienteUseCase(ClienteGateway clienteGateway,
+                                                EnviarEmailUseCase enviarEmailUseCase
     ) {
-        return new CriarClienteUseCaseImpl(clienteGateway);
+        return new CriarClienteUseCaseImpl(clienteGateway, enviarEmailUseCase);
     }
 
     @Bean

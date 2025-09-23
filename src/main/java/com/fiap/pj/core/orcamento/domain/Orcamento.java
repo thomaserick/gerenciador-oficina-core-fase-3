@@ -32,9 +32,9 @@ public class Orcamento {
     private UUID ordemServicoId;
     @Setter
     private ZonedDateTime dataCriacao;
+
     @Setter
     private Set<OrcamentoItemServico> servicos = new HashSet<>();
-
     @Setter
     private Set<OrcamentoItemPecaInsumo> pecasInsumos = new HashSet<>();
 

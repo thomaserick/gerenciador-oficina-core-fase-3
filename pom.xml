@@ -13,7 +13,7 @@
     <groupId>com.fiap.pj</groupId>
     <artifactId>gerenciador-oficina-core</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-
+    <packaging>jar</packaging>
     <name>gerenciador-oficina-core</name>
     <description>Gerenciador :: Oficina Core</description>
 
@@ -165,6 +165,12 @@
             <artifactId>jjwt-jackson</artifactId>
             <version>${jwt.version}</version>
             <scope>runtime</scope>
+        </dependency>
+
+        <!-- EMAIL -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
     </dependencies>
 

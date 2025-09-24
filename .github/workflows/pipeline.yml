@@ -38,6 +38,12 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: "jayjayg"
+          password: "dckr_pat_YOeGgycXA75Xk9MrnS1P82a9g5g"
+
       - name: Run Docker File
         run: docker build -t jayjayg/gerenciador-oficina-core:${{ github.run_number }} .
         

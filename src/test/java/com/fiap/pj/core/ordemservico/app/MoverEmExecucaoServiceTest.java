@@ -1,6 +1,9 @@
 package com.fiap.pj.core.ordemservico.app;
 
 
+import com.fiap.pj.core.cliente.app.gateways.ClienteGateway;
+import com.fiap.pj.core.cliente.util.factory.ClienteTestFactory;
+import com.fiap.pj.core.email.app.usecase.EnviarEmailUseCase;
 import com.fiap.pj.core.ordemservico.app.gateways.OrdemServicoGateway;
 import com.fiap.pj.core.ordemservico.domain.OrdemServico;
 import com.fiap.pj.core.ordemservico.domain.enums.OrdemServicoStatus;
@@ -26,6 +29,7 @@ import static com.fiap.pj.core.ordemservico.domain.enums.OrdemServicoStatus.CRIA
 import static com.fiap.pj.core.ordemservico.domain.enums.OrdemServicoStatus.EM_DIAGNOSTICO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -38,17 +42,26 @@ class MoverEmExecucaoServiceTest {
     @Mock
     private OrdemServicoGateway ordemServicoGateway;
 
+    @Mock
+    private ClienteGateway clienteGateway;
+
+    @Mock
+    private EnviarEmailUseCase enviarEmailUseCase;
+
     @InjectMocks
-    private MoverEmExecucaoUseCaseImpl overEmExecucaoUseCaseImpl;
+    private MoverEmExecucaoUseCaseImpl moverEmExecucaoUseCaseImpl;
 
     @Test
     void deveAlteraStatusOsEmExecucao() {
         TestSecurityConfig.setAuthentication();
+
         var ordemServico = OrdemServicoTestFactory.umaOrdemServico(AGUARDANDO_APROVACAO);
+        var cliente = ClienteTestFactory.umCliente();
 
         when(ordemServicoGateway.buscarPorId(ordemServico.getId())).thenReturn(Optional.of(ordemServico));
+        when(clienteGateway.buscarPorId(any(UUID.class))).thenReturn(Optional.of(cliente));
 
-        overEmExecucaoUseCaseImpl.handle(ordemServico.getId());
+        moverEmExecucaoUseCaseImpl.handle(ordemServico.getId());
 
         verify(ordemServicoGateway).salvar(ordemServicoArgumentCaptor.capture());
         OrdemServico ordemServicoAlterada = ordemServicoArgumentCaptor.getValue();
@@ -61,11 +74,14 @@ class MoverEmExecucaoServiceTest {
     @Test
     void deveAlteraStatusOsEmExecucaoComSatusAtualEmDiagnostico() {
         TestSecurityConfig.setAuthentication();
+
         var ordemServico = OrdemServicoTestFactory.umaOrdemServico(EM_DIAGNOSTICO);
+        var cliente = ClienteTestFactory.umCliente();
 
         when(ordemServicoGateway.buscarPorId(ordemServico.getId())).thenReturn(Optional.of(ordemServico));
+        when(clienteGateway.buscarPorId(any(UUID.class))).thenReturn(Optional.of(cliente));
 
-        overEmExecucaoUseCaseImpl.handle(ordemServico.getId());
+        moverEmExecucaoUseCaseImpl.handle(ordemServico.getId());
 
         verify(ordemServicoGateway).salvar(ordemServicoArgumentCaptor.capture());
         OrdemServico ordemServicoAlterada = ordemServicoArgumentCaptor.getValue();
@@ -83,7 +99,7 @@ class MoverEmExecucaoServiceTest {
                 .when(ordemServicoGateway)
                 .buscarPorId(id);
 
-        var thrown = catchThrowable(() -> overEmExecucaoUseCaseImpl.handle(id));
+        var thrown = catchThrowable(() -> moverEmExecucaoUseCaseImpl.handle(id));
         assertThat(thrown).isInstanceOf(OrdemServicoNaoEncontradaException.class);
     }
 
@@ -92,7 +108,7 @@ class MoverEmExecucaoServiceTest {
         var ordemServico = OrdemServicoTestFactory.umaOrdemServico(CRIADA);
         when(ordemServicoGateway.buscarPorId(ordemServico.getId())).thenReturn(Optional.of(ordemServico));
 
-        var thrown = catchThrowable(() -> overEmExecucaoUseCaseImpl.handle(ordemServico.getId()));
+        var thrown = catchThrowable(() -> moverEmExecucaoUseCaseImpl.handle(ordemServico.getId()));
         assertThat(thrown).isInstanceOf(OrdemServicoStatusInvalidoEmExecucaoException.class);
     }
 

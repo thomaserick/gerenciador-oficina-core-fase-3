@@ -58,7 +58,10 @@ public class AprovarOrcamentoUseCaseImpl implements AprovarOrcamentoUseCase {
                 new EnviarEmailCommand(
                         cliente.getEmail(),
                         Template.ORCAMENTO_APROVADO,
-                        List.of(orcamento.getId())
+                        List.of(
+                                orcamento.getId(),
+                                orcamento.getOrdemServicoId()
+                        )
                 )
         );
     }

@@ -2,10 +2,17 @@ package com.fiap.pj.infra.ordemservico.persistence.specification;
 
 import com.fiap.pj.core.ordemservico.domain.enums.OrdemServicoStatus;
 import com.fiap.pj.infra.ordemservico.persistence.OrdemServicoEntity;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaBuilder.Case;
+import jakarta.persistence.criteria.Expression;
+import jakarta.persistence.criteria.Order;
+import jakarta.persistence.criteria.Root;
 import lombok.Builder;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import static java.util.Objects.nonNull;
@@ -32,6 +39,17 @@ public class OrdemServicoSpecification {
     private final ZonedDateTime dataConclusaoDe;
     private final ZonedDateTime dataConclusaoAte;
 
+    private static final List<OrdemServicoStatus> STATUS_ORDER = List.of(
+            OrdemServicoStatus.EM_EXECUCAO,
+            OrdemServicoStatus.AGUARDANDO_APROVACAO,
+            OrdemServicoStatus.EM_DIAGNOSTICO,
+            OrdemServicoStatus.AGUARDANDO_RETIRADA
+    );
+    private static final List<OrdemServicoStatus> EXCLUIR_DA_LISTAGEM = List.of(
+            OrdemServicoStatus.ENTREGUE,
+            OrdemServicoStatus.FINALIZADA
+    );
+
     public Specification<OrdemServicoEntity> buildSpecification() {
         Specification<OrdemServicoEntity> specs = Specification.allOf();
 
@@ -54,31 +72,11 @@ public class OrdemServicoSpecification {
                 specs = specs.and(queContenhaStatusIgualA(this.status));
             }
 
-            specs = buildFiltrosData(specs);
-
-
+            specs = this.buildFiltrosData(specs);
         }
 
-        return specs;
-    }
-
-    private Specification<OrdemServicoEntity> buildFiltrosData(Specification<OrdemServicoEntity> specs) {
-
-        if (nonNull(this.dataCriacaoDe)) {
-            specs = specs.and(comDataCriacaoDe(this.dataCriacaoDe));
-        }
-
-        if (nonNull(this.dataCriacaoAte)) {
-            specs = specs.and(comDataCriacaoAte(this.dataCriacaoAte));
-        }
-
-        if (nonNull(this.dataConclusaoDe)) {
-            specs = specs.and(comDataConclusaoDe(this.dataConclusaoDe));
-        }
-
-        if (nonNull(this.dataConclusaoAte)) {
-            specs = specs.and(comDataConclusaoAte(this.dataConclusaoAte));
-        }
+        specs = specs.and(queNaoContenhaStatusNaLista(EXCLUIR_DA_LISTAGEM));
+        specs = buildSpecificationComOrdenacaoPorStatus(specs);
 
         return specs;
     }
@@ -119,4 +117,51 @@ public class OrdemServicoSpecification {
         return (root, query, cb) -> cb.lessThanOrEqualTo(root.get(DATA_CONCLUSAO), dataConclusaoAte);
     }
 
+    private Specification<OrdemServicoEntity> buildFiltrosData(Specification<OrdemServicoEntity> specs) {
+
+        if (nonNull(this.dataCriacaoDe)) {
+            specs = specs.and(comDataCriacaoDe(this.dataCriacaoDe));
+        }
+
+        if (nonNull(this.dataCriacaoAte)) {
+            specs = specs.and(comDataCriacaoAte(this.dataCriacaoAte));
+        }
+
+        if (nonNull(this.dataConclusaoDe)) {
+            specs = specs.and(comDataConclusaoDe(this.dataConclusaoDe));
+        }
+
+        if (nonNull(this.dataConclusaoAte)) {
+            specs = specs.and(comDataConclusaoAte(this.dataConclusaoAte));
+        }
+
+        return specs;
+    }
+
+    private Specification<OrdemServicoEntity> queNaoContenhaStatusNaLista(List<OrdemServicoStatus> statusList) {
+        return (root, query, builder) -> builder.not(root.get(FIELD_STATUS).in(statusList));
+    }
+
+    public Specification<OrdemServicoEntity> buildSpecificationComOrdenacaoPorStatus(Specification<OrdemServicoEntity> specs) {
+        return (root, query, builder) -> {
+            query.orderBy(buildCustomStatusOrder(root, builder));
+            return specs.toPredicate(root, query, builder);
+        };
+    }
+    
+    private List<Order> buildCustomStatusOrder(Root<OrdemServicoEntity> root, CriteriaBuilder builder) {
+        List<Order> orders = new ArrayList<>();
+        Expression<Integer> statusOrderExpr = builder.selectCase();
+
+        for (int i = 0; i < STATUS_ORDER.size(); i++) {
+            statusOrderExpr = ((Case<Integer>) statusOrderExpr).when(builder.equal(root.get(FIELD_STATUS), STATUS_ORDER.get(i)), i);
+        }
+
+        statusOrderExpr = ((Case<Integer>) statusOrderExpr).otherwise(STATUS_ORDER.size());
+
+        orders.add(builder.asc(statusOrderExpr));
+        orders.add(builder.desc(root.get(DATA_CRIACAO)));
+
+        return orders;
+    }
 }

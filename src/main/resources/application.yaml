@@ -16,7 +16,7 @@ spring:
       transaction-isolation: TRANSACTION_READ_COMMITTED
       auto-commit: false
       validation-timeout: 3000
-      leak-detection-threshold: 0  # 1min - log message indicating a possible connection leak
+      leak-detection-threshold: 0
       data-source-properties:
         useServerPrepStmts: false
         cachePrepStmts: true

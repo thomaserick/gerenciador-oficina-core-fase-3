@@ -72,8 +72,8 @@ jobs:
   # 🔹 Deploy no Kubernetes
       - name: Deploy to EKS
         run: |
-          kubectl apply -f ops/deployment.yaml
-          kubectl apply -f ops/service.yaml
+          kubectl apply -f ./ops/deployment.yaml
+          kubectl apply -f ./ops/service.yaml
 
 #      - name: Mvn Clean and Install
 #        run: mvn clean package install && mvn clean install

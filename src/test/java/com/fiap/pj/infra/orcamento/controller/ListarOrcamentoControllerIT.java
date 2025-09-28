@@ -45,7 +45,7 @@ class ListarOrcamentoControllerIT {
                 .andExpect(jsonPath("$.items[0].status", is(OrcamentoStatus.AGUARDANDO_APROVACAO.name())))
                 .andExpect(jsonPath("$.items[0].servicos[0].id", is("7422d4fd-ea12-415a-98af-810c803ab35c")))
                 .andExpect(jsonPath("$.items[0].servicos[0].descricao", is("Troca de Óleo")))
-                .andExpect(jsonPath("$.items[0].servicos[0].valorUnitario", is(69.0)))
+                .andExpect(jsonPath("$.items[0].servicos[0].valorUnitario", is(69)))
                 .andExpect(jsonPath("$.items[0].servicos[0].quantidade", is(1)))
                 .andExpect(jsonPath("$.items[0].pecasInsumos[0].id", is("afe064ba-de28-4e67-9b7a-daf2586b95fe")))
                 .andExpect(jsonPath("$.items[0].pecasInsumos[0].descricao", is("Óleo do Motor")))

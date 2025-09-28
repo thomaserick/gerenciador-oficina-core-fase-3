@@ -50,11 +50,39 @@ jobs:
       - name: Push Docker Image
         run: docker push jayjayg/gerenciador-oficina-core:${{ github.run_number }}
 
-      - name: Mvn Clean and Install
-        run: mvn clean package install && mvn clean install
+  # 🔹 Configurar AWS CLI
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: "ASIA5FTZC632XKF5NR5Z"
+          aws-secret-access-key: "YTC/+4bcptJqd7OifYUKz5yrOizdqx3g94aQPJ/u"
+          aws-session-token: "IQoJb3JpZ2luX2VjEDwaCXVzLXdlc3QtMiJGMEQCIGczB5UZt0qpwDdNRQJUfPsXCZ3XgkBWMme5zZRyQ/W7AiA08zYWKk53teCRDD9UrfVOfLXCWZ7DkgqMozUYDeySaCq7AgjF//////////8BEAAaDDkwNTQxODMwNzMxNyIMK8CxMkovUMmAGcptKo8Cx19Apt/ttCvVtK3xYy7544nLhMGGXQQZDhrrGbhSHRPbC/JuXcRupqk4zOY/XWrn4wh5QFLfp+FbvbmhaBjALf0yd7UalmiAlrdmH9JCEGr8JXcSE/Un3UXNfeWJvU1AwiiKOXAU3EvAdf/dw4q/5cmr40xQN0YpCWfhNzx20AgVKybljBYVPAI3n1KdnqybBZurnrn9gXf9r/GG3KfWYcNcetZRidD9aBitpLk0BgaUyFiPHBuupshVzzjZdXBm4SxxnMqkq82dMnrJ80P1eAYY6ivvm79PDWPx2EekcSv9e35dZrB8JoVi7iYau2gNUCovjNlHOu39NqJP95stPFpiHXws9tsX9MdtJTfsuDDgmubGBjqeAUb9kfRuOYoYVi2V2c1VWDI1DA9MchYpweNN7tP8BQkWdV5CLmiAvWfurvlhgNyzS0MGmAaDVpRjVzIclvlfU8C5SJuN04aJUuz34AXRoJWnGgN/gKcMUzQ1zddNvfrDzcK5jBu1647bfLxbsv50qk+w6D/CLudyDWPm8ZvHbI0UNUJOYHpLUi2X8E0426yyAh/viZT6h9UxNjN4UAzK"
+          aws-region: "us-east-1"
 
-      - name: Build and analyze
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=CaioMC_gerenciador-oficina-core
+  # 🔹 Instalar kubectl
+      - name: Install kubectl
+        run: |
+          curl -LO "https://dl.k8s.io/release/$(curl -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+          chmod +x kubectl
+          sudo mv kubectl /usr/local/bin/
+
+  # 🔹 Atualizar kubeconfig para o cluster EKS
+      - name: Update kubeconfig
+        run: aws eks update-kubeconfig --region us-east-1 --name projeto
+
+  # 🔹 Deploy no Kubernetes
+      - name: Deploy to EKS
+        run: |
+          kubectl apply -f ops/deployment.yaml
+          kubectl apply -f ops/service.yaml
+
+#      - name: Mvn Clean and Install
+#        run: mvn clean package install && mvn clean install
+
+#      - name: Build and analyze
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=CaioMC_gerenciador-oficina-core
+
+

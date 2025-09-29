@@ -5,12 +5,15 @@ on:
     branches:
       - main
   pull_request:
-    types: [opened, synchronize, reopened]
+    types: [ opened, synchronize, reopened ]
+
+env:
+  JAVA_VERSION: '17'
+  DISTRIBUTION: 'zulu'
 
 jobs:
   build:
-
-    name: Build and analyze
+    name: Build
     runs-on: ubuntu-latest
 
     steps:
@@ -18,71 +21,131 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set up JDK 17
+      - name: Set up JDK ${{env.JAVA_VERSION}}
         uses: actions/setup-java@v3
         with:
-          java-version: 17
-          distribution: 'zulu'
+          java-version: ${{env.JAVA_VERSION}}
+          distribution: ${{env.DISTRIBUTION}}
+          cache: maven
 
-      # - name: Cache SonarCloud packages
-        # uses: actions/cache@v3
-        # with:
-          #path: ~/.sonar/cache
-          #key: ${{ runner.os }}-sonar
-          #restore-keys: ${{ runner.os }}-sonar
+      - name: Build with Maven
+        run: mvn -B clean package -DskipTests
 
-      - name: Cache Maven packages
-        uses: actions/cache@v3
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
         with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
+          name: app-jar
+          path: target/*.jar
 
-      - name: Login to Docker Hub
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Set up JDK ${{env.JAVA_VERSION}}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{env.JAVA_VERSION}}
+          distribution: ${{env.DISTRIBUTION}}
+
+      - name: Run Unit Tests
+        run: mvn -B test
+
+  #  sonar:
+  #    name: SonarQube Analysis
+  #    runs-on: ubuntu-latest
+  #    needs: test
+  #    steps:
+  #      - name: Checkout source
+  #        uses: actions/checkout@v4
+  #
+  #      - name: Set up JDK ${{env.JAVA_VERSION}}
+  #        uses: actions/setup-java@v4
+  #        with:
+  #          java-version: ${{env.JAVA_VERSION}}
+  #          distribution: ${{env.DISTRIBUTION}}
+  #
+  #      - name: Cache SonarQube packages
+  #        uses: actions/cache@v4
+  #        with:
+  #          path: ~/.sonar/cache
+  #          key: ${{ runner.os }}-sonar
+  #          restore-keys: ${{ runner.os }}-sonar
+  #
+  #      - name: Run SonarQube Analysis
+  #        env:
+  #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  #        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=CaioMC_gerenciador-oficina-core
+
+  docker:
+    name: Publish Docker Image
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: app-jar
+          path: app
+
+      - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
-          username: "jayjayg"
-          password: "dckr_pat_YOeGgycXA75Xk9MrnS1P82a9g5g"
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Run Docker File
-        run: docker build -t jayjayg/gerenciador-oficina-core:${{ github.run_number }} .
-        
-      - name: Push Docker Image
-        run: docker push jayjayg/gerenciador-oficina-core:${{ github.run_number }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-  # 🔹 Configurar AWS CLI
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v6
         with:
-          aws-access-key-id: "ASIA5FTZC632XKF5NR5Z"
-          aws-secret-access-key: "YTC/+4bcptJqd7OifYUKz5yrOizdqx3g94aQPJ/u"
-          aws-session-token: "IQoJb3JpZ2luX2VjEDwaCXVzLXdlc3QtMiJGMEQCIGczB5UZt0qpwDdNRQJUfPsXCZ3XgkBWMme5zZRyQ/W7AiA08zYWKk53teCRDD9UrfVOfLXCWZ7DkgqMozUYDeySaCq7AgjF//////////8BEAAaDDkwNTQxODMwNzMxNyIMK8CxMkovUMmAGcptKo8Cx19Apt/ttCvVtK3xYy7544nLhMGGXQQZDhrrGbhSHRPbC/JuXcRupqk4zOY/XWrn4wh5QFLfp+FbvbmhaBjALf0yd7UalmiAlrdmH9JCEGr8JXcSE/Un3UXNfeWJvU1AwiiKOXAU3EvAdf/dw4q/5cmr40xQN0YpCWfhNzx20AgVKybljBYVPAI3n1KdnqybBZurnrn9gXf9r/GG3KfWYcNcetZRidD9aBitpLk0BgaUyFiPHBuupshVzzjZdXBm4SxxnMqkq82dMnrJ80P1eAYY6ivvm79PDWPx2EekcSv9e35dZrB8JoVi7iYau2gNUCovjNlHOu39NqJP95stPFpiHXws9tsX9MdtJTfsuDDgmubGBjqeAUb9kfRuOYoYVi2V2c1VWDI1DA9MchYpweNN7tP8BQkWdV5CLmiAvWfurvlhgNyzS0MGmAaDVpRjVzIclvlfU8C5SJuN04aJUuz34AXRoJWnGgN/gKcMUzQ1zddNvfrDzcK5jBu1647bfLxbsv50qk+w6D/CLudyDWPm8ZvHbI0UNUJOYHpLUi2X8E0426yyAh/viZT6h9UxNjN4UAzK"
-          aws-region: "us-east-1"
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/gerenciador-oficina-core:${{ github.run_number }}
+          context: .
 
-  # 🔹 Instalar kubectl
-      - name: Install kubectl
-        uses: azure/setup-kubectl@v4
-        with:
-          version: 'latest'
 
-      # 🔹 Atualizar kubeconfig para o cluster EKS
-      - name: Update kubeconfig
-        run: aws eks update-kubeconfig --region us-east-1 --name projeto
+#  aws-deploy:
+#    name: Deploy to AWS EKS
+#    runs-on: ubuntu-latest
+#    needs: docker
+#    steps:
+#      - name: Checkout source
+#        uses: actions/checkout@v4
+#
+#      # 🔹 Configurar AWS CLI
+#      - name: Configure AWS credentials
+#        uses: aws-actions/configure-aws-credentials@v4
+#        with:
+#          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#          aws-session-toke: ${{ secrets.AWS_SESSION_TOKEN }}
+#          aws-region: "us-east-1"
+#
+#      # 🔹 Instalar kubectl
+#      - name: Install kubectl
+#        uses: azure/setup-kubectl@v4
+#        with:
+#          version: 'latest'
+#
+#      # 🔹 Atualizar kubeconfig para o cluster EKS
+#      - name: Update kubeconfig
+#        run: aws eks update-kubeconfig --region us-east-1 --name projeto
+#
+#      # 🔹 Deploy no Kubernetes
+#      - name: Deploy to EKS
+#        run: |
+#          kubectl apply -f ./ops/deployment.yaml -n projeto
+#          kubectl apply -f ./ops/services.yaml -n projeto
+#          kubectl apply -f ./ops/hpa.yaml -n projeto
 
-  # 🔹 Deploy no Kubernetes
-      - name: Deploy to EKS
-        run: |
-          kubectl apply -f ./ops/deployment.yaml -n projeto
-          kubectl apply -f ./ops/services.yaml -n projeto
-          kubectl apply -f ./ops/hpa.yaml -n projeto
 
-#      - name: Mvn Clean and Install
-#        run: mvn clean package install && mvn clean install
-
-#      - name: Build and analyze
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-#        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=CaioMC_gerenciador-oficina-core
 
 

@@ -8,8 +8,11 @@ on:
     types: [ opened, synchronize, reopened ]
 
 env:
+  PROJECT_NAME: 'gerenciador-oficina-core'
   JAVA_VERSION: '17'
   DISTRIBUTION: 'zulu'
+  DOCKER_IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/${{env.PROJECT_NAME}}
+  AWS_REGION: 'us-east-1'
 
 jobs:
   build:
@@ -107,7 +110,9 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/gerenciador-oficina-core:${{ github.run_number }}
+          tags:
+            ${{ env.DOCKER_IMAGE }}:${{ github.run_number }}
+            ${{ env.DOCKER_IMAGE }}:latest
           context: .
 
   aws-deploy:
@@ -125,7 +130,7 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
-          aws-region: "us-east-1"
+          aws-region: ${{ AWS_REGION }}
 
       # 🔹 Instalar kubectl
       - name: Install kubectl

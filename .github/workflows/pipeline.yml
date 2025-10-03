@@ -109,7 +109,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags:
+          tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.PROJECT_NAME }}:${{ github.run_number }}
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.PROJECT_NAME }}:latest
           context: .

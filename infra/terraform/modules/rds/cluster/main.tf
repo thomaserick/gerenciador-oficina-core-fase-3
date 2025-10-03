@@ -8,8 +8,8 @@ resource "aws_db_subnet_group" "rds_snet_group" {
 }
 
 resource "aws_rds_cluster_parameter_group" "parameter_group" {
-  name        = "cluster-rds-aurora-postgresql-16"
-  family      = "aurora-postgresql16"
+  name        = "cluster-rds-${var.rds_engine}-16"
+  family      = var.db_parameter_group_family
   description = "RDS cluster parameter group"
 
   parameter {
@@ -20,12 +20,13 @@ resource "aws_rds_cluster_parameter_group" "parameter_group" {
 }
 
 resource "aws_db_parameter_group" "db_parameter_group" {
-  name        = "db-rds-aurora-postgresql-16"
-  family      = "aurora-postgresql16"
+  name        = "db-rds-${var.rds_engine}-16"
+  family      = var.db_parameter_group_family
   description = "RDS cluster parameter group"
 }
 
 resource "aws_rds_cluster" "rds" {
+  source_region                         = var.aws_region
   cluster_identifier                    = var.rds_name
   engine                                = var.rds_engine
   engine_version                        = var.rds_engine_version
@@ -39,12 +40,13 @@ resource "aws_rds_cluster" "rds" {
   performance_insights_enabled          = true
   performance_insights_retention_period = 7
   db_subnet_group_name                  = aws_db_subnet_group.rds_snet_group.name
-  storage_type                          = "aurora-iopt1"
+  storage_type                          = var.rds_storage_type
   storage_encrypted                     = true
   deletion_protection                   = false
   backup_retention_period               = 20
   skip_final_snapshot                   = true
   apply_immediately                     = true
+
 
   enabled_cloudwatch_logs_exports = ["postgresql", "iam-db-auth-error", "instance"]
 

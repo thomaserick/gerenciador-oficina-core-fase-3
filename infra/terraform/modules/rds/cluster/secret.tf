@@ -5,7 +5,8 @@ resource "random_password" "password_user_postgres" {
 }
 
 resource "aws_secretsmanager_secret" "secret_user_postgres" {
-  name = "rds/${var.rds_name}/postgres"
+  name        = "rds/${var.rds_name}/postgres"
+  description = "Credenciais do banco PostgreSQL RDS"
 }
 
 resource "aws_secretsmanager_secret_version" "secret_password_postgres" {
@@ -15,6 +16,7 @@ resource "aws_secretsmanager_secret_version" "secret_password_postgres" {
     password = "${random_password.password_user_postgres.result}"
   })
 }
+
 
 data "aws_secretsmanager_secret" "secret_user_postgres" {
   name = aws_secretsmanager_secret.secret_user_postgres.name

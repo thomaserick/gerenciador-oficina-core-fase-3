@@ -1,10 +1,11 @@
 module "sg_rds" {
-  source = "terraform-aws-modules/security-group/aws"
+  source  = "terraform-aws-modules/security-group/aws"
   version = ">= 5.3.0"
 
   name        = "rds"
   description = "Permite acesso interno as aplicacoes no RDS"
   vpc_id      = var.vpc_id
+
 
   ingress_with_cidr_blocks = [
     {

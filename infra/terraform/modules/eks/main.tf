@@ -2,7 +2,7 @@
 
 resource "aws_eks_cluster" "cluster" {
   name     = var.cluster_name
-  role_arn = "arn:aws:iam::905418307317:role/c175509a4540172l11767539t1w905418-LabEksClusterRole-6l5ecKzAcqbF"
+  role_arn = var.role_arn
   version  = "1.33"
 
   vpc_config {
@@ -26,7 +26,7 @@ resource "aws_eks_cluster" "cluster" {
   compute_config {
     enabled       = true
     node_pools    = ["general-purpose", "system"]
-    node_role_arn = "arn:aws:iam::905418307317:role/c175509a4540172l11767539t1w905418307-LabEksNodeRole-bltw0M491dDz"
+    node_role_arn = var.node_role_arn
   }
 
   kubernetes_network_config {
@@ -41,7 +41,7 @@ resource "aws_eks_cluster" "cluster" {
     }
   }
 
-  depends_on = [ aws_security_group.eks_extra ]
+  depends_on = [aws_security_group.eks_extra]
 }
 
 ## EKS SG Adicional ##
@@ -51,11 +51,11 @@ resource "aws_security_group" "eks_extra" {
   vpc_id      = var.vpc_id
 
   ingress {
-    description      = "Permitir VPC acessar API server"
-    from_port        = 443
-    to_port          = 443
-    protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
+    description = "Permitir VPC acessar API server"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {

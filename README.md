@@ -30,20 +30,53 @@ API para gerenciamento de uma oficina com autenticação e controle de estoque.
 
 ## ⚙️ Instalação
 
-### Pré-requisitos
+### Rodar o projeto local com Docker
+
+#### Pré-requisitos
 
 - Docker 24.0+
 - Docker Compose 2.20+
 
-### Comandos para rodar o projeto local com Docker
+#### Comandos
 
-1 Suba os containers:
+1. Suba os containers:
 
 ```bash
   docker-compose up 
 ```
 
-### Comandos para rodar o projeto local
+### Rodar o projeto local com Kubernetes
+
+#### Pré-requisitos
+
+- Docker 24.0+
+- Suba o Kubernetes localmente (minikube, kind, etc)
+
+#### Comandos
+
+1. Aplique os manifests manualmente ou utilize o comando abaixo para aplicar todos os manifests da pasta k8s
+
+```bash
+  ./devops/k8s/deploy-dev-k8s.sh
+```
+
+2. Verifique se os pods estão rodando
+
+```bash
+  kubectl get pods -n gerenciador-oficina-core
+```
+
+3. Caso utilize o Kind precisa criar um port-forward para acessar a aplicação
+   (não expõe automaticamente os NodePorts para o localhost)
+
+```bash
+  kubectl port-forward service/gerenciador-oficina-service 8081:8081 -n gerenciador-oficina-core
+```
+
+5. Acesse a aplicação na porta `http://localhost:8081/swagger-ui/index.html` ou
+   `http://localhost:30081/swagger-ui/index.html`
+
+### Rodar o projeto local
 
 #### Pré-requisitos
 
@@ -51,7 +84,7 @@ API para gerenciamento de uma oficina com autenticação e controle de estoque.
 - **PostgreSQL** para banco de dados
 - **Maven** para gerenciar as dependências do projeto
 
-#### Passos para rodar
+#### Comandos
 
 1. Clone o repositório
 
@@ -100,6 +133,10 @@ utilizar o endpoint `/usuarios`.
 }
 
 ```
+
+Commandos:
+
+- kubectl port-forward service/gerenciador-oficina-service 8081:8081 -n gerenciador-oficina-core
 
 ## 📚 Documentação da API
 

@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: gerenciador-oficina-core-postgres
+  name: gerenciador-oficina-postgres
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: gerenciador-oficina-core-postgres
+      app: gerenciador-oficina-postgres
   template:
     metadata:
       labels:
-        app: gerenciador-oficina-core-postgres
+        app: gerenciador-oficina-postgres
     spec:
       containers:
         - name: postgres
@@ -40,11 +40,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: gerenciador-oficina-core-postgres
+  name: gerenciador-oficina-postgres
 spec:
   type: ClusterIP
   ports:
     - port: 5432
       targetPort: 5432
   selector:
-    app: gerenciador-oficina-core-postgres
+    app: gerenciador-oficina-postgres

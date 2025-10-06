@@ -30,9 +30,21 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 8081
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8081
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8081
+            initialDelaySeconds: 10
+            periodSeconds: 5
           env:
             - name: SPRING_DATASOURCE_URL
-              value: jdbc:postgresql://gerenciador-oficina-postgres:5432/gerenciador_oficina
+              value: jdbc:postgresql://gerenciador-oficina-postgres:5432/gerenciador-oficina
             - name: SPRING_DATASOURCE_USERNAME
               valueFrom:
                 secretKeyRef:

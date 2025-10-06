@@ -19,7 +19,7 @@ spec:
             - containerPort: 5432
           env:
             - name: POSTGRES_DB
-              value: gerenciador_oficina
+              value: gerenciador-oficina
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:

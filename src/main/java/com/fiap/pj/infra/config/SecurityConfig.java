@@ -38,6 +38,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/v1/usuarios").permitAll()
                         .requestMatchers("/v1/usuarios/login").permitAll()
                         .requestMatchers(ENDPOINT_SWAGGER).permitAll()
+                        .requestMatchers("/actuator/**").permitAll()
                         .anyRequest().authenticated()
                 ).sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(userAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

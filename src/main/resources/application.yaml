@@ -84,5 +84,12 @@ api:
     jwt:
       secret: n7Q2zXE9+fR3GjG2Q1v9K2Wq4tYF8xX0Y0mK9P2qQ3w=
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+
+
 server:
   port: 8081

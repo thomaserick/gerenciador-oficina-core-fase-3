@@ -84,7 +84,11 @@ api:
     jwt:
       secret: n7Q2zXE9+fR3GjG2Q1v9K2Wq4tYF8xX0Y0mK9P2qQ3w=
 
+
 management:
+  metrics:
+    enable:
+      all: false
   endpoints:
     web:
       exposure:

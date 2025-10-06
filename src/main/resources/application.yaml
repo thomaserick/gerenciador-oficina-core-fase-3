@@ -86,13 +86,17 @@ api:
 
 
 management:
-  metrics:
-    enable:
-      all: false
   endpoints:
     web:
       exposure:
         include: health
+  metrics:
+    enable:
+      all: false
+  endpoint:
+    metrics:
+      enabled: false
+
 
 
 server:

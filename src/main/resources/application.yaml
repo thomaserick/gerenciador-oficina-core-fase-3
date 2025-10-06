@@ -62,6 +62,12 @@ spring:
           timeout: 3000
           writetimeout: 5000
 
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.actuate.autoconfigure.metrics.MetricsAutoConfiguration
+      - org.springframework.boot.actuate.autoconfigure.metrics.SystemMetricsAutoConfiguration
+      - org.springframework.boot.actuate.autoconfigure.metrics.export.simple.SimpleMetricsExportAutoConfiguration
+
 springdoc:
   default-produces-media-type: application/json
   api-docs:
@@ -92,7 +98,8 @@ management:
         include: health
   metrics:
     enable:
-      all: false
+      process: false
+      system: false
   endpoint:
     metrics:
       enabled: false

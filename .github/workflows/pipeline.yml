@@ -144,7 +144,5 @@ jobs:
       # 🔹 Deploy no Kubernetes
       - name: Deploy to EKS
         run: |
-          kubectl get namespace projeto || kubectl create namespace projeto
-          kubectl apply -f ./devops/k8s/prod/deployment.yaml -n projeto
-          kubectl apply -f ./devops/k8s/prod/services.yaml -n projeto
-          kubectl apply -f ./devops/k8s/prod/hpa.yaml -n projeto
+          chmod +x ./devops/scripts/deploy-prod-k8s.sh
+          ./devops/scripts/deploy-prod-k8s.sh

@@ -6,31 +6,32 @@ set -e
 # =============================
 
 NAMESPACE="gerenciador-oficina-core"
+K8S_PATH="./devops/k8s/dev"
 
 echo "🚀 Iniciando deploy Kubernetes no namespace: $NAMESPACE"
 
 # Verifica se o namespace existe
 if ! kubectl get namespace "$NAMESPACE" &>/dev/null; then
   echo "📦 Criando namespace $NAMESPACE..."
-  kubectl apply -f ./devops/k8s/dev/namespace.yaml
+  kubectl apply -f $K8S_PATH/namespace.yaml
 else
   echo "✅ Namespace $NAMESPACE já existe."
 fi
 
 echo "🔐 Aplicando secrets..."
-kubectl apply -f ./devops/k8s/dev/postgres-secret.yaml -n $NAMESPACE
+kubectl apply -f $K8S_PATH/postgres-secret.yaml -n $NAMESPACE
 
 echo "🐘 Subindo PostgreSQL..."
-kubectl apply -f ./devops/k8s/dev/postgres-deployment.yaml -n $NAMESPACE
+kubectl apply -f $K8S_PATH/postgres-deployment.yaml -n $NAMESPACE
 
 echo "☕ Subindo aplicação Spring Boot..."
-kubectl apply -f ./devops/k8s/dev/deployment.yaml -n $NAMESPACE
+kubectl apply -f $K8S_PATH/deployment.yaml -n $NAMESPACE
 
 echo "🌐 Criando service para expor aplicação..."
-kubectl apply -f ./devops/k8s/dev/services.yaml -n $NAMESPACE
+kubectl apply -f $K8S_PATH/services.yaml -n $NAMESPACE
 
 echo "📈 Aplicando Horizontal Pod Autoscaler..."
-kubectl apply -f ./devops/k8s/dev/hpa.yaml -n $NAMESPACE
+kubectl apply -f $K8S_PATH/hpa.yaml -n $NAMESPACE
 
 echo "✅ Deploy concluído!"
 echo "-------------------------------------------"

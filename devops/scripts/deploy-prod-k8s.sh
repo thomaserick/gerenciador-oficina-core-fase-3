@@ -6,7 +6,7 @@ set -e
 # =============================
 
 NAMESPACE="projeto"
-K8S_PATH="./devops/k8s/dev"
+K8S_PATH="./devops/k8s/prod"
 
 echo "🚀 Iniciando deploy Kubernetes no namespace: $NAMESPACE"
 

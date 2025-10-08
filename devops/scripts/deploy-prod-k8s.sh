@@ -13,6 +13,12 @@ echo "🚀 Iniciando deploy Kubernetes no namespace: $NAMESPACE"
 # Verifica se o namespace existe
 kubectl get namespace $NAMESPACE || kubectl apply -f $K8S_PATH/namespace.yaml
 
+echo "🔐 Aplicando secrets..."
+kubectl apply -f $K8S_PATH/postgres-secret.yaml -n $NAMESPACE
+
+echo "⚙️ Aplicando configmap..."
+kubectl apply -f $K8S_PATH/configmap.yaml -n $NAMESPACE
+
 echo "☕ Subindo aplicação Spring Boot..."
 kubectl apply -f $K8S_PATH/deployment.yaml -n $NAMESPACE
 

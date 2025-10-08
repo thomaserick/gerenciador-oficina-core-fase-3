@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: projeto-config
+data:
+  SPRING_DATASOURCE_URL: jdbc:postgresql://projeto-instance.car8w6k8i7hc.us-east-1.rds.amazonaws.com:5432/projeto
+

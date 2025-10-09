@@ -19,25 +19,37 @@ resource "aws_eks_cluster" "cluster" {
 
   bootstrap_self_managed_addons = false
 
-  zonal_shift_config {
-    enabled = true
-  }
-
-  compute_config {
-    enabled       = true
-    node_pools    = ["general-purpose", "system"]
-    node_role_arn = var.node_role_arn
-  }
-
-  kubernetes_network_config {
-    elastic_load_balancing {
-      enabled = true
+  dynamic "zonal_shift_config" {
+    for_each = var.eks_auto_mode ? [1] : []
+    content {
+      enabled = var.eks_auto_mode
     }
   }
 
-  storage_config {
-    block_storage {
-      enabled = true
+  dynamic "compute_config" {
+    for_each = var.eks_auto_mode ? [1] : []
+    content {
+      enabled       = var.eks_auto_mode
+      node_pools    = ["general-purpose", "system"]
+      node_role_arn = var.node_role_arn
+    }
+  }
+
+  dynamic "kubernetes_network_config" {
+    for_each = var.eks_auto_mode ? [1] : []
+    content {
+      elastic_load_balancing {
+        enabled = var.eks_auto_mode
+      }
+    }
+  }
+
+  dynamic "storage_config" {
+    for_each = var.eks_auto_mode ? [1] : []
+    content {
+      block_storage {
+        enabled = var.eks_auto_mode
+      }
     }
   }
 

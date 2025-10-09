@@ -1,23 +1,28 @@
+# VPC
 output "vpc_id" {
+  description = "ID da VPC principal"
   value       = aws_vpc.main.id
 }
 
-output "vpc_computing_subnet_1a_id" {
-  value       = aws_subnet.computing_subnet_1a.id
-}
-output "vpc_computing_subnet_1b_id" {
-  value       = aws_subnet.computing_subnet_1b.id
-}
-output "vpc_computing_subnet_1c_id" {
-  value       = aws_subnet.computing_subnet_1c.id
+output "vpc_cidr" {
+  description = "CIDR da VPC"
+  value       = aws_vpc.main.cidr_block
 }
 
-output "vpc_database_subnet_1a_id" {
-  value       = aws_subnet.database_subnet_1a.id
+# Internet Gateway
+output "internet_gateway_id" {
+  description = "ID do Internet Gateway"
+  value       = aws_internet_gateway.gw.id
 }
-output "vpc_database_subnet_1b_id" {
-  value       = aws_subnet.database_subnet_1b.id
+
+# Subnets públicas
+output "public_subnet_ids" {
+  description = "Lista de IDs das subnets públicas"
+  value       = [for subnet in aws_subnet.public : subnet.id]
 }
-output "vpc_database_subnet_1c_id" {
-  value       = aws_subnet.database_subnet_1c.id
-}
+
+# # Subnets privadas
+# output "private_subnet_ids" {
+#   description = "Lista de IDs das subnets privadas"
+#   value       = [for subnet in aws_subnet.private : subnet.id]
+# }

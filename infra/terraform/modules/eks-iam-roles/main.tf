@@ -24,6 +24,31 @@ resource "aws_iam_role_policy_attachment" "cluster_AmazonEKSClusterPolicy" {
   role       = aws_iam_role.cluster.name
 }
 
+# --- Políticas adicionais (somente se eks_auto_mode = true) ---
+resource "aws_iam_role_policy_attachment" "cluster_AmazonEKSBlockStoragePolicy" {
+  count      = var.eks_auto_mode ? 1 : 0
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSBlockStoragePolicy"
+  role       = aws_iam_role.cluster.name
+}
+
+resource "aws_iam_role_policy_attachment" "cluster_AmazonEKSComputePolicy" {
+  count      = var.eks_auto_mode ? 1 : 0
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSComputePolicy"
+  role       = aws_iam_role.cluster.name
+}
+
+resource "aws_iam_role_policy_attachment" "cluster_AmazonEKSLoadBalancingPolicy" {
+  count      = var.eks_auto_mode ? 1 : 0
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSLoadBalancingPolicy"
+  role       = aws_iam_role.cluster.name
+}
+
+resource "aws_iam_role_policy_attachment" "cluster_AmazonEKSNetworkingPolicy" {
+  count      = var.eks_auto_mode ? 1 : 0
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSNetworkingPolicy"
+  role       = aws_iam_role.cluster.name
+}
+
 # IAM Role para os nós (Node Group)
 resource "aws_iam_role" "node" {
   name = var.node_role_name
@@ -57,3 +82,5 @@ resource "aws_iam_role_policy_attachment" "node_AmazonEC2ContainerRegistryReadOn
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
   role       = aws_iam_role.node.name
 }
+
+

@@ -1,6 +1,15 @@
-## IAM ROLES Config ##
+## Ambiente para rodar no FREE TIER da AWS
+
+# Provider Config ##
+provider "aws" {
+  region = var.aws_region
+}
+
+
+# ## IAM ROLES Config ##
 module "eks_iam_roles" {
-  source = "../modules/eks-iam-roles"
+  source        = "../modules/eks-iam-roles"
+  eks_auto_mode = var.eks_auto_mode
 }
 
 ## VPC Config ##
@@ -10,34 +19,52 @@ module "vpc" {
   vpc_name = var.project_name
 }
 
-## EKS Config ##
+# ## EKS Config ##
 module "eks" {
   source        = "../modules/eks"
   cluster_name  = var.project_name
   role_arn      = module.eks_iam_roles.cluster_role_arn
   node_role_arn = module.eks_iam_roles.node_role_arn
   vpc_id        = module.vpc.vpc_id
-  vpc_subnets   = [module.vpc.vpc_computing_subnet_1a_id, module.vpc.vpc_computing_subnet_1b_id, module.vpc.vpc_computing_subnet_1c_id]
+  vpc_subnets   = module.vpc.public_subnet_ids
+  eks_auto_mode = var.eks_auto_mode
 
-  depends_on = [module.eks_iam_roles]
+  depends_on = [module.eks_iam_roles, module.vpc]
+
+}
+
+# ## EKS node Config ##
+# module "eks-node" {
+#   source        = "../modules/eks-node"
+#   cluster_name  = var.project_name
+#   node_role_arn = module.eks_iam_roles.node_role_arn
+#   vpc_subnets   = module.vpc.computing_subnet_ids
+#   depends_on    = [module.eks]
+# }
+
+
+
+# SG Config ##
+module "sg_rds" {
+  source     = "../modules/security_group/sg_rds"
+  vpc_cidr   = var.vpc_cidr
+  vpc_id     = module.vpc.vpc_id
+  depends_on = [module.vpc]
 }
 
 ## RDS Config ##
 module "rds" {
-  source            = "../modules/rds/cluster"
-  rds_name          = var.project_name
-  vpc_id            = module.vpc.vpc_id
-  vpc_cidr          = var.vpc_cidr
-  database_subnets  = [module.vpc.vpc_database_subnet_1a_id, module.vpc.vpc_database_subnet_1b_id, module.vpc.vpc_database_subnet_1c_id]
-  security_group_id = [module.sg_rds.security_group_id]
-  aws_region        = var.aws_region
+  source                    = "../modules/rds/single"
+  rds_name                  = var.project_name
+  database_subnets          = module.vpc.public_subnet_ids
+  security_group_id         = [module.sg_rds.security_group_id]
+  rds_engine                = var.aws_rds_engine
+  rds_engine_version        = var.aws_rds_engine_version
+  rds_instance_class        = var.aws_rds_instance_class
+  rds_storage_type          = var.aws_rds_storage_type
+  db_parameter_group_family = var.db_parameter_group_family
 
   depends_on = [module.sg_rds]
 }
 
-## SG Config ##
-module "sg_rds" {
-  source   = "../modules/security_group/sg_rds"
-  vpc_cidr = var.vpc_cidr
-  vpc_id   = module.vpc.vpc_id
-}
+

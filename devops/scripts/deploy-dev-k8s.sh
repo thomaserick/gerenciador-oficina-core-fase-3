@@ -12,28 +12,28 @@ echo "🚀 Iniciando deploy Kubernetes no namespace: $NAMESPACE"
 
 # Verifica se o namespace existe
 if ! kubectl get namespace "$NAMESPACE" &>/dev/null; then
-  echo "📦 Criando namespace $NAMESPACE..."
+  echo "Criando namespace $NAMESPACE..."
   kubectl apply -f $K8S_PATH/namespace.yaml
 else
-  echo "✅ Namespace $NAMESPACE já existe."
+  echo "Namespace $NAMESPACE já existe."
 fi
 
-echo "🔐 Aplicando secrets..."
+echo "Aplicando secrets..."
 kubectl apply -f $K8S_PATH/postgres-secret.yaml -n $NAMESPACE
 
-echo "⚙️ Aplicando configmap..."
+echo "Aplicando configmap..."
 kubectl apply -f $K8S_PATH/configmap.yaml -n $NAMESPACE
 
-echo "🐘 Subindo PostgreSQL..."
+echo "Subindo PostgreSQL..."
 kubectl apply -f $K8S_PATH/postgres-deployment.yaml -n $NAMESPACE
 
-echo "☕ Subindo aplicação Spring Boot..."
+echo "Subindo aplicação Spring Boot..."
 kubectl apply -f $K8S_PATH/deployment.yaml -n $NAMESPACE
 
-echo "🌐 Criando service para expor aplicação..."
+echo "Criando service para expor aplicação..."
 kubectl apply -f $K8S_PATH/services.yaml -n $NAMESPACE
 
-echo "📈 Aplicando Horizontal Pod Autoscaler..."
+echo "Aplicando Horizontal Pod Autoscaler..."
 kubectl apply -f $K8S_PATH/hpa.yaml -n $NAMESPACE
 
 echo "✅ Deploy concluído!"

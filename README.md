@@ -4,13 +4,19 @@
 [![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.2.0-green?logo=spring)](https://spring.io/projects/spring-boot)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-14-blue?logo=postgresql)](https://www.postgresql.org/)
 [![Docker](https://img.shields.io/badge/Docker-24.0+-blue?logo=docker)](https://www.docker.com/)
+[![Kubernetes](https://img.shields.io/badge/Kubernetes-1.27+-blue?logo=kubernetes)](https://kubernetes.io/)
+[![AWS](https://img.shields.io/badge/AWS-EKS-orange?logo=amazon-aws)](https://aws.amazon.com/eks/)
+[![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-Automation-black?logo=githubactions)](https://github.com/thomaserick/gerenciador-oficina-core-fase-2/actions/workflows/pipeline.yml)
 
 API para gerenciamento de uma oficina com autenticação e controle de estoque.
 
 ## 📋 Índice
 
 - [Tecnologias](#-tecnologias)
-- [Instalação](#-instalação)
+- [CI/CD Pipeline](#-cicd-pipeline--github-actions)
+- [Kubernetes (EKS)](#-kubernetes-eks)
+- [Instalação Local](#-instalação-local)
+- [Instalação Aws](#-instalação-Aws)
 - [Autenticação](#-autenticação)
 - [Documentação APIs](#-documentação-da-api)
 - [Documentação DDD](#-documentação-ddd)
@@ -27,8 +33,135 @@ API para gerenciamento de uma oficina com autenticação e controle de estoque.
 - **Flyway** - Migrações de banco
 - **OpenAPI/Swagger** - Documentação APIs
 - **Mockito** - Testes unitários
+- **GitHub Actions** - Automação CI/CD
+- **SonarQube** - Análise de qualidade e cobertura de código
+- **Terraform** - Gerenciador de Infraestrutura IaC
+- **Kubernetes (K8s)** - Deploy e escalonamento
+- **AWS EKS** - Orquestração de containers
+- **AWS RDS** - Banco de dados gerenciado (PostgreSQL)
+- **AWS IAM** - Gerenciamento de permissões e segurança
+- **AWS VPC** - Rede privada virtual
+- **AWS EC2** - Instâncias de servidores
 
-## ⚙️ Instalação
+## 🚀 CI/CD Pipeline – GitHub Actions
+
+Esta pipeline automatiza o processo de build, teste, análise, empacotamento e deploy da aplicação Gerenciador Oficina
+Core.
+Ela é executada automaticamente em eventos de push na branch main.
+
+### Fluxo da Pipeline
+
+                ┌────────────┐
+                │   Push /   │
+                │ PullRequest│
+                └──────┬─────┘
+                       │
+                       ▼
+                 🔨 Build
+                 (Gera .jar)
+                       │
+                       ▼
+                 ✅ Test
+              (Executa testes)
+                       │
+                       ▼
+              🔍 SonarQube Analysis
+          (Avalia qualidade do código)
+                       │
+                       ▼
+                 🐳 Docker
+      (Gera e publica imagem no Docker Hub)
+                       │
+                       ▼
+               ☁️ AWS Deploy
+      (Atualiza configmap + faz deploy no EKS)
+
+### 🔨 Job: Build
+
+Responsável por compilar o projeto e gerar o artefato `.jar`.
+
+- Faz checkout do código fonte.
+- Executa em um container Ubuntu com Java 17 e Maven pré-instalados.
+- Executa o comando: - mvn -B clean package -DskipTests
+- Faz upload do artefato gerado `(target/*.jar)` para ser reutilizado nos próximos jobs.
+
+### ✅ Job: test
+
+Executa os testes unitários:
+
+- Faz checkout do código.
+- Configura o Java 17.
+- Executa `mvn test` para validar o código antes de seguir.
+
+### 🔍 Job: SonarQube Analysis
+
+Realiza a análise estática de código com o SonarQube:
+
+- Faz checkout e configuração Java.
+- Utiliza cache do SonarQube para otimizar execução.
+- Executa:`
+mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+Dsonar.projectKey=CaioMC_gerenciador-oficina-core
+`
+- Autenticação via SONAR_TOKEN armazenado nos GitHub Secrets.
+
+### 🐳 Job: docker
+
+Cria e publica a imagem Docker da aplicação:
+
+- Faz download do artefato .jar gerado no job Build.
+- Faz login no Docker Hub usando secrets (DOCKERHUB_USERNAME e DOCKERHUB_TOKEN).
+- Configura o ambiente Docker Buildx.
+- Constrói e envia a imagem para o Docker Hub com as tags:
+    - latest
+    - run_number (versão incremental da execução da pipeline)
+- Publica em: `docker.io/<usuario-dockerhub>/gerenciador-oficina-core`
+
+### ☁️ Job: aws-deploy
+
+Realiza o deploy automático no AWS EKS:
+
+- Configura credenciais da AWS `(via AWS_ACCESS_KEY_ID_DEV e AWS_SECRET_ACCESS_KEY_DEV)`.
+- Instala e configura o kubectl.
+- Atualiza o kubeconfig para o cluster EKS
+- Obtém automaticamente o endpoint do banco RDS e substitui no `ConfigMap`
+- Executa o script `./devops/scripts/deploy-prod-k8s.sh
+` para aplicar as configurações Kubernetes.
+
+## ☸️ Kubernetes (EKS)
+
+A pasta devops/k8s/prod contém os manifestos Kubernetes utilizados para implantar e gerenciar a aplicação no cluster
+EKS (AWS).
+Cada arquivo tem uma função específica dentro do fluxo de deploy e operação em produção.
+
+### 📁 Estrutura
+
+```plaintext
+devops/
+├─ k8s/
+│   └─ prod/
+│       ├─ configmap.yaml
+│       ├─ deployment.yaml
+│       ├─ hpa.yaml
+│       ├─ namespace.yaml  
+│       ├─ service.yaml
+│       ├─ postgres-secret.yaml
+│       └─ services.yaml
+└─ scripts/
+    └─ deploy-prod-k8s.sh
+```
+
+| Arquivo                  | Descrição                                                                                                                                                                                                  |
+|--------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **namespace.yaml**       | Define o namespace onde os recursos da aplicação serão criados (isola o ambiente no cluster).                                                                                                              |
+| **configmap.yaml**       | Contém variáveis de configuração da aplicação, incluindo o endpoint do RDS                                                                                                                                 |
+| **postgres-secret.yaml** | Armazena de forma segura as credenciais de acesso ao banco de dados PostgreSQL (usuário e senha).                                                                                                          |
+| **deployment.yaml**      | Define como o container da aplicação é executado — imagem Docker, réplicas, volumes e variáveis de ambiente.                                                                                               |
+| **services.yaml**        | Expõe o deployment internamente ou externamente via LoadBalancer, tornando a aplicação acessível.                                                                                                          |
+| **hpa.yaml**             | Configura o **Horizontal Pod Autoscaler**, responsável por escalar os pods automaticamente conforme CPU/memória.                                                                                           |
+| **deploy-prod-k8s.sh**   | Script automatizado utilizado no pipeline de CI/CD para aplicar todos os manifests ( `kubectl apply -f`) no cluster EKS. Também atualiza o `ConfigMap` com o endpoint mais recente do RDS antes do deploy. |
+
+## ⚙️ Instalação Local
 
 ### Rodar o projeto local com Docker
 
@@ -109,6 +242,55 @@ API para gerenciamento de uma oficina com autenticação e controle de estoque.
     ```
 
 O sistema rodará na porta `localhost:8081`.
+
+## ⚙️ Instalação AWS
+
+#### Pré-requisitos
+
+- Docker 24.0+
+- Terraform v1.13+
+- AWS CLI v2+
+- Kubectl v1.27+
+
+Para subirmos todo o seviço na AWS para gerenciar nossa aplicação, precisamos executar alguns
+passos para primeiro subir toda nossa infraestrura para AWS e depois executar
+o CI/CD pelo github Actions pra fazer o deploy da aplicação.
+
+### Rodar o projeto AWS
+
+#### Comandos
+
+1. Crie um usuario na AWS que contenha a policy
+2. Gere as Secrets AWS-ACCESS-KEY-ID e AWS-SECRET-ACCESS-KEY (Guarde em um local seguro)
+3. Autenticar o usuario pelo AWS CLI
+
+  ```
+    aws configure
+    
+    Ex: AWS 
+      Access Key ID [****************2VXT]: 
+      AWS Secret Access Key [****************B9uz]: 
+      Default region name [us-east-1]: 
+      Default output format [json]:
+  ```
+
+4. Rodaremos o commando para subir toda nossa infraestrutura no servidor da `AWS EKS` para orquestação de containers
+   e RDS `postgres` para banco de dados relacional
+    1. Abra um terminal na pasta ./infra/terraform/prod para inicializar o terraform
+        ```
+        terraform init   
+        ```
+    2. Para de fato subir precisamos rodar o commando
+        ```
+        terraform apply
+        ```
+    3. Se tudo der certo vai subir 38 recursos na Aws de infra da nossa aplicação
+    4. Caso queira derrubar toda a infraestrura
+        ```
+        terraform destroy
+        ```
+5. Depois que toda infraestrutura estiver UP vamos para o proximo passo que é o deploy da aplicação
+6. Utilizamos o gitHub Actions onde é feito automaticamente o deploy da aplição para a nossa infra na AWS
 
 ## 🔑 Autenticação
 

@@ -140,15 +140,15 @@ jobs:
       - name: Update kubeconfig
         run: aws eks update-kubeconfig --region ${{env.AWS_REGION}} --name ${{ env.PROJECT_NAME }}
 
-      - name: Update endpoint RDS in ConfigMap
-        run: |
-          RDS_ENDPOINT=$(aws rds describe-db-instances \
-            --db-instance-identifier ${{ env.PROJECT_NAME }}-instance \
-            --query "DBInstances[0].Endpoint.Address" \
-            --output text)
-          kubectl create configmap gerenciador-oficina-config \
-            --from-literal=SPRING_DATASOURCE_URL=jdbc:postgresql://$RDS_ENDPOINT:5432/postgres \
-            -o yaml --dry-run=client | kubectl apply -f -
+      #      - name: Update endpoint RDS in ConfigMap
+      #        run: |
+      #          RDS_ENDPOINT=$(aws rds describe-db-instances \
+      #            --db-instance-identifier ${{ env.PROJECT_NAME }}-instance \
+      #            --query "DBInstances[0].Endpoint.Address" \
+      #            --output text)
+      #          kubectl create configmap gerenciador-oficina-config \
+      #            --from-literal=SPRING_DATASOURCE_URL=jdbc:postgresql://$RDS_ENDPOINT:5432/postgres \
+      #            -o yaml --dry-run=client | kubectl apply -f -
 
       # 🔹 Deploy no Kubernetes
       - name: Deploy to EKS

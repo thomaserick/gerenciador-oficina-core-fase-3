@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: gerenciador-oficina-config
 data:
-  SPRING_DATASOURCE_URL: jdbc:postgresql://url_rds:5432/postgres
+  SPRING_DATASOURCE_URL: jdbc:postgresql://gerenciador-oficina-core-instance.cu30s04uawn6.us-east-1.rds.amazonaws.com:5432/postgres
 

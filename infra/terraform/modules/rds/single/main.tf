@@ -21,7 +21,7 @@ resource "aws_db_instance" "rds_instance" {
   instance_class          = var.rds_instance_class
   allocated_storage       = var.rds_allocated_storage
   storage_type            = var.rds_storage_type
-  db_name                 = var.rds_name
+  db_name                 = var.rds_db_name
   username                = jsondecode(aws_secretsmanager_secret_version.secret_password_postgres.secret_string)["username"]
   password                = jsondecode(aws_secretsmanager_secret_version.secret_password_postgres.secret_string)["password"]
   parameter_group_name    = aws_db_parameter_group.db_parameter_group.name

@@ -1,12 +1,12 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: projeto-api
+  name: gerenciador-oficina-hpa
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: projeto-api
+    name: gerenciador-oficina-core-api
   minReplicas: 1
   maxReplicas: 4
   metrics:

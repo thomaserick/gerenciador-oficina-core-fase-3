@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: projeto-api
+  name: gerenciador-oficina-core-api
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: projeto-api
+      app: gerenciador-oficina-core-api
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -15,11 +15,11 @@ spec:
   template:
     metadata:
       labels:
-        app: projeto-api
+        app: gerenciador-oficina-core-api
     spec:
       terminationGracePeriodSeconds: 60
       containers:
-        - name: projeto-api
+        - name: gerenciador-oficina-core-api
           image: "docker.io/jayjayg/gerenciador-oficina-core:latest"
           resources:
             requests:
@@ -34,7 +34,7 @@ spec:
             - name: SPRING_DATASOURCE_URL
               valueFrom:
                 configMapKeyRef:
-                  name: projeto-config
+                  name: gerenciador-oficina-config
                   key: SPRING_DATASOURCE_URL
             - name: SPRING_DATASOURCE_USERNAME
               valueFrom:

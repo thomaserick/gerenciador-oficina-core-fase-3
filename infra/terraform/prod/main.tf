@@ -33,16 +33,6 @@ module "eks" {
 
 }
 
-# ## EKS node Config ##
-# module "eks-node" {
-#   source        = "../modules/eks-node"
-#   cluster_name  = var.project_name
-#   node_role_arn = module.eks_iam_roles.node_role_arn
-#   vpc_subnets   = module.vpc.computing_subnet_ids
-#   depends_on    = [module.eks]
-# }
-
-
 
 # SG Config ##
 module "sg_rds" {

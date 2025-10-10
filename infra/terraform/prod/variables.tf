@@ -1,4 +1,4 @@
-variable "project_name" { default = "projeto" }
+variable "project_name" { default = "gerenciador-oficina-core" }
 variable "aws_region" { default = "us-east-1" }
 variable "eks_auto_mode" {
   description = "Habilita o modo EKS Auto (gerenciado totalmente pela AWS)"

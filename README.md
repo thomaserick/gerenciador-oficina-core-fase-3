@@ -15,6 +15,7 @@ API para gerenciamento de uma oficina com autenticação e controle de estoque.
 - [Tecnologias](#-tecnologias)
 - [CI/CD Pipeline](#-cicd-pipeline--github-actions)
 - [Kubernetes (EKS)](#-kubernetes-eks)
+- [Infraestrutura (IaC) com Terraform](#-infraestrutura-iac-com-terraform)
 - [Instalação Local](#-instalação-local)
 - [Instalação Aws](#-instalação-Aws)
 - [Autenticação](#-autenticação)
@@ -161,6 +162,31 @@ devops/
 | **hpa.yaml**             | Configura o **Horizontal Pod Autoscaler**, responsável por escalar os pods automaticamente conforme CPU/memória.                                                                                           |
 | **deploy-prod-k8s.sh**   | Script automatizado utilizado no pipeline de CI/CD para aplicar todos os manifests ( `kubectl apply -f`) no cluster EKS. Também atualiza o `ConfigMap` com o endpoint mais recente do RDS antes do deploy. |
 
+### 🏗️ Infraestrutura (IaC) com Terraform
+
+A infraestrutura do projeto é provisionada utilizando Terraform,
+organizada de forma modular para facilitar a manutenção e o reuso dos componentes.
+
+### 📁 Estrutura
+
+```plaintext
+infra/
+└── terraform/
+    ├── modules/          
+    │   ├── vpc/                # Criação da VPC, subnets e rotas
+    │   ├── eks/                # Configuração do cluster EKS
+    │   ├── eks-iam-roles/      # Criação de roles e policies para o EKS
+    │   ├── rds/                # Instância do banco de dados RDS PostgreSQL com subnets privadas
+    │   └── security_group/     # Regras de segurança e grupos de acesso
+    ├── prod/
+    │   └── main.tf             # Arquivo principal que integra os módulos para o ambiente de produção
+```
+
+Cada módulo representa um componente independente da infraestrutura, permitindo o versionamento e a escalabilidade da
+arquitetura.
+O diretório prod/ contém a configuração do ambiente produtivo, referenciando os módulos necessários para provisionar
+toda a stack AWS.
+
 ## ⚙️ Instalação Local
 
 ### Rodar o projeto local com Docker
@@ -260,7 +286,7 @@ o CI/CD pelo github Actions pra fazer o deploy da aplicação.
 
 #### Comandos
 
-1. Crie um usuario na AWS que contenha a policy
+1. Crie um usuario na AWS que contenha a policy AdministratorAccess
 2. Gere as Secrets AWS-ACCESS-KEY-ID e AWS-SECRET-ACCESS-KEY (Guarde em um local seguro)
 3. Autenticar o usuario pelo AWS CLI
 
@@ -331,6 +357,4 @@ Commandos:
 ### [Diagrama](https://drive.google.com/file/d/1gpGtB9AUglij6xUx8oZw5JVPN-rvoWDh/view)
 
 ### [Imagem no Docker-Hub](https://hub.docker.com/repository/docker/caiomc/gerenciador-oficina-core)
-
-
 

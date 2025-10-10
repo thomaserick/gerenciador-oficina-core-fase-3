@@ -46,7 +46,7 @@ module "sg_rds" {
 module "rds" {
   source                    = "../modules/rds/single"
   rds_name                  = var.project_name
-  database_subnets          = module.vpc.public_subnet_ids
+  database_subnets          = module.vpc.private_subnet_ids
   security_group_id         = [module.sg_rds.security_group_id]
   rds_engine                = var.aws_rds_engine
   rds_engine_version        = var.aws_rds_engine_version

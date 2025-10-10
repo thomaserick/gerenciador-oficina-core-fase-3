@@ -28,7 +28,7 @@ resource "aws_db_instance" "rds_instance" {
   db_subnet_group_name    = aws_db_subnet_group.rds_snet_group.name
   vpc_security_group_ids  = var.security_group_id
   skip_final_snapshot     = true
-  publicly_accessible     = true # Libera para acesso externo
+  publicly_accessible     = false # Libera para acesso externo
   multi_az                = false
   backup_retention_period = 0 # zero para evitar snapshots automáticos; em produção defina >=1
   deletion_protection     = false

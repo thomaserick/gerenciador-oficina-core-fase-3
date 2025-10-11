@@ -23,6 +23,11 @@ rules:
   - apiGroups: [ "metrics.k8s.io" ]
     resources: [ "pods", "nodes" ]
     verbs: [ "get", "list", "watch" ]
+  - apiGroups: [ "" ]
+    resources: [ "configmaps" ]
+    resourceNames: [ "extension-apiserver-authentication" ]
+    verbs: [ "get", "list", "watch" ]
+
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -56,8 +61,10 @@ spec:
       serviceAccountName: metrics-server
       containers:
         - name: metrics-server
-          image: registry.k8s.io/metrics-server/metrics-server:v0.12.0
+          image: public.ecr.aws/eks-distro/kubernetes-sigs/metrics-server:v0.7.2-eks-1-29-latest
           args:
+            - --secure-port=4443
+            - --cert-dir=/tmp
             - --kubelet-insecure-tls
             - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
           ports:
@@ -71,6 +78,12 @@ spec:
             limits:
               cpu: 200m
               memory: 400Mi
+          volumeMounts:
+            - name: tmp-dir
+              mountPath: /tmp
+      volumes:
+        - name: tmp-dir
+          emptyDir: { }
 ---
 apiVersion: v1
 kind: Service
@@ -85,3 +98,4 @@ spec:
   ports:
     - port: 443
       targetPort: 4443
+      protocol: TCP

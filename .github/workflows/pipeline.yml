@@ -78,43 +78,43 @@ jobs:
   #          restore-keys: ${{ runner.os }}-sonar
   #
   #      - name: Run SonarQube Analysis
-  #        en
-  aws-deploy:v:
-    #          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-    #        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=CaioMC_gerenciador-oficina-core
-    #
-    #  docker:
-    #    name: Publish Docker Image
-    #    runs-on: ubuntu-latest
-    #    needs: sonar
-    #    steps:
-    #      - name: Checkout source
-    #        uses: actions/checkout@v4
-    #
-    #      - name: Download build artifact
-    #        uses: actions/download-artifact@v4
-    #        with:
-    #          name: app-jar
-    #          path: app
-    #
-    #      - name: Log in to Docker Hub
-    #        uses: docker/login-action@v3
-    #        with:
-    #          username: ${{ secrets.DOCKERHUB_USERNAME }}
-    #          password: ${{ secrets.DOCKERHUB_TOKEN }}
-    #
-    #      - name: Set up Docker Buildx
-    #        uses: docker/setup-buildx-action@v3
-    #
-    #      - name: Build and Push Docker Image
-    #        uses: docker/build-push-action@v6
-    #        with:
-    #          push: true
-    #          tags: |
-    #            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.PROJECT_NAME }}:${{ github.run_number }}
-    #            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.PROJECT_NAME }}:latest
-    #          context: .
+  #        env:
+  #          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  #        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=CaioMC_gerenciador-oficina-core
+  #
+  #  docker:
+  #    name: Publish Docker Image
+  #    runs-on: ubuntu-latest
+  #    needs: sonar
+  #    steps:
+  #      - name: Checkout source
+  #        uses: actions/checkout@v4
+  #
+  #      - name: Download build artifact
+  #        uses: actions/download-artifact@v4
+  #        with:
+  #          name: app-jar
+  #          path: app
+  #
+  #      - name: Log in to Docker Hub
+  #        uses: docker/login-action@v3
+  #        with:
+  #          username: ${{ secrets.DOCKERHUB_USERNAME }}
+  #          password: ${{ secrets.DOCKERHUB_TOKEN }}
+  #
+  #      - name: Set up Docker Buildx
+  #        uses: docker/setup-buildx-action@v3
+  #
+  #      - name: Build and Push Docker Image
+  #        uses: docker/build-push-action@v6
+  #        with:
+  #          push: true
+  #          tags: |
+  #            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.PROJECT_NAME }}:${{ github.run_number }}
+  #            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.PROJECT_NAME }}:latest
+  #          context: .
 
+  aws-deploy:
     name: Deploy to AWS EKS
     runs-on: ubuntu-latest
     needs: build

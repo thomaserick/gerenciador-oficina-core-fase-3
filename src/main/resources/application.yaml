@@ -50,7 +50,7 @@ spring:
     host: smtp.gmail.com
     port: 587
     username: oficina.mecanica.tech.fiap@gmail.com
-    password: wpqh xtpx nmiu npak
+    password: ${SMTP_PASSWORD}
     properties:
       mail:
         smtp:

@@ -36,20 +36,24 @@ public class EnviarEmailUseCaseImpl implements EnviarEmailUseCase {
     @Override
     public void handle(EnviarEmailCommand cmd) {
         try {
-            EmailTemplate emailTemplate = this.emailGateway.buscarTemplate(cmd.template())
-                    .orElseGet(() -> this.buscarTemplateDoResource(cmd.template()));
+//            EmailTemplate emailTemplate = this.emailGateway.buscarTemplate(cmd.template())
+//                    .orElseGet(() -> this.buscarTemplateDoResource(cmd.template()));
 
             MimeMessage message = this.mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, UTF_8_ENCONDING);
 
             helper.setTo(cmd.destinatario());
-            helper.setSubject(emailTemplate.getAssunto());
-            helper.setText(
-                    this.getFormattedText(cmd, emailTemplate),
-                    true
-            );
+//            helper.setSubject(emailTemplate.getAssunto());
+//            helper.setText(
+//                    this.getFormattedText(cmd, emailTemplate),
+//                    true
+//            );
 
+            message.setSubject("Teste SMTP EKS Gmail");
+            message.setText("✅ Funcionou! Teste de envio de e-mail via Gmail no EKS.");
             this.mailSender.send(message);
+
+
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             throw new EmailTemplateNaoFoiPossivelEnviarEmailException(

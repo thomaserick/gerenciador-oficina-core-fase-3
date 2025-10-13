@@ -140,6 +140,17 @@ jobs:
       - name: Update kubeconfig
         run: aws eks update-kubeconfig --region ${{env.AWS_REGION}} --name ${{ env.PROJECT_NAME }}
 
+      - name: Criar Secret SMTP
+        env:
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+        run: |
+          kubectl delete secret smtp-credentials -n ${{ env.PROJECT_NAME }} --ignore-not-found
+          kubectl create secret generic smtp-credentials \
+            --from-literal=username="$SMTP_USERNAME" \
+            --from-literal=password="$SMTP_PASSWORD" \
+            -n ${{ env.PROJECT_NAME }}
+
       - name: Atualizar e aplicar ConfigMap com endpoint do RDS
         run: |
           RDS_ENDPOINT=$(aws rds describe-db-instances \

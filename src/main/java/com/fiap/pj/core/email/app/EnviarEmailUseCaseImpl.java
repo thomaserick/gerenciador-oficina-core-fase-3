@@ -8,6 +8,7 @@ import com.fiap.pj.core.email.domain.enums.Template;
 import com.fiap.pj.core.email.exception.EmailTemplateExceptions.EmailTemplateNaoEncontradoException;
 import com.fiap.pj.core.email.exception.EmailTemplateExceptions.EmailTemplateNaoFoiPossivelEnviarEmailException;
 import jakarta.mail.internet.MimeMessage;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -18,6 +19,7 @@ import java.nio.file.Files;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
+@Slf4j
 public class EnviarEmailUseCaseImpl implements EnviarEmailUseCase {
 
     public static final String UTF_8_ENCONDING = "UTF-8";
@@ -49,6 +51,7 @@ public class EnviarEmailUseCaseImpl implements EnviarEmailUseCase {
 
             this.mailSender.send(message);
         } catch (Exception e) {
+            log.error(e.getMessage(), e);
             throw new EmailTemplateNaoFoiPossivelEnviarEmailException(
                     EXCEPTION_FALHA_ENVIO_EMAIL_MESSAGE,
                     e
@@ -77,7 +80,7 @@ public class EnviarEmailUseCaseImpl implements EnviarEmailUseCase {
         }
     }
 
-    private static String getFormattedText(EnviarEmailCommand cmd, EmailTemplate emailTemplate) {
+    private String getFormattedText(EnviarEmailCommand cmd, EmailTemplate emailTemplate) {
         return CollectionUtils.isEmpty(cmd.args())
                 ? emailTemplate.getCorpo()
                 : String.format(emailTemplate.getCorpo(), cmd.args().toArray());

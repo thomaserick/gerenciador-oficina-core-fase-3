@@ -39,80 +39,80 @@ jobs:
           name: app-jar
           path: target/*.jar
 
-    test:
-      name: Run Tests
-      runs-on: ubuntu-latest
-      needs: build
-      steps:
-        - name: Checkout source
-          uses: actions/checkout@v4
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
 
-        - name: Set up JDK ${{env.JAVA_VERSION}}
-          uses: actions/setup-java@v4
-          with:
-            java-version: ${{env.JAVA_VERSION}}
-            distribution: ${{env.DISTRIBUTION}}
+      - name: Set up JDK ${{env.JAVA_VERSION}}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{env.JAVA_VERSION}}
+          distribution: ${{env.DISTRIBUTION}}
 
-        - name: Run Unit Tests
-          run: mvn -B test
+      - name: Run Unit Tests
+        run: mvn -B test
 
-    sonar:
-      name: SonarQube Analysis
-      runs-on: ubuntu-latest
-      needs: test
-      steps:
-        - name: Checkout source
-          uses: actions/checkout@v4
+  sonar:
+    name: SonarQube Analysis
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
 
-        - name: Set up JDK ${{env.JAVA_VERSION}}
-          uses: actions/setup-java@v4
-          with:
-            java-version: ${{env.JAVA_VERSION}}
-            distribution: ${{env.DISTRIBUTION}}
+      - name: Set up JDK ${{env.JAVA_VERSION}}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{env.JAVA_VERSION}}
+          distribution: ${{env.DISTRIBUTION}}
 
-        - name: Cache SonarQube packages
-          uses: actions/cache@v4
-          with:
-            path: ~/.sonar/cache
-            key: ${{ runner.os }}-sonar
-            restore-keys: ${{ runner.os }}-sonar
+      - name: Cache SonarQube packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
 
-        - name: Run SonarQube Analysis
-          env:
-            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=CaioMC_gerenciador-oficina-core
+      - name: Run SonarQube Analysis
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=CaioMC_gerenciador-oficina-core
 
-    docker:
-      name: Publish Docker Image
-      runs-on: ubuntu-latest
-      needs: sonar
-      steps:
-        - name: Checkout source
-          uses: actions/checkout@v4
+  docker:
+    name: Publish Docker Image
+    runs-on: ubuntu-latest
+    needs: sonar
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
 
-        - name: Download build artifact
-          uses: actions/download-artifact@v4
-          with:
-            name: app-jar
-            path: app
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: app-jar
+          path: app
 
-        - name: Log in to Docker Hub
-          uses: docker/login-action@v3
-          with:
-            username: ${{ secrets.DOCKERHUB_USERNAME }}
-            password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-        - name: Set up Docker Buildx
-          uses: docker/setup-buildx-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-        - name: Build and Push Docker Image
-          uses: docker/build-push-action@v6
-          with:
-            push: true
-            tags: |
-              ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.PROJECT_NAME }}:${{ github.run_number }}
-              ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.PROJECT_NAME }}:latest
-            context: .
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.PROJECT_NAME }}:${{ github.run_number }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.PROJECT_NAME }}:latest
+          context: .
 
   aws-deploy:
     name: Deploy to AWS EKS
@@ -153,3 +153,4 @@ jobs:
         run: |
           chmod +x ./devops/scripts/deploy-prod-k8s.sh
           ./devops/scripts/deploy-prod-k8s.sh
+

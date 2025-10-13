@@ -7,15 +7,13 @@ import com.fiap.pj.core.email.domain.EmailTemplate;
 import com.fiap.pj.core.email.domain.enums.Template;
 import com.fiap.pj.core.email.exception.EmailTemplateExceptions.EmailTemplateNaoEncontradoException;
 import com.fiap.pj.core.email.exception.EmailTemplateExceptions.EmailTemplateNaoFoiPossivelEnviarEmailException;
+import com.fiap.pj.core.util.EmailTemplateUtils;
 import jakarta.mail.internet.MimeMessage;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.util.CollectionUtils;
 
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
@@ -36,23 +34,19 @@ public class EnviarEmailUseCaseImpl implements EnviarEmailUseCase {
     @Override
     public void handle(EnviarEmailCommand cmd) {
         try {
-//            EmailTemplate emailTemplate = this.emailGateway.buscarTemplate(cmd.template())
-//                    .orElseGet(() -> this.buscarTemplateDoResource(cmd.template()));
+            EmailTemplate emailTemplate = this.emailGateway.buscarTemplate(cmd.template())
+                    .orElseGet(() -> this.buscarTemplateDoResource(cmd.template()));
 
             MimeMessage message = this.mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, UTF_8_ENCONDING);
 
             helper.setTo(cmd.destinatario());
-//            helper.setSubject(emailTemplate.getAssunto());
-//            helper.setText(
-//                    this.getFormattedText(cmd, emailTemplate),
-//                    true
-//            );
-
-            message.setSubject("Teste SMTP EKS Gmail");
-            message.setText("✅ Funcionou! Teste de envio de e-mail via Gmail no EKS.");
+            helper.setSubject(emailTemplate.getAssunto());
+            helper.setText(
+                    this.getFormattedText(cmd, emailTemplate),
+                    true
+            );
             this.mailSender.send(message);
-
 
         } catch (Exception e) {
             log.error(e.getMessage(), e);
@@ -65,11 +59,9 @@ public class EnviarEmailUseCaseImpl implements EnviarEmailUseCase {
 
     private EmailTemplate buscarTemplateDoResource(Template templateEnum) {
         try {
-            String nomeArquivo = "email/" + templateEnum.name().toLowerCase() + ".html";
+            String nomeArquivo = templateEnum.name().toLowerCase() + ".html";
 
-            ClassPathResource resource = new ClassPathResource(nomeArquivo);
-
-            String corpo = Files.readString(resource.getFile().toPath(), StandardCharsets.UTF_8);
+            String corpo = EmailTemplateUtils.readEmailTemplateAsString(nomeArquivo);
             String assunto = templateEnum.getAssuntoPadrao();
 
             return new EmailTemplate(

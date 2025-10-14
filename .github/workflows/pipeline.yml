@@ -148,16 +148,13 @@ jobs:
             --output text)
           sed -i "s|{{RDS_ENDPOINT}}|$RDS_ENDPOINT|g" ./devops/k8s/prod/configmap.yaml
 
-      #      - name: Criar Secret SMTP
-      #        env:
-      #          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
-      #          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
-      #        run: |
-      #          kubectl delete secret smtp-credentials -n ${{ env.PROJECT_NAME }} --ignore-not-found
-      #          kubectl create secret generic smtp-credentials \
-      #            --from-literal=username="$SMTP_USERNAME" \
-      #            --from-literal=password="$SMTP_PASSWORD" \
-      #            -n ${{ env.PROJECT_NAME }}
+      - name: Substituir variáveis do Secret SMTP
+        env:
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+        run: |
+          sed -i "s|\${SMTP_USERNAME}|${SMTP_USERNAME}|g" ./devops/k8s/prod/smtp-secret.yaml
+          sed -i "s|\${SMTP_PASSWORD}|${SMTP_PASSWORD}|g" ./devops/k8s/prod/smtp-secret.yaml
 
       # 🔹 Deploy no Kubernetes
       - name: Deploy to EKS

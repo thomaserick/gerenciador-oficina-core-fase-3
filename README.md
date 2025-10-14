@@ -345,5 +345,5 @@ Commandos:
 
 ### [Diagrama](https://drive.google.com/file/d/1gpGtB9AUglij6xUx8oZw5JVPN-rvoWDh/view)
 
-### [Imagem no Docker-Hub](https://hub.docker.com/repository/docker/caiomc/gerenciador-oficina-core)
+### [Imagem no Docker-Hub](https://hub.docker.com/r/jayjayg/gerenciador-oficina-core)
 

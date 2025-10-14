@@ -44,38 +44,27 @@ API para gerenciamento de uma oficina com autenticação e controle de estoque.
 - **AWS VPC** - Rede privada virtual
 - **AWS EC2** - Instâncias de servidores
 
+## 🚀 Troca - Hexagonal Architecture ➡️ Clean Architecture
+
+| Hexagonal Architecture                                   | Clean Architecture                                    |
+|----------------------------------------------------------|-------------------------------------------------------|
+| ![Hexagonal](docs/assets/arquitetura-hexagonal.png)      | ![Clean](docs/assets/clean-architecture.png)          |
+
+[ℹ️ Nova estrutura do projeto](docs/adrs/ADR.001.md)
+
+## ⚙️ Terraform – Fluxo da Infraestrutura
+
+![Terraform](docs/assets/terraform-fluxo-infra.jpg)
+
+[ℹ️ Terraform](infra/terraform)
+
 ## 🚀 CI/CD Pipeline – GitHub Actions
 
 Esta pipeline automatiza o processo de build, teste, análise, empacotamento e deploy da aplicação Gerenciador Oficina
 Core.
 Ela é executada automaticamente em eventos de push na branch main.
 
-### Fluxo da Pipeline
-
-                ┌────────────┐
-                │   Push /   │
-                │ PullRequest│
-                └──────┬─────┘
-                       │
-                       ▼
-                 🔨 Build
-                 (Gera .jar)
-                       │
-                       ▼
-                 ✅ Test
-              (Executa testes)
-                       │
-                       ▼
-              🔍 SonarQube Analysis
-          (Avalia qualidade do código)
-                       │
-                       ▼
-                 🐳 Docker
-      (Gera e publica imagem no Docker Hub)
-                       │
-                       ▼
-               ☁️ AWS Deploy
-      (Atualiza configmap + faz deploy no EKS)
+![Terraform](docs/assets/ci-cd-fluxo-pipeline.jpg)
 
 ### 🔨 Job: Build
 
@@ -216,7 +205,7 @@ toda a stack AWS.
 1. Aplique os manifests manualmente ou utilize o comando abaixo para aplicar todos os manifests da pasta k8s
 
 ```bash
-  ./devops/k8s/deploy-dev-k8s.sh
+  ./devops/scripts/deploy-dev-k8s.sh
 ```
 
 2. Verifique se os pods estão rodando

@@ -24,7 +24,6 @@ public class OrcamentoExternoController implements OrcamentoExternoControllerOpe
     private final AprovarOrcamentoExternoUseCase aprovarOrcamentoExternoUseCase;
     private final ReprovarOrcamentoExternoUseCase reprovarOrcamentoExternoUseCase;
 
-
     @PostMapping("/{id}/aprovar")
     public ResponseEntity<Void> aprovarOrcamento(@PathVariable UUID id) {
         this.aprovarOrcamentoExternoUseCase.handle(id);

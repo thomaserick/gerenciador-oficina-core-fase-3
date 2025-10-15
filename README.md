@@ -12,6 +12,7 @@ API para gerenciamento de uma oficina com autenticação e controle de estoque.
 
 ## 📋 Índice
 
+- [Vídeos de Demonstração](#-vídeos-de-demonstração)
 - [Tecnologias](#-tecnologias)
 - [CI/CD Pipeline](#-cicd-pipeline--github-actions)
 - [Kubernetes (EKS)](#-kubernetes-eks)
@@ -21,6 +22,16 @@ API para gerenciamento de uma oficina com autenticação e controle de estoque.
 - [Autenticação](#-autenticação)
 - [Documentação APIs](#-documentação-da-api)
 - [Documentação DDD](#-documentação-ddd)
+
+### 🎬 Vídeos de Demonstração
+
+### Visão completa do ambiente em execução:
+
+1. [Overview entregavel](https://www.loom.com/share/e55bb833fa6846a195aabde72ca01fd0?sid=fd86d25e-31dc-4435-b230-00b93d0672d9)
+2. [Terraform - Infraestrutura como Código (IaC)](https://www.loom.com/share/08cd0dbcbe414557b50d38291db85cfa?sid=919e30db-d432-4695-a0a2-bff2ae2fe9ba)
+3. [Consumo das APIs](https://www.loom.com/share/954ad4d1a46148e5ace6c8abd83b7b57?sid=22d3f36d-880e-4fcc-95ea-bf639a52019a)
+4. [HorizontalPodAutoscaler - HPA](https://www.loom.com/share/c81d396b7e464c0582d115620af54849?sid=3e4ccc01-27c6-4599-acb1-7e5a11c708f4)
+5. [CI/CD Pipeline - GitHub Actions](https://www.loom.com/share/83d3ee145aa6452dadd796a1f07748ea)
 
 ## 🛠 Tecnologias
 
@@ -46,9 +57,9 @@ API para gerenciamento de uma oficina com autenticação e controle de estoque.
 
 ## 🚀 Troca - Hexagonal Architecture ➡️ Clean Architecture
 
-| Hexagonal Architecture                                   | Clean Architecture                                    |
-|----------------------------------------------------------|-------------------------------------------------------|
-| ![Hexagonal](docs/assets/arquitetura-hexagonal.png)      | ![Clean](docs/assets/clean-architecture.png)          |
+| Hexagonal Architecture                              | Clean Architecture                           |
+|-----------------------------------------------------|----------------------------------------------|
+| ![Hexagonal](docs/assets/arquitetura-hexagonal.png) | ![Clean](docs/assets/clean-architecture.png) |
 
 [ℹ️ Nova estrutura do projeto](docs/adrs/ADR.001.md)
 

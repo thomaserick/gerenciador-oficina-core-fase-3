@@ -20,7 +20,7 @@ spec:
       terminationGracePeriodSeconds: 60
       containers:
         - name: gerenciador-oficina-api
-          image: "docker.io/jayjayg/gerenciador-oficina-core:latest"
+          image: "docker.io/thomaserick/gerenciador-oficina-core:latest"
           resources:
             requests:
               memory: "1200Mi"

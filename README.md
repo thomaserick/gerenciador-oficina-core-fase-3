@@ -364,5 +364,5 @@ utilizar o endpoint `/usuarios`.
 
 ### [Diagrama](https://drive.google.com/file/d/1gpGtB9AUglij6xUx8oZw5JVPN-rvoWDh/view)
 
-### [Imagem no Docker-Hub](https://hub.docker.com/r/jayjayg/gerenciador-oficina-core)
+### [Imagem no Docker-Hub](https://hub.docker.com/r/thomaserick/gerenciador-oficina-core)
 

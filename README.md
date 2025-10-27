@@ -1,4 +1,4 @@
-# 🛠 API de Gerenciador de Oficina - Fase 2
+# 🛠 API de Gerenciador de Oficina - Fase 3
 
 [![Java](https://img.shields.io/badge/Java-17+-orange?logo=openjdk)](https://openjdk.org/)
 [![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.2.0-green?logo=spring)](https://spring.io/projects/spring-boot)
@@ -8,7 +8,22 @@
 [![AWS](https://img.shields.io/badge/AWS-EKS-orange?logo=amazon-aws)](https://aws.amazon.com/eks/)
 [![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-Automation-black?logo=githubactions)](https://github.com/thomaserick/gerenciador-oficina-core-fase-2/actions/workflows/pipeline.yml)
 
+
 API para gerenciamento de uma oficina com autenticação e controle de estoque.
+
+## 🔗 Repositórios Relacionados — Fase 3
+
+A arquitetura do **Gerenciador de Oficina — Fase 3** é composta por múltiplos módulos independentes, cada um versionado em um repositório separado para facilitar a manutenção e o CI/CD.
+
+| Módulo | Descrição | Repositório                                                                                                                 |
+|:-------|:-----------|:----------------------------------------------------------------------------------------------------------------------------|
+| 🧱 **Core Application** | Aplicação principal responsável pelas regras de negócio, APIs REST e integração com os demais módulos. | [thomasserick/gerenciador-oficina-core-fase-3](https://github.com/thomaserick/gerenciador-oficina-core-fase-3)              |
+| ⚡ **Lambda Functions** | Conjunto de funções *serverless* para processamento assíncrono, notificações e automações event-driven. | [thomasserick/gerenciador-oficina-lambda-fase-3](https://github.com/thomaserick/gerenciador-oficina-lambda-fase-3)          |
+| ☸️ **Kubernetes Infrastructure** | Infraestrutura da aplicação no Kubernetes, incluindo manifests, deployments, ingress e autoscaling. | [thomaserick/gerenciador-oficina-k8s-infra-fase-3](https://github.com/thomasserick/gerenciador-oficina-k8s-infra-fase-3)    |
+| 🗄️ **Database Infrastructure** | Infraestrutura do banco de dados gerenciado (RDS PostgreSQL), versionada e automatizada via Terraform. | [thomasserick/gerenciador-oficina-db-infra-fase-3](https://github.com/thomaserick/gerenciador-oficina-db-infra-fase-3) |
+
+> 🔍 Cada repositório é autônomo, mas integra-se ao **Core** por meio de pipelines e configurações declarativas (Terraform e CI/CD).
+
 
 ## 📋 Índice
 
@@ -27,11 +42,8 @@ API para gerenciamento de uma oficina com autenticação e controle de estoque.
 
 ### Visão completa do ambiente em execução:
 
-1. [Overview entregavel](https://www.loom.com/share/e55bb833fa6846a195aabde72ca01fd0?sid=fd86d25e-31dc-4435-b230-00b93d0672d9)
-2. [Terraform - Infraestrutura como Código (IaC)](https://www.loom.com/share/08cd0dbcbe414557b50d38291db85cfa?sid=919e30db-d432-4695-a0a2-bff2ae2fe9ba)
-3. [Consumo das APIs](https://www.loom.com/share/954ad4d1a46148e5ace6c8abd83b7b57?sid=22d3f36d-880e-4fcc-95ea-bf639a52019a)
-4. [HorizontalPodAutoscaler - HPA](https://www.loom.com/share/c81d396b7e464c0582d115620af54849?sid=3e4ccc01-27c6-4599-acb1-7e5a11c708f4)
-5. [CI/CD Pipeline - GitHub Actions](https://www.loom.com/share/83d3ee145aa6452dadd796a1f07748ea)
+1. Em construção...
+
 
 ## 🛠 Tecnologias
 
@@ -341,10 +353,6 @@ utilizar o endpoint `/usuarios`.
 }
 
 ```
-
-Commandos:
-
-- kubectl port-forward service/gerenciador-oficina-service 8081:8081 -n gerenciador-oficina-core
 
 ## 📚 Documentação da API
 

@@ -77,7 +77,7 @@ A arquitetura do **Gerenciador de Oficina — Fase 3** é composta por múltiplo
 
 ## ⚙️ Terraform – Fluxo da Infraestrutura
 
-![Terraform](docs/assets/terraform-fluxo-infra.jpg)
+![Terraform](../gerenciador-oficina-db-infra-fase-3/docs/assets/terraform-fluxo-infra.jpg)
 
 [ℹ️ Terraform](infra/terraform)
 

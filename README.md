@@ -31,7 +31,6 @@ A arquitetura do **Gerenciador de Oficina — Fase 3** é composta por múltiplo
 - [Tecnologias](#-tecnologias)
 - [CI/CD Pipeline](#-cicd-pipeline--github-actions)
 - [Kubernetes (EKS)](#-kubernetes-eks)
-- [Infraestrutura (IaC) com Terraform](#-infraestrutura-iac-com-terraform)
 - [Instalação Local](#-instalação-local)
 - [Instalação Aws](#-instalação-Aws)
 - [Autenticação](#-autenticação)
@@ -67,19 +66,14 @@ A arquitetura do **Gerenciador de Oficina — Fase 3** é composta por múltiplo
 - **AWS VPC** - Rede privada virtual
 - **AWS EC2** - Instâncias de servidores
 
-## 🚀 Troca - Hexagonal Architecture ➡️ Clean Architecture
-
-| Hexagonal Architecture                              | Clean Architecture                           |
-|-----------------------------------------------------|----------------------------------------------|
+## 🚀 Arquitetura 
+| Clean Architecture                           |
+|----------------------------------------------|
 | ![Hexagonal](docs/assets/arquitetura-hexagonal.png) | ![Clean](docs/assets/clean-architecture.png) |
 
-[ℹ️ Nova estrutura do projeto](docs/adrs/ADR.001.md)
-
-## ⚙️ Terraform – Fluxo da Infraestrutura
+## ⚙️ Fluxo da Infraestrutura
 
 ![Terraform](docs/assets/terraform-fluxo-infra.jpg)
-
-[ℹ️ Terraform](infra/terraform)
 
 ## 🚀 CI/CD Pipeline – GitHub Actions
 
@@ -87,7 +81,7 @@ Esta pipeline automatiza o processo de build, teste, análise, empacotamento e d
 Core.
 Ela é executada automaticamente em eventos de push na branch main.
 
-![Terraform](docs/assets/ci-cd-fluxo-pipeline.jpg)
+![Pipeline](docs/assets/ci-cd-fluxo-pipeline.jpg)
 
 ### 🔨 Job: Build
 
@@ -174,30 +168,6 @@ devops/
 | **hpa.yaml**             | Configura o **Horizontal Pod Autoscaler**, responsável por escalar os pods automaticamente conforme CPU/memória.                                                                                           |
 | **deploy-prod-k8s.sh**   | Script automatizado utilizado no pipeline de CI/CD para aplicar todos os manifests ( `kubectl apply -f`) no cluster EKS. Também atualiza o `ConfigMap` com o endpoint mais recente do RDS antes do deploy. |
 
-### 🏗️ Infraestrutura (IaC) com Terraform
-
-A infraestrutura do projeto é provisionada utilizando Terraform,
-organizada de forma modular para facilitar a manutenção e o reuso dos componentes.
-
-### 📁 Estrutura
-
-```plaintext
-infra/
-└── terraform/
-    ├── modules/          
-    │   ├── vpc/                # Criação da VPC, subnets e rotas
-    │   ├── eks/                # Configuração do cluster EKS
-    │   ├── eks-iam-roles/      # Criação de roles e policies para o EKS
-    │   ├── rds/                # Instância do banco de dados RDS PostgreSQL com subnets privadas
-    │   └── security_group/     # Regras de segurança e grupos de acesso
-    ├── prod/
-    │   └── main.tf             # Arquivo principal que integra os módulos para o ambiente de produção
-```
-
-Cada módulo representa um componente independente da infraestrutura, permitindo o versionamento e a escalabilidade da
-arquitetura.
-O diretório prod/ contém a configuração do ambiente produtivo, referenciando os módulos necessários para provisionar
-toda a stack AWS.
 
 ## ⚙️ Instalação Local
 

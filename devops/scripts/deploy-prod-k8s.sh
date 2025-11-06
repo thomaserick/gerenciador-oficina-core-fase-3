@@ -20,15 +20,11 @@ kubectl apply -f $K8S_PATH/smtp-secret.yaml -n $NAMESPACE
 echo "Aplicando configmap..."
 kubectl apply -f $K8S_PATH/configmap.yaml -n $NAMESPACE
 
-echo "Aplicando Metrics Server..."
-kubectl apply -f $K8S_PATH/metrics-server.yaml
-
 echo "Subindo aplicação Spring Boot..."
 kubectl apply -f $K8S_PATH/deployment.yaml -n $NAMESPACE
 
 echo "Criando service para expor aplicação..."
 kubectl apply -f $K8S_PATH/services.yaml -n $NAMESPACE
-
 
 echo "Aplicando Horizontal Pod Autoscaler..."
 kubectl apply -f $K8S_PATH/hpa.yaml -n $NAMESPACE

@@ -9,6 +9,7 @@ on:
 
 env:
   PROJECT_NAME: 'gerenciador-oficina-core'
+  RDS_DB_NAME: 'gerenciador-oficina-rds-instance'
   JAVA_VERSION: '17.0.13'
   DISTRIBUTION: 'zulu'
   AWS_REGION: 'us-east-1'
@@ -143,7 +144,7 @@ jobs:
       - name: Atualizar e aplicar ConfigMap com endpoint do RDS
         run: |
           RDS_ENDPOINT=$(aws rds describe-db-instances \
-            --db-instance-identifier ${{ env.PROJECT_NAME }}-instance \
+            --db-instance-identifier ${{ env.RDS_DB_NAME }} \
             --query "DBInstances[0].Endpoint.Address" \
             --output text)
           sed -i "s|{{RDS_ENDPOINT}}|$RDS_ENDPOINT|g" ./devops/k8s/prod/configmap.yaml

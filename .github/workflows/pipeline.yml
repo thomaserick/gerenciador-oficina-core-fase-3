@@ -9,7 +9,7 @@ on:
 
 env:
   PROJECT_NAME: 'gerenciador-oficina-core'
-  RDS_DB_NAME: 'gerenciador-oficina-rds-instance'
+  RDS_DB_NAME: 'gerenciador-oficina-rds'
   JAVA_VERSION: '17.0.13'
   DISTRIBUTION: 'zulu'
   AWS_REGION: 'us-east-1'

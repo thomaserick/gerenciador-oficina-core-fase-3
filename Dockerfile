@@ -1,14 +1,11 @@
-# Build the application
-FROM maven:3.8.8-amazoncorretto-17 AS build
-WORKDIR /app
-COPY pom.xml .
-RUN mvn dependency:go-offline
-COPY src ./src
-RUN mvn clean install -DskipTests
+FROM eclipse-temurin:17-jdk-jammy
 
-# Create the final image
-FROM openjdk:17-jdk-slim
+# Define o diretório de trabalho
 WORKDIR /app
-COPY --from=build /app/target/*.jar app.jar
+
+# Copia o JAR gerado pelo job anterior
+COPY app/*.jar app.jar
+
 EXPOSE 8081
+# Comando de inicialização
 ENTRYPOINT ["java", "-jar", "app.jar"]

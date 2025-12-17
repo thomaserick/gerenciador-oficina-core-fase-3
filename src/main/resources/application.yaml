@@ -104,6 +104,9 @@ management:
   endpoint:
     metrics:
       enabled: false
+    health:
+      probes:
+        enabled: true
 
 server:
   port: 8081

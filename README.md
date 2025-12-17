@@ -248,6 +248,13 @@ devops/
     ```
     spring.profiles.active=dev
     ```
+4. Adicionar o agent do newrelic na execução da aplicação
+
+    ```
+    -javaagent:pathCompleto/gerenciador-oficina-core-fase-3/newrelic/newrelic.jar
+    ```
+5. Configurar a key do newRelic ${NEW_RELIC_LICENSE_KEY} nas variaveis de ambiente da aplicação
+
 
 O sistema rodará na porta `localhost:8081`.
 

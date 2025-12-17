@@ -20,6 +20,7 @@ fi
 
 echo "Aplicando secrets..."
 kubectl apply -f $K8S_PATH/postgres-secret.yaml -n $NAMESPACE
+kubectl apply -f $K8S_PATH/newrelic-secret.yaml -n $NAMESPACE
 
 echo "Aplicando configmap..."
 kubectl apply -f $K8S_PATH/configmap.yaml -n $NAMESPACE

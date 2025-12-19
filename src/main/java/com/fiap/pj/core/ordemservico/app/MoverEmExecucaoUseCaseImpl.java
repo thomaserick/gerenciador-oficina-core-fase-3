@@ -8,6 +8,8 @@ import com.fiap.pj.core.email.app.usecase.command.EnviarEmailCommand;
 import com.fiap.pj.core.email.domain.enums.Template;
 import com.fiap.pj.core.ordemservico.app.gateways.OrdemServicoGateway;
 import com.fiap.pj.core.ordemservico.app.usecase.MoverEmExecucaoUseCase;
+import com.fiap.pj.core.ordemservico.app.usecase.RegistrarStatusOrdemServicoUseCase;
+import com.fiap.pj.core.ordemservico.app.usecase.command.RegistrarStatusOrdemServicoCommand;
 import com.fiap.pj.core.ordemservico.domain.OrdemServico;
 import com.fiap.pj.core.ordemservico.domain.enums.OrdemServicoStatus;
 import com.fiap.pj.core.ordemservico.exception.OrdemServicoExceptions.OrdemServicoNaoEncontradaException;
@@ -20,20 +22,22 @@ public class MoverEmExecucaoUseCaseImpl implements MoverEmExecucaoUseCase {
     private final OrdemServicoGateway ordemServicoGateway;
     private final EnviarEmailUseCase enviarEmailUseCase;
     private final ClienteGateway clienteGateway;
+    private final RegistrarStatusOrdemServicoUseCase registrarStatusOrdemServicoUseCase;
 
-    public MoverEmExecucaoUseCaseImpl(OrdemServicoGateway ordemServicoGateway, EnviarEmailUseCase enviarEmailUseCase, ClienteGateway clienteGateway) {
+    public MoverEmExecucaoUseCaseImpl(OrdemServicoGateway ordemServicoGateway, EnviarEmailUseCase enviarEmailUseCase, ClienteGateway clienteGateway, RegistrarStatusOrdemServicoUseCase registrarStatusOrdemServicoUseCase) {
         this.ordemServicoGateway = ordemServicoGateway;
         this.enviarEmailUseCase = enviarEmailUseCase;
         this.clienteGateway = clienteGateway;
+        this.registrarStatusOrdemServicoUseCase = registrarStatusOrdemServicoUseCase;
     }
 
     @Override
     public void handle(UUID id) {
         OrdemServico ordemServico = this.ordemServicoGateway.buscarPorId(id).orElseThrow(OrdemServicoNaoEncontradaException::new);
+        var dataCriacaoStatusAtual = ordemServico.getDataCriacaoStatusAtual();
         ordemServico.moverEmExecucao();
-
         this.ordemServicoGateway.salvar(ordemServico);
-
+        registrarStatusOrdemServicoUseCase.handle(new RegistrarStatusOrdemServicoCommand(ordemServico,dataCriacaoStatusAtual));
         this.enviarEmail(ordemServico);
     }
 

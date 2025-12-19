@@ -20,8 +20,10 @@ import com.fiap.pj.core.veiculo.app.gateways.VeiculoGateway;
 import com.fiap.pj.core.veiculo.domain.Veiculo;
 import com.fiap.pj.core.veiculo.exception.VeiculoExceptions.VeiculoNaoEncontradoException;
 import com.fiap.pj.infra.util.security.SecurityContextUtils;
+import com.newrelic.api.agent.NewRelic;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 
@@ -77,6 +79,9 @@ public class CriarOrcamentoUseCaseImpl extends OrcamentoUseCaseImpl implements C
 
         Veiculo veiculo = this.veiculoGateway.buscarPorId(cmd.getVeiculoId()).orElseThrow(VeiculoNaoEncontradoException::new);
 
+        NewRelic.getAgent().getInsights().recordCustomEvent(
+                "OrcamentoCriado", Map.of("orcamentoId", orcamento.getId().toString(),"status", orcamento.getStatus().name()));
+
         this.enviarEmailUseCase.handle(
                 new EnviarEmailCommand(
                         cliente.getEmail(),
@@ -88,6 +93,8 @@ public class CriarOrcamentoUseCaseImpl extends OrcamentoUseCaseImpl implements C
                         )
                 )
         );
+
+
 
         return orcamento;
     }

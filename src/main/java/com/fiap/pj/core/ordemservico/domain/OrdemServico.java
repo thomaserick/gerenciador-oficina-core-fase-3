@@ -13,8 +13,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -106,6 +110,16 @@ public class OrdemServico {
         this.diagnostico = new Diagnostico(this.id, descricao);
     }
 
+    public ZonedDateTime getDataCriacaoStatusAtual() {
+        return this.getUltimaSituacao().map(SituacaoOrdemServico::getDataCriacao).orElse(ZonedDateTime.now(ZoneOffset.UTC));
+    }
+
+    private Optional<SituacaoOrdemServico> getUltimaSituacao() {
+        return this.historicoSituacao.stream()
+                .max(Comparator.comparing(SituacaoOrdemServico::getDataCriacao));
+    }
+
+
     private void validarStatusParaInserirDiagnostico() {
         if (!OrdemServicoStatus.EM_DIAGNOSTICO.equals(this.status)) {
             throw new OrdemServicoStatusInvalidoDiagnosticoException();
@@ -117,4 +131,6 @@ public class OrdemServico {
         this.getHistoricoSituacao().add(situacao);
         this.status = status;
     }
+
+
 }

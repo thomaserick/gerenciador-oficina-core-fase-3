@@ -1,6 +1,7 @@
 package com.fiap.pj.core.ordemservico.app;
 
 
+import com.fiap.pj.core.observability.app.gateways.ObservabilityGateway;
 import com.fiap.pj.core.ordemservico.app.gateways.OrdemServicoGateway;
 import com.fiap.pj.core.ordemservico.domain.OrdemServico;
 import com.fiap.pj.core.ordemservico.util.factory.OrdemServicoTestFactory;
@@ -24,6 +25,9 @@ class CriarOrdemServicoServiceTest {
 
     @Mock
     private OrdemServicoGateway ordemServicoGateway;
+
+    @Mock
+    private ObservabilityGateway observabilityGateway;
 
     @InjectMocks
     private CriarOrdemServicoUseCaseImpl criarOrdemServicoUseCaseImpl;

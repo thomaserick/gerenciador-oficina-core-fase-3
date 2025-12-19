@@ -108,5 +108,9 @@ management:
       probes:
         enabled: true
 
+email:
+  enabled: true
+
+
 server:
   port: 8081

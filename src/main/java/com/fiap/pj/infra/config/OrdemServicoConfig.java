@@ -3,6 +3,7 @@ package com.fiap.pj.infra.config;
 
 import com.fiap.pj.core.cliente.app.gateways.ClienteGateway;
 import com.fiap.pj.core.email.app.usecase.EnviarEmailUseCase;
+import com.fiap.pj.core.observability.app.gateways.ObservabilityGateway;
 import com.fiap.pj.core.ordemservico.app.*;
 import com.fiap.pj.core.ordemservico.app.gateways.OrdemServicoGateway;
 import com.fiap.pj.core.ordemservico.app.usecase.*;
@@ -15,9 +16,9 @@ import org.springframework.context.annotation.Configuration;
 public class OrdemServicoConfig {
 
     @Bean
-    CriarOrdemServicoUseCase criarOrdemServicoUseCase(OrdemServicoGateway ordemServicoGateway
-    ) {
-        return new CriarOrdemServicoUseCaseImpl(ordemServicoGateway);
+    CriarOrdemServicoUseCase criarOrdemServicoUseCase(OrdemServicoGateway ordemServicoGateway, ObservabilityGateway observabilityGateway
+                                                      ) {
+        return new CriarOrdemServicoUseCaseImpl(ordemServicoGateway, observabilityGateway);
     }
 
     @Bean
@@ -32,13 +33,13 @@ public class OrdemServicoConfig {
     }
 
     @Bean
-    MoverEmDiagnosticoUseCase moverEmDiagnosticoUseCase(OrdemServicoGateway ordemServicoGateway, EnviarEmailUseCase enviarEmailUseCase, ClienteGateway clienteGateway) {
-        return new MoverEmDiagnosticoUseCaseImpl(ordemServicoGateway, enviarEmailUseCase, clienteGateway);
+    MoverEmDiagnosticoUseCase moverEmDiagnosticoUseCase(OrdemServicoGateway ordemServicoGateway, EnviarEmailUseCase enviarEmailUseCase, ClienteGateway clienteGateway,RegistrarStatusOrdemServicoUseCase registrarStatusOrdemServicoUseCase) {
+        return new MoverEmDiagnosticoUseCaseImpl(ordemServicoGateway, enviarEmailUseCase, clienteGateway,registrarStatusOrdemServicoUseCase);
     }
 
     @Bean
-    MoverEmExecucaoUseCase moverEmExecucaoUseCase(OrdemServicoGateway ordemServicoGateway, EnviarEmailUseCase enviarEmailUseCase, ClienteGateway clienteGateway) {
-        return new MoverEmExecucaoUseCaseImpl(ordemServicoGateway, enviarEmailUseCase, clienteGateway);
+    MoverEmExecucaoUseCase moverEmExecucaoUseCase(OrdemServicoGateway ordemServicoGateway, EnviarEmailUseCase enviarEmailUseCase, ClienteGateway clienteGateway,RegistrarStatusOrdemServicoUseCase registrarStatusOrdemServicoUseCase) {
+        return new MoverEmExecucaoUseCaseImpl(ordemServicoGateway, enviarEmailUseCase, clienteGateway,registrarStatusOrdemServicoUseCase);
     }
 
     @Bean
@@ -47,8 +48,8 @@ public class OrdemServicoConfig {
     }
 
     @Bean
-    MoverFinalizadaUseCase moverFinalizadaUseCase(OrdemServicoGateway ordemServicoGateway, EnviarEmailUseCase enviarEmailUseCase, ClienteGateway clienteGateway) {
-        return new MoverFinalizadaUseCaseImpl(ordemServicoGateway, enviarEmailUseCase, clienteGateway);
+    MoverFinalizadaUseCase moverFinalizadaUseCase(OrdemServicoGateway ordemServicoGateway, EnviarEmailUseCase enviarEmailUseCase, ClienteGateway clienteGateway,RegistrarStatusOrdemServicoUseCase registrarStatusOrdemServicoUseCase) {
+        return new MoverFinalizadaUseCaseImpl(ordemServicoGateway, enviarEmailUseCase, clienteGateway,registrarStatusOrdemServicoUseCase);
     }
 
     @Bean
@@ -64,6 +65,11 @@ public class OrdemServicoConfig {
     @Bean
     BuscarAcompanhamentoByOrdemServicoIdUseCase buscarAcompanhamentoByOrdemServicoIdUseCase(OrdemServicoGateway ordemServicoGateway) {
         return new BuscarAcompanhamentoByOrdemServicoIdUseCaseImpl(ordemServicoGateway);
+    }
+
+    @Bean
+    RegistrarStatusOrdemServicoUseCase registrarStatusOrdemServicoUseCase(ObservabilityGateway observabilityGateway){
+        return new RegistrarStatusOrdemServicoUseCaseImpl(observabilityGateway);
     }
 
     @Bean

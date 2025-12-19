@@ -5,6 +5,7 @@ import com.fiap.pj.core.cliente.app.gateways.ClienteGateway;
 import com.fiap.pj.core.cliente.util.factory.ClienteTestFactory;
 import com.fiap.pj.core.email.app.usecase.EnviarEmailUseCase;
 import com.fiap.pj.core.ordemservico.app.gateways.OrdemServicoGateway;
+import com.fiap.pj.core.ordemservico.app.usecase.RegistrarStatusOrdemServicoUseCase;
 import com.fiap.pj.core.ordemservico.domain.OrdemServico;
 import com.fiap.pj.core.ordemservico.domain.enums.OrdemServicoStatus;
 import com.fiap.pj.core.ordemservico.exception.OrdemServicoExceptions.OrdemServicoStatusInvalidoDiagnosticoException;
@@ -41,6 +42,9 @@ class MoverEmDiagnosticoServiceTest {
 
     @Mock
     private ClienteGateway clienteGateway;
+
+    @Mock
+    private RegistrarStatusOrdemServicoUseCase registrarStatusOrdemServicoUseCase;
 
     @Mock
     private EnviarEmailUseCase enviarEmailUseCase;

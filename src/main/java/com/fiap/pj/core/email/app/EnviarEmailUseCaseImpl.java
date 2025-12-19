@@ -10,6 +10,7 @@ import com.fiap.pj.core.email.exception.EmailTemplateExceptions.EmailTemplateNao
 import com.fiap.pj.core.util.EmailTemplateUtils;
 import jakarta.mail.internet.MimeMessage;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.util.CollectionUtils;
@@ -26,6 +27,10 @@ public class EnviarEmailUseCaseImpl implements EnviarEmailUseCase {
     private final EmailGateway emailGateway;
     private final JavaMailSender mailSender;
 
+    @Value("${email.enabled:true}")
+    private boolean emailEnabled;
+
+
     public EnviarEmailUseCaseImpl(EmailGateway emailGateway, JavaMailSender mailSender) {
         this.emailGateway = emailGateway;
         this.mailSender = mailSender;
@@ -33,6 +38,12 @@ public class EnviarEmailUseCaseImpl implements EnviarEmailUseCase {
 
     @Override
     public void handle(EnviarEmailCommand cmd) {
+
+        if (!emailEnabled) {
+            log.info("Envio de email está desabilitado. Comando de envio {} para: {} não será processado.", cmd.template().getAssuntoPadrao(), cmd.destinatario());
+            return;
+        }
+
         try {
             EmailTemplate emailTemplate = this.emailGateway.buscarTemplate(cmd.template())
                     .orElseGet(() -> this.buscarTemplateDoResource(cmd.template()));

@@ -23,7 +23,7 @@ public class RegistrarStatusOrdemServicoUseCaseImpl implements RegistrarStatusOr
     @Override
     public void handle(RegistrarStatusOrdemServicoCommand cmd) {
         var ordemServico = cmd.ordemServico();
-        long duracaoMs = Duration.between(cmd.dataCriacaoStatusAnterior(), ZonedDateTime.now(ZoneOffset.UTC)).toMillis();
+        long duracaoMs = Duration.between(cmd.dataCriacaoStatusAnterior(), ZonedDateTime.now(ZoneOffset.UTC)).toMinutes();
 
         Map<String, Object> atributos = new HashMap<>();
         atributos.put("status",cmd.ordemServico().getStatus().name());

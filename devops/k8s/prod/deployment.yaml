@@ -51,6 +51,7 @@ spec:
             httpGet:
               path: /actuator/health
               port: 8081
+            initialDelaySeconds: 60
             periodSeconds: 10
             failureThreshold: 30
           env:
@@ -79,3 +80,8 @@ spec:
                 secretKeyRef:
                   name: smtp-credentials
                   key: password
+            - name: NEW_RELIC_LICENSE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: newrelic-secret
+                  key: license-key

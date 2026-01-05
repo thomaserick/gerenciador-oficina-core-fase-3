@@ -198,7 +198,7 @@ Este projeto utiliza o New Relic para garantir observabilidade completa da aplic
 ![Latência das APIs](docs/assets/monitoramento/latency.png)
 
 ### Consumo de Recursos
-![CPU e Memória](docs/assets/monitoramento/newrelic-kubernetes.png)
+![CPU e Memória](docs/assets/monitoramento/recursos.png)
 
 ### Logs Estruturados e Correlação
 ![Logs no New Relic](docs/assets/monitoramento/logs.png)

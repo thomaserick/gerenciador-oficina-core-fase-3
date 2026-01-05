@@ -31,6 +31,7 @@ A arquitetura do **Gerenciador de Oficina — Fase 3** é composta por múltiplo
 - [Tecnologias](#-tecnologias)
 - [CI/CD Pipeline](#-cicd-pipeline--github-actions)
 - [Kubernetes (EKS)](#-kubernetes-eks)
+- [Monitoramento e Observabilidade](#-monitoramento-e-observabilidade-com-new-relic)
 - [Instalação Local](#-instalação-local)
 - [Instalação Aws](#-instalação-Aws)
 - [Autenticação](#-autenticação)
@@ -65,6 +66,8 @@ A arquitetura do **Gerenciador de Oficina — Fase 3** é composta por múltiplo
 - **AWS IAM** - Gerenciamento de permissões e segurança
 - **AWS VPC** - Rede privada virtual
 - **AWS EC2** - Instâncias de servidores
+- **New Relic** - Monitoramento e observabilidade
+
 
 ## 🚀 Arquitetura 
 | Clean Architecture                           |
@@ -82,6 +85,21 @@ Core.
 Ela é executada automaticamente em eventos de push na branch main.
 
 ![Pipeline](docs/assets/ci-cd-fluxo-pipeline.jpg)
+
+### Variaveis de Ambiente
+A pipeline utiliza as seguintes variáveis de ambiente armazenadas como Secrets no GitHub:
+    
+| Nome                        | Descrição                                         |
+|-----------------------------|---------------------------------------------------|
+| SONAR_TOKEN                 | Token de autenticação para o SonarQube            |
+| DOCKERHUB_USERNAME          | Nome de usuário do Docker Hub                     |
+| DOCKERHUB_TOKEN             | Token de acesso do Docker Hub                     |
+| AWS_ACCESS_KEY_ID_          | Chave de acesso AWS                               |
+| AWS_SECRET_ACCESS_KEY       | Chave secreta AWS                                 |
+| NEW_RELIC_LICENSE_KEY       | Chave de licença do New Relic para monitoramento  |
+|SMTP_USERNAME                | Usuário SMTP para envio de e-mails                |
+|SMTP_PASSWORD                | Senha SMTP para envio de e-mails                  |
+|-----------------------------|---------------------------------------------------|
 
 ### 🔨 Job: Build
 
@@ -167,6 +185,93 @@ devops/
 | **services.yaml**        | Expõe o deployment internamente ou externamente via LoadBalancer, tornando a aplicação acessível.                                                                                                          |
 | **hpa.yaml**             | Configura o **Horizontal Pod Autoscaler**, responsável por escalar os pods automaticamente conforme CPU/memória.                                                                                           |
 | **deploy-prod-k8s.sh**   | Script automatizado utilizado no pipeline de CI/CD para aplicar todos os manifests ( `kubectl apply -f`) no cluster EKS. Também atualiza o `ConfigMap` com o endpoint mais recente do RDS antes do deploy. |
+
+## 📊 Monitoramento e Observabilidade com New Relic
+
+Este projeto utiliza o New Relic para garantir observabilidade completa da aplicação, permitindo monitorar performance, saúde, consumo de recursos e falhas operacionais em tempo real.
+
+### Visão Geral (APM)
+![New Relic APM Overview](docs/assets/monitoramento/apm-overview-1.png)
+![New Relic APM Overview](docs/assets/monitoramento/apm-overview-2.png)
+
+### Latência das APIs
+![Latência das APIs](docs/assets/monitoramento/latency.png)
+
+### Consumo de Recursos
+![CPU e Memória](docs/assets/monitoramento/newrelic-kubernetes.png)
+
+### Logs Estruturados e Correlação
+![Logs no New Relic](docs/assets/monitoramento/logs.png)
+
+### Alertas
+![Alertas no New Relic](docs/assets/monitoramento/alerts.png)
+
+### Synthetic monitors
+![Synthetic Monitors](docs/assets/monitoramento/synthetics.png)
+
+### 🔍 Monitoramento
+
+A solução contempla o acompanhamento contínuo dos seguintes aspectos:
+
+- Latência das APIs
+    - Tempo de resposta das requisições HTTP.
+    - Identificação de endpoints mais lentos.
+    - Análise de throughput e apdex.
+
+- Consumo de recursos no Kubernetes
+  - Uso de CPU e memória por pod e container.
+  - Análise de comportamento sob carga.
+  - Detecção de gargalos
+
+- Healthchecks e Uptime
+  - Monitoramento dos endpoints:
+    - /actuator/health
+    - /actuator/health/liveness
+    - /actuator/health/readiness
+  - Integração com probes do Kubernetes.
+  - Validação contínua de disponibilidade da aplicação.
+  - 
+- Alertas para falhas no processamento de ordens de serviço
+  - Alertas baseados em erros de negócio.
+  - Monitoramento de falhas por status da ordem de serviço.
+  - Notificações automáticas em caso de degradação ou erro crítico.
+
+- Logs estruturados (JSON)
+  - Logs no formato JSON para melhor indexação e busca.
+  - Correlação entre logs, traces e requisições.
+  - Inclusão de trace.id, span.id e identificadores de negócio (ex: ordemServicoId).
+
+### 📈 Dashboards
+
+São disponibilizados dashboards no New Relic para visualização e análise dos principais indicadores do sistema:
+
+### Dashboards
+![dashboard](docs/assets/monitoramento/dashboard-1.png)
+![dashboard](docs/assets/monitoramento/dashboard-2.png)
+
+- Volume diário de ordens de serviço
+  - Total de ordens criadas por dia.
+- Tempo médio de execução por status
+  - Diagnóstico
+  - Execução
+  - Finalização
+
+  Permite identificar gargalos no fluxo de processamento.
+
+- Erros e falhas nas integrações
+  - Erros em chamadas externas.
+  - Taxa de falhas por integração.
+  - Análise de impacto no fluxo de negócio.
+
+### 🚨 Alertas
+
+Alertas são configurados no New Relic para:
+
+- Aumento anormal de latência.
+- Erros HTTP (4xx / 5xx).
+- Falhas no processamento de ordens de serviço.
+- Indisponibilidade dos healthchecks.
+- Consumo excessivo de CPU ou memória no Kubernetes.
 
 
 ## ⚙️ Instalação Local

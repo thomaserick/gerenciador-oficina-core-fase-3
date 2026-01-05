@@ -88,7 +88,7 @@ Ela é executada automaticamente em eventos de push na branch main.
 
 ### Variaveis de Ambiente
 A pipeline utiliza as seguintes variáveis de ambiente armazenadas como Secrets no GitHub:
-    
+
 | Nome                        | Descrição                                         |
 |-----------------------------|---------------------------------------------------|
 | SONAR_TOKEN                 | Token de autenticação para o SonarQube            |
@@ -99,7 +99,7 @@ A pipeline utiliza as seguintes variáveis de ambiente armazenadas como Secrets 
 | NEW_RELIC_LICENSE_KEY       | Chave de licença do New Relic para monitoramento  |
 |SMTP_USERNAME                | Usuário SMTP para envio de e-mails                |
 |SMTP_PASSWORD                | Senha SMTP para envio de e-mails                  |
-|-----------------------------|---------------------------------------------------|
+
 
 ### 🔨 Job: Build
 

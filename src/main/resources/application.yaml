@@ -93,7 +93,7 @@ api:
 
 security:
   internal:
-    api-key: ${INTERNAL_API_KEY}
+    api-key: k_live_9f3c2e8a7b1d4f6a9c0e5d2b8a1f7c3e6d4b9a2f0c8e1d7a5b6c4
 
 
 management:

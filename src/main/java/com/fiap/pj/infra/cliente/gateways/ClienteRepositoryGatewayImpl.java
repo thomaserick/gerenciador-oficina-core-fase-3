@@ -50,6 +50,11 @@ public class ClienteRepositoryGatewayImpl implements ClienteGateway {
     }
 
     @Override
+    public boolean existsByDocumentoIdentificacaoNumeroAndAtivo(String documento) {
+        return repository.existsByDocumentoIdentificacaoNumeroAndAtivo(documento);
+    }
+
+    @Override
     public Slice<ClienteResponse> listarUsuarios(ListarClienteRequest request) {
         var specification = new ClienteSpecification(request.getNome(), request.getDocumentoIdentificacao(), request.getPlaca(), request.getAtivo());
         return repository.findProjectedBy(specification.buildSpecification(), request.getPageable(), ClienteResponse.class);

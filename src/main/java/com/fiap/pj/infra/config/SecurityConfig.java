@@ -1,5 +1,6 @@
 package com.fiap.pj.infra.config;
 
+import com.fiap.pj.infra.security.ApiKeyFilter;
 import com.fiap.pj.infra.security.UserAuthenticationFilter;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -29,6 +30,8 @@ public class SecurityConfig {
     };
 
     private final UserAuthenticationFilter userAuthenticationFilter;
+    private final ApiKeyFilter apiKeyFilter;
+
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -39,9 +42,14 @@ public class SecurityConfig {
                         .requestMatchers("/v1/usuarios/login").permitAll()
                         .requestMatchers(ENDPOINT_SWAGGER).permitAll()
                         .requestMatchers("/actuator/**").permitAll()
+                        .requestMatchers("/interno/**").permitAll()
                         .requestMatchers("/externo/orcamentos/**").hasAnyAuthority("CLIENT_API", "ADM")
                         .anyRequest().authenticated()
                 ).sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(
+                        apiKeyFilter,
+                        UsernamePasswordAuthenticationFilter.class
+                )
                 .addFilterBefore(userAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

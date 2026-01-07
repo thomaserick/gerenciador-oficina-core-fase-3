@@ -5,6 +5,7 @@ import com.fiap.pj.core.cliente.app.AlterarClienteUseCaseImpl;
 import com.fiap.pj.core.cliente.app.AtivarClienteUseCaseImpl;
 import com.fiap.pj.core.cliente.app.CriarClienteUseCaseImpl;
 import com.fiap.pj.core.cliente.app.ExcluirClienteUseCaseImpl;
+import com.fiap.pj.core.cliente.app.ExistsClienteByCpfUseCaseImpl;
 import com.fiap.pj.core.cliente.app.InativarClienteUseCaseImpl;
 import com.fiap.pj.core.cliente.app.ListarClienteUseCaseImpl;
 import com.fiap.pj.core.cliente.app.gateways.ClienteGateway;
@@ -51,6 +52,12 @@ public class ClienteConfig {
     ListarClienteUseCaseImpl listarClienteUseCase(ClienteGateway clienteGateway
     ) {
         return new ListarClienteUseCaseImpl(clienteGateway);
+    }
+
+    @Bean
+    ExistsClienteByCpfUseCaseImpl existsClienteByCpfUseCase(ClienteGateway clienteGateway
+    ) {
+        return new ExistsClienteByCpfUseCaseImpl(clienteGateway);
     }
 
     @Bean

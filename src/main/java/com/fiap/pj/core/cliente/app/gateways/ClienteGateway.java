@@ -11,5 +11,7 @@ public interface ClienteGateway extends BaseRepositoryGateway<Cliente> {
 
     boolean existsByDocumentoIdentificacaoNumero(String documento);
 
+    boolean existsByDocumentoIdentificacaoNumeroAndAtivo(String documento);
+
     Slice<ClienteResponse> listarUsuarios(ListarClienteRequest request);
 }

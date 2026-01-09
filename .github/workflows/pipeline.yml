@@ -164,4 +164,3 @@ jobs:
         run: |
           chmod +x ./devops/scripts/deploy-prod-k8s.sh
           ./devops/scripts/deploy-prod-k8s.sh
-

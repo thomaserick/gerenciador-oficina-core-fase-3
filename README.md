@@ -75,7 +75,7 @@ em um repositório separado para facilitar a manutenção e o CI/CD.
 
 ## ⚙️ Fluxo da Infraestrutura
 
-![Terraform](../gerenciador-oficina-db-infra-fase-3/docs/assets/terraform-fluxo-infra.jpg)
+![Terraform](docs/assets/terraform-fluxo-infra.jpg)
 
 ## 🚀 CI/CD Pipeline – GitHub Actions
 

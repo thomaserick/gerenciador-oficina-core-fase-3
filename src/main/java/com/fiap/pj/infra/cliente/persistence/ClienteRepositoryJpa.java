@@ -14,4 +14,7 @@ public interface ClienteRepositoryJpa extends JpaRepository<ClienteEntity, UUID>
     @Query("SELECT CASE WHEN COUNT(c) > 0 THEN TRUE ELSE FALSE END FROM ClienteEntity c WHERE c.documentoIdentificacao.numero = :numero")
     boolean existsByDocumentoIdentificacaoNumero(@Param("numero") String numero);
 
+
+    @Query("SELECT CASE WHEN COUNT(c) > 0 THEN TRUE ELSE FALSE END FROM ClienteEntity c WHERE c.documentoIdentificacao.numero = :numero and c.ativo = TRUE")
+    boolean existsByDocumentoIdentificacaoNumeroAndAtivo(@Param("numero") String numero);
 }

@@ -39,7 +39,7 @@ class LoginUsuarioUseCaseImplTest {
         when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class))).thenReturn(authentication);
 
 
-        when(jwtUtil.generateToken(Mockito.any(UserDetailsImpl.class))).thenReturn("token");
+        when(jwtUtil.generateUserToken(Mockito.any(UserDetailsImpl.class))).thenReturn("token");
         var response = loginUsuarioUseCaseImpl.handle(umLoginUsuarioCommand());
 
         assertEquals("token", response.token());

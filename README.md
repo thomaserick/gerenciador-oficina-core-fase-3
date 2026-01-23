@@ -8,22 +8,23 @@
 [![AWS](https://img.shields.io/badge/AWS-EKS-orange?logo=amazon-aws)](https://aws.amazon.com/eks/)
 [![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-Automation-black?logo=githubactions)](https://github.com/thomaserick/gerenciador-oficina-core-fase-2/actions/workflows/pipeline.yml)
 
-
 API para gerenciamento de uma oficina com autenticação e controle de estoque.
 
 ## 🔗 Repositórios Relacionados — Fase 3
 
-A arquitetura do **Gerenciador de Oficina — Fase 3** é composta por múltiplos módulos independentes, cada um versionado em um repositório separado para facilitar a manutenção e o CI/CD.
+A arquitetura do **Gerenciador de Oficina — Fase 3** é composta por múltiplos módulos independentes, cada um versionado
+em um repositório separado para facilitar a manutenção e o CI/CD.
 
-| Módulo | Descrição | Repositório                                                                                                             |
-|:-------|:-----------|:------------------------------------------------------------------------------------------------------------------------|
-| 🧱 **Core Application** | Aplicação principal responsável pelas regras de negócio, APIs REST e integração com os demais módulos. | [gerenciador-oficina-core-fase-3](https://github.com/thomaserick/gerenciador-oficina-core-fase-3)                       |
-| ⚡ **Lambda Functions** | Conjunto de funções *serverless* para processamento assíncrono, notificações e automações event-driven. | [gerenciador-oficina-lambda-fase-3](https://github.com/thomaserick/gerenciador-oficina-lambda-fase-3)       |
-| ☸️ **Kubernetes Infrastructure** | Infraestrutura da aplicação no Kubernetes, incluindo manifests, deployments, ingress e autoscaling. | [gerenciador-oficina-k8s-infra-fase-3](https://github.com/thomaserick/gerenciador-oficina-k8s-infra-fase-3) |
-| 🗄️ **Database Infrastructure** | Infraestrutura do banco de dados gerenciado (RDS PostgreSQL), versionada e automatizada via Terraform. | [gerenciador-oficina-db-infra-fase-3](https://github.com/thomaserick/gerenciador-oficina-db-infra-fase-3)  |
+| Módulo                           | Descrição                                                                                               | Repositório                                                                                                 |
+|:---------------------------------|:--------------------------------------------------------------------------------------------------------|:------------------------------------------------------------------------------------------------------------|
+| 🧱 **Core Application**          | Aplicação principal responsável pelas regras de negócio, APIs REST e integração com os demais módulos.  | [gerenciador-oficina-core-fase-3](https://github.com/thomaserick/gerenciador-oficina-core-fase-3)           |
+| ⚡ **Lambda Functions**           | Conjunto de funções *serverless* para processamento assíncrono, notificações e automações event-driven. | [gerenciador-oficina-lambda-fase-3](https://github.com/thomaserick/gerenciador-oficina-lambda-fase-3)       |
+| ☸️ **Kubernetes Infrastructure** | Infraestrutura da aplicação no Kubernetes, incluindo manifests, deployments, ingress e autoscaling.     | [gerenciador-oficina-k8s-infra-fase-3](https://github.com/thomaserick/gerenciador-oficina-k8s-infra-fase-3) |
+| 🗄️ **Database Infrastructure**  | Infraestrutura do banco de dados gerenciado (RDS PostgreSQL), versionada e automatizada via Terraform.  | [gerenciador-oficina-db-infra-fase-3](https://github.com/thomaserick/gerenciador-oficina-db-infra-fase-3)   |
+| 🌐 **API Gateway Infrastructure** | Infraestrutura do API Gateway com rate limiting, redirecionamento e monitoramento via Terraform. | [gerenciador-oficina-api-gateway-infra-fase-3](https://github.com/CaioMC/gerenciador-oficina-gateway-fase-3) |
 
-> 🔍 Cada repositório é autônomo, mas integra-se ao **Core** por meio de pipelines e configurações declarativas (Terraform e CI/CD).
-
+> 🔍 Cada repositório é autônomo, mas integra-se ao **Core** por meio de pipelines e configurações declarativas (
+> Terraform e CI/CD).
 
 ## 📋 Índice
 
@@ -31,6 +32,7 @@ A arquitetura do **Gerenciador de Oficina — Fase 3** é composta por múltiplo
 - [Tecnologias](#-tecnologias)
 - [CI/CD Pipeline](#-cicd-pipeline--github-actions)
 - [Kubernetes (EKS)](#-kubernetes-eks)
+- [Monitoramento e Observabilidade](#-monitoramento-e-observabilidade-com-new-relic)
 - [Instalação Local](#-instalação-local)
 - [Instalação Aws](#-instalação-Aws)
 - [Autenticação](#-autenticação)
@@ -39,10 +41,13 @@ A arquitetura do **Gerenciador de Oficina — Fase 3** é composta por múltiplo
 
 ### 🎬 Vídeos de Demonstração
 
+### [Desafio - Apresentacao - DOCUMENTAÇÕES](https://www.loom.com/share/4ffb02e6c0964e40ba426e13b0f5d391)
+### [Desafio - Apresentacao - Gateway + Lambda](https://www.loom.com/share/9afd356c1c0f4cdca6962e6439420ae9)
+### [Desafio - Apresenta - New Relic](https://www.loom.com/share/7b636334eaed4fcbaa8c2627d8be8567)
+
 ### Visão completa do ambiente em execução:
 
 1. Em construção...
-
 
 ## 🛠 Tecnologias
 
@@ -65,15 +70,17 @@ A arquitetura do **Gerenciador de Oficina — Fase 3** é composta por múltiplo
 - **AWS IAM** - Gerenciamento de permissões e segurança
 - **AWS VPC** - Rede privada virtual
 - **AWS EC2** - Instâncias de servidores
+- **New Relic** - Monitoramento e observabilidade
 
-## 🚀 Arquitetura 
-| Clean Architecture                           |
-|----------------------------------------------|
+## 🚀 Arquitetura
+
+| Clean Architecture                                  |
+|-----------------------------------------------------|
 | ![Hexagonal](docs/assets/arquitetura-hexagonal.png) | ![Clean](docs/assets/clean-architecture.png) |
 
 ## ⚙️ Fluxo da Infraestrutura
 
-![Terraform](../gerenciador-oficina-db-infra-fase-3/docs/assets/terraform-fluxo-infra.jpg)
+![Terraform](docs/assets/terraform-fluxo-infra.jpg)
 
 ## 🚀 CI/CD Pipeline – GitHub Actions
 
@@ -82,6 +89,21 @@ Core.
 Ela é executada automaticamente em eventos de push na branch main.
 
 ![Pipeline](docs/assets/ci-cd-fluxo-pipeline.jpg)
+
+### Variaveis de Ambiente
+
+A pipeline utiliza as seguintes variáveis de ambiente armazenadas como Secrets no GitHub:
+
+| Nome                  | Descrição                                        |
+|-----------------------|--------------------------------------------------|
+| SONAR_TOKEN           | Token de autenticação para o SonarQube           |
+| DOCKERHUB_USERNAME    | Nome de usuário do Docker Hub                    |
+| DOCKERHUB_TOKEN       | Token de acesso do Docker Hub                    |
+| AWS_ACCESS_KEY_ID_    | Chave de acesso AWS                              |
+| AWS_SECRET_ACCESS_KEY | Chave secreta AWS                                |
+| NEW_RELIC_LICENSE_KEY | Chave de licença do New Relic para monitoramento |
+| SMTP_USERNAME         | Usuário SMTP para envio de e-mails               |
+| SMTP_PASSWORD         | Senha SMTP para envio de e-mails                 |
 
 ### 🔨 Job: Build
 
@@ -168,6 +190,100 @@ devops/
 | **hpa.yaml**             | Configura o **Horizontal Pod Autoscaler**, responsável por escalar os pods automaticamente conforme CPU/memória.                                                                                           |
 | **deploy-prod-k8s.sh**   | Script automatizado utilizado no pipeline de CI/CD para aplicar todos os manifests ( `kubectl apply -f`) no cluster EKS. Também atualiza o `ConfigMap` com o endpoint mais recente do RDS antes do deploy. |
 
+## 📊 Monitoramento e Observabilidade com New Relic
+
+Este projeto utiliza o New Relic para garantir observabilidade completa da aplicação, permitindo monitorar performance,
+saúde, consumo de recursos e falhas operacionais em tempo real.
+
+### Visão Geral (APM)
+
+![New Relic APM Overview](docs/assets/monitoramento/apm-overview-1.png)
+![New Relic APM Overview](docs/assets/monitoramento/apm-overview-2.png)
+
+### Latência das APIs
+
+![Latência das APIs](docs/assets/monitoramento/latency.png)
+
+### Consumo de Recursos
+
+![CPU e Memória](docs/assets/monitoramento/recursos.png)
+
+### Logs Estruturados e Correlação
+
+![Logs no New Relic](docs/assets/monitoramento/logs.png)
+
+### Alertas
+
+![Alertas no New Relic](docs/assets/monitoramento/alerts.png)
+
+### Synthetic monitors
+
+![Synthetic Monitors](docs/assets/monitoramento/synthetics.png)
+
+### 🔍 Monitoramento
+
+A solução contempla o acompanhamento contínuo dos seguintes aspectos:
+
+- Latência das APIs
+    - Tempo de resposta das requisições HTTP.
+    - Identificação de endpoints mais lentos.
+    - Análise de throughput e apdex.
+
+- Consumo de recursos no Kubernetes
+    - Uso de CPU e memória por pod e container.
+    - Análise de comportamento sob carga.
+    - Detecção de gargalos
+
+- Healthchecks e Uptime
+    - Monitoramento dos endpoints:
+        - /actuator/health
+        - /actuator/health/liveness
+        - /actuator/health/readiness
+    - Integração com probes do Kubernetes.
+    - Validação contínua de disponibilidade da aplicação.
+    -
+- Alertas para falhas no processamento de ordens de serviço
+    - Alertas baseados em erros de negócio.
+    - Monitoramento de falhas por status da ordem de serviço.
+    - Notificações automáticas em caso de degradação ou erro crítico.
+
+- Logs estruturados (JSON)
+    - Logs no formato JSON para melhor indexação e busca.
+    - Correlação entre logs, traces e requisições.
+    - Inclusão de trace.id, span.id e identificadores de negócio (ex: ordemServicoId).
+
+### 📈 Dashboards
+
+São disponibilizados dashboards no New Relic para visualização e análise dos principais indicadores do sistema:
+
+### Dashboards
+
+![dashboard](docs/assets/monitoramento/dashboard-1.png)
+![dashboard](docs/assets/monitoramento/dashboard-2.png)
+
+- Volume diário de ordens de serviço
+    - Total de ordens criadas por dia.
+- Tempo médio de execução por status
+    - Diagnóstico
+    - Execução
+    - Finalização
+
+  Permite identificar gargalos no fluxo de processamento.
+
+- Erros e falhas nas integrações
+    - Erros em chamadas externas.
+    - Taxa de falhas por integração.
+    - Análise de impacto no fluxo de negócio.
+
+### 🚨 Alertas
+
+Alertas são configurados no New Relic para:
+
+- Aumento anormal de latência.
+- Erros HTTP (4xx / 5xx).
+- Falhas no processamento de ordens de serviço.
+- Indisponibilidade dos healthchecks.
+- Consumo excessivo de CPU ou memória no Kubernetes.
 
 ## ⚙️ Instalação Local
 
@@ -254,7 +370,6 @@ devops/
     -javaagent:pathCompleto/gerenciador-oficina-core-fase-3/newrelic/newrelic.jar
     ```
 5. Configurar a key do newRelic ${NEW_RELIC_LICENSE_KEY} nas variaveis de ambiente da aplicação
-
 
 O sistema rodará na porta `localhost:8081`.
 

@@ -31,7 +31,7 @@ public class LoginUsuarioUseCaseImpl implements LoginUsuarioUseCase {
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             UserDetailsImpl userDetailsImpl = (UserDetailsImpl) authentication.getPrincipal();
-            final String jwt = jwtUtil.generateToken(userDetailsImpl);
+            final String jwt = jwtUtil.generateUserToken(userDetailsImpl);
 
             return new LoginUsuarioResponse(jwt);
         } catch (AuthenticationException e) {

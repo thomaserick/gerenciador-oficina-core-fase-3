@@ -45,9 +45,6 @@ em um repositório separado para facilitar a manutenção e o CI/CD.
 ### [Desafio - Apresentacao - Gateway + Lambda](https://www.loom.com/share/9afd356c1c0f4cdca6962e6439420ae9)
 ### [Desafio - Apresenta - New Relic](https://www.loom.com/share/7b636334eaed4fcbaa8c2627d8be8567)
 
-### Visão completa do ambiente em execução:
-
-1. Em construção...
 
 ## 🛠 Tecnologias
 
@@ -71,6 +68,14 @@ em um repositório separado para facilitar a manutenção e o CI/CD.
 - **AWS VPC** - Rede privada virtual
 - **AWS EC2** - Instâncias de servidores
 - **New Relic** - Monitoramento e observabilidade
+
+## 📝 Diagramas Tecnicos
+
+![Diagrama de Componente](docs/assets/diagrama_componente.jpg)
+![Diagrama de Cadastro Usuario](docs/assets/diagrama_sequencia_cadastro_usuario.jpg)
+![Diagrama de Autenticacao](docs/assets/diagrama_sequencia_autenticacao.jpg)
+![Diagrama de Ordem de Servico](docs/assets/diagram_sequencia_abertura_ordem_servico.jpg)
+![Diagrama de Entidade Realacionamento](docs/assets/diagrama_entidade_relacionamento.jpg)
 
 ## 🚀 Arquitetura
 
